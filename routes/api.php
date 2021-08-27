@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/indicators', [\App\Http\Controllers\IndicatorController::class, 'index']);
+Route::post('/indicators/create', [\App\Http\Controllers\IndicatorController::class, 'store']);
 Route::get('/package', [\App\Http\Controllers\PackageController::class, 'index']);
 Route::get('/ppk', [\App\Http\Controllers\PPKController::class, 'index']);
 Route::get('/accessor-ppk', [\App\Http\Controllers\AccessorPpkController::class, 'index']);
