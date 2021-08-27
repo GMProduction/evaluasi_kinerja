@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/indicators', [\App\Http\Controllers\IndicatorController::class, 'index']);
+Route::get('/package', [\App\Http\Controllers\PackageController::class, 'index']);
+Route::get('/ppk', [\App\Http\Controllers\PPKController::class, 'index']);
+Route::get('/accessor-ppk', [\App\Http\Controllers\AccessorPpkController::class, 'index']);
+Route::post('/accessor-ppk/create', [\App\Http\Controllers\AccessorPpkController::class, 'store']);
+Route::get('/vendor', [\App\Http\Controllers\VendorController::class, 'index']);
+Route::post('/vendor/create', [\App\Http\Controllers\VendorController::class, 'store']);
+Route::get('/accessor', [\App\Http\Controllers\AccessorController::class, 'index']);
+Route::post('/accessor/create', [\App\Http\Controllers\AccessorController::class, 'store']);

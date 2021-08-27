@@ -40,5 +40,16 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'roles' => 'array'
     ];
+
+    public function vendor()
+    {
+        return $this->hasOne(Vendor::class,'user_id');
+    }
+
+    public function accessorPpk()
+    {
+        return $this->hasOne(AccessorPPK::class, 'user_id');
+    }
 }
