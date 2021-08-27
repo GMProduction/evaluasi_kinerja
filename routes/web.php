@@ -20,3 +20,8 @@ Route::get('/package', [\App\Http\Controllers\PackageController::class, 'index']
 Route::get('/ppk', [\App\Http\Controllers\PPKController::class, 'index']);
 Route::get('/accessor-ppk', [\App\Http\Controllers\AccessorPpkController::class, 'index']);
 Route::post('/accessor-ppk/create', [\App\Http\Controllers\AccessorPpkController::class, 'store']);
+
+
+Route::get('/superuser', function () {
+    return view('superuser/dashboard');
+});
