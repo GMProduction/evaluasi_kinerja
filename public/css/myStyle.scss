@@ -3,4 +3,48 @@ $surface-color: #fff;
 $text-color: #666;
 $text-color2: #666;
 $curve: 40;
+$activecolor: #887DF3;
+.icon-size-lg{
+    font-size: 2rem;
+}
 
+.c-text{
+    color: $text-color;
+}
+
+
+.table-container {
+    border-radius: 5px;
+    padding: 24px;
+    background-color: white;
+    box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px, rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
+    margin-bottom: 50px;
+  }
+
+
+.items-tab{
+    display: flex;
+
+    .card-tab{
+        padding: 16px;
+        box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px, rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
+        background-color: white;
+        border-radius: 10px;
+        width: 200px;
+        margin-right: 16px;
+        
+       
+        &.active{
+            color: $activecolor !important;
+            text-shadow: $activecolor 0px 50px 100px -20px, $activecolor 0px 30px 60px -30px;
+
+        }
+
+        .number-card{
+            margin-bottom: 0;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: $text-color;
+        }
+    }
+}

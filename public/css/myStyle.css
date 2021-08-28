@@ -1,1 +1,37 @@
-/* No CSS *//*# sourceMappingURL=myStyle.css.map */
+.icon-size-lg {
+  font-size: 2rem;
+}
+
+.c-text {
+  color: #666;
+}
+
+.table-container {
+  border-radius: 5px;
+  padding: 24px;
+  background-color: white;
+  box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px, rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
+  margin-bottom: 50px;
+}
+
+.items-tab {
+  display: flex;
+}
+.items-tab .card-tab {
+  padding: 16px;
+  box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px, rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
+  background-color: white;
+  border-radius: 10px;
+  width: 200px;
+  margin-right: 16px;
+}
+.items-tab .card-tab.active {
+  color: #887DF3 !important;
+  text-shadow: #887DF3 0px 50px 100px -20px, #887DF3 0px 30px 60px -30px;
+}
+.items-tab .card-tab .number-card {
+  margin-bottom: 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #666;
+}

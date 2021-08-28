@@ -11,5 +11,10 @@
 @endsection
 
 @section('script')
- 
+<script>
+    $(document).ready(function() {
+        
+        $("#dashboard").addClass("active");
+    });
+</script>
 @endsection

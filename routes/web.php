@@ -25,3 +25,7 @@ Route::post('/accessor-ppk/create', [\App\Http\Controllers\AccessorPpkController
 Route::get('/superuser', function () {
     return view('superuser/dashboard');
 });
+
+Route::get('/superuser/users', function () {
+    return view('superuser/user/user');
+});
