@@ -29,3 +29,11 @@ Route::get('/superuser', function () {
 Route::get('/superuser/users', function () {
     return view('superuser/user/user');
 });
+
+Route::get('/superuser/ppk', function () {
+    return view('superuser/ppk/ppk');
+});
+
+Route::get('/superuser/paket-konstruksi', function () {
+    return view('superuser/paket-konstruksi/paketKonstruksi');
+});

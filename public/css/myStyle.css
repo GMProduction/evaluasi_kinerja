@@ -6,6 +6,47 @@
   color: #666;
 }
 
+.header-table {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.header-table .title-table {
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.bt-primary-sm {
+  all: unset;
+  background-color: #887DF3;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  font-size: 0.8rem;
+  transition: all 300ms;
+  box-shadow: none;
+  cursor: pointer;
+}
+.bt-primary-sm:hover {
+  color: white;
+  box-shadow: #887DF355 0px 7px 29px 0px;
+}
+
+.bt-primary {
+  all: unset;
+  background-color: #887DF3;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  transition: all 300ms;
+  box-shadow: none;
+  cursor: pointer;
+}
+.bt-primary:hover {
+  color: white;
+  box-shadow: #887DF355 0px 7px 29px 0px;
+}
+
 .table-container {
   border-radius: 5px;
   padding: 24px;
@@ -24,14 +65,42 @@
   border-radius: 10px;
   width: 200px;
   margin-right: 16px;
+  cursor: pointer;
+  transition: all 300ms;
 }
 .items-tab .card-tab.active {
-  color: #887DF3 !important;
-  text-shadow: #887DF3 0px 50px 100px -20px, #887DF3 0px 30px 60px -30px;
+  background-color: #887DF3;
+  color: white;
+  box-shadow: #887DF355 0px 7px 29px 0px;
 }
 .items-tab .card-tab .number-card {
   margin-bottom: 0;
   font-size: 1.4rem;
   font-weight: bold;
-  color: #666;
+}
+
+.pagination > li > a {
+  background-color: white;
+  color: #887DF3;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+  color: #5a5a5a;
+  background-color: #eee;
+  border-color: #ddd;
+}
+
+.pagination > .active > a {
+  color: white;
+  background-color: #887DF3 !important;
+  border: solid 1px #887DF3 !important;
+  box-shadow: #887DF355 0px 7px 29px 0px;
+}
+
+.pagination > .active > a:hover {
+  background-color: #887DF3 !important;
+  border: solid 1px #887DF3;
 }

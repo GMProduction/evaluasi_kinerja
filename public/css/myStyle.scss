@@ -4,12 +4,59 @@ $text-color: #666;
 $text-color2: #666;
 $curve: 40;
 $activecolor: #887DF3;
+$shadowactivecolor: #887DF355;
 .icon-size-lg{
     font-size: 2rem;
 }
 
 .c-text{
     color: $text-color;
+}
+
+.header-table{
+
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    
+    .title-table{
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+}
+
+.bt-primary-sm{
+    all: unset;
+    background-color: $activecolor;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    font-size: 0.8rem;
+    transition: all 300ms;
+    box-shadow: none;
+    cursor: pointer;
+
+    &:hover{
+        color: white;
+        box-shadow: $shadowactivecolor 0px 7px 29px 0px;
+    }
+}
+
+.bt-primary{
+    all: unset;
+    background-color: $activecolor;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    transition: all 300ms;
+    box-shadow: none;
+    cursor: pointer;
+
+    &:hover{
+        color: white;
+        box-shadow: $shadowactivecolor 0px 7px 29px 0px;
+    }
 }
 
 
@@ -32,19 +79,52 @@ $activecolor: #887DF3;
         border-radius: 10px;
         width: 200px;
         margin-right: 16px;
-        
-       
-        &.active{
-            color: $activecolor !important;
-            text-shadow: $activecolor 0px 50px 100px -20px, $activecolor 0px 30px 60px -30px;
+        cursor: pointer;
+        transition: all 300ms;
 
+        &.active{
+            background-color: $activecolor;
+            color: white;
+            box-shadow: $shadowactivecolor 0px 7px 29px 0px;
         }
 
         .number-card{
             margin-bottom: 0;
             font-size: 1.4rem;
             font-weight: bold;
-            color: $text-color;
         }
     }
+}
+
+
+// PAGINATION
+
+.pagination > li > a
+{
+    background-color: white;
+    color: $activecolor;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: $activecolor !Important;
+    border: solid 1px $activecolor !Important;
+    box-shadow: $shadowactivecolor 0px 7px 29px 0px;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: $activecolor !Important;
+    border: solid 1px $activecolor;
 }
