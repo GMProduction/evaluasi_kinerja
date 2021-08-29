@@ -10,6 +10,10 @@ class Indicator extends Model
     use HasFactory;
     protected $table = 'indicator';
 
+    protected $fillable = [
+      'name'
+    ];
+
     public function subIndicator()
     {
         return $this->hasMany(SubIndicator::class, 'indicator_id');

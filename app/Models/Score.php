@@ -5,18 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PPK extends Model
+class Score extends Model
 {
     use HasFactory;
 
-    protected $table = 'ppk';
-
     protected $fillable = [
-      'name'
+        'package_id',
+        'evaluator_id',
+        'sub_indicator_id',
+        'score',
+        'text',
     ];
-
-    public function accessorPpk()
-    {
-        return $this->hasMany(AccessorPPK::class, 'ppk_id');
-    }
 }

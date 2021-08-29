@@ -18,9 +18,10 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'roles'
     ];
 
     /**
@@ -51,5 +52,19 @@ class User extends Authenticatable
     public function accessorPpk()
     {
         return $this->hasOne(AccessorPPK::class, 'user_id');
+    }
+
+    public function superuser()
+    {
+        return $this->hasOne(Superuser::class, 'user_id');
+    }
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class, 'user_id');
+    }
+
+    public function accessor(){
+        return $this->hasOne(Accessor::class, 'user_id');
     }
 }

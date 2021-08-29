@@ -11,6 +11,11 @@ class AccessorPPK extends Model
 
     protected $table = 'accessor_ppk';
 
+    protected $fillable = [
+        'user_id',
+        'name'
+    ];
+
     public function ppk()
     {
         return $this->belongsTo(PPK::class, 'ppk_id');

@@ -64,7 +64,7 @@
                     <a href="/superuser/indikator" id="indikator" class="nav_link"> <i class='bx bx-doughnut-chart' ></i> <span
                             class="nav_name">Indikator</span> </a>
 
-                   
+
                 </div>
             </div>
 
@@ -94,6 +94,21 @@
     <script src="{{ asset('js/dialog.js') }}"></script>
     <script src="{{ asset('js/moment.js') }}"></script>
     {{-- <script src="{{ asset('js/myStyle.js') }}"></script> --}}
+    <script>
+        jQuery.fn.dataTableExt.oApi.fnPagingInfo = function (oSettings) {
+            return {
+                "iStart": oSettings._iDisplayStart,
+                "iEnd": oSettings.fnDisplayEnd(),
+                "iLength": oSettings._iDisplayLength,
+                "iTotal": oSettings.fnRecordsTotal(),
+                "iFilteredTotal": oSettings.fnRecordsDisplay(),
+                "iPage": oSettings._iDisplayLength === -1 ?
+                    0 : Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+                "iTotalPages": oSettings._iDisplayLength === -1 ?
+                    0 : Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
+            };
+        };
+    </script>
     @yield('script')
 </body>
 

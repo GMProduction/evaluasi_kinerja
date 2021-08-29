@@ -22,22 +22,26 @@ Route::get('/accessor-ppk', [\App\Http\Controllers\AccessorPpkController::class,
 Route::post('/accessor-ppk/create', [\App\Http\Controllers\AccessorPpkController::class, 'store']);
 
 
-Route::get('/superuser', function () {
-    return view('superuser/dashboard');
-});
+Route::prefix('/superuser')->group(function (){
+    Route::get('/', function () {
+        return view('superuser/dashboard');
+    });
 
-Route::get('/superuser/users', function () {
-    return view('superuser/user/user');
-});
+    Route::prefix('/users')->group(function (){
+        Route::match(['post','get'],'/', [\App\Http\Controllers\Superadmin\UserController::class,'index']);
+        Route::get('/{id}/delete', [\App\Http\Controllers\Superadmin\UserController::class,'delete']);
+        Route::get('/datatable/{role}',[\App\Http\Controllers\Superadmin\UserController::class,'datatable'])->name('user_datatable');
+    });
 
-Route::get('/superuser/ppk', function () {
-    return view('superuser/ppk/ppk');
-});
+    Route::get('/ppk', function () {
+        return view('superuser/ppk/ppk');
+    });
 
-Route::get('/superuser/paket-konstruksi', function () {
-    return view('superuser/paket-konstruksi/paketKonstruksi');
-});
+    Route::get('/paket-konstruksi', function () {
+        return view('superuser/paket-konstruksi/paketKonstruksi');
+    });
 
-Route::get('/superuser/indikator', function () {
-    return view('superuser/indikator/indikator');
+    Route::get('/indikator', function () {
+        return view('superuser/indikator/indikator');
+    });
 });

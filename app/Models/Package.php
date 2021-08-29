@@ -10,6 +10,12 @@ class Package extends Model
     use HasFactory;
     protected $table = 'package';
 
+    protected $fillable = [
+        'name',
+        'vendor_id',
+        'ppk_id',
+    ];
+
     public function vendor()
     {
         return $this->belongsTo(User::class, 'vendor_id');

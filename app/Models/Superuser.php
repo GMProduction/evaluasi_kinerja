@@ -5,18 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PPK extends Model
+class Superuser extends Model
 {
     use HasFactory;
 
-    protected $table = 'ppk';
+    protected $table = 'superuser';
 
     protected $fillable = [
-      'name'
+        'user_id',
+        'name'
     ];
-
-    public function accessorPpk()
-    {
-        return $this->hasMany(AccessorPPK::class, 'ppk_id');
-    }
 }

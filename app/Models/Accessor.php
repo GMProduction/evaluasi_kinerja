@@ -10,6 +10,11 @@ class Accessor extends Model
     use HasFactory;
     protected $table = 'accessor';
 
+    protected $fillable = [
+        'user_id',
+        'name'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
