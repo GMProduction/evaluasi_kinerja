@@ -16,9 +16,40 @@
   font-weight: 600;
 }
 
+.bt-success-sm {
+  all: unset;
+  background-color: #0ebb48;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  font-size: 0.8rem;
+  transition: all 300ms;
+  box-shadow: none;
+  cursor: pointer;
+}
+.bt-success-sm:hover {
+  color: white;
+  box-shadow: #0ebb4855 0px 7px 29px 0px;
+}
+
+.bt-success {
+  all: unset;
+  background-color: #0ebb48;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  transition: all 300ms;
+  box-shadow: none;
+  cursor: pointer;
+}
+.bt-success:hover {
+  color: white;
+  box-shadow: #0ebb4855 0px 7px 29px 0px;
+}
+
 .bt-primary-sm {
   all: unset;
-  background-color: #887DF3;
+  background-color: #887df3;
   border-radius: 5px;
   color: white;
   padding: 10px;
@@ -29,12 +60,12 @@
 }
 .bt-primary-sm:hover {
   color: white;
-  box-shadow: #887DF355 0px 7px 29px 0px;
+  box-shadow: #887df355 0px 7px 29px 0px;
 }
 
 .bt-primary {
   all: unset;
-  background-color: #887DF3;
+  background-color: #887df3;
   border-radius: 5px;
   color: white;
   padding: 10px;
@@ -44,7 +75,7 @@
 }
 .bt-primary:hover {
   color: white;
-  box-shadow: #887DF355 0px 7px 29px 0px;
+  box-shadow: #887df355 0px 7px 29px 0px;
 }
 
 .table-container {
@@ -69,9 +100,9 @@
   transition: all 300ms;
 }
 .items-tab .card-tab.active {
-  background-color: #887DF3;
+  background-color: #887df3;
   color: white;
-  box-shadow: #887DF355 0px 7px 29px 0px;
+  box-shadow: #887df355 0px 7px 29px 0px;
 }
 .items-tab .card-tab .number-card {
   margin-bottom: 0;
@@ -79,9 +110,35 @@
   font-weight: bold;
 }
 
+.card-indikator {
+  padding: 16px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  position: relative;
+  width: 100%;
+}
+.card-indikator .header-indikator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+td.details-control {
+  background: url("../static-images/arrow-down.png") no-repeat center;
+  background-size: cover;
+  cursor: pointer;
+}
+
+tr.shown td.details-control {
+  background: url("../static-images/arrow-down.png") no-repeat center;
+  transform: rotate(180deg);
+  background-size: cover;
+  cursor: pointer;
+}
+
 .pagination > li > a {
   background-color: white;
-  color: #887DF3;
+  color: #887df3;
 }
 
 .pagination > li > a:focus,
@@ -95,31 +152,53 @@
 
 .pagination > .active > a {
   color: white;
-  background-color: #887DF3 !important;
-  border: solid 1px #887DF3 !important;
-  box-shadow: #887DF355 0px 7px 29px 0px;
+  background-color: #887df3 !important;
+  border: solid 1px #887df3 !important;
+  box-shadow: #887df355 0px 7px 29px 0px;
 }
 
 .pagination > .active > a:hover {
-  background-color: #887DF3 !important;
-  border: solid 1px #887DF3;
+  background-color: #887df3 !important;
+  border: solid 1px #887df3;
 }
 
 .input-daterange input {
   text-align: left !important;
 }
 
-.datepicker table tr td.active.active, .datepicker table tr td.active.disabled, .datepicker table tr td.active.disabled.active, .datepicker table tr td.active.disabled.disabled, .datepicker table tr td.active.disabled:active, .datepicker table tr td.active.disabled:hover, .datepicker table tr td.active.disabled:hover.active, .datepicker table tr td.active.disabled:hover.disabled, .datepicker table tr td.active.disabled:hover:active, .datepicker table tr td.active.disabled:hover:hover, .datepicker table tr td.active.disabled:hover[disabled], .datepicker table tr td.active.disabled[disabled], .datepicker table tr td.active:active, .datepicker table tr td.active:hover, .datepicker table tr td.active:hover.active, .datepicker table tr td.active:hover.disabled, .datepicker table tr td.active:hover:active, .datepicker table tr td.active:hover:hover, .datepicker table tr td.active:hover[disabled], .datepicker table tr td.active[disabled] {
-  background-color: #887DF3 !important;
-  box-shadow: #887DF355 0px 7px 29px 0px !important;
+.datepicker table tr td.active.active,
+.datepicker table tr td.active.disabled,
+.datepicker table tr td.active.disabled.active,
+.datepicker table tr td.active.disabled.disabled,
+.datepicker table tr td.active.disabled:active,
+.datepicker table tr td.active.disabled:hover,
+.datepicker table tr td.active.disabled:hover.active,
+.datepicker table tr td.active.disabled:hover.disabled,
+.datepicker table tr td.active.disabled:hover:active,
+.datepicker table tr td.active.disabled:hover:hover,
+.datepicker table tr td.active.disabled:hover[disabled],
+.datepicker table tr td.active.disabled[disabled],
+.datepicker table tr td.active:active,
+.datepicker table tr td.active:hover,
+.datepicker table tr td.active:hover.active,
+.datepicker table tr td.active:hover.disabled,
+.datepicker table tr td.active:hover:active,
+.datepicker table tr td.active:hover:hover,
+.datepicker table tr td.active:hover[disabled],
+.datepicker table tr td.active[disabled] {
+  background-color: #887df3 !important;
+  box-shadow: #887df355 0px 7px 29px 0px !important;
 }
 
-.datepicker table tr td.active, .datepicker table tr td.active.disabled, .datepicker table tr td.active.disabled:hover, .datepicker table tr td.active:hover {
+.datepicker table tr td.active,
+.datepicker table tr td.active.disabled,
+.datepicker table tr td.active.disabled:hover,
+.datepicker table tr td.active:hover {
   background-color: #006dcc;
-  background-image: linear-gradient(to bottom, #887DF3, #887DF3) !important;
+  background-image: linear-gradient(to bottom, #887df3, #887df3) !important;
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="$activecolor", endColorstr="#0044cc", GradientType=0);
-  border-color: #887DF3 #887DF3 #002a80;
+  border-color: #887df3 #887df3 #002a80;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
   color: #fff;

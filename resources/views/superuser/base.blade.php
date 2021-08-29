@@ -61,7 +61,7 @@
                     <a href="/superuser/paket-konstruksi" id="paketKonstruksi" class="nav_link"> <i class='bx bx-building-house' ></i>
                          <span class="nav_name">Bookmark</span> </a>
 
-                    <a href="#" class="nav_link"> <i class='bx bx-doughnut-chart' ></i> <span
+                    <a href="/superuser/indikator" id="indikator" class="nav_link"> <i class='bx bx-doughnut-chart' ></i> <span
                             class="nav_name">Indikator</span> </a>
 
                    
