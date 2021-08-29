@@ -37,3 +37,7 @@ Route::get('/superuser/ppk', function () {
 Route::get('/superuser/paket-konstruksi', function () {
     return view('superuser/paket-konstruksi/paketKonstruksi');
 });
+
+Route::get('/superuser/indikator', function () {
+    return view('superuser/indikator/indikator');
+});

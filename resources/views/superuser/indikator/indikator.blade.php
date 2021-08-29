@@ -5,6 +5,7 @@
 @endsection
 
 
+
 @section('content')
 
     <section class="" style="margin-top: 100px">
@@ -16,7 +17,7 @@
                         <p class="number-card">40</p>
                     </div>
                     <div class="mt-2">
-                        Super User
+                        Main Indikator
                     </div>
                 </a>
 
@@ -26,39 +27,10 @@
                         <p class="number-card">40</p>
                     </div>
                     <div class="mt-2">
-                        Admin Balai
+                        Sub Indikator
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text" id="uAsesorBalai">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-user'></i>
-                        <p class="number-card">40</p>
-                    </div>
-                    <div class="mt-2">
-                        Asesor Balai
-                    </div>
-                </a>
-
-                <a class="card-tab d-block c-text" id="uAsesorPPK">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-user'></i>
-                        <p class="number-card">40</p>
-                    </div>
-                    <div class="mt-2">
-                        Asesor PPK
-                    </div>
-                </a>
-
-                <a class="card-tab d-block c-text" id="uPenyediaJasa">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-user'></i>
-                        <p class="number-card">23</p>
-                    </div>
-                    <div class="mt-2">
-                        Penyedia Jasa
-                    </div>
-                </a>
             </div>
 
 

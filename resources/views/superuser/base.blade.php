@@ -24,7 +24,7 @@
     <link href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
         rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/select2-bootstrap.min.css" type="text/css">
     <!-- custom css -->
 
     <script src="{{ asset('js/swal.js') }}"></script>
@@ -58,14 +58,13 @@
                     <a href="/superuser/ppk" id="ppk" class="nav_link"> <i
                             class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">PPK</span> </a>
 
-                    <a href="/superuser/paket-konstruksi" id="paketKonstruksi" class="nav_link"> <i
-                            class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Bookmark</span> </a>
+                    <a href="/superuser/paket-konstruksi" id="paketKonstruksi" class="nav_link"> <i class='bx bx-building-house' ></i>
+                         <span class="nav_name">Bookmark</span> </a>
 
-                    <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span
-                            class="nav_name">Files</span> </a>
+                    <a href="#" class="nav_link"> <i class='bx bx-doughnut-chart' ></i> <span
+                            class="nav_name">Indikator</span> </a>
 
-                    <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span
-                            class="nav_name">Stats</span> </a>
+                   
                 </div>
             </div>
 
@@ -91,6 +90,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap5.min.js"></script>
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('js/dialog.js') }}"></script>
     <script src="{{ asset('js/moment.js') }}"></script>
     {{-- <script src="{{ asset('js/myStyle.js') }}"></script> --}}

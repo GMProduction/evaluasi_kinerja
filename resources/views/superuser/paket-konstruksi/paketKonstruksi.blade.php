@@ -11,7 +11,7 @@
 @section('content')
 
     <section class="" style="margin-top: 100px">
-        
+
         <!-- Tab panes -->
         <div class="mt-4" style="min-height: 23vh">
             <!-- Tab panes -->
@@ -30,7 +30,7 @@
                             <th>Nama PPK</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Berakhir</th>
-                  
+
                         </tr>
                     </thead>
                     <tbody>
@@ -60,32 +60,35 @@
                             @csrf
                             <input id="id" name="id" hidden>
                             <input name="roles" value="admin" hidden>
-                          
+
 
                             <div class="mb-3">
                                 <label for="namaKonstruksi" class="form-label">Nama Konstruksi</label>
                                 <input type="text" class="form-control" id="namaKonstruksi" name="namaKonstruksi">
                             </div>
 
-                            {{-- <div class="mb-3">
-                                <label for="namaKonstruksi" class="form-label">Nama Konstruksi</label>
-                                <input type="text" class="form-control" id="namaKonstruksi" name="namaKonstruksi">
-                            </div> --}}
+                            <div class="mb-3">
+                                <label for="namaPPK" class="form-label">Nama PPK</label>
+                                <select class=" me-2 w-100 form-control"   aria-label="select" id="namaPPK" name="namaPPK"
+                                    required>
+
+                                </select>
+                            </div>
 
                             <div class="input-group input-daterange">
                                 <div class="me-2">
                                     <label for="start" class="form-label">Tanggal Mulai</label>
                                     <input type="text" class="form-control " name="start" required>
                                 </div>
-                             
-                                
+
+
                                 <div class="ms-2">
                                     <label for="end" class="form-label">Tanggal Berakhir</label>
-                                    <input type="text" class="form-control " name="end"  required>
+                                    <input type="text" class="form-control " name="end" required>
                                 </div>
-                               
+
                             </div>
-                           
+
                             <button type="submit" class="bt-primary mt-3">Simpan</button>
                         </form>
                     </div>
@@ -102,16 +105,22 @@
 
             $("#paketKonstruksi").addClass("active");
             // $("#uSuperUser").addClass("active");
-            $('#tambahdata').modal({backdrop: 'static', keyboard: false})  
+            $('#tambahdata').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
             $('#table').DataTable();
+
+            var select = $('#kota');
+            select.select2();
         });
 
-        $('.input-daterange input').each(function () {
+        $('.input-daterange input').each(function() {
             $(this).datepicker({
                 format: "dd-mm-yyyy"
             });
         });
-        
+
         $(document).on('click', '#addData, #editData', function() {
             // $('#tambahdata #id').val($(this).data('id'));
             // $('#tambahdata #nama').val($(this).data('nama'));
@@ -126,7 +135,5 @@
             // }
             $('#tambahdata').modal('show');
         })
-
-
     </script>
 @endsection
