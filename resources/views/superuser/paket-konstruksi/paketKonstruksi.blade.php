@@ -24,23 +24,24 @@
             <div class="table-container">
                 <table id="table" class="table table-striped" style="width:100%">
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama Konstruksi</th>
-                            <th>Nama PPK</th>
-                            <th>Tanggal Mulai</th>
-                            <th>Tanggal Berakhir</th>
+                    <tr>
+                        <th>#</th>
+                        <th>Nama Paket</th>
+                        <th>PPK</th>
+                        <th>Penyedia Jasa</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Tanggal Berakhir</th>
 
-                        </tr>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Gedung ABC</td>
-                            <td>Anto</td>
-                            <td>12 Agustus 2021</td>
-                            <td>31 Agustus 2021</td>
-                        </tr>
+                    {{--                        <tr>--}}
+                    {{--                            <td>1</td>--}}
+                    {{--                            <td>Gedung ABC</td>--}}
+                    {{--                            <td>Anto</td>--}}
+                    {{--                            <td>12 Agustus 2021</td>--}}
+                    {{--                            <td>31 Agustus 2021</td>--}}
+                    {{--                        </tr>--}}
                     </tbody>
 
                 </table>
@@ -58,20 +59,26 @@
                     <div class="modal-body">
                         <form id="form" onsubmit="return Save()">
                             @csrf
-                            <input id="id" name="id" hidden>
-                            <input name="roles" value="admin" hidden>
-
-
                             <div class="mb-3">
-                                <label for="namaKonstruksi" class="form-label">Nama Konstruksi</label>
-                                <input type="text" class="form-control" id="namaKonstruksi" name="namaKonstruksi">
+                                <label for="name" class="form-label">Nama Paket</label>
+                                <input type="text" class="form-control" id="name" name="name">
                             </div>
 
                             <div class="mb-3">
-                                <label for="namaPPK" class="form-label">Nama PPK</label>
-                                <select class=" me-2 w-100 form-control"   aria-label="select" id="namaPPK" name="namaPPK"
-                                    required>
+                                <label for="ppk" class="form-label">Nama PPK</label>
+                                <select class=" me-2 w-100 form-control" aria-label="select" id="ppk" name="ppk">
+                                    @foreach($ppk as $v)
+                                        <option value="{{$v->id}}">{{$v->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
+                            <div class="mb-3">
+                                <label for="vendor" class="form-label">Penyedia Jasa</label>
+                                <select class=" me-2 w-100 form-control" aria-label="select" id="vendor" name="vendor">
+                                    @foreach($vendor as $v)
+                                        <option value="{{$v->user->id}}">{{$v->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -83,8 +90,8 @@
 
 
                                 <div class="ms-2">
-                                    <label for="end" class="form-label">Tanggal Berakhir</label>
-                                    <input type="text" class="form-control " name="end" required>
+                                    <label for="finish" class="form-label">Tanggal Berakhir</label>
+                                    <input type="text" class="form-control " name="finish" required>
                                 </div>
 
                             </div>
@@ -101,7 +108,7 @@
 
 @section('script')
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
 
             $("#paketKonstruksi").addClass("active");
             // $("#uSuperUser").addClass("active");
@@ -115,13 +122,13 @@
             select.select2();
         });
 
-        $('.input-daterange input').each(function() {
+        $('.input-daterange input').each(function () {
             $(this).datepicker({
                 format: "dd-mm-yyyy"
             });
         });
 
-        $(document).on('click', '#addData, #editData', function() {
+        $(document).on('click', '#addData, #editData', function () {
             // $('#tambahdata #id').val($(this).data('id'));
             // $('#tambahdata #nama').val($(this).data('nama'));
             // $('#tambahdata #alamat').val($(this).data('alamat'));

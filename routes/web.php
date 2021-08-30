@@ -37,9 +37,7 @@ Route::prefix('/superuser')->group(function (){
         return view('superuser/ppk/ppk');
     });
 
-    Route::get('/paket-konstruksi', function () {
-        return view('superuser/paket-konstruksi/paketKonstruksi');
-    });
+    Route::get('/paket-konstruksi', [\App\Http\Controllers\PackageController::class, 'index']);
 
     Route::get('/indikator', function () {
         return view('superuser/indikator/indikator');
