@@ -10,50 +10,50 @@
     <section class="" style="margin-top: 100px">
         <div role="tablist">
             <div class="items-tab" id="menu-tab">
-                <a class="card-tab active d-block c-text" id="uSuperUser">
+                <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="superuser" data-text-roles="Superuser">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user-circle icon-size-lg '></i>
-                        <p class="number-card">40</p>
+                        <p class="number-card">0</p>
                     </div>
                     <div class="mt-2">
                         Super User
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text" id="uAdminBalai">
+                <a class="card-tab d-block c-text card-user" id="uadmin" data-roles="admin" data-text-roles="Admin">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user-voice'></i>
-                        <p class="number-card">40</p>
+                        <p class="number-card">0</p>
                     </div>
                     <div class="mt-2">
                         Admin Balai
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text" id="uAsesorBalai">
+                <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor" data-text-roles="Asesor Balai">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user'></i>
-                        <p class="number-card">40</p>
+                        <p class="number-card">0</p>
                     </div>
                     <div class="mt-2">
                         Asesor Balai
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text" id="uAsesorPPK">
+                <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk" data-text-roles="Asesor PPK">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user'></i>
-                        <p class="number-card">40</p>
+                        <p class="number-card">0</p>
                     </div>
                     <div class="mt-2">
                         Asesor PPK
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text" id="uPenyediaJasa">
+                <a class="card-tab d-block c-text card-user" id="uvendor" data-roles="vendor" data-text-roles="Penyedia Jasa">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user'></i>
-                        <p class="number-card">23</p>
+                        <p class="number-card">0</p>
                     </div>
                     <div class="mt-2">
                         Penyedia Jasa
@@ -137,9 +137,10 @@
         $(document).ready(function() {
 
             $("#user").addClass("active");
-            // $("#uSuperUser").addClass("active");
             roles = 'superuser';
             textRoles = 'Superuser'
+            getCountUser()
+
             datatable(roles);
         });
 
@@ -151,6 +152,7 @@
         function afterSave(){
             $('#tambahdata').modal('hide');
             table.ajax.reload();
+            getCountUser()
         }
 
 
@@ -186,6 +188,15 @@
             });
         }
 
+        function getCountUser() {
+            $.get(window.location.pathname+'/count', function (data) {
+                $.each(data, function (key, val) {
+                    console.log(val['roles']['0'])
+                    $('#u'+val['roles']['0']+' p').html(val['count'])
+                })
+            })
+        }
+
         function datatable(role){
 
             var url = window.location.pathname+'/datatable/'+role;
@@ -203,11 +214,11 @@
                     return nRow;
                 },
                 columnDefs: [
-                    {"title": "#", "searchable": false, "orderable": false, "targets": 0,},
-                    {"title": "Nama", 'targets': 1, 'searchable': true, 'orderable': false},
-                    {"title": "Username", 'targets': 2, 'searchable': true, 'orderable': true},
-                    {"title": "Email", 'targets': 3, 'searchable': true, 'orderable': true},
-                    {"title": "Action", 'targets': 4, 'searchable': false, 'orderable': false},
+                    {"title": "#", "searchable": false, "orderable": false, "targets": 0,"className": "text-center"},
+                    {"title": "Nama", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Username", 'targets': 2, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Email", 'targets': 3, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Action", 'targets': 4, 'searchable': false, 'orderable': false, "className": "text-center"},
                 ],
 
                 columns: [
@@ -217,7 +228,7 @@
                         "data": null,
                         "defaultContent": ''
                     },
-                    {data: role+'.name', name:  'name'},
+                    {data: role+'.name', name:  role+'.name'},
                     {data: 'username', name: 'username'},
                     {data: 'email', name: 'email'},
                     {
@@ -225,9 +236,6 @@
                         "data": 'id',
                         "width": '100',
                         "render": function (data, type, row, meta) {
-                            console.log(role)
-                            console.log(meta)
-                            console.log(data)
                             return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-position="" data-name="" data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
                                 '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="'+row.username+'" data-type="Edit" data-email="'+row.email+'" data-name="'+row[role].name+'" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
                         }
@@ -237,44 +245,13 @@
         }
 
 
-        $(document).on('click', '#uSuperUser', function() {
-            roles = 'superuser';
-            textRoles = 'Superuser'
+        $(document).on('click', '.card-user', function() {
+            roles = $(this).data('roles');
+            textRoles = $(this).data('text-roles')
             datatable(roles);
 
-            $('.title-table').text('Data Super User');
+            $('.title-table').text('Data '+textRoles);
         })
 
-        $(document).on('click', '#uAdminBalai', function() {
-            roles = 'admin';
-            textRoles = 'Admin Balai'
-            datatable(roles);
-
-            $('.title-table').text('Data Admin Balai');
-        })
-
-        $(document).on('click', '#uAsesorBalai', function() {
-            roles = 'accessor';
-            textRoles = 'Asesor Balai'
-            datatable(roles);
-
-            $('.title-table').text('Data Asesor Balai');
-        })
-
-        $(document).on('click', '#uAsesorPPK', function() {
-            roles = 'accessorPpk';
-            textRoles = 'Asesor PPK'
-            datatable(roles);
-
-            $('.title-table').text('Data Asesor PPK');
-        })
-
-        $(document).on('click', '#uPenyediaJasa', function() {
-            roles = 'vendor';
-            textRoles = 'Penyedia Jasa'
-            datatable(roles);
-
-            $('.title-table').text('Data Penyedia Jasa');
-        })
     </script>
 @endsection

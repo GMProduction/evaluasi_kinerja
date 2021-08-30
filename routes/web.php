@@ -22,7 +22,7 @@ Route::get('/accessor-ppk', [\App\Http\Controllers\AccessorPpkController::class,
 Route::post('/accessor-ppk/create', [\App\Http\Controllers\AccessorPpkController::class, 'store']);
 
 
-Route::prefix('/superuser')->group(function (){
+Route::prefix('/')->group(function (){
     Route::get('/', function () {
         return view('superuser/dashboard');
     });
@@ -30,12 +30,14 @@ Route::prefix('/superuser')->group(function (){
     Route::prefix('/users')->group(function (){
         Route::match(['post','get'],'/', [\App\Http\Controllers\Superadmin\UserController::class,'index']);
         Route::get('/{id}/delete', [\App\Http\Controllers\Superadmin\UserController::class,'delete']);
+        Route::get('/count', [\App\Http\Controllers\Superadmin\UserController::class,'getCountUser']);
         Route::get('/datatable/{role}',[\App\Http\Controllers\Superadmin\UserController::class,'datatable'])->name('user_datatable');
     });
 
-    Route::get('/ppk', function () {
-        return view('superuser/ppk/ppk');
-    });
+   Route::prefix('/ppk')->group(function (){
+       Route::match(['post','get'],'/', [\App\Http\Controllers\Superadmin\PPKController::class,'index']);
+       Route::get('/datatable', [\App\Http\Controllers\Superadmin\PPKController::class, 'datatable']);
+   });
 
     Route::get('/paket-konstruksi', function () {
         return view('superuser/paket-konstruksi/paketKonstruksi');
