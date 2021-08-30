@@ -39,12 +39,22 @@ Route::prefix('/')->group(function (){
        Route::get('/datatable', [\App\Http\Controllers\Superadmin\PPKController::class, 'datatable']);
    });
 
-    Route::get('/paket-konstruksi', function () {
-        return view('superuser/paket-konstruksi/paketKonstruksi');
-    });
+   Route::prefix('/paket-konstruksi')->group(function (){
+       Route::match(['post','get'],'/', [\App\Http\Controllers\PackageController::class, 'index']);
+       Route::get('/detail/{id}', [\App\Http\Controllers\PackageController::class, 'detail']);
+       Route::get('/datatable',[\App\Http\Controllers\PackageController::class,'datatable'])->name('package_datatable');
+       Route::get('/addendum-datatable/{id}',[\App\Http\Controllers\PackageController::class,'datatableAddendum']);
+       Route::post('/addendum/add',[\App\Http\Controllers\PackageController::class,'addDetail']);
+   });
+
 
     Route::match(['post','get'],'/indikator', [\App\Http\Controllers\Superadmin\IndicatorController::class,'index']);
     Route::post('/indikator/{idIndikator}', [\App\Http\Controllers\Superadmin\IndicatorController::class,'storeSubIndikator']);
     Route::get('/indikator/{idIndikator}/sub', [\App\Http\Controllers\Superadmin\IndicatorController::class,'getSubIndicator']);
     Route::get('/indikator/get-all', [\App\Http\Controllers\Superadmin\IndicatorController::class,'getIndicator']);
+
+    Route::prefix('/penilaian')->group(function (){
+        Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);
+    });
+
 });

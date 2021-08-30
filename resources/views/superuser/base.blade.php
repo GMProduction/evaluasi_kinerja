@@ -25,7 +25,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
         rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/select2-bootstrap.min.css" type="text/css">
-    <!-- custom css -->
 
     <script src="{{ asset('js/swal.js') }}"></script>
     @yield('moreCss')
@@ -59,10 +58,11 @@
                             class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">PPK</span> </a>
 
                     <a href="/paket-konstruksi" id="paketKonstruksi" class="nav_link"> <i class='bx bx-building-house' ></i>
-                         <span class="nav_name">Bookmark</span> </a>
-
+                         <span class="nav_name">Paket Konstruksi</span> </a>
                     <a href="/indikator" id="indikator" class="nav_link"> <i class='bx bx-doughnut-chart' ></i> <span
                             class="nav_name">Indikator</span> </a>
+                    <a href="/penilaian" id="penilaian" class="nav_link"> <i class='bx bx-doughnut-chart' ></i> <span
+                            class="nav_name">Penilaian</span> </a>
 
 
                 </div>

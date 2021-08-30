@@ -23,25 +23,6 @@
             </div>
             <div class="table-container">
                 <table id="table" class="table table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama Konstruksi</th>
-                            <th>Nama PPK</th>
-                            <th>Tanggal Mulai</th>
-                            <th>Tanggal Berakhir</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Gedung ABC</td>
-                            <td>Anto</td>
-                            <td>12 Agustus 2021</td>
-                            <td>31 Agustus 2021</td>
-                        </tr>
-                    </tbody>
 
                 </table>
             </div>
@@ -58,20 +39,36 @@
                     <div class="modal-body">
                         <form id="form" onsubmit="return Save()">
                             @csrf
-                            <input id="id" name="id" hidden>
-                            <input name="roles" value="admin" hidden>
-
-
                             <div class="mb-3">
-                                <label for="namaKonstruksi" class="form-label">Nama Konstruksi</label>
-                                <input type="text" class="form-control" id="namaKonstruksi" name="namaKonstruksi">
+                                <label for="name" class="form-label">Nama Paket</label>
+                                <input type="text" class="form-control" id="name" name="name">
                             </div>
 
                             <div class="mb-3">
-                                <label for="namaPPK" class="form-label">Nama PPK</label>
-                                <select class=" me-2 w-100 form-control"   aria-label="select" id="namaPPK" name="namaPPK"
-                                    required>
+                                <label for="reference" class="form-label">No. Kontrak</label>
+                                <input type="text" class="form-control" id="reference" name="reference">
+                            </div>
 
+                            <div class="mb-3 input-daterange">
+                                <label for="date_contract" class="form-label">Tanggal Kontrak</label>
+                                <input type="text" class="form-control " name="date_contract" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ppk" class="form-label">PPK</label>
+                                <select class=" me-2 w-100 form-control" aria-label="select" id="ppk" name="ppk">
+                                    @foreach($ppk as $v)
+                                        <option value="{{$v->id}}">{{$v->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="vendor" class="form-label">Penyedia Jasa</label>
+                                <select class=" me-2 w-100 form-control" aria-label="select" id="vendor" name="vendor">
+                                    @foreach($vendor as $v)
+                                        <option value="{{$v->user->id}}">{{$v->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -83,8 +80,8 @@
 
 
                                 <div class="ms-2">
-                                    <label for="end" class="form-label">Tanggal Berakhir</label>
-                                    <input type="text" class="form-control " name="end" required>
+                                    <label for="finish" class="form-label">Tanggal Berakhir</label>
+                                    <input type="text" class="form-control " name="finish" required>
                                 </div>
 
                             </div>
@@ -101,38 +98,117 @@
 
 @section('script')
     <script>
-        $(document).ready(function() {
+        var table;
 
+        function Save() {
+            saveData('Tambah Data Paket', 'form', null, afterSave)
+            return false;
+        }
+
+        function afterSave() {
+            $('#tambahdata').modal('hide');
+            table.ajax.reload();
+        }
+
+        function datatable() {
+
+            var url = window.location.pathname + '/datatable';
+            table = $('#table').DataTable({
+                destroy: true,
+                processing: true,
+                serverSide: true,
+                ajax: url,
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    // debugger;
+                    var numStart = this.fnPagingInfo().iStart;
+                    var index = numStart + iDisplayIndexFull + 1;
+                    // var index = iDisplayIndexFull + 1;
+                    $("td:first", nRow).html(index);
+                    return nRow;
+                },
+                columnDefs: [
+                    {"title": "#", "searchable": false, "orderable": false, "targets": 0, "className": "text-center"},
+                    {"title": "Paket", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {
+                        "title": "No. Kontrak",
+                        'targets': 2,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
+                    {
+                        "title": "Tanggal Kontrak",
+                        'targets': 3,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
+                    {"title": "PPK", 'targets': 4, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {
+                        "title": "Penyedia Jasa",
+                        'targets': 5,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
+                    {"title": "Mulai", 'targets': 6, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {
+                        "title": "Selesai",
+                        'targets': 7,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
+                    {
+                        "title": "Action",
+                        'targets': 8,
+                        'searchable': false,
+                        'orderable': false,
+                        "className": "text-center"
+                    },
+                ],
+
+                columns: [
+                    {
+                        "className": '',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": ''
+                    },
+                    {data: 'name', name: 'name'},
+                    {data: 'no_reference', name: 'no_reference'},
+                    {data: 'date', name: 'date'},
+                    {data: 'ppk.name', name: 'ppk.name'},
+                    {data: 'vendor.vendor.name', name: 'vendor.vendor.name'},
+                    {data: 'start_at', name: 'start_at'},
+                    {data: 'finish_at', name: 'finish_at'},
+                    {
+                        "data": 'id',
+                        "width": '100',
+                        "render": function (data, type, row, meta) {
+                            return '<a href="/paket-konstruksi/detail/' + data + '" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
+                        }
+                    },
+                ]
+            })
+        }
+
+        $(document).ready(function () {
             $("#paketKonstruksi").addClass("active");
-            // $("#uSuperUser").addClass("active");
             $('#tambahdata').modal({
                 backdrop: 'static',
                 keyboard: false
-            })
-            $('#table').DataTable();
-
-            var select = $('#kota');
-            select.select2();
+            });
+            datatable();
         });
 
-        $('.input-daterange input').each(function() {
+        $('.input-daterange input').each(function () {
             $(this).datepicker({
                 format: "dd-mm-yyyy"
             });
         });
 
-        $(document).on('click', '#addData, #editData', function() {
-            // $('#tambahdata #id').val($(this).data('id'));
-            // $('#tambahdata #nama').val($(this).data('nama'));
-            // $('#tambahdata #alamat').val($(this).data('alamat'));
-            // $('#tambahdata #no_hp').val($(this).data('hp'));
-            // $('#tambahdata #username').val($(this).data('username'));
-            // $('#tambahdata #password_confirmation').val('');
-            // $('#tambahdata #password').val('');
-            // if($(this).data('id')){
-            //     $('#tambahdata #password_confirmation').val('******');
-            //     $('#tambahdata #password').val('******');
-            // }
+        $(document).on('click', '#addData, #editData', function () {
             $('#tambahdata').modal('show');
         })
     </script>
