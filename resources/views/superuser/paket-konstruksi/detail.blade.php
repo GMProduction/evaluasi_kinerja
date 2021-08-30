@@ -182,6 +182,10 @@
             $('#addData').on('click', function () {
                 $('#tambahdata').modal('show');
             });
+            $('#tambahdata').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
             $('.input-daterange input').each(function () {
                 $(this).datepicker({
                     format: "dd-mm-yyyy"

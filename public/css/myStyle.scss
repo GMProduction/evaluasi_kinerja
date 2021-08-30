@@ -26,6 +26,22 @@ $shadowsuccessecolor: #0ebb4855;
     }
 }
 
+.t-primary{
+    color: $activecolor;
+}
+
+.t-bagus{
+    color: green;
+}
+
+.t-cukup{
+    color: orange;
+}
+
+.t-kurang{
+    color: red;
+}
+
 .bt-success-sm {
     all: unset;
     background-color: $successcolor;
@@ -56,6 +72,23 @@ $shadowsuccessecolor: #0ebb4855;
     &:hover {
         color: white;
         box-shadow: $shadowsuccessecolor 0px 7px 29px 0px;
+    }
+}
+
+.bt-primary-xsm {
+    all: unset;
+    background-color: $activecolor;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.6rem;
+    transition: all 300ms;
+    box-shadow: none;
+    cursor: pointer;
+
+    &:hover {
+        color: white;
+        box-shadow: $shadowactivecolor 0px 7px 29px 0px;
     }
 }
 
@@ -260,5 +293,5 @@ tr.shown td.details-control {
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
     color: #fff;
-    text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
+    // text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
 }

@@ -16,10 +16,20 @@
 
             <div class="header-table">
                 <p class="title-table">Data Hasil Evaluasi Paket</p>
-{{--                <a class="bt-primary-sm" id="addData"><i class='bx bx-plus'></i> Tambah Data</a>--}}
             </div>
             <div class="table-container">
                 <table id="table" class="table table-striped" style="width:100%">
+                    <tr>
+                        <th>#</th>
+                        <th>Nama Paket Konstruksi</th>
+                        <th>Action</th>
+                    </tr>
+
+                    <tr>
+                        <td>1</td>
+                        <td>Paket 1</td>
+                        <td><a class="bt-primary-xsm" href="/detail-penilaian">Detail</a></td>
+                    </tr>
                 </table>
             </div>
         </div>
