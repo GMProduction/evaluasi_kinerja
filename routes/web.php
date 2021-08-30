@@ -39,9 +39,18 @@ Route::prefix('/')->group(function (){
        Route::get('/datatable', [\App\Http\Controllers\Superadmin\PPKController::class, 'datatable']);
    });
 
-    Route::get('/paket-konstruksi', [\App\Http\Controllers\PackageController::class, 'index']);
+   Route::prefix('/paket-konstruksi')->group(function (){
+       Route::match(['post','get'],'/', [\App\Http\Controllers\PackageController::class, 'index']);
+       Route::get('/datatable',[\App\Http\Controllers\PackageController::class,'datatable'])->name('package_datatable');
+   });
+
 
     Route::get('/indikator', function () {
         return view('superuser/indikator/indikator');
     });
+
+    Route::prefix('/penilaian')->group(function (){
+        Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);
+    });
+
 });
