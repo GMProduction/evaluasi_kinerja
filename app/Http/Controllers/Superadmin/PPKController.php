@@ -31,4 +31,9 @@ class PPKController extends Controller
 
         return response()->json(['msg' => 'success']);
     }
+
+    public function getPPK(){
+        $ppk = PPK::all();
+        return $ppk;
+    }
 }

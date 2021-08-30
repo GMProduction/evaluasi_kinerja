@@ -36,6 +36,7 @@ Route::prefix('/')->group(function (){
 
    Route::prefix('/ppk')->group(function (){
        Route::match(['post','get'],'/', [\App\Http\Controllers\Superadmin\PPKController::class,'index']);
+       Route::get('/get-all', [\App\Http\Controllers\Superadmin\PPKController::class,'getPPK']);
        Route::get('/datatable', [\App\Http\Controllers\Superadmin\PPKController::class, 'datatable']);
    });
 
@@ -48,10 +49,12 @@ Route::prefix('/')->group(function (){
    });
 
 
-    Route::match(['post','get'],'/indikator', [\App\Http\Controllers\Superadmin\IndicatorController::class,'index']);
-    Route::post('/indikator/{idIndikator}', [\App\Http\Controllers\Superadmin\IndicatorController::class,'storeSubIndikator']);
-    Route::get('/indikator/{idIndikator}/sub', [\App\Http\Controllers\Superadmin\IndicatorController::class,'getSubIndicator']);
-    Route::get('/indikator/get-all', [\App\Http\Controllers\Superadmin\IndicatorController::class,'getIndicator']);
+    Route::prefix('/indikator')->group(function (){
+        Route::match(['post','get'],'/', [\App\Http\Controllers\Superadmin\IndicatorController::class,'index']);
+        Route::post('/{idIndikator}', [\App\Http\Controllers\Superadmin\IndicatorController::class,'storeSubIndikator']);
+        Route::get('/{idIndikator}/sub', [\App\Http\Controllers\Superadmin\IndicatorController::class,'getSubIndicator']);
+        Route::get('/get-all', [\App\Http\Controllers\Superadmin\IndicatorController::class,'getIndicator']);
+    });
 
     Route::prefix('/penilaian')->group(function (){
         Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);

@@ -62,8 +62,6 @@
             </div>
 
 
-
-
             <!-- Modal Tambah-->
             <div class="modal fade" id="tambahdata" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -75,11 +73,18 @@
                         <div class="modal-body">
                             <form id="form" onsubmit="return Save()">
                                 @csrf
-                                <input id="id" name="id" hidden >
+                                <input id="id" name="id" hidden>
                                 <input name="roles" id="roles" hidden>
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
                                     <input type="text" class="form-control" id="name" name="name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">PPK</label>
+                                    <select class="select2 me-2 w-100" aria-label="Default select example" id="selectPPK" name="selectPPK" required>
+                                        <option>asdadas</option>
+                                        <option>asdadas</option>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
@@ -99,7 +104,7 @@
                                 <div class="mb-3">
                                     <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
                                     <input type="password" class="form-control" id="password_confirmation"
-                                        name="password_confirmation">
+                                           name="password_confirmation">
                                 </div>
                                 <div class="mb-4"></div>
                                 <button type="submit" class="bt-primary">Simpan</button>
@@ -118,7 +123,7 @@
 
             <div class="header-table">
                 <p class="title-table">Data Super User</p>
-                <a class="bt-primary-sm" id="addData" data-type="Tambah"><i class='bx bx-plus' ></i> Tambah Data</a>
+                <a class="bt-primary-sm" id="addData" data-type="Tambah"><i class='bx bx-plus'></i> Tambah Data</a>
             </div>
 
 
@@ -131,75 +136,74 @@
 @endsection
 
 @section('script')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         var roles, textRoles;
         var table;
-        $(document).ready(function() {
-
+        $(document).ready(function () {
             $("#user").addClass("active");
             roles = 'superuser';
             textRoles = 'Superuser'
             getCountUser()
-
+            // $('#selectPPK').select2();
+            // getSelect('selectPPK','/ppk/get-all','name')
             datatable(roles);
         });
 
-        function Save(){
-            saveData('Tambah Data '+textRoles,'form',null,afterSave)
+        function Save() {
+            saveData('Tambah Data ' + textRoles, 'form', null, afterSave)
             return false;
         }
 
-        function afterSave(){
+        function afterSave() {
             $('#tambahdata').modal('hide');
             table.ajax.reload();
             getCountUser()
         }
 
-
-        $(document).on('click', '#addData, #editData', function() {
+        $(document).on('click', '#addData, #editData', function () {
             $('#tambahdata #id').val($(this).data('id'));
             $('#tambahdata #roles').val(roles);
-            $('#tambahdata #title').html($(this).data('type')+' Data '+textRoles);
+            $('#tambahdata #title').html($(this).data('type') + ' Data ' + textRoles);
             $('#tambahdata #email').val($(this).data('email'));
             $('#tambahdata #name').val($(this).data('name'));
             $('#tambahdata #username').val($(this).data('username'));
             $('#tambahdata #password_confirmation').val('');
             $('#tambahdata #password').val('');
-           if ($(this).data('id')){
-               $('#tambahdata #password_confirmation').val('********');
-               $('#tambahdata #password').val('********');
-           }
+            if ($(this).data('id')) {
+                $('#tambahdata #password_confirmation').val('********');
+                $('#tambahdata #password').val('********');
+            }
 
             $('#tambahdata').modal('show');
         })
-
 
         //GANTI MENU
         var header = document.getElementById("menu-tab");
         var btns = header.getElementsByClassName("card-tab");
         for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function() {
+            btns[i].addEventListener("click", function () {
 
                 var current = $('.card-tab.active')
                 current[0].className = current[0].className.replace(" active", "");
                 this.className += " active ";
 
-
             });
         }
 
         function getCountUser() {
-            $.get(window.location.pathname+'/count', function (data) {
+            $.get(window.location.pathname + '/count', function (data) {
                 $.each(data, function (key, val) {
                     console.log(val['roles']['0'])
-                    $('#u'+val['roles']['0']+' p').html(val['count'])
+                    $('#u' + val['roles']['0'] + ' p').html(val['count'])
                 })
             })
         }
 
-        function datatable(role){
+        function datatable(role) {
 
-            var url = window.location.pathname+'/datatable/'+role;
+            var url = window.location.pathname + '/datatable/' + role;
             table = $('#table').DataTable({
                 destroy: true,
                 processing: true,
@@ -214,7 +218,7 @@
                     return nRow;
                 },
                 columnDefs: [
-                    {"title": "#", "searchable": false, "orderable": false, "targets": 0,"className": "text-center"},
+                    {"title": "#", "searchable": false, "orderable": false, "targets": 0, "className": "text-center"},
                     {"title": "Nama", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
                     {"title": "Username", 'targets': 2, 'searchable': true, 'orderable': true, "className": "text-center"},
                     {"title": "Email", 'targets': 3, 'searchable': true, 'orderable': true, "className": "text-center"},
@@ -228,7 +232,7 @@
                         "data": null,
                         "defaultContent": ''
                     },
-                    {data: role+'.name', name:  role+'.name'},
+                    {data: role + '.name', name: role + '.name'},
                     {data: 'username', name: 'username'},
                     {data: 'email', name: 'email'},
                     {
@@ -237,20 +241,19 @@
                         "width": '100',
                         "render": function (data, type, row, meta) {
                             return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-position="" data-name="" data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
-                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="'+row.username+'" data-type="Edit" data-email="'+row.email+'" data-name="'+row[role].name+'" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
+                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="' + row.username + '" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role].name + '" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
                         }
                     },
                 ]
             })
         }
 
-
-        $(document).on('click', '.card-user', function() {
+        $(document).on('click', '.card-user', function () {
             roles = $(this).data('roles');
             textRoles = $(this).data('text-roles')
             datatable(roles);
 
-            $('.title-table').text('Data '+textRoles);
+            $('.title-table').text('Data ' + textRoles);
         })
 
     </script>
