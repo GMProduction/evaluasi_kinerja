@@ -1,3 +1,15 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 .icon-size-lg {
   font-size: 2rem;
 }
@@ -112,7 +124,7 @@
 
 .card-indikator {
   padding: 16px;
-  border: 1px solid grey;
+  /*border: 1px solid grey;*/
   border-radius: 5px;
   position: relative;
   width: 100%;

@@ -21,30 +21,61 @@
             </div>
 
 
-            <div class="table-container">
-                {{-- <table id="table" class="table table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Salary</th>
-                        </tr>
-                    </thead>
-                    
+            <div class="">
+                <div class="row" id="rowIndikator">
+                    {{--                    <div class="col-sm-12 col-md-6 ">--}}
+                    {{--                        <div class="card-indikator table-container">--}}
+                    {{--                            <div class="header-indikator">--}}
+                    {{--                                <p class="mb-0 fw-bold">Main Indikator</p>--}}
+                    {{--                                <a class="bt-success-sm" data-id="main" id="addSubIndikaor">tambah Sub</a>--}}
+                    {{--                            </div>--}}
+                    {{--                            <div class="body-indikator">--}}
+                    {{--                                <table class="table" id="tablemain">--}}
+                    {{--                                    <thead>--}}
+                    {{--                                    <tr>--}}
+                    {{--                                        <th>Sub Indikator</th>--}}
+                    {{--                                        <th>Bad</th>--}}
+                    {{--                                        <th>Medium</th>--}}
+                    {{--                                        <th>Good</th>--}}
+                    {{--                                    </tr>--}}
+                    {{--                                    </thead>--}}
+                    {{--                                    <tbody>--}}
+                    {{--                                    <tr>--}}
+                    {{--                                        <td>Nama Sub Indikator</td>--}}
+                    {{--                                        <td>50</td>--}}
+                    {{--                                        <td>50</td>--}}
+                    {{--                                        <td>50</td>--}}
+                    {{--                                    </tr>--}}
+                    {{--                                    </tbody>--}}
+                    {{--                                </table>--}}
+                    {{--                            </div>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
 
-                </table> --}}
+                </div>
 
+            </div>
+        </div>
 
-                <div class="card-indikator">
-                    <div class="header-indikator">
-                        <p class="mb-0 fw-bold">Main Indikator</p>
-                        <a class="bt-success-sm">tambah Sub</a>
+        <div class="modal fade" id="tambahdata" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><span id="title"></span> Data Indikator</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="body-indikator">
-                        <p>Nama Sub Indicator</p>
+                    <div class="modal-body">
+                        <form id="form" onsubmit="return Save()">
+                            @csrf
+                            <input id="id" name="id" hidden>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nama Indikator</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <button type="submit" class="bt-primary">Simpan</button>
+                        </form>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -53,36 +84,56 @@
 
 @section('script')
     <script>
-        $(document).ready(function() {
+        var title;
+        $(document).ready(function () {
+
+            $(document).on('click', '#addSubIndikaor', function () {
+                $('.trInput').remove();
+                var id = $(this).data('id');
+                $('#table' + id + ' tr:last').after('<tr id="trInput" class="trInput">' +
+                    '                                   <td><input type="text" class="form-control" name="name" value=""></td>' +
+                    '                                   <td><input type="number" class="form-control" name="bad" value=""></td>' +
+                    '                                   <td><input type="number" class="form-control"  name="medium" value=""></td>' +
+                    '                                   <td><input type="number" class="form-control" name="good" value=""></td>' +
+                    '                                   <td class="text-center"><a class="btn btn-sm btn-success me-2"  style="border-radius: 50px; width: 50px" data-id-indikator="' + id + '" id="saveSubIndicator"><i class=\'bx bxs-save\'></i></a>' +
+                    '                                   <a class="btn btn-sm btn-danger"  style="border-radius: 50px; width: 50px" data-id-indikator="' + id + '" id="clearInputSubIndikator"><i class=\'bx bx-window-close\'></i></a></td>' +
+                    '                                </tr>');
+            })
+
+            $(document).on('click', '#clearInputSubIndikator', function () {
+                $('.trInput').remove();
+            })
+
+            $(document).on('click', '#saveSubIndicator', function () {
+                var title = 'Tambah';
+                if ($(this).data('id')) {
+                    title = 'Edit'
+                }
+                var idIndikator = $(this).data('id-indikator');
+                var data = {
+                    '_token': '{{csrf_token()}}',
+                    'id': $(this).data('id'),
+                    'bad': $('#trInput [name="bad"]').val(),
+                    'name': $('#trInput [name="name"]').val(),
+                    'medium': $('#trInput [name="medium"]').val(),
+                    'good': $('#trInput [name="good"]').val(),
+                }
+                saveDataObject(title + ' Data Sub Indikator', data, window.location.pathname + '/' + idIndikator, afterSaveSub)
+                return false;
+            })
+
+            function afterSaveSub(data) {
+                console.log(data)
+                $('.trInput').remove();
+
+                getSubIndikator(data['data'])
+            }
 
             $("#indikator").addClass("active");
-            // $("#uSuperUser").addClass("active");
+            getMainIndicator()
 
-            // var table = $('#table').DataTable({
-            //     "ajax": "/data/object.txt",
-            //     "columns": [{
-            //             "className": 'details-control',
-            //             "orderable": false,
-            //             "data": null,
-            //             "defaultContent": ''
-            //         },
-            //         {
-            //             "data": "name"
-            //         },
-            //         {
-            //             "data": "position"
-            //         },
-            //         {
-            //             "data": "office"
-            //         },
-            //         {
-            //             "data": "salary"
-            //         }
-            //     ],
-            //     "order": [
-            //         [1, 'asc']
-            //     ]
-            });
+
+        });
 
         //     // Add event listener for opening and closing details
         //     $('#table tbody').on('click', 'td.details-control', function() {
@@ -125,19 +176,94 @@
         //         '</table>';
         // }
 
-        $(document).on('click', '#addData, #editData', function() {
-            // $('#tambahdata #id').val($(this).data('id'));
-            // $('#tambahdata #nama').val($(this).data('nama'));
-            // $('#tambahdata #alamat').val($(this).data('alamat'));
-            // $('#tambahdata #no_hp').val($(this).data('hp'));
-            // $('#tambahdata #username').val($(this).data('username'));
-            // $('#tambahdata #password_confirmation').val('');
-            // $('#tambahdata #password').val('');
-            // if($(this).data('id')){
-            //     $('#tambahdata #password_confirmation').val('******');
-            //     $('#tambahdata #password').val('******');
-            // }
+        function getMainIndicator() {
+            $.get('/indikator/get-all', function (data) {
+                $('#rowIndikator').empty();
+                $.each(data, function (key, value) {
+                    var name = value['name'];
+
+                    $('#rowIndikator').append('<div class="col-sm-12  ">\n' +
+                        '                        <div class="card-indikator table-container">\n' +
+                        '                            <div class="header-indikator">\n' +
+                        '                                <div class="row"><p class="mb-0 fw-bold">' + name + ' <span><a class="btn btn-sm" title="Edit Master Indikator" data-name="'+name+'"  data-id="' + value['id'] + '" id="editData"><i class=\'bx bx-edit-alt\'></i></a></span></p>\n' +
+                        '                                      ' +
+                        '                                 </div>' +
+                        '                                <a class="bt-success-sm" data-id="' + value['id'] + '"  id="addSubIndikaor">Tambah Sub</a>\n' +
+                        '                            </div>\n' +
+                        '                            <div class="body-indikator">\n' +
+                        '                                <table class="table" id="table' + value['id'] + '">\n' +
+                        '                                    <thead>\n' +
+                        '                                    <tr>\n' +
+                        '                                        <th style="width: 60%">Sub Indikator</th>\n' +
+                        '                                        <th class="text-center" style="width: 100px">Bad</th>\n' +
+                        '                                        <th class="text-center"  style="width: 100px">Medium</th>\n' +
+                        '                                        <th class="text-center"  style="width: 100px">Good</th>\n' +
+                        '                                        <th class="text-center"  colspan="2">Aksi</th>\n' +
+                        '                                    </tr>\n' +
+                        '                                    </thead>\n' +
+                        '                                    <tbody id="tbody' + value['id'] + '">\n' +
+                        '                                    </tbody>\n' +
+                        '                                </table>\n' +
+                        '                            </div>\n' +
+                        '                        </div>\n' +
+                        '                    </div>');
+
+                    $.each(value['sub_indicator'], function (k, v) {
+                        $('#tbody' + value['id']).append(' <tr>\n' +
+                            '                                        <td>' + v['name'] + '</td>\n' +
+                            '                                        <td class="text-center" >' + v['bad'] + '</td>\n' +
+                            '                                        <td class="text-center" >' + v['medium'] + '</td>\n' +
+                            '                                        <td class="text-center" >' + v['good'] + '</td>\n' +
+                            '                                        <td class="text-center" style="width: 150px;"><a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px; width: 50px"  data-id="' + v['id'] + '" id="deleteSubIndikator"><i class="bx bx-trash-alt"></i></a>' +
+                            '                                             <a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px; width: 50px"  data-id="' + v['id'] + '" id="editSubIndikator"><i class="bx bx-edit"></i></a></td>\n' +
+                            '                                    </tr>')
+                    })
+
+                })
+            })
+        }
+
+        function getSubIndikator(id) {
+            $.get('/indikator/' + id + '/sub', function (data) {
+                $('#tbody' + id).empty();
+                $.each(data, function (k, v) {
+                    $('#tbody' + v['indicator_id']).append(' <tr>\n' +
+                        '                                        <td>' + v['name'] + '</td>\n' +
+                        '                                        <td>' + v['bad'] + '</td>\n' +
+                        '                                        <td>' + v['medium'] + '</td>\n' +
+                        '                                        <td>' + v['good'] + '</td>\n' +
+                        '                                        <td><a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px; width: 50px"  data-id="' + v['id'] + '" id="deleteSubIndikator"><i class="bx bx-trash-alt"></i></a>' +
+                        '                                             <a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px; width: 50px"  data-id="' + v['id'] + '" id="editSubIndikator"><i class="bx bx-edit"></i></a></td>\n' +
+                        '                                    </tr>')
+                })
+            })
+        }
+
+        $(document).on('click','#editSubIndikator', function () {
+            var $item = $(this).closest("tr")
+            console.log($item);
+            console.log($item[0].children);
+            console.log($item[0].cells[0]);
+        })
+
+        $(document).on('click', '#addData, #editData', function () {
+            $('#tambahdata #id').val($(this).data('id'));
+            $('#tambahdata #name').val($(this).data('name'));
+            title = 'Tambah';
+            if ($(this).data('id')) {
+                title = 'Edit'
+            }
+            $('#tambahdata #title').html(title);
             $('#tambahdata').modal('show');
         });
+
+        function Save() {
+            saveData(title + ' Data Main Indikator', 'form')
+            return false;
+        }
+
+        function afterSave() {
+
+        }
     </script>
 @endsection

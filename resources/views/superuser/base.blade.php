@@ -49,19 +49,19 @@
                     <span class="nav_logo-name">Evaluasi Kinerja</span> </a>
 
                 <div class="nav_list">
-                    <a href="/superuser" id="dashboard" class="nav_link "> <i class='bx bx-grid-alt nav_icon'></i>
+                    <a href="/" id="dashboard" class="nav_link "> <i class='bx bx-grid-alt nav_icon'></i>
                         <span class="nav_name">Dashboard</span> </a>
 
-                    <a href="/superuser/users" id="user" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span
+                    <a href="/users" id="user" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span
                             class="nav_name">Users</span> </a>
 
-                    <a href="/superuser/ppk" id="ppk" class="nav_link"> <i
+                    <a href="/ppk" id="ppk" class="nav_link"> <i
                             class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">PPK</span> </a>
 
-                    <a href="/superuser/paket-konstruksi" id="paketKonstruksi" class="nav_link"> <i class='bx bx-building-house' ></i>
+                    <a href="/paket-konstruksi" id="paketKonstruksi" class="nav_link"> <i class='bx bx-building-house' ></i>
                          <span class="nav_name">Bookmark</span> </a>
 
-                    <a href="/superuser/indikator" id="indikator" class="nav_link"> <i class='bx bx-doughnut-chart' ></i> <span
+                    <a href="/indikator" id="indikator" class="nav_link"> <i class='bx bx-doughnut-chart' ></i> <span
                             class="nav_name">Indikator</span> </a>
 
 

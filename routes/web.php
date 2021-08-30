@@ -43,7 +43,8 @@ Route::prefix('/')->group(function (){
         return view('superuser/paket-konstruksi/paketKonstruksi');
     });
 
-    Route::get('/indikator', function () {
-        return view('superuser/indikator/indikator');
-    });
+    Route::match(['post','get'],'/indikator', [\App\Http\Controllers\Superadmin\IndicatorController::class,'index']);
+    Route::post('/indikator/{idIndikator}', [\App\Http\Controllers\Superadmin\IndicatorController::class,'storeSubIndikator']);
+    Route::get('/indikator/{idIndikator}/sub', [\App\Http\Controllers\Superadmin\IndicatorController::class,'getSubIndicator']);
+    Route::get('/indikator/get-all', [\App\Http\Controllers\Superadmin\IndicatorController::class,'getIndicator']);
 });

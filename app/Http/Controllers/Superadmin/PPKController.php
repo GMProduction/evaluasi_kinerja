@@ -15,6 +15,9 @@ class PPKController extends Controller
     }
 
     public function index(){
+        if (\request()->isMethod('POST')){
+            return $this->store();
+        }
         return view('superuser.ppk.ppk');
     }
 

@@ -111,7 +111,7 @@ function saveDataObject(title, form_data, url, resposeSuccess) {
                                 timer: 1000
                             }).then((dat) => {
                                 if (resposeSuccess) {
-                                    resposeSuccess()
+                                    resposeSuccess(data)
                                 } else {
                                     window.location.reload()
                                 }

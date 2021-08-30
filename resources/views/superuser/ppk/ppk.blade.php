@@ -41,7 +41,7 @@
                             <input id="id" name="id" hidden>
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama PPK</label>
-                                <input type="text" class="form-control" id="name" name="name">
+                                <input type="text" class="form-control" id="name" name="name" required>
                             </div>
                             <button type="submit" class="bt-primary">Simpan</button>
                         </form>
@@ -76,7 +76,7 @@
             $('#tambahdata').modal('show');
         })
 
-        function save() {
+        function Save() {
             saveData(title+' Data PPK','form',null,afterSave)
             return false;
         }
