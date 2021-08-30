@@ -49,7 +49,7 @@ class User extends Authenticatable
         return $this->hasOne(Vendor::class,'user_id');
     }
 
-    public function accessorPpk()
+    public function accessorppk()
     {
         return $this->hasOne(AccessorPPK::class, 'user_id');
     }

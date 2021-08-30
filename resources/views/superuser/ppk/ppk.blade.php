@@ -11,7 +11,7 @@
 @section('content')
 
     <section class="" style="margin-top: 100px">
-        
+
         <!-- Tab panes -->
         <div class="mt-4" style="min-height: 23vh">
             <!-- Tab panes -->
@@ -23,20 +23,6 @@
             </div>
             <div class="table-container">
                 <table id="table" class="table table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                  
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Anto</td>
-                        </tr>
-                    </tbody>
-
                 </table>
             </div>
         </div>
@@ -46,22 +32,17 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data PPK</h5>
+                        <h5 class="modal-title" id="exampleModalLabel"><span id="title"></span> Data PPK</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form id="form" onsubmit="return Save()">
                             @csrf
                             <input id="id" name="id" hidden>
-                            <input name="roles" value="admin" hidden>
-                          
-
                             <div class="mb-3">
-                                <label for="namappk" class="form-label">Nama PPK</label>
-                                <input type="text" class="form-control" id="namappk" name="namappk">
+                                <label for="name" class="form-label">Nama PPK</label>
+                                <input type="text" class="form-control" id="name" name="name">
                             </div>
-
-                           
                             <button type="submit" class="bt-primary">Simpan</button>
                         </form>
                     </div>
@@ -74,31 +55,80 @@
 
 @section('script')
     <script>
+        var table, title;
         $(document).ready(function() {
 
             $("#ppk").addClass("active");
-            // $("#uSuperUser").addClass("active");
 
-            $('#table').DataTable();
+            datatable()
         });
 
 
         $(document).on('click', '#addData, #editData', function() {
-            // $('#tambahdata #id').val($(this).data('id'));
-            // $('#tambahdata #nama').val($(this).data('nama'));
-            // $('#tambahdata #alamat').val($(this).data('alamat'));
-            // $('#tambahdata #no_hp').val($(this).data('hp'));
-            // $('#tambahdata #username').val($(this).data('username'));
-            // $('#tambahdata #password_confirmation').val('');
-            // $('#tambahdata #password').val('');
-            // if($(this).data('id')){
-            //     $('#tambahdata #password_confirmation').val('******');
-            //     $('#tambahdata #password').val('******');
-            // }
+            $('#tambahdata #id').val($(this).data('id'));
+            title = 'Tambah';
+            if ($(this).data('id')){
+                title = 'Edit';
+            }
+            $('#tambahdata #title').html(title);
+            $('#tambahdata #name').val($(this).data('name'));
+
             $('#tambahdata').modal('show');
         })
 
+        function save() {
+            saveData(title+' Data PPK','form',null,afterSave)
+            return false;
+        }
 
-    
+        function afterSave() {
+            $('#tambahdata').modal('hide');
+            datatable()
+        }
+
+        function datatable(){
+
+            var url = window.location.pathname+'/datatable';
+            table = $('#table').DataTable({
+                destroy: true,
+                processing: true,
+                serverSide: true,
+                ajax: url,
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    // debugger;
+                    var numStart = this.fnPagingInfo().iStart;
+                    var index = numStart + iDisplayIndexFull + 1;
+                    // var index = iDisplayIndexFull + 1;
+                    $("td:first", nRow).html(index);
+                    return nRow;
+                },
+                columnDefs: [
+                    {"title": "#", "searchable": false, "orderable": false, "targets": 0,"className": "text-center"},
+                    {"title": "Nama", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Action", 'targets': 2, 'searchable': false, 'orderable': false, "className": "text-center"},
+                ],
+
+                columns: [
+                    {
+                        "className": '',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": ''
+                    },
+                    {data: 'name', name:  'name'},
+                    {
+                        "target": 2,
+                        "data": 'id',
+                        "width": '100',
+                        "render": function (data, type, row, meta) {
+                            return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px"  data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
+                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px"  data-name="'+row.name+'" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
+                        }
+                    },
+                ]
+            })
+        }
+
+
     </script>
 @endsection
