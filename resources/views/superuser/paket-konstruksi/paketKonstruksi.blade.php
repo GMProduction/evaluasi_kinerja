@@ -23,6 +23,7 @@
             </div>
             <div class="table-container">
                 <table id="table" class="table table-striped" style="width:100%">
+
                 </table>
             </div>
         </div>
@@ -98,19 +99,20 @@
 @section('script')
     <script>
         var table;
-        function Save(){
-            saveData('Tambah Data Paket','form',null,afterSave)
+
+        function Save() {
+            saveData('Tambah Data Paket', 'form', null, afterSave)
             return false;
         }
 
-        function afterSave(){
+        function afterSave() {
             $('#tambahdata').modal('hide');
             table.ajax.reload();
         }
 
-        function datatable(){
+        function datatable() {
 
-            var url = window.location.pathname+'/datatable';
+            var url = window.location.pathname + '/datatable';
             table = $('#table').DataTable({
                 destroy: true,
                 processing: true,
@@ -125,15 +127,45 @@
                     return nRow;
                 },
                 columnDefs: [
-                    {"title": "#", "searchable": false, "orderable": false, "targets": 0,"className": "text-center"},
+                    {"title": "#", "searchable": false, "orderable": false, "targets": 0, "className": "text-center"},
                     {"title": "Paket", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "No. Kontrak", 'targets': 2, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Tanggal Kontrak", 'targets': 3, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {
+                        "title": "No. Kontrak",
+                        'targets': 2,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
+                    {
+                        "title": "Tanggal Kontrak",
+                        'targets': 3,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
                     {"title": "PPK", 'targets': 4, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Penyedia Jasa", 'targets': 5, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {
+                        "title": "Penyedia Jasa",
+                        'targets': 5,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
                     {"title": "Mulai", 'targets': 6, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Selesai", 'targets': 7, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Action", 'targets': 8, 'searchable': false, 'orderable': false, "className": "text-center"},
+                    {
+                        "title": "Selesai",
+                        'targets': 7,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
+                    {
+                        "title": "Action",
+                        'targets': 8,
+                        'searchable': false,
+                        'orderable': false,
+                        "className": "text-center"
+                    },
                 ],
 
                 columns: [
@@ -143,19 +175,18 @@
                         "data": null,
                         "defaultContent": ''
                     },
-                    {data: 'name', name:  'name'},
-                    {data: 'no_reference', name:  'no_reference'},
-                    {data: 'date', name:  'date'},
+                    {data: 'name', name: 'name'},
+                    {data: 'no_reference', name: 'no_reference'},
+                    {data: 'date', name: 'date'},
                     {data: 'ppk.name', name: 'ppk.name'},
                     {data: 'vendor.vendor.name', name: 'vendor.vendor.name'},
                     {data: 'start_at', name: 'start_at'},
                     {data: 'finish_at', name: 'finish_at'},
                     {
-                        "target": 2,
                         "data": 'id',
                         "width": '100',
                         "render": function (data, type, row, meta) {
-                            return '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
+                            return '<a href="/paket-konstruksi/detail/' + data + '" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
                         }
                     },
                 ]

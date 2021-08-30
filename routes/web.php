@@ -41,7 +41,10 @@ Route::prefix('/')->group(function (){
 
    Route::prefix('/paket-konstruksi')->group(function (){
        Route::match(['post','get'],'/', [\App\Http\Controllers\PackageController::class, 'index']);
+       Route::get('/detail/{id}', [\App\Http\Controllers\PackageController::class, 'detail']);
        Route::get('/datatable',[\App\Http\Controllers\PackageController::class,'datatable'])->name('package_datatable');
+       Route::get('/addendum-datatable/{id}',[\App\Http\Controllers\PackageController::class,'datatableAddendum']);
+       Route::post('/addendum/add',[\App\Http\Controllers\PackageController::class,'addDetail']);
    });
 
 
