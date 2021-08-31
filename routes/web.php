@@ -32,7 +32,7 @@ Route::prefix('/')->middleware('auth')->group(function (){
         return view('superuser/dashboard');
     });
 
-    Route::prefix('/users')->group(function (){
+    Route::prefix('/users')->middleware('roles:superuser,admin')->group(function (){
         Route::match(['post','get'],'/', [\App\Http\Controllers\Superadmin\UserController::class,'index']);
         Route::get('/{id}/delete', [\App\Http\Controllers\Superadmin\UserController::class,'delete']);
         Route::get('/count', [\App\Http\Controllers\Superadmin\UserController::class,'getCountUser']);
@@ -54,7 +54,7 @@ Route::prefix('/')->middleware('auth')->group(function (){
    });
 
 
-    Route::prefix('/indikator')->group(function (){
+    Route::prefix('/indikator')->middleware('roles:superuser,admin')->group(function (){
         Route::match(['post','get'],'/', [\App\Http\Controllers\Superadmin\IndicatorController::class,'index']);
         Route::post('/{idIndikator}', [\App\Http\Controllers\Superadmin\IndicatorController::class,'storeSubIndikator']);
         Route::get('/{idIndikator}/sub', [\App\Http\Controllers\Superadmin\IndicatorController::class,'getSubIndicator']);

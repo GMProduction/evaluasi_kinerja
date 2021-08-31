@@ -33,7 +33,7 @@
                             <div class="mb-3 input-daterange">
                                 <label for="date_contract" class="form-label">Tanggal Kontrak</label>
                                 <input type="text" class="form-control " name="date_contract" required
-                                       value="{{$data->date}}">
+                                       value="{{date('d-m-Y', strtotime($data->date))}}">
                             </div>
                             <div class="mb-3">
                                 <label for="ppk" class="form-label">PPK</label>
@@ -55,12 +55,12 @@
                             </div>
                             <div class="mb-3 input-daterange">
                                 <label for="start" class="form-label">Tanggal Mulai</label>
-                                <input type="text" class="form-control " name="start" value="{{$data->start_at}}"
+                                <input type="text" class="form-control " name="start" value="{{date('d-m-Y', strtotime($data->start_at))}}"
                                        required>
                             </div>
                             <div class="mb-3 input-daterange">
                                 <label for="finish" class="form-label">Tanggal Berakhir</label>
-                                <input type="text" class="form-control " name="finish" value="{{$data->finish_at}}"
+                                <input type="text" class="form-control " name="finish" value="{{date('d-m-Y', strtotime($data->finish_at))}}"
                                        required>
                             </div>
                             <hr/>
@@ -185,7 +185,7 @@
                     {
                         data: 'date_addendum', name: 'date_addendum',
                         "render": function (data) {
-                            return moment(data).format('DD-MM-YYYY')
+                            return moment(data).format('DD MMMM YYYY')
                         }
                     },
                     {

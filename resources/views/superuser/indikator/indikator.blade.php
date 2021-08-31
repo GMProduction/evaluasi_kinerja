@@ -10,12 +10,11 @@
 
     <section class="" style="margin-top: 100px">
 
-        <div class="mt-4" style="min-height: 23vh">
-            <div class="header-table table-container">
-                <p class="title-table">Data Indikator</p>
+        <div class="mt-4  table-container" style="min-height: 23vh">
+            <div class="header-table">
+                <p class="title-table fw-bold t-primary">Data Indikator</p>
                 <a class="bt-primary-sm" id="addData"><i class='bx bx-plus'></i> Tambah Data</a>
             </div>
-
             <form class="row g-3">
                 <div class="col">
                     <input class="form-control" type="text" name="cari" value="{{request('cari')}}" placeholder="Cari master indikator">
@@ -66,8 +65,6 @@
     <script>
         var title, idSubIndikator, idIndikator;
         $(document).ready(function () {
-
-            $("#indikator").addClass("active");
             getMainIndicator()
             currency('weight')
         });
@@ -80,6 +77,7 @@
                 '                                   <td class="text-center"><a class="btn btn-sm btn-success me-2"  style="border-radius: 50px; width: 50px" data-id-indikator="' + id + '" id="saveSubIndicator"><i class=\'bx bxs-save\'></i></a>' +
                 '                                   <a class="btn btn-sm btn-danger"  style="border-radius: 50px; width: 50px" data-id-indikator="' + id + '" id="clearInputSubIndikator"><i class=\'bx bx-window-close\'></i></a></td>' +
                 '                                </tr>');
+            $('#trInput [name="name"]').focus();
         })
 
         $(document).on('click', '#clearInputSubIndikator', function () {
@@ -199,7 +197,6 @@
         })
 
         $(document).on('click', '#addData, #editData', function () {
-            console.log('asd')
             $('#tambahdata #id').val($(this).data('id'));
             $('#tambahdata #name').val($(this).data('name'));
             $('#tambahdata #weight').val($(this).data('weight'));

@@ -84,10 +84,12 @@
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        var roles, textRoles;
+        var table;
         $(document).ready(function () {
-
-            $("#dashboard").addClass("active");
             chart()
+            roles = 'superuser';
+            textRoles = 'Superuser'
         });
 
         function chart() {
@@ -145,15 +147,7 @@
             );
         }
 
-        var roles, textRoles;
-        var table;
-        $(document).ready(function () {
 
-            $("#dashboard").addClass("active");
-            roles = 'superuser';
-            textRoles = 'Superuser'
-
-        });
 
 
     </script>

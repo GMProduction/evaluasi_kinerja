@@ -19,11 +19,10 @@
             height: 35px !important;
         }
     </style>
-
     <section class="___class_+?0___" style="margin-top: 100px">
         <div role="tablist">
             <div class="items-tab" id="menu-tab">
-                @if(auth()->user()->roles == 'superuser')
+                @if(auth()->user()->roles[0] == 'superuser')
                     <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="superuser"
                        data-text-roles="Superuser">
                         <div class="d-flex justify-content-between">
@@ -35,7 +34,7 @@
                         </div>
                     </a>
                 @endif
-                <a class="card-tab d-block c-text card-user" id="uadmin" data-roles="admin" data-text-roles="Admin">
+                <a class="card-tab d-block {{auth()->user()->roles[0] == 'admin' ? 'active' : ''}} c-text card-user" id="uadmin" data-roles="admin" data-text-roles="Admin Balai">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user-voice'></i>
                         <p class="number-card">0</p>
@@ -45,28 +44,30 @@
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor"
-                   data-text-roles="Asesor Balai">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-user'></i>
-                        <p class="number-card">0</p>
-                    </div>
-                    <div class="mt-2">
-                        Asesor Balai
-                    </div>
-                </a>
+                @if(auth()->user()->roles[0] == 'superuser')
 
-                <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk"
-                   data-text-roles="Asesor PPK">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-user'></i>
-                        <p class="number-card">0</p>
-                    </div>
-                    <div class="mt-2">
-                        Asesor PPK
-                    </div>
-                </a>
+                    <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor"
+                       data-text-roles="Asesor Balai">
+                        <div class="d-flex justify-content-between">
+                            <i class='bx bx-user'></i>
+                            <p class="number-card">0</p>
+                        </div>
+                        <div class="mt-2">
+                            Asesor Balai
+                        </div>
+                    </a>
 
+                    <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk"
+                       data-text-roles="Asesor PPK">
+                        <div class="d-flex justify-content-between">
+                            <i class='bx bx-user'></i>
+                            <p class="number-card">0</p>
+                        </div>
+                        <div class="mt-2">
+                            Asesor PPK
+                        </div>
+                    </a>
+                @endif
                 <a class="card-tab d-block c-text card-user" id="uvendor" data-roles="vendor"
                    data-text-roles="Penyedia Jasa">
                     <div class="d-flex justify-content-between">
@@ -135,7 +136,7 @@
 
             <div class="table-container">
                 <div class="header-table">
-                    <p class="fw-bold t-primary title-table">Data Super User</p>
+                    <p class="fw-bold t-primary title-table"></p>
 
                     <a class="bt-primary-sm" id="addData" data-type="Tambah"><i class='bx bx-plus'></i> Tambah Data</a>
                 </div>
@@ -152,11 +153,15 @@
         var roles, textRoles, title;
         var table;
         $(document).ready(function () {
-            $("#user").addClass("active");
             roles = 'superuser';
             textRoles = 'Superuser'
-            getCountUser()
+            @if(auth()->user()->roles[0] == 'admin')
+                roles = 'admin';
+            textRoles = 'Admin Balai'
+            @endif
 
+            getCountUser()
+            $('.title-table').text('Data ' + textRoles);
             datatable(roles);
         });
 
@@ -217,7 +222,6 @@
         function getCountUser() {
             $.get(window.location.pathname + '/count', function (data) {
                 $.each(data, function (key, val) {
-                    console.log(val['roles']['0'])
                     $('#u' + val['roles']['0'] + ' p').html(val['count'])
                 })
             })

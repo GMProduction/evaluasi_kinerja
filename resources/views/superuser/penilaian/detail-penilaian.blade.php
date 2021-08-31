@@ -123,7 +123,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-7">
+                        <div class="col-6">
                             <div class="table-container">
                                 <p class="fw-bold t-primary">Peta Kinerja Penyedia Jasa</p>
                                 <hr>
@@ -131,7 +131,7 @@
                             </div>
                         </div>
 
-                        <div class="col-5">
+                        <div class="col-6">
                             <div class="table-container" id="parentofchart">
                                 <p class="fw-bold t-primary">Risalah Hasil Penilaian Faktor</p>
                                 <hr>
