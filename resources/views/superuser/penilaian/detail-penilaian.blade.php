@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <section class="" style="margin-top: 100px">
+    <section class="___class_+?0___" style="margin-top: 100px">
         <div class="mt-4" style="min-height: 23vh">
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
@@ -84,7 +84,7 @@
                                 data-text-roles="Superuser">
                                 <div class="d-flex justify-content-between">
                                     <i class='bx bx-message-square-edit'></i>
-                                    <p class="number-card t-bagus">89</p>
+                                        <p class="number-card t-bagus">89</p>
                                 </div>
                                 <div class="mt-2">
                                     Penilaian Sendiri
@@ -137,35 +137,47 @@
                     <div class="table-container">
                         <p class="fw-bold t-primary">Detail Penilaian</p>
                         <table id="table" class="table " style="width:100%">
-                            <tr>
+                            <tr class="bg-prim-light">
                                 <th>1</th>
                                 <th colspan="2">Sumber Daya Manusia / Personil</th>
+                                <th>Update Terahkir</th>
+                                <th>File Terupload</th>
                             </tr>
 
                             <tr>
                                 <td>1.1</td>
                                 <td>Produktivitass</td>
-                                <td><a class="bt-success-sm">Baik</a></td>
+                                <td><a class="b-bagus-light-xsm">Baik</a></td>
+                                <td>31 Agustus 2021</td>
+                                <td><a class="bt-primary-xsm">Download</a></td>
                             </tr>
                             <tr>
                                 <td>1.2</td>
                                 <td>Produktivitas</td>
-                                <td><a class="bt-success-sm">Baik</a></td>
+                                <td><a class="b-bagus-light-xsm">Baik</a></td>
+                                <td>31 Agustus 2021</td>
+                                <td><a class="bt-primary-xsm">Download</a></td>
                             </tr>
-                            <tr>
+                            <tr class="bg-prim-light">
                                 <th>1</th>
                                 <th colspan="2">Sumber Daya Manusia / Personil</th>
+                                <th>Update Terahkir</th>
+                                <th>File Terupload</th>
                             </tr>
 
                             <tr>
                                 <td>1.1</td>
                                 <td>Produktivitas</td>
-                                <td><a class="bt-success-sm">Baik</a></td>
+                                <td><a class="b-cukup-light-xsm">Cukup</a></td>
+                                <td>31 Agustus 2021</td>
+                                <td><a class="bt-primary-xsm">Download</a></td>
                             </tr>
                             <tr>
                                 <td>1.2</td>
                                 <td>Produktivitas</td>
-                                <td><a class="bt-success-sm">Baik</a></td>
+                                <td><a class="b-buruk-light-xsm">Buruk</a></td>
+                                <td>31 Agustus 2021</td>
+                                <td><a class="bt-primary-xsm">Download</a></td>
                             </tr>
                         </table>
                     </div>
@@ -179,28 +191,50 @@
 @section('script')
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-        google.charts.load("current", {packages:["corechart"]});
+        google.charts.load("current", {
+            packages: ["corechart"]
+        });
         google.charts.setOnLoadCallback(drawChart);
-        function drawChart() {
-          var data = google.visualization.arrayToDataTable([
-            ['Penilaian', 'Nilai'],
-          
-            ['Bagus',  50],
-            ['Kurang',    10],
-            ['Cukup', 10],
 
-          ]);
-  
-          var options = {
-            title: 'Total Faktor Di Nilai 70',
-            pieHole: 0.2,
-            chartArea: {width: '100%'},
-            'legend': {'position': 'bottom'}
-          };
-  
-          var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-          chart.draw(data, options);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Penilaian', 'Nilai'],
+
+                ['Bagus (50)', 50],
+                ['Cukup (10)', 10],
+                ['Kurang (10)', 10],
+
+
+            ]);
+
+            var options = {
+                title: 'Total Faktor Di Nilai 70',
+                pieHole: 0.2,
+                chartArea: {
+                    width: '100%'
+                },
+                'legend': {
+                    'position': 'bottom'
+                },
+                colors: ['green', 'orange', 'red', ],
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
         }
 
-      </script>
+        //GANTI MENU
+        var header = document.getElementById("menu-tab");
+        var btns = header.getElementsByClassName("card-tab");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function() {
+
+                var current = $('.card-tab.active')
+                current[0].className = current[0].className.replace(" active", "");
+                this.className += " active ";
+
+
+            });
+        }
+    </script>
 @endsection

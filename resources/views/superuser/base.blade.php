@@ -61,7 +61,7 @@
                          <span class="nav_name">Paket Konstruksi</span> </a>
                     <a href="/indikator" id="indikator" class="nav_link"> <i class='bx bx-doughnut-chart' ></i> <span
                             class="nav_name">Indikator</span> </a>
-                    <a href="/penilaian" id="penilaian" class="nav_link"> <i class='bx bx-doughnut-chart' ></i> <span
+                    <a href="/penilaian" id="penilaian" class="nav_link"> <i class='bx bxs-bar-chart-square'></i> <span
                             class="nav_name">Penilaian</span> </a>
 
 

@@ -7,10 +7,11 @@
 
 @section('content')
 
-    <section class="" style="margin-top: 100px">
+    <section class="___class_+?0___" style="margin-top: 100px">
         <div role="tablist">
             <div class="items-tab" id="menu-tab">
-                <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="superuser" data-text-roles="Superuser">
+                <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="superuser"
+                    data-text-roles="Superuser">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user-circle icon-size-lg '></i>
                         <p class="number-card">0</p>
@@ -30,7 +31,8 @@
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor" data-text-roles="Asesor Balai">
+                <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor"
+                    data-text-roles="Asesor Balai">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user'></i>
                         <p class="number-card">0</p>
@@ -40,7 +42,8 @@
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk" data-text-roles="Asesor PPK">
+                <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk"
+                    data-text-roles="Asesor PPK">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user'></i>
                         <p class="number-card">0</p>
@@ -50,7 +53,8 @@
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text card-user" id="uvendor" data-roles="vendor" data-text-roles="Penyedia Jasa">
+                <a class="card-tab d-block c-text card-user" id="uvendor" data-roles="vendor"
+                    data-text-roles="Penyedia Jasa">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user'></i>
                         <p class="number-card">0</p>
@@ -65,17 +69,19 @@
 
 
             <!-- Modal Tambah-->
-            <div class="modal fade" id="tambahdata" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="tambahdata" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="title"></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form id="form" onsubmit="return Save()">
                                 @csrf
-                                <input id="id" name="id" hidden >
+                                <input id="id" name="id" hidden>
                                 <input name="roles" id="roles" hidden>
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
@@ -116,13 +122,18 @@
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
 
-            <div class="header-table">
+            {{-- <div class="header-table">
                 <p class="title-table">Data Super User</p>
-                <a class="bt-primary-sm" id="addData" data-type="Tambah"><i class='bx bx-plus' ></i> Tambah Data</a>
-            </div>
+                <a class="bt-primary-sm" id="addData" data-type="Tambah"><i class='bx bx-plus'></i> Tambah Data</a>
+            </div> --}}
 
 
             <div class="table-container">
+                <div class="header-table">
+                    <p class="fw-bold t-primary title-table">Data Super User</p>
+
+                    <a class="bt-primary-sm" id="addData" data-type="Tambah"><i class='bx bx-plus'></i> Tambah Data</a>
+                </div>
                 <table id="table" class="table table-striped" style="width:100%">
                 </table>
             </div>
@@ -144,12 +155,12 @@
             datatable(roles);
         });
 
-        function Save(){
-            saveData('Tambah Data '+textRoles,'form',null,afterSave)
+        function Save() {
+            saveData('Tambah Data ' + textRoles, 'form', null, afterSave)
             return false;
         }
 
-        function afterSave(){
+        function afterSave() {
             $('#tambahdata').modal('hide');
             table.ajax.reload();
             getCountUser()
@@ -159,16 +170,16 @@
         $(document).on('click', '#addData, #editData', function() {
             $('#tambahdata #id').val($(this).data('id'));
             $('#tambahdata #roles').val(roles);
-            $('#tambahdata #title').html($(this).data('type')+' Data '+textRoles);
+            $('#tambahdata #title').html($(this).data('type') + ' Data ' + textRoles);
             $('#tambahdata #email').val($(this).data('email'));
             $('#tambahdata #name').val($(this).data('name'));
             $('#tambahdata #username').val($(this).data('username'));
             $('#tambahdata #password_confirmation').val('');
             $('#tambahdata #password').val('');
-           if ($(this).data('id')){
-               $('#tambahdata #password_confirmation').val('********');
-               $('#tambahdata #password').val('********');
-           }
+            if ($(this).data('id')) {
+                $('#tambahdata #password_confirmation').val('********');
+                $('#tambahdata #password').val('********');
+            }
 
             $('#tambahdata').modal('show');
         })
@@ -189,23 +200,23 @@
         }
 
         function getCountUser() {
-            $.get(window.location.pathname+'/count', function (data) {
-                $.each(data, function (key, val) {
+            $.get(window.location.pathname + '/count', function(data) {
+                $.each(data, function(key, val) {
                     console.log(val['roles']['0'])
-                    $('#u'+val['roles']['0']+' p').html(val['count'])
+                    $('#u' + val['roles']['0'] + ' p').html(val['count'])
                 })
             })
         }
 
-        function datatable(role){
+        function datatable(role) {
 
-            var url = window.location.pathname+'/datatable/'+role;
+            var url = window.location.pathname + '/datatable/' + role;
             table = $('#table').DataTable({
                 destroy: true,
                 processing: true,
                 serverSide: true,
                 ajax: url,
-                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // debugger;
                     var numStart = this.fnPagingInfo().iStart;
                     var index = numStart + iDisplayIndexFull + 1;
@@ -213,31 +224,72 @@
                     $("td:first", nRow).html(index);
                     return nRow;
                 },
-                columnDefs: [
-                    {"title": "#", "searchable": false, "orderable": false, "targets": 0,"className": "text-center"},
-                    {"title": "Nama", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Username", 'targets': 2, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Email", 'targets': 3, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Action", 'targets': 4, 'searchable': false, 'orderable': false, "className": "text-center"},
+                columnDefs: [{
+                        "title": "#",
+                        "searchable": false,
+                        "orderable": false,
+                        "targets": 0,
+                        "className": "text-center"
+                    },
+                    {
+                        "title": "Nama",
+                        'targets': 1,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
+                    {
+                        "title": "Username",
+                        'targets': 2,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
+                    {
+                        "title": "Email",
+                        'targets': 3,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
+                    {
+                        "title": "Action",
+                        'targets': 4,
+                        'searchable': false,
+                        'orderable': false,
+                        "className": "text-center"
+                    },
                 ],
 
-                columns: [
-                    {
+                columns: [{
                         "className": '',
                         "orderable": false,
                         "data": null,
                         "defaultContent": ''
                     },
-                    {data: role+'.name', name:  role+'.name'},
-                    {data: 'username', name: 'username'},
-                    {data: 'email', name: 'email'},
+                    {
+                        data: role + '.name',
+                        name: role + '.name'
+                    },
+                    {
+                        data: 'username',
+                        name: 'username'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
                     {
                         "target": 2,
                         "data": 'id',
                         "width": '100',
-                        "render": function (data, type, row, meta) {
-                            return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-position="" data-name="" data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
-                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="'+row.username+'" data-type="Edit" data-email="'+row.email+'" data-name="'+row[role].name+'" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
+                        "render": function(data, type, row, meta) {
+                            return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-position="" data-name="" data-id="' +
+                                data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
+                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="' +
+                                row.username + '" data-type="Edit" data-email="' + row.email +
+                                '" data-name="' + row[role].name + '" data-id="' + data +
+                                '" id="editData"><i class="bx bx-edit"></i></a>'
                         }
                     },
                 ]
@@ -250,8 +302,7 @@
             textRoles = $(this).data('text-roles')
             datatable(roles);
 
-            $('.title-table').text('Data '+textRoles);
+            $('.title-table').text('Data ' + textRoles);
         })
-
     </script>
 @endsection

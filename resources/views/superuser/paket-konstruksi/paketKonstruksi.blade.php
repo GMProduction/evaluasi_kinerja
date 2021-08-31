@@ -17,11 +17,13 @@
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
 
-            <div class="header-table">
-                <p class="title-table">Data Paket Konstruksi</p>
-                <a class="bt-primary-sm" id="addData"><i class='bx bx-plus'></i> Tambah Data</a>
-            </div>
+           
             <div class="table-container">
+                <div class="header-table">
+                    <p class="title-table fw-bold t-primary">Data Paket Konstruksi</p>
+                    <a class="bt-primary-sm" id="addData"><i class='bx bx-plus'></i> Tambah Data</a>
+                </div>
+                
                 <table id="table" class="table table-striped" style="width:100%">
 
                 </table>
