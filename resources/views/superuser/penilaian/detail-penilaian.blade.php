@@ -144,7 +144,7 @@
 
                             <tr>
                                 <td>1.1</td>
-                                <td>Produktivitas</td>
+                                <td>Produktivitass</td>
                                 <td><a class="bt-success-sm">Baik</a></td>
                             </tr>
                             <tr>
