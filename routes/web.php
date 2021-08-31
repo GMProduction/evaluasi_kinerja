@@ -21,6 +21,9 @@ Route::get('/ppk', [\App\Http\Controllers\PPKController::class, 'index']);
 Route::get('/accessor-ppk', [\App\Http\Controllers\AccessorPpkController::class, 'index']);
 Route::post('/accessor-ppk/create', [\App\Http\Controllers\AccessorPpkController::class, 'store']);
 
+Route::get('/login', function () {
+    return view('login');
+});
 
 Route::prefix('/')->group(function (){
     Route::get('/', function () {
