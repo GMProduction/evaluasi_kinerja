@@ -17,7 +17,12 @@ class UserController extends Controller
 
     public function datatable($role)
     {
+        $data ='';
         $data = User::with("$role")->whereJsonContains('roles', $role);
+
+        if ($role == 'accessorppk'){
+            $data = User::with("accessorppk.ppk")->whereJsonContains('roles', $role);
+        }
 
         return DataTables::of($data)->make(true);
     }
@@ -104,7 +109,11 @@ class UserController extends Controller
                 $password = Hash::make($fieldPassword['password']);
                 Arr::set($field, 'password', $password);
                 $user = User::create($field);
+                if (\request('roles') == 'accessorppk'){
+                    Arr::set($field, 'ppk_id', \request('selectPPK'));
+                }
                 $user->$roles()->create($field);
+
             }
             DB::commit();
 

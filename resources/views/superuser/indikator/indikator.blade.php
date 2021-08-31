@@ -91,10 +91,10 @@
                 $('.trInput').remove();
                 var id = $(this).data('id');
                 $('#table' + id + ' tr:last').after('<tr id="trInput" class="trInput">' +
-                    '                                   <td><input type="text" class="form-control" name="name" value=""></td>' +
-                    '                                   <td><input type="number" class="form-control" name="bad" value=""></td>' +
-                    '                                   <td><input type="number" class="form-control"  name="medium" value=""></td>' +
-                    '                                   <td><input type="number" class="form-control" name="good" value=""></td>' +
+                    '                                   <td><input type="text" class="form-control" name="name" value="" required></td>' +
+                    '                                   <td><input type="number" class="form-control" name="bad" value="0" required></td>' +
+                    '                                   <td><input type="number" class="form-control"  name="medium" value="0" required></td>' +
+                    '                                   <td><input type="number" class="form-control" name="good" value="0" required></td>' +
                     '                                   <td class="text-center"><a class="btn btn-sm btn-success me-2"  style="border-radius: 50px; width: 50px" data-id-indikator="' + id + '" id="saveSubIndicator"><i class=\'bx bxs-save\'></i></a>' +
                     '                                   <a class="btn btn-sm btn-danger"  style="border-radius: 50px; width: 50px" data-id-indikator="' + id + '" id="clearInputSubIndikator"><i class=\'bx bx-window-close\'></i></a></td>' +
                     '                                </tr>');
@@ -108,6 +108,23 @@
                 var title = 'Tambah';
                 if ($(this).data('id')) {
                     title = 'Edit'
+                }
+                if($('#trInput [name="name"]').val() === ''){
+                    swal("Nama sub indikator harus disisi", {
+                        icon: "warning",
+                        buttons: false,
+                        timer: 2000
+                    })
+                    return false
+                }
+
+                if($('#trInput [name="bad"]').val() === '' || $('#trInput [name="medium"]').val() === '' || $('#trInput [name="good"]').val() === ''){
+                    swal("Data penilaian harus di isi", {
+                        icon: "warning",
+                        buttons: false,
+                        timer: 2000
+                    })
+                    return false
                 }
                 var idIndikator = $(this).data('id-indikator');
                 var data = {

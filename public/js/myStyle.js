@@ -6,4 +6,9 @@ $(document).ready(function() {
   $("#dikemas").removeClass("active");
   $("#selesai").removeClass("active");
   $("#profil").removeClass("active");
+
+    $('#tambahdata').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
 });
