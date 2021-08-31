@@ -213,6 +213,5 @@ function getSelect(id, url, nameValue, idValue) {
                 select.append('<option value="' + value['id'] + '">' + value[nameValue] + '</option>')
             }
         })
-        select.select2()
     })
 }

@@ -13,7 +13,8 @@ class AccessorPPK extends Model
 
     protected $fillable = [
         'user_id',
-        'name'
+        'name',
+        'ppk_id'
     ];
 
     public function ppk()

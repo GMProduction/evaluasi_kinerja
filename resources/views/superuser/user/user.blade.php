@@ -6,7 +6,19 @@
 
 
 @section('content')
+<style>
+    .select2-selection__rendered {
+        line-height: 35px !important;
+    }
 
+    .select2-container .select2-selection--single {
+        height: auto !important;
+    }
+
+    .select2-selection__arrow {
+        height: 35px !important;
+    }
+</style>
     <section class="" style="margin-top: 100px">
         <div role="tablist">
             <div class="items-tab" id="menu-tab">
@@ -79,13 +91,7 @@
                                     <label for="name" class="form-label">Name</label>
                                     <input type="text" class="form-control" id="name" name="name">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">PPK</label>
-                                    <select class="select2 me-2 w-100" aria-label="Default select example" id="selectPPK" name="selectPPK" required>
-                                        <option>asdadas</option>
-                                        <option>asdadas</option>
-                                    </select>
-                                </div>
+                               <div id="ppkDiv"></div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="email" name="email">
@@ -146,8 +152,9 @@
             roles = 'superuser';
             textRoles = 'Superuser'
             getCountUser()
-            // $('#selectPPK').select2();
-            // getSelect('selectPPK','/ppk/get-all','name')
+
+
+
             datatable(roles);
         });
 
@@ -174,6 +181,18 @@
             if ($(this).data('id')) {
                 $('#tambahdata #password_confirmation').val('********');
                 $('#tambahdata #password').val('********');
+            }
+            $('#ppkDiv').empty()
+            if (roles === 'accessorppk'){
+                $('#ppkDiv').html(' <div class="mb-3">\n' +
+                    '                                    <label for="name" class="form-label">PPK</label>\n' +
+                    '                                    <select class="me-2" style="width: 100%" aria-label="Default select example" id="selectPPK" name="selectPPK" required>\n' +
+                    '                                    </select>\n' +
+                    '                                </div>')
+                getSelect('selectPPK','/ppk/get-all','name', $(this).data('ppk'))
+                $('#selectPPK').select2({
+                    dropdownParent: $('#tambahdata')
+                });
             }
 
             $('#tambahdata').modal('show');
@@ -240,8 +259,10 @@
                         "data": 'id',
                         "width": '100',
                         "render": function (data, type, row, meta) {
+                            var ppk = row[role].ppk !== undefined  ? row[role].ppk.id : '';
+                            console.log(ppk)
                             return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-position="" data-name="" data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
-                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="' + row.username + '" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role].name + '" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
+                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="' + row.username + '" data-ppk="'+ppk+'" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role].name + '" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
                         }
                     },
                 ]
