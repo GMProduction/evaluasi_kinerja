@@ -15,4 +15,13 @@ class SubIndicator extends Model
       'indicator_id',
     ];
 
+    public function score()
+    {
+        return $this->hasMany(Score::class, 'sub_indicator_id');
+    }
+
+    public function singleScore()
+    {
+        return $this->hasOne(Score::class, 'sub_indicator_id');
+    }
 }
