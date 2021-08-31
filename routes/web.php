@@ -58,7 +58,10 @@ Route::prefix('/')->group(function (){
 
     Route::prefix('/penilaian')->group(function (){
         Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);
-        Route::get('/cek', [\App\Http\Controllers\ScoreController::class, 'getScore']);
+        Route::get('/datatable', [\App\Http\Controllers\ScoreController::class, 'datatable']);
+        Route::get('/detail/{id}', [\App\Http\Controllers\ScoreController::class, 'detail']);
+        Route::get('/results', [\App\Http\Controllers\ScoreController::class, 'getScore']);
+        Route::get('/radar', [\App\Http\Controllers\ScoreController::class, 'getRadarChart']);
     });
 
     Route::get('/detail-penilaian', function () {
