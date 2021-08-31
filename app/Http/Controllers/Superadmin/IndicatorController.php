@@ -36,14 +36,15 @@ class IndicatorController extends Controller
     }
 
     public function getIndicator(){
-        $indicator = Indicator::with('subIndicator')->get();
+        $indicator = Indicator::with('subIndicator')->filter(request('cari'))->get();
         return $indicator;
     }
 
     public function storeSubIndikator($idIndikator){
         $indikator = Indicator::find($idIndikator);
         if (request('id')){
-            $indikator->subIndicator()->update(request()->all());
+            $subIndikator = SubIndicator::find(request('id'));
+            $subIndikator->update(request()->all());
         }else{
             $indikator->subIndicator()->create(request()->all());
         }

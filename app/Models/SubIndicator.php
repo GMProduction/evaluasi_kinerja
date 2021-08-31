@@ -13,9 +13,6 @@ class SubIndicator extends Model
     protected $fillable = [
       'name',
       'indicator_id',
-      'medium',
-      'bad',
-      'good'
     ];
 
 }
