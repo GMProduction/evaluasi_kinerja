@@ -6,7 +6,6 @@
 
 
 @section('content')
-<<<<<<< HEAD
 <style>
     .select2-selection__rendered {
         line-height: 35px !important;
@@ -132,14 +131,6 @@
         </div>
         <!-- Tab panes -->
         <div class="mt-4" style="min-height: 23vh">
-            <!-- Tab panes -->
-            {{-- @yield('contentUser') --}}
-
-            {{-- <div class="header-table">
-                <p class="title-table">Data Super User</p>
-                <a class="bt-primary-sm" id="addData" data-type="Tambah"><i class='bx bx-plus'></i> Tambah Data</a>
-            </div> --}}
-
 
             <div class="table-container">
                 <div class="header-table">
@@ -155,8 +146,7 @@
 @endsection
 
 @section('script')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
         var roles, textRoles;
         var table;
@@ -272,7 +262,6 @@
                         "width": '100',
                         "render": function (data, type, row, meta) {
                             var ppk = row[role].ppk !== undefined  ? row[role].ppk.id : '';
-                            console.log(ppk)
                             return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-position="" data-name="" data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
                                 '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="' + row.username + '" data-ppk="'+ppk+'" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role].name + '" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
                         }
