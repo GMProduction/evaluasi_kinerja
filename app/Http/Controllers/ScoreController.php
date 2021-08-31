@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Helper\CustomController;
 use App\Models\Indicator;
+use App\Models\Score;
 
 class ScoreController extends CustomController
 {
@@ -21,7 +22,9 @@ class ScoreController extends CustomController
 
     public function getScore()
     {
-        $data = Indicator::with(['subIndicator.singleScore'])->addSelect()->get();
+        $data = Indicator::with(['subIndicator.singleScore' => function($query){
+            $query->where('package_id', 1);
+        }])->get();
         return $data->toArray();
     }
 }
