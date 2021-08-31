@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class SubIndicator extends Model
 {
@@ -22,6 +23,6 @@ class SubIndicator extends Model
 
     public function singleScore()
     {
-        return $this->hasOne(Score::class, 'sub_indicator_id');
+        return $this->hasOne(Score::class, 'sub_indicator_id')->where('evaluator_id', 2);
     }
 }
