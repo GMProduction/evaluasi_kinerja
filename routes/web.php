@@ -58,6 +58,7 @@ Route::prefix('/')->group(function (){
 
     Route::prefix('/penilaian')->group(function (){
         Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);
+        Route::get('/cek', [\App\Http\Controllers\ScoreController::class, 'getScore']);
     });
 
     Route::get('/detail-penilaian', function () {
