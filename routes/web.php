@@ -60,4 +60,7 @@ Route::prefix('/')->group(function (){
         Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);
     });
 
+    Route::get('/detail-penilaian', function () {
+        return view('superuser/penilaian/detail-penilaian');
+    });
 });

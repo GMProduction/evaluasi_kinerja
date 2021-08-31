@@ -6,6 +6,7 @@
 
 
 @section('content')
+<<<<<<< HEAD
 <style>
     .select2-selection__rendered {
         line-height: 35px !important;
@@ -19,10 +20,12 @@
         height: 35px !important;
     }
 </style>
-    <section class="" style="margin-top: 100px">
+
+    <section class="___class_+?0___" style="margin-top: 100px">
         <div role="tablist">
             <div class="items-tab" id="menu-tab">
-                <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="superuser" data-text-roles="Superuser">
+                <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="superuser"
+                    data-text-roles="Superuser">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user-circle icon-size-lg '></i>
                         <p class="number-card">0</p>
@@ -42,7 +45,8 @@
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor" data-text-roles="Asesor Balai">
+                <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor"
+                    data-text-roles="Asesor Balai">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user'></i>
                         <p class="number-card">0</p>
@@ -52,7 +56,8 @@
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk" data-text-roles="Asesor PPK">
+                <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk"
+                    data-text-roles="Asesor PPK">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user'></i>
                         <p class="number-card">0</p>
@@ -62,7 +67,8 @@
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text card-user" id="uvendor" data-roles="vendor" data-text-roles="Penyedia Jasa">
+                <a class="card-tab d-block c-text card-user" id="uvendor" data-roles="vendor"
+                    data-text-roles="Penyedia Jasa">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user'></i>
                         <p class="number-card">0</p>
@@ -75,12 +81,14 @@
 
 
             <!-- Modal Tambah-->
-            <div class="modal fade" id="tambahdata" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="tambahdata" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="title"></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form id="form" onsubmit="return Save()">
@@ -127,13 +135,18 @@
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
 
-            <div class="header-table">
+            {{-- <div class="header-table">
                 <p class="title-table">Data Super User</p>
                 <a class="bt-primary-sm" id="addData" data-type="Tambah"><i class='bx bx-plus'></i> Tambah Data</a>
-            </div>
+            </div> --}}
 
 
             <div class="table-container">
+                <div class="header-table">
+                    <p class="fw-bold t-primary title-table">Data Super User</p>
+
+                    <a class="bt-primary-sm" id="addData" data-type="Tambah"><i class='bx bx-plus'></i> Tambah Data</a>
+                </div>
                 <table id="table" class="table table-striped" style="width:100%">
                 </table>
             </div>
@@ -228,7 +241,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: url,
-                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // debugger;
                     var numStart = this.fnPagingInfo().iStart;
                     var index = numStart + iDisplayIndexFull + 1;
@@ -244,8 +257,7 @@
                     {"title": "Action", 'targets': 4, 'searchable': false, 'orderable': false, "className": "text-center"},
                 ],
 
-                columns: [
-                    {
+                columns: [{
                         "className": '',
                         "orderable": false,
                         "data": null,
@@ -276,6 +288,5 @@
 
             $('.title-table').text('Data ' + textRoles);
         })
-
     </script>
 @endsection
