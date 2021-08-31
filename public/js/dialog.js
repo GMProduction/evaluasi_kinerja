@@ -215,3 +215,14 @@ function getSelect(id, url, nameValue, idValue) {
         })
     })
 }
+
+function currency(field) {
+    $('#' + field).on({
+        keyup: function () {
+            formatCurrency($(this));
+        },
+        blur: function () {
+            formatCurrency($(this), "blur");
+        }
+    });
+}

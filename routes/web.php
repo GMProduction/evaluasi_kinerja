@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\AuthController::class, 'pageLogin']);
+Route::get('/login', [\App\Http\Controllers\AuthController::class, 'pageLogin']);
 
 Route::get('/indicators', [\App\Http\Controllers\IndicatorController::class, 'index']);
 Route::get('/package', [\App\Http\Controllers\PackageController::class, 'index']);

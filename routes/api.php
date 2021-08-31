@@ -28,3 +28,5 @@ Route::get('/vendor', [\App\Http\Controllers\VendorController::class, 'index']);
 Route::post('/vendor/create', [\App\Http\Controllers\VendorController::class, 'store']);
 Route::get('/accessor', [\App\Http\Controllers\AccessorController::class, 'index']);
 Route::post('/accessor/create', [\App\Http\Controllers\AccessorController::class, 'store']);
+
+Route::post('/login', [\App\Http\Controllers\AuthController::class,'login']);

@@ -12,6 +12,7 @@ class Indicator extends Model
 
     protected $fillable = [
         'name',
+        'weight'
     ];
 
     public function subIndicator()
