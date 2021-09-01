@@ -52,6 +52,14 @@ class ScoreController extends CustomController
         }
     }
 
+    public function setScore()
+    {
+        try {
+
+        }catch (\Exception $e){
+
+        }
+    }
     public function getRadarChart()
     {
         try {

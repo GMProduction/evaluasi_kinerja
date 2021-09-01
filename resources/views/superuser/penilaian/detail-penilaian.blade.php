@@ -232,9 +232,9 @@
                 '<td>' + mainKey + '.' + (key + 1) + '</td>\n' +
                 '<td>' + value['name'] + '</td>\n' +
                 '<td><a class="' + btn_class + ' "  data-bs-toggle="dropdown" aria-expanded="false">' + score + '</a>\n'+
-                '<div class="dropdown-menu"> <button class="dropdown-item" type="button">Bagus</button>\n'+
-                '<button class="dropdown-item" type="button">Cukup</button>\n'+
-                '<button class="dropdown-item" type="button">Kurang</button></div></td>\n' +
+                '<div class="dropdown-menu"> <button class="dropdown-item nilai" type="button" data-value="3">Bagus</button>\n'+
+                '<button class="dropdown-item nilai" type="button" data-value="2">Cukup</button>\n'+
+                '<button class="dropdown-item nilai" type="button" data-value="1">Kurang</button></div></td>\n' +
                 '<td>' + last_update + '</td>\n' +
                 '<td><a class="bt-primary-xsm">' + file_text + '</a></td>\n' +
                 '</tr>';
@@ -266,6 +266,10 @@
                         sub += elSubIndicator((k + 1), kSub, vSub);
                     });
                     elMain.after(sub);
+                });
+                $('.nilai').on('click', function () {
+                    let value = this.dataset.value;
+                    console.log(value);
                 });
                 console.log(response)
             } catch (e) {
