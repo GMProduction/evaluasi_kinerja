@@ -10,7 +10,7 @@
 
 @section('content')
     <section class="___class_+?0___" style="margin-top: 100px">
-        <div class="mt-4" style="min-height: 23vh">
+        <div class="mt-4 mb-5" style="min-height: 23vh">
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
 
@@ -84,18 +84,18 @@
                 <div class="col-8">
                     <div role="tablist" class="mb-3">
                         <div class="items-tab" id="menu-tab">
-                            <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="superuser"
+                            <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="vendor"
                                data-text-roles="Superuser">
                                 <div class="d-flex justify-content-between">
                                     <i class='bx bx-message-square-edit'></i>
                                     <p class="number-card t-bagus">89</p>
                                 </div>
                                 <div class="mt-2">
-                                    Penilaian Sendiri
+                                    Penyedia Jasa
                                 </div>
                             </a>
 
-                            <a class="card-tab d-block c-text card-user" id="uadmin" data-roles="admin"
+                            <a class="card-tab d-block c-text card-user" id="uadmin" data-roles="ppk"
                                data-text-roles="Admin">
                                 <div class="d-flex justify-content-between">
                                     <i class='bx bx-message-square-edit'></i>
@@ -106,7 +106,7 @@
                                 </div>
                             </a>
 
-                            <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor"
+                            <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="office"
                                data-text-roles="Asesor Balai">
                                 <div class="d-flex justify-content-between">
                                     <i class='bx bx-message-square-edit'></i>
@@ -137,6 +137,14 @@
                                 <hr>
                                 <div id="donutchart" style="width: 100%;"></div>
                             </div>
+
+                            <div class="table-container" id="parentofchart">
+                                <p class="fw-bold t-primary">Nilai Komulatif</p>
+                                <hr>
+                                <h1 class="t-cukup text-center mt-5" style="font-size: 4rem">65</h1>
+                                <p class="b-cukup r-fullround text-center  ms-auto me-auto p-1 mt-3"
+                                   style="width: 200px">Cukup</p>
+                            </div>
                         </div>
                     </div>
                     <div class="table-container">
@@ -155,6 +163,9 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript">
+        var package_id = '{{ $data->id }}';
+        var roles = '{{ auth()->user()->roles[0] }}';
+        var index = 'vendor';
         google.charts.load("current", {
             packages: ["corechart"]
         });
@@ -204,14 +215,15 @@
         function elMainIndicator(key, value) {
             return '<tr class="bg-prim-light" id="indicator-' + key + '">' +
                 '<th>' + (key + 1) + '</th>' +
-                '<th colspan="2">' + value['name'] + '</th>' +
+                '<th >' + value['name'] + '</th>' +
+                '<th style="min-width: 100px" ></th>' +
                 '<th>Update Terahkir</th>' +
                 '<th>File Terupload</th>' +
                 '</tr>'
         }
 
         function elSubIndicator(mainKey, key, value) {
-            const {single_score} = value;
+            const {single_score, id} = value;
             const availableScore = ['', 'Kurang', 'Cukup', 'Baik'];
             const availableBtnClass = ['bt-primary-xsm', 'b-buruk-light-xsm', 'b-cukup-light-xsm', 'b-bagus-light-xsm'];
             let score = single_score !== null ? availableScore[single_score['score']] : 'Beri Nilai';
@@ -220,10 +232,20 @@
             let update_at = single_score !== null ? new Date(single_score['updated_at']) : null;
             let last_update = single_score !== null ? getCurrentDateString(update_at) : '-';
             let btn_class = single_score !== null ? availableBtnClass[single_score['score']] : 'bt-primary-xsm';
+            let dropdown_active = '';
+            let el_dropdown = '';
+            if (roles === index) {
+                dropdown_active = 'dropdown';
+                el_dropdown = '<div class="dropdown-menu"> <button class="dropdown-item nilai" type="button" data-value="3" data-subin="' + id + '">Baik</button>\n' +
+                    '<button class="dropdown-item nilai" type="button" data-value="2" data-subin="' + id + '">Cukup</button>\n' +
+                    '<button class="dropdown-item nilai" type="button" data-value="1" data-subin="' + id + '">Kurang</button></div>';
+            }
             return '<tr>' +
                 '<td>' + mainKey + '.' + (key + 1) + '</td>\n' +
                 '<td>' + value['name'] + '</td>\n' +
-                '<td><a class="' + btn_class + '">' + score + '</a></td>\n' +
+                '<td><a class="' + btn_class + ' "  data-bs-toggle="' + dropdown_active + '" aria-expanded="false">' + score + '</a>\n' +
+                el_dropdown +
+                '</td>\n' +
                 '<td>' + last_update + '</td>\n' +
                 '<td><a class="bt-primary-xsm">' + file_text + '</a></td>\n' +
                 '</tr>';
@@ -239,11 +261,11 @@
             return date.toLocaleDateString('id-ID', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
         }
 
-        async function getScore() {
+        async function getScore(type) {
             let el = $('#result-container');
             try {
                 el.empty();
-                let response = await $.get('/penilaian/results');
+                let response = await $.get('/penilaian/results?package=' + package_id + '&type=' + type);
                 let data = response['data']['indicator'];
                 el.append(elTable());
                 let table = $('#table');
@@ -256,27 +278,51 @@
                     });
                     elMain.after(sub);
                 });
+                $('.nilai').on('click',  function () {
+                    let value = this.dataset.value;
+                    let sub_indicator = this.dataset.subin;
+                    console.log(value, sub_indicator, package_id);
+                    setScore(sub_indicator, value);
+
+                });
+                await getRadarChart();
                 console.log(response)
             } catch (e) {
                 console.log(e);
             }
         }
 
+        async function setScore(sub, value) {
+            try {
+                let response = await $.post('/penilaian/set-score', {
+                    _token: '{{csrf_token()}}',
+                    sub_indicator: sub,
+                    value: value,
+                    index: index,
+                    package: package_id
+                });
+                await getScore(index);
 
-        function chart() {
+                console.log(response)
+            }catch (e) {
+                console.log(response)
+            }
+        }
+        var radarChart;
+        function chart(dataChart) {
 
+            let labels = [];
+            let values = [];
+            dataChart['indicator'].forEach(function (v, k) {
+                labels.push(v['index']);
+                values.push(v['radar']);
+                console.log(v)
+            });
             const data = {
-                labels: [
-                    'Sumber Daya Manusia / Personil',
-                    'Bahan / Material',
-                    'Peralatan Berat',
-                    'Peralatan Laboratorium',
-                    'Keuangan',
-                    'Lingkungan Lokasi',
-                ],
+                labels: labels,
                 datasets: [{
                     label: 'My First Dataset',
-                    data: [50, 90, 100, 30, 20, 90],
+                    data: values,
                     fill: true,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgb(255, 99, 132)',
@@ -302,7 +348,7 @@
             };
 
 
-            new Chart(
+            radarChart = new Chart(
                 document.getElementById('myChart'),
                 config,
                 options = {
@@ -321,9 +367,24 @@
             );
         }
 
+        async function getRadarChart(){
+            try {
+                let response = await $.get('/penilaian/radar?package='+package_id);
+                chart(response['data']);
+                // await getScore(index);
+                console.log(response)
+            }catch (e) {
+                console.log(e)
+            }
+        }
         $(document).ready(function () {
-            getScore();
-            chart();
+            getScore('vendor');
+            getRadarChart();
+            // chart();
+            $('.card-user').on('click', function () {
+                index = this.dataset.roles;
+                getScore(index)
+            })
         })
     </script>
 @endsection

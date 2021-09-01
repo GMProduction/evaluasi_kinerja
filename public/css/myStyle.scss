@@ -11,6 +11,14 @@ $burukcolorlight: #ff4081;
 $shadowactivecolor: #887df355;
 $shadowsuccessecolor: #0ebb4855;
 
+.b-cukup{
+    background-color: $cukupcolorlight;
+    color: white;
+} 
+.r-fullround{
+    border-radius: 50px;
+}
+
 .icon-size-lg {
     font-size: 2rem;
 }

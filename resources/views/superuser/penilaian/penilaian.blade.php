@@ -14,10 +14,11 @@
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
 
-            <div class="header-table">
-                <p class="title-table">Data Hasil Evaluasi Paket</p>
-            </div>
+           
             <div class="table-container">
+                <div class="header-table">
+                    <p class="title-table fw-bold t-primary">Data Hasil Evaluasi Paket</p>
+                </div>
                 <table id="table" class="table table-striped" style="width:100%">
 {{--                    <tr>--}}
 {{--                        <th>#</th>--}}

@@ -21,4 +21,9 @@ class AccessorPPK extends Model
     {
         return $this->belongsTo(PPK::class, 'ppk_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

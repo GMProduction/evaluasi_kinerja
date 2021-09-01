@@ -40,7 +40,7 @@ Route::prefix('/')->middleware('auth')->group(
         );
 
         Route::get('/get-count-dashboard', [\App\Http\Controllers\DashboardController::class, 'getAllCountData']);
-Route::get('/datatable-package-ongoing', [\App\Http\Controllers\DashboardController::class, 'datatable']);
+        Route::get('/datatable-package-ongoing', [\App\Http\Controllers\DashboardController::class, 'datatable']);
         Route::prefix('/users')->middleware('roles:superuser,admin')->group(
             function () {
                 Route::match(['post', 'get'], '/', [\App\Http\Controllers\Superadmin\UserController::class, 'index']);
@@ -88,6 +88,17 @@ Route::get('/datatable-package-ongoing', [\App\Http\Controllers\DashboardControl
             }
         );
 
+        Route::prefix('/penilaian')->group(
+            function () {
+                Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);
+                Route::get('/datatable', [\App\Http\Controllers\ScoreController::class, 'datatable']);
+                Route::get('/detail/{id}', [\App\Http\Controllers\ScoreController::class, 'detail']);
+                Route::get('/results', [\App\Http\Controllers\ScoreController::class, 'getScore']);
+                Route::get('/radar', [\App\Http\Controllers\ScoreController::class, 'getRadarChart']);
+                Route::post('/set-score', [\App\Http\Controllers\ScoreController::class, 'setScore']);
+            }
+        );
+
         Route::get(
             '/detail-penilaian',
             function () {
@@ -96,3 +107,4 @@ Route::get('/datatable-package-ongoing', [\App\Http\Controllers\DashboardControl
         );
     }
 );
+
