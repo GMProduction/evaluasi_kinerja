@@ -17,7 +17,7 @@
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
 
-            
+
             <div class="table-container">
                 <div class="header-table">
                     <p class="title-table fw-bold t-primary ">Data PPK</p>
@@ -59,9 +59,6 @@
     <script>
         var table, title;
         $(document).ready(function() {
-
-            $("#ppk").addClass("active");
-
             datatable()
         });
 
@@ -105,7 +102,7 @@
                     return nRow;
                 },
                 columnDefs: [
-                    {"title": "#", "searchable": false, "orderable": false, "targets": 0,"className": "text-center"},
+                    {"title": "#", "searchable": false, "orderable": false, "targets": 0,"className": "text-center", "width": "100"},
                     {"title": "Nama", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
                     {"title": "Action", 'targets': 2, 'searchable': false, 'orderable': false, "className": "text-center"},
                 ],

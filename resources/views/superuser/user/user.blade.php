@@ -6,35 +6,35 @@
 
 
 @section('content')
-<style>
-    .select2-selection__rendered {
-        line-height: 35px !important;
-    }
+    <style>
+        .select2-selection__rendered {
+            line-height: 35px !important;
+        }
 
-    .select2-container .select2-selection--single {
-        height: auto !important;
-    }
+        .select2-container .select2-selection--single {
+            height: auto !important;
+        }
 
-    .select2-selection__arrow {
-        height: 35px !important;
-    }
-</style>
-
+        .select2-selection__arrow {
+            height: 35px !important;
+        }
+    </style>
     <section class="___class_+?0___" style="margin-top: 100px">
         <div role="tablist">
             <div class="items-tab" id="menu-tab">
-                <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="superuser"
-                    data-text-roles="Superuser">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-user-circle icon-size-lg '></i>
-                        <p class="number-card">0</p>
-                    </div>
-                    <div class="mt-2">
-                        Super User
-                    </div>
-                </a>
-
-                <a class="card-tab d-block c-text card-user" id="uadmin" data-roles="admin" data-text-roles="Admin">
+                @if(auth()->user()->roles[0] == 'superuser')
+                    <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="superuser"
+                       data-text-roles="Superuser">
+                        <div class="d-flex justify-content-between">
+                            <i class='bx bx-user-circle icon-size-lg '></i>
+                            <p class="number-card">0</p>
+                        </div>
+                        <div class="mt-2">
+                            Super User
+                        </div>
+                    </a>
+                @endif
+                <a class="card-tab d-block {{auth()->user()->roles[0] == 'admin' ? 'active' : ''}} c-text card-user" id="uadmin" data-roles="admin" data-text-roles="Admin Balai">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user-voice'></i>
                         <p class="number-card">0</p>
@@ -44,30 +44,32 @@
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor"
-                    data-text-roles="Asesor Balai">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-user'></i>
-                        <p class="number-card">0</p>
-                    </div>
-                    <div class="mt-2">
-                        Asesor Balai
-                    </div>
-                </a>
+                @if(auth()->user()->roles[0] == 'superuser')
 
-                <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk"
-                    data-text-roles="Asesor PPK">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-user'></i>
-                        <p class="number-card">0</p>
-                    </div>
-                    <div class="mt-2">
-                        Asesor PPK
-                    </div>
-                </a>
+                    <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor"
+                       data-text-roles="Asesor Balai">
+                        <div class="d-flex justify-content-between">
+                            <i class='bx bx-user'></i>
+                            <p class="number-card">0</p>
+                        </div>
+                        <div class="mt-2">
+                            Asesor Balai
+                        </div>
+                    </a>
 
+                    <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk"
+                       data-text-roles="Asesor PPK">
+                        <div class="d-flex justify-content-between">
+                            <i class='bx bx-user'></i>
+                            <p class="number-card">0</p>
+                        </div>
+                        <div class="mt-2">
+                            Asesor PPK
+                        </div>
+                    </a>
+                @endif
                 <a class="card-tab d-block c-text card-user" id="uvendor" data-roles="vendor"
-                    data-text-roles="Penyedia Jasa">
+                   data-text-roles="Penyedia Jasa">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user'></i>
                         <p class="number-card">0</p>
@@ -81,13 +83,13 @@
 
             <!-- Modal Tambah-->
             <div class="modal fade" id="tambahdata" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
+                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="title"></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                                    aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form id="form" onsubmit="return Save()">
@@ -98,7 +100,7 @@
                                     <label for="name" class="form-label">Name</label>
                                     <input type="text" class="form-control" id="name" name="name">
                                 </div>
-                               <div id="ppkDiv"></div>
+                                <div id="ppkDiv"></div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="email" name="email">
@@ -134,7 +136,7 @@
 
             <div class="table-container">
                 <div class="header-table">
-                    <p class="fw-bold t-primary title-table">Data Super User</p>
+                    <p class="fw-bold t-primary title-table"></p>
 
                     <a class="bt-primary-sm" id="addData" data-type="Tambah"><i class='bx bx-plus'></i> Tambah Data</a>
                 </div>
@@ -148,21 +150,23 @@
 @section('script')
 
     <script>
-        var roles, textRoles;
+        var roles, textRoles, title;
         var table;
         $(document).ready(function () {
-            $("#user").addClass("active");
             roles = 'superuser';
             textRoles = 'Superuser'
+            @if(auth()->user()->roles[0] == 'admin')
+                roles = 'admin';
+            textRoles = 'Admin Balai'
+            @endif
+
             getCountUser()
-
-
-
+            $('.title-table').text('Data ' + textRoles);
             datatable(roles);
         });
 
         function Save() {
-            saveData('Tambah Data ' + textRoles, 'form', null, afterSave)
+            saveData(title + ' Data ' + textRoles, 'form', null, afterSave)
             return false;
         }
 
@@ -175,7 +179,8 @@
         $(document).on('click', '#addData, #editData', function () {
             $('#tambahdata #id').val($(this).data('id'));
             $('#tambahdata #roles').val(roles);
-            $('#tambahdata #title').html($(this).data('type') + ' Data ' + textRoles);
+            title = $(this).data('type');
+            $('#tambahdata #title').html(title + ' Data ' + textRoles);
             $('#tambahdata #email').val($(this).data('email'));
             $('#tambahdata #name').val($(this).data('name'));
             $('#tambahdata #username').val($(this).data('username'));
@@ -186,13 +191,13 @@
                 $('#tambahdata #password').val('********');
             }
             $('#ppkDiv').empty()
-            if (roles === 'accessorppk'){
+            if (roles === 'accessorppk') {
                 $('#ppkDiv').html(' <div class="mb-3">\n' +
                     '                                    <label for="name" class="form-label">PPK</label>\n' +
                     '                                    <select class="me-2" style="width: 100%" aria-label="Default select example" id="selectPPK" name="selectPPK" required>\n' +
                     '                                    </select>\n' +
                     '                                </div>')
-                getSelect('selectPPK','/ppk/get-all','name', $(this).data('ppk'))
+                getSelect('selectPPK', '/ppk/get-all', 'name', $(this).data('ppk'))
                 $('#selectPPK').select2({
                     dropdownParent: $('#tambahdata')
                 });
@@ -217,7 +222,6 @@
         function getCountUser() {
             $.get(window.location.pathname + '/count', function (data) {
                 $.each(data, function (key, val) {
-                    console.log(val['roles']['0'])
                     $('#u' + val['roles']['0'] + ' p').html(val['count'])
                 })
             })
@@ -231,7 +235,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: url,
-                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // debugger;
                     var numStart = this.fnPagingInfo().iStart;
                     var index = numStart + iDisplayIndexFull + 1;
@@ -248,11 +252,11 @@
                 ],
 
                 columns: [{
-                        "className": '',
-                        "orderable": false,
-                        "data": null,
-                        "defaultContent": ''
-                    },
+                    "className": '',
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": ''
+                },
                     {data: role + '.name', name: role + '.name'},
                     {data: 'username', name: 'username'},
                     {data: 'email', name: 'email'},
@@ -261,9 +265,9 @@
                         "data": 'id',
                         "width": '100',
                         "render": function (data, type, row, meta) {
-                            var ppk = row[role].ppk !== undefined  ? row[role].ppk.id : '';
+                            var ppk = row[role].ppk !== undefined ? row[role].ppk.id : '';
                             return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-position="" data-name="" data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
-                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="' + row.username + '" data-ppk="'+ppk+'" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role].name + '" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
+                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="' + row.username + '" data-ppk="' + ppk + '" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role].name + '" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
                         }
                     },
                 ]

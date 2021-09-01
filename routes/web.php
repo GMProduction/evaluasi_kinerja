@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\AuthController::class, 'pageLogin']);
+Route::get('/login', [\App\Http\Controllers\AuthController::class, 'pageLogin'])->name('login');
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
+Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
 
 Route::get('/indicators', [\App\Http\Controllers\IndicatorController::class, 'index']);
 Route::get('/package', [\App\Http\Controllers\PackageController::class, 'index']);
@@ -25,12 +27,12 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::prefix('/')->group(function (){
+Route::prefix('/')->middleware('auth')->group(function (){
     Route::get('/', function () {
         return view('superuser/dashboard');
     });
 
-    Route::prefix('/users')->group(function (){
+    Route::prefix('/users')->middleware('roles:superuser,admin')->group(function (){
         Route::match(['post','get'],'/', [\App\Http\Controllers\Superadmin\UserController::class,'index']);
         Route::get('/{id}/delete', [\App\Http\Controllers\Superadmin\UserController::class,'delete']);
         Route::get('/count', [\App\Http\Controllers\Superadmin\UserController::class,'getCountUser']);
@@ -52,7 +54,7 @@ Route::prefix('/')->group(function (){
    });
 
 
-    Route::prefix('/indikator')->group(function (){
+    Route::prefix('/indikator')->middleware('roles:superuser,admin')->group(function (){
         Route::match(['post','get'],'/', [\App\Http\Controllers\Superadmin\IndicatorController::class,'index']);
         Route::post('/{idIndikator}', [\App\Http\Controllers\Superadmin\IndicatorController::class,'storeSubIndikator']);
         Route::get('/{idIndikator}/sub', [\App\Http\Controllers\Superadmin\IndicatorController::class,'getSubIndicator']);

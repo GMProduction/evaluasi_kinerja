@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Super User | Evaluasi Kinerja </title>
+    <title>Evaluasi Kinerja | {{auth()->user()->roles[0]}}</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -34,7 +34,7 @@
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
 
         <div class="d-flex align-items-center">
-            <p class="me-2 mb-0">Hi, SuperAdmin </p>
+            <p class="me-2 mb-0">Hi, {{auth()->user()->username}} </p>
             <div class="header_img"> <img
                     src="https://awsimages.detik.net.id/community/media/visual/2021/05/05/takeuchi-miyu_43.jpeg?w=700&q=90"
                     style="object-fit: cover" alt=""> </div>
@@ -46,17 +46,17 @@
                     {{-- <i class='bx bx-layer nav_logo-icon'></i> --}}
                     <span class="nav_logo-name">Evaluasi Kinerja</span> </a>
 
-                <div class="nav_list">
+                <div id="sidebar" class="nav_list">
                     <a href="/" id="dashboard" class="nav_link "> <i class='bx bx-grid-alt nav_icon'></i>
                         <span class="nav_name">Dashboard</span> </a>
 
-                    <a href="/users" id="user" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span
+                    <a href="/users" id="users" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span
                             class="nav_name">Users</span> </a>
 
                     <a href="/ppk" id="ppk" class="nav_link"> <i
                             class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">PPK</span> </a>
 
-                    <a href="/paket-konstruksi" id="paketKonstruksi" class="nav_link"> <i class='bx bx-building-house' ></i>
+                    <a href="/paket-konstruksi" id="paket-konstruksi" class="nav_link"> <i class='bx bx-building-house' ></i>
                          <span class="nav_name">Paket Konstruksi</span> </a>
                     <a href="/indikator" id="indikator" class="nav_link"> <i class='bx bx-doughnut-chart' ></i> <span
                             class="nav_name">Indikator</span> </a>
@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-            <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span>
+            <a href="/logout" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span>
             </a>
         </nav>
     </div>
@@ -91,7 +91,7 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-
+    <script src="{{ asset('js/currency.js') }}"></script>
     <script src="{{ asset('js/dialog.js') }}"></script>
     <script src="{{ asset('js/moment.js') }}"></script>
 

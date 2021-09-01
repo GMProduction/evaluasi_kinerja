@@ -179,11 +179,24 @@
                     },
                     {data: 'name', name: 'name'},
                     {data: 'no_reference', name: 'no_reference'},
-                    {data: 'date', name: 'date'},
+                    {
+                        data: 'date', name: 'date',
+                        "render": function (data) {
+                            return moment(data).format('DD MMMM YYYY')
+                        }
+                    },
                     {data: 'ppk.name', name: 'ppk.name'},
                     {data: 'vendor.vendor.name', name: 'vendor.vendor.name'},
-                    {data: 'start_at', name: 'start_at'},
-                    {data: 'finish_at', name: 'finish_at'},
+                    {
+                        data: 'start_at', name: 'start_at', "render": function (data) {
+                            return moment(data).format('DD MMMM YYYY')
+                        }
+                    },
+                    {
+                        data: 'finish_at', name: 'finish_at', "render": function (data) {
+                            return moment(data).format('DD MMMM YYYY')
+                        }
+                    },
                     {
                         "data": 'id',
                         "width": '100',
@@ -196,7 +209,6 @@
         }
 
         $(document).ready(function () {
-            $("#paketKonstruksi").addClass("active");
             $('#tambahdata').modal({
                 backdrop: 'static',
                 keyboard: false

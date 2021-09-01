@@ -97,9 +97,8 @@ class UserController extends Controller
                 $user = User::find(\request('id'));
                 if (strpos($fieldPassword['password'], '*') === false) {
                     $password = Hash::make($fieldPassword['password']);
-                    Arr::add($field, 'password', $password);
+                    Arr::set($field, 'password', $password);
                 }
-
                 $user->update($field);
                 $user->$roles()->update(['name' => $field['name']]);
             } else {
