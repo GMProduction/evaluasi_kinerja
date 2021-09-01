@@ -405,70 +405,71 @@
 
 <body>
 
-@if($errors->any())
-{{--    <h4>{{$errors}}</h4>--}}
-{{--    <h4>{{$errors->first()}}</h4>--}}
-    {{--        <h4>{{$errors->first() == 'The password field is required.' ? 'swal' : 'input'}}</h4>--}}
-    @if($errors->first())
-        <script>
-            swal('{{$errors->first()}}', {
-                icon: 'warning',
-                buttons: false,
-                timer: 2000
-            })
-        </script>
+    @if ($errors->any())
+        {{-- <h4>{{$errors}}</h4> --}}
+        {{-- <h4>{{$errors->first()}}</h4> --}}
+        {{-- <h4>{{$errors->first() == 'The password field is required.' ? 'swal' : 'input'}}</h4> --}}
+        @if ($errors->first())
+            <script>
+                swal('{{ $errors->first() }}', {
+                    icon: 'warning',
+                    buttons: false,
+                    timer: 2000
+                })
+            </script>
+        @endif
     @endif
-@endif
 
 
-<div class="container" id="container">
-    <div class="form-container sign-up-container">
-        <form action="#">
-            <h1>Create Account</h1>
-            <div class="social-container">
-                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            <span>or use your email for registration</span>
-            <input type="text" placeholder="Name"/>
-            <input type="email" placeholder="Email"/>
-            <input type="password" placeholder="Password"/>
-            <button>Sign Up</button>
-        </form>
-    </div>
-    <div class="form-container sign-in-container">
-        <form action="#" method="post">
-            @csrf
-            <h1>Login</h1>
-            <div class="social-container">
-                <p style="margin-bottom: 10px; margin-top: 10px">Masukan Email/Username <br>dan Password</p>
-            </div>
-            {{-- <span>or use your account</span> --}}
-            <input type="text" placeholder="Email / Username" name="username" value="{{session('username')}}"/>
-            <input type="password" placeholder="Password" name="password"/>
-            <div href="#">Jika ada kendala login silahkan hubungi kami di <a target="_blank" href="https://wa.me/6281234567890" class="t-primary">sini</a></div>
-            <button class="b-primary mt-4" style="border: none; cursor: pointer">Sign In</button>
-        </form>
-    </div>
-    <div class="overlay-container">
-        <div class="overlay">
-            <div class="overlay-panel overlay-left">
-                <h1>Evaluasi Kinerja Penyedia Jasa</h1>
-                <p>To keep connected with us please login with your personal info</p>
-                <button class="ghost" id="signIn">Sign In</button>
-            </div>
-            <div class="overlay-panel overlay-right">
-                <h1>Evaluasi Kinerja Penyedia Jasa</h1>
-                <p>Hitung penilaian kinerja penyedia jasa disini</p>
-                {{-- <button class="ghost" id="signUp">Sign Up</button> --}}
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form action="#">
+                <h1>Create Account</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your email for registration</span>
+                <input type="text" placeholder="Name" />
+                <input type="email" placeholder="Email" />
+                <input type="password" placeholder="Password" />
+                <button>Sign Up</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form action="#" method="post">
+                @csrf
+                <h1>Login</h1>
+                <div class="social-container">
+                    <p style="margin-bottom: 10px; margin-top: 10px">Masukan Email/Username <br>dan Password</p>
+                </div>
+                {{-- <span>or use your account</span> --}}
+                <input type="text" placeholder="Email / Username" name="username" value="{{ session('username') }}" />
+                <input type="password" placeholder="Password" name="password" />
+                <div href="#">Jika ada kendala login silahkan hubungi kami di <a target="_blank"
+                        href="https://wa.me/6281234567890" class="t-primary">sini</a></div>
+                <button class="b-primary mt-4" style="border: none; cursor: pointer">Sign In</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Evaluasi Kinerja Penyedia Jasa</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Evaluasi Kinerja Penyedia Jasa</h1>
+                    <p>Hitung penilaian kinerja penyedia jasa disini</p>
+                    {{-- <button class="ghost" id="signUp">Sign Up</button> --}}
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="footer">
-    {{-- <b>	Follow me on </b>
+    <div class="footer">
+        {{-- <b>	Follow me on </b>
         <div class="icons">
             <a href="https://github.com/kvaibhav01" target="_blank" class="social"><i class="fab fa-github"></i></a>
             <a href="https://www.instagram.com/vaibhavkhulbe143/" target="_blank" class="social"><i class="fab fa-instagram"></i></a>
@@ -478,7 +479,8 @@
             </div>
         </div> --}}
 
-    <script src="{{ asset('js/login.js') }}"></script>
+        {{-- <script src="{{ asset('js/login.js') }}"></script> --}}
+    </div>
 </body>
 
 </html>
