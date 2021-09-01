@@ -13,15 +13,18 @@
         <div class="mt-4  table-container" style="min-height: 23vh">
             <div class="header-table">
                 <p class="title-table fw-bold t-primary">Data Indikator</p>
-                <div>
-                <form>
-                    <input class="form-control" type="text" name="cari" value="{{ request('cari') }}"
-                        placeholder="Cari master indikator">
-                    <button class="btn btn-success" type="submit"><i class='bx bx-search-alt-2'></i></button>
-                    <a class="btn btn-primary" href="/indikator"><i class='bx bx-reset'></i></a>
-                </form>
-                <a class="bt-primary-sm" id="addData"><i class='bx bx-plus'></i> Tambah Data</a>
-            </div>
+                <div >
+                    <form class="d-flex">
+                        <input class="form-control" type="text" name="cari"
+                            style="border-top-right-radius: 0;border-bottom-right-radius: 0;"
+                            value="{{ request('cari') }}" placeholder="Cari master indikator">
+                        <button class="btn btn-warning me-3" style="border-top-left-radius: 0;border-bottom-left-radius: 0;"
+                            type="submit"><i class='bx bx-search-alt-2'></i></button>
+                        {{-- <a class="btn btn-primary" href="/indikator"><i class='bx bx-reset'></i></a> --}}
+                        <a class="bt-primary-sm " id="addData" style="min-width: 100px"><i class='bx bx-plus'></i> Tambah Data</a>
+
+                    </form>
+                </div>
             </div>
 
             <div class="___class_+?8___">
