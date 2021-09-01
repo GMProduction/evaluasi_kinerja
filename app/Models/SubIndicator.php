@@ -23,6 +23,6 @@ class SubIndicator extends Model
 
     public function singleScore()
     {
-        return $this->hasOne(Score::class, 'sub_indicator_id')->where('evaluator_id', 2);
+        return $this->hasOne(Score::class, 'sub_indicator_id');
     }
 }

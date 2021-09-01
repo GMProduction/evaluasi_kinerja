@@ -8,6 +8,7 @@ use App\Helper\CustomController;
 use App\Models\Indicator;
 use App\Models\Package;
 use App\Models\Score;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
 class ScoreController extends CustomController
@@ -19,14 +20,25 @@ class ScoreController extends CustomController
 
     public function datatable()
     {
-        $data = Package::with(['vendor.vendor', 'ppk'])->get();
+        $roles = auth()->user()->roles[0];
+        $userId = Auth::id();
+        $query = Package::with(['vendor.vendor', 'ppk']);
+        if ($roles === 'vendor') {
+            $query->where('vendor_id', $userId);
+        }
+
+        if ($roles === 'accessorppk') {
+            $query->whereHas('ppk.accessorppk.user', function ($query) use ($userId) {
+                $query->where('id', $userId);
+            });
+        }
+        $data = $query->get();
         return DataTables::of($data)->make(true);
     }
 
     public function index()
     {
-        $data = Package::with(['vendor.vendor', 'ppk'])->get();
-        return view('superuser.penilaian.penilaian')->with(['data' => $data]);
+        return view('superuser.penilaian.penilaian');
     }
 
     public function detail($id)
@@ -38,8 +50,11 @@ class ScoreController extends CustomController
     public function getScore()
     {
         try {
-            $data = Indicator::with(['subIndicator.singleScore' => function ($query) {
-                $query->where('package_id', 1);
+            $packageId = request()->query->get('package');
+            $type = request()->query->get('type');
+//            dd($packageId);
+            $data = Indicator::with(['subIndicator.singleScore' => function ($query) use ($packageId, $type) {
+                $query->where('package_id', $packageId)->where('type', $type);
             }])->get();
             return response()->json([
                 'msg' => 'success',
@@ -55,16 +70,54 @@ class ScoreController extends CustomController
     public function setScore()
     {
         try {
+            $subIndicatorId = $this->postField('sub_indicator');
+            $packageId = $this->postField('package');
+            $value = (int)$this->postField('value');
+            $type = $this->postField('index');
+            $authorId = Auth::id();
+            $score = Score::where('package_id', $packageId)->where('author_id', $authorId)->where('type', $type)->where('sub_indicator_id', $subIndicatorId)->first();
+            $scoreText = 'bad';
+            switch ($value) {
+                case 1:
+                    $scoreText = 'bad';
+                    break;
+                case 3:
+                    $scoreText = 'medium';
+                    break;
+                case 3:
+                    $scoreText = 'good';
+                    break;
+                default:
+                    break;
+            }
+            if ($score !== null) {
 
-        }catch (\Exception $e){
-
+                $score->score = $value;
+                $score->text = $scoreText;
+                $score->save();
+            } else {
+                $newScore = new Score();
+                $newScore->package_id = $packageId;
+                $newScore->evaluator_id = $authorId;
+                $newScore->author_id = $authorId;
+                $newScore->sub_indicator_id = $subIndicatorId;
+                $newScore->score = $value;
+                $newScore->text = $scoreText;
+                $newScore->type = $type;
+                $newScore->save();
+            }
+            return response()->json(['msg' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['msg' => 'Terjadi Kesalahan Server..'], 500);
         }
     }
+
     public function getRadarChart()
     {
         try {
-            $data = Indicator::with(['subIndicator.singleScore' => function ($query) {
-                $query->where('package_id', 1);
+            $packageId = request()->query->get('package');
+            $data = Indicator::with(['subIndicator.singleScore' => function ($query) use ($packageId) {
+                $query->where('package_id', $packageId);
             }])->get();
             $arrData = $data->toArray();
             $result = [];

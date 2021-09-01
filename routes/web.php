@@ -67,6 +67,7 @@ Route::prefix('/')->middleware('auth')->group(function (){
         Route::get('/detail/{id}', [\App\Http\Controllers\ScoreController::class, 'detail']);
         Route::get('/results', [\App\Http\Controllers\ScoreController::class, 'getScore']);
         Route::get('/radar', [\App\Http\Controllers\ScoreController::class, 'getRadarChart']);
+        Route::post('/set-score', [\App\Http\Controllers\ScoreController::class, 'setScore']);
     });
 
     Route::get('/detail-penilaian', function () {
