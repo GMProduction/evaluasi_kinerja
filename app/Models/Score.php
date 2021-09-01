@@ -9,6 +9,7 @@ class Score extends Model
 {
     use HasFactory;
 
+    protected $table = 'score';
     protected $fillable = [
         'package_id',
         'evaluator_id',
