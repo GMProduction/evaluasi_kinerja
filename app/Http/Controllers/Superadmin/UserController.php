@@ -129,6 +129,8 @@ class UserController extends Controller
         return $user;
     }
 
+
+
     public function delete($id){
 
     }

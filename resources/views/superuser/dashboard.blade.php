@@ -10,16 +10,19 @@
     <section class="" style="margin-top: 100px">
     {{--        <canvas id="myChart" height="400" width="400"></canvas>--}}
     {{--        <canvas id="canvas" height="400" width="400"></canvas>--}}
-    @if(auth()->user()->roles[0] == 'superuser')
-        @include('superuser.dashboard.superuser')
+    @if(auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin')
+        @include('superuser.dashboard.superuser', ['data' => 'content'])
     @endif
-    <!-- Tab panes -->
 
     </section>
 @endsection
 
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @if(auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin')
+        @include('superuser.dashboard.superuser', ['data' => 'script'])
+    @endif
+
     <script>
         var roles, textRoles;
         var table;
