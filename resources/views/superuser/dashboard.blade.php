@@ -8,76 +8,13 @@
 @section('content')
 
     <section class="" style="margin-top: 100px">
-        <canvas id="myChart"></canvas>
+    {{--        <canvas id="myChart" height="400" width="400"></canvas>--}}
+    {{--        <canvas id="canvas" height="400" width="400"></canvas>--}}
+    @if(auth()->user()->roles[0] == 'superuser')
+        @include('superuser.dashboard.superuser')
+    @endif
+    <!-- Tab panes -->
 
-        <div role="tablist">
-            <div class="items-tab" id="menu-tab">
-                <a class="card-tab  d-block c-text card-user" id="usuperuser" data-roles="superuser" data-text-roles="Superuser">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-user-circle icon-size-lg '></i>
-                        <p class="number-card">0</p>
-                    </div>
-                    <div class="mt-2">
-                        Data User
-                    </div>
-                </a>
-
-                <a class="card-tab d-block c-text card-user" id="uadmin" data-roles="admin" data-text-roles="Admin">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-message-square-detail nav_icon'></i>
-                        <p class="number-card">0</p>
-                    </div>
-                    <div class="mt-2">
-                        Data PPK
-                    </div>
-                </a>
-
-                <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor" data-text-roles="Asesor Balai">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-building-house'></i>
-                        <p class="number-card">0</p>
-                    </div>
-                    <div class="mt-2">
-                        Data Paket Konstruksi
-                    </div>
-                </a>
-
-                <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk" data-text-roles="Asesor PPK">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-doughnut-chart'></i>
-                        <p class="number-card">0</p>
-                    </div>
-                    <div class="mt-2">
-                        Data Indikator
-                    </div>
-                </a>
-
-
-            </div>
-
-
-        </div>
-        <!-- Tab panes -->
-        <div class="mt-4" style="min-height: 23vh">
-            <!-- Tab panes -->
-            {{-- @yield('contentUser') --}}
-
-
-            <div class="table-container">
-                <p class="fw-bold t-primary">Data Konstruksi Yang Masih Berlangsung</p>
-                <table id="table" class="table table-striped" style="width:100%">
-                    <tr>
-                        <th>Paket</th>
-                        <th>No. Kontrak</th>
-                        <th>Tanggal Kontrak</th>
-                        <th>PPK</th>
-                        <th>Penyedia Jasa</th>
-                        <th>Mulai</th>
-                        <th>Selesai</th>
-                    </tr>
-                </table>
-            </div>
-        </div>
     </section>
 @endsection
 
@@ -87,7 +24,8 @@
         var roles, textRoles;
         var table;
         $(document).ready(function () {
-            chart()
+            // chart()
+            // cahar11()
             roles = 'superuser';
             textRoles = 'Superuser'
         });
@@ -100,10 +38,13 @@
                     'Drinking',
                     'Sleeping',
                     'Designing',
+                    'Designing',
+                    'Designing',
+                    'Designing',
                 ],
                 datasets: [{
                     label: 'My First Dataset',
-                    data: [65, 59, 90, 81],
+                    data: [60, 40, 35, 80, 75, 62, 55],
                     fill: true,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgb(255, 99, 132)',
@@ -120,34 +61,66 @@
                 type: 'radar',
                 data: data,
                 options: {
-                    elements: {
-                        line: {
-                            borderWidth: 3
-                        }
-                    }
+                    // elements: {
+                    // line: {
+                    //     borderWidth: 3
+                    // },
+                    responsive: false,
+                    maintainAspectRatio: true,
+                    scale: {
+                        reverse: false,
+                        max: 100,
+                        min: 0,
+                        stepSize: 20
+                    },
+
+                    // }
                 },
             };
-
-            new Chart(
-                document.getElementById('myChart'),
-                config,
-                options = {
-                    scales: {
-                        r: {
-                            angleLines: {
-                                display: false
-                            },
-                            min: 0,
-                            max: 100,
-                            // suggestedMin: 0,
-                            // suggestedMax: 100
-                        }
-                    }
-                }
+            var canvas = document.getElementById("myChart");
+            var radar = new Chart(canvas,
+                config
             );
         }
 
+        function cahar11() {
+            var options = {
+                responsive: false,
+                maintainAspectRatio: true,
+                scale: {
+                    scale: {
+                        min: 0,
+                        max: 5,
+                    },
+                }
+            };
 
+            var dataLiteracy = {
+                labels: [
+                    "1", "2", "3", "4", "5"
+                ],
+                datasets: [{
+                    label: "Literacy",
+                    backgroundColor: "rgba(179,181,198,0.2)",
+                    borderColor: "rgba(179,181,198,1)",
+                    pointBackgroundColor: "rgba(179,181,198,1)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(179,181,198,1)",
+                    data: [
+                        2, 3, 4, 1, 2
+                    ]
+                }]
+            };
+
+            var ctx = document.getElementById("canvas");
+            var myRadarChart = new Chart(ctx, {
+                type: 'radar',
+                data: dataLiteracy,
+                options: options
+            });
+            console.log(myRadarChart);
+        }
 
 
     </script>
