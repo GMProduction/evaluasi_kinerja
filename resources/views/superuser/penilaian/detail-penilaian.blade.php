@@ -10,7 +10,7 @@
 
 @section('content')
     <section class="___class_+?0___" style="margin-top: 100px">
-        <div class="mt-4" style="min-height: 23vh">
+        <div class="mt-4 mb-5" style="min-height: 23vh">
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
 
@@ -137,6 +137,13 @@
                                 <hr>
                                 <div id="donutchart" style="width: 100%;"></div>
                             </div>
+
+                            <div class="table-container" id="parentofchart">
+                                <p class="fw-bold t-primary">Nilai Komulatif</p>
+                                <hr>
+                                <h1 class="t-cukup text-center mt-5"  style="font-size: 4rem">65</h1>
+                                <p class="b-cukup r-fullround text-center  ms-auto me-auto p-1 mt-3" style="width: 200px" >Cukup</p>
+                            </div>
                         </div>
                     </div>
                     <div class="table-container">
@@ -204,7 +211,8 @@
         function elMainIndicator(key, value) {
             return '<tr class="bg-prim-light" id="indicator-' + key + '">' +
                 '<th>' + (key + 1) + '</th>' +
-                '<th colspan="2">' + value['name'] + '</th>' +
+                '<th >' + value['name'] + '</th>' +
+                '<th style="min-width: 100px" ></th>' +
                 '<th>Update Terahkir</th>' +
                 '<th>File Terupload</th>' +
                 '</tr>'
@@ -223,7 +231,10 @@
             return '<tr>' +
                 '<td>' + mainKey + '.' + (key + 1) + '</td>\n' +
                 '<td>' + value['name'] + '</td>\n' +
-                '<td><a class="' + btn_class + '">' + score + '</a></td>\n' +
+                '<td><a class="' + btn_class + ' "  data-bs-toggle="dropdown" aria-expanded="false">' + score + '</a>\n'+
+                '<div class="dropdown-menu"> <button class="dropdown-item" type="button">Bagus</button>\n'+
+                '<button class="dropdown-item" type="button">Cukup</button>\n'+
+                '<button class="dropdown-item" type="button">Kurang</button></div></td>\n' +
                 '<td>' + last_update + '</td>\n' +
                 '<td><a class="bt-primary-xsm">' + file_text + '</a></td>\n' +
                 '</tr>';
