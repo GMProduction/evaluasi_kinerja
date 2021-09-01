@@ -141,9 +141,9 @@
                             <div class="table-container" id="parentofchart">
                                 <p class="fw-bold t-primary">Nilai Komulatif</p>
                                 <hr>
-                                <h1 class="t-cukup text-center mt-5" style="font-size: 4rem">65</h1>
-                                <p class="b-cukup r-fullround text-center  ms-auto me-auto p-1 mt-3"
-                                   style="width: 200px">Cukup</p>
+                                <h1 class=" text-center mt-5" style="font-size: 4rem" id="comulative_value"></h1>
+                                <p id="comulative_status" class="b-cukup r-fullround text-center  ms-auto me-auto p-1 mt-3"
+                                   style="width: 200px"></p>
                             </div>
                         </div>
                     </div>
@@ -154,7 +154,33 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="modal fade" id="modalfile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><span id="title"></span> Upload File</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form" onsubmit="return Save()">
+                            @csrf
+                            <input id="id" name="id" hidden>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nama Sub Indikator</label>
+                                <p id="fileNameSub"></p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="weight" class="form-label">File</label>
+                                <input type="file" class="form-control" id="file" name="file">
+                            </div>
+                            <button type="submit" class="bt-primary">Simpan</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </section>
 @endsection
@@ -178,7 +204,6 @@
                 ['Bagus (50)', 50],
                 ['Cukup (10)', 10],
                 ['Kurang (10)', 10],
-
 
             ]);
 
@@ -208,7 +233,6 @@
                 current[0].className = current[0].className.replace(" active", "");
                 this.className += " active ";
 
-
             });
         }
 
@@ -228,10 +252,13 @@
             const availableBtnClass = ['bt-primary-xsm', 'b-buruk-light-xsm', 'b-cukup-light-xsm', 'b-bagus-light-xsm'];
             let score = single_score !== null ? availableScore[single_score['score']] : 'Beri Nilai';
             let file_text = single_score !== null ? single_score['file'] !== null ? 'Download' : 'Upload File' : '-';
+            let file_Id = single_score !== null ? single_score['file'] !== null ? 'download' : 'upload' : '-';
             let file_link = single_score !== null ? single_score['file'] : 'Upload File';
             let update_at = single_score !== null ? new Date(single_score['updated_at']) : null;
             let last_update = single_score !== null ? getCurrentDateString(update_at) : '-';
             let btn_class = single_score !== null ? availableBtnClass[single_score['score']] : 'bt-primary-xsm';
+            let button_upload = single_score !== null ? single_score['file'] !== null ? '<a class="bt-primary-xsm ms-2" data-subname="' + value['name'] + '" data-link="' + file_link + '" data-scoreid="' + single_score['id'] + '" id="upload">Upload File</a>' : '' : '';
+            let scoreid = single_score !== null ? single_score['id'] : '';
             let dropdown_active = '';
             let el_dropdown = '';
             if (roles === index) {
@@ -243,12 +270,33 @@
             return '<tr>' +
                 '<td>' + mainKey + '.' + (key + 1) + '</td>\n' +
                 '<td>' + value['name'] + '</td>\n' +
-                '<td><a class="' + btn_class + ' "  data-bs-toggle="' + dropdown_active + '" aria-expanded="false">' + score + '</a>\n' +
+                '<td><a class="' + btn_class + ' " style="cursor: pointer"  data-bs-toggle="' + dropdown_active + '" aria-expanded="false">' + score + '</a>\n' +
                 el_dropdown +
                 '</td>\n' +
                 '<td>' + last_update + '</td>\n' +
-                '<td><a class="bt-primary-xsm">' + file_text + '</a></td>\n' +
+                '<td><a class="bt-primary-xsm" data-subname="' + value['name'] + '" data-link="' + file_link + '" data-scoreid="' + scoreid + '" id="' + file_Id + '">' + file_text + '</a></td>\n' +
                 '</tr>';
+        }
+
+        $(document).on('click', '#download', function () {
+            $(this).attr('target', '_blank')
+            $(this).attr('href', $(this).data('link'));
+        })
+        $(document).on('click', '#upload', function () {
+            $('#modalfile #fileNameSub').html($(this).data('subname'))
+            $('#modalfile #id').val($(this).data('scoreid'))
+            $('#modalfile #file').val('')
+            $('#modalfile').modal('show')
+        })
+
+        function Save() {
+            saveData('Upload File', 'form', null, afterSaveFile)
+            return false;
+        }
+
+        function afterSaveFile(data) {
+            $('#modalfile').modal('hide')
+            getScore(data)
         }
 
         function elTable() {
@@ -278,7 +326,7 @@
                     });
                     elMain.after(sub);
                 });
-                $('.nilai').on('click',  function () {
+                $('.nilai').on('click', function () {
                     let value = this.dataset.value;
                     let sub_indicator = this.dataset.subin;
                     console.log(value, sub_indicator, package_id);
@@ -304,11 +352,13 @@
                 await getScore(index);
 
                 console.log(response)
-            }catch (e) {
+            } catch (e) {
                 console.log(response)
             }
         }
+
         var radarChart;
+
         function chart(dataChart) {
 
             let labels = [];
@@ -318,7 +368,7 @@
                 values.push(v['radar']);
                 console.log(v)
             });
-            const data = {
+           const data = {
                 labels: labels,
                 datasets: [{
                     label: 'My First Dataset',
@@ -343,48 +393,82 @@
                         line: {
                             borderWidth: 3
                         }
-                    }
+                    },
+                    // responsive: false,
+                    maintainAspectRatio: true,
+                    scale: {
+                        reverse: false,
+                        max: 10,
+                        min: 0,
+                        stepSize: 2
+                    },
                 },
+                plugins: [{
+                    beforeInit: function(chart) {
+                        chart.data.labels.forEach(function(e, i, a) {
+                            console.log()
+                            var space = e.split(' ');
+                            // if (space[2]) {
+                            //     a[i] = e.split(' ');
+                            // }
+                        });
+                    }
+                }]
             };
+            if (radarChart) {
+                radarChart.destroy();
 
-
+            }
             radarChart = new Chart(
                 document.getElementById('myChart'),
                 config,
-                options = {
-                    scales: {
-                        r: {
-                            angleLines: {
-                                display: false
-                            },
-                            min: 0,
-                            max: 100,
-                            // suggestedMin: 0,
-                            // suggestedMax: 100
-                        }
-                    }
-                }
+
             );
+
         }
 
-        async function getRadarChart(){
+        async function getRadarChart() {
             try {
-                let response = await $.get('/penilaian/radar?package='+package_id);
+                let response = await $.get('/penilaian/radar?package=' + package_id);
+                setComulative(response['comulative'])
                 chart(response['data']);
                 // await getScore(index);
                 console.log(response)
-            }catch (e) {
+            } catch (e) {
                 console.log(e)
             }
         }
+
+        function setComulative(data) {
+            $('#comulative_value').html(data)
+
+            if (data < 50) {
+                $('#comulative_value').addClass('t-kurang');
+                $('#comulative_status').addClass('b-kurang').html('Kurang');
+            } else if (data < 64) {
+                $('#comulative_value').addClass('t-cukup');
+                $('#comulative_status').addClass('b-kurang').html('Kurang');
+            } else if (data < 79) {
+                $('#comulative_value').addClass('t-cukup');
+                $('#comulative_status').addClass('b-cukup').html('Cukup');
+            } else if (data < 90) {
+                $('#comulative_value').addClass('t-bagus');
+                $('#comulative_status').addClass('b-bagus').html('Baik');
+            }else if (data < 100) {
+                $('#comulative_value').addClass('t-bagus');
+                $('#comulative_status').addClass('b-bagus').html('Baik');
+            }
+        }
+
         $(document).ready(function () {
             getScore('vendor');
-            getRadarChart();
+            // getRadarChart();
             // chart();
             $('.card-user').on('click', function () {
                 index = this.dataset.roles;
                 getScore(index)
             })
         })
+
     </script>
 @endsection

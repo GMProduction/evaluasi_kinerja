@@ -7,12 +7,18 @@
 //     }
 // });
 
-
 function formatNumber(n) {
     // format number 1000000 to 1,234,567
-    return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, "")
+    if (parseInt(n[0]) > 0) {
+        n = n.replace(n, '0');
+    }
+    n = n.replace(/\D/g, "");
+    if (n.length < 3) {
+        n = n.replace(/\B(?=(\d{1}))/g, ".")
+        console.log(n)
+    }
+    return n
 }
-
 
 function formatCurrency(input, blur) {
     // appends $ to value, validates decimal side
@@ -22,7 +28,9 @@ function formatCurrency(input, blur) {
     var input_val = input.val();
 
     // don't validate empty input
-    if (input_val === "") { return; }
+    if (input_val === "") {
+        return;
+    }
 
     // original length
     var original_len = input_val.length;

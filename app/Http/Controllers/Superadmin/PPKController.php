@@ -37,5 +37,9 @@ class PPKController extends Controller
         return $ppk;
     }
 
+    public function delete($id){
+        PPK::destroy($id);
+        return response()->json(['msg' => 'success']);
+    }
 
 }

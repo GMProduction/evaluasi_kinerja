@@ -55,6 +55,7 @@ Route::prefix('/')->middleware('auth')->group(
             function () {
                 Route::match(['post', 'get'], '/', [\App\Http\Controllers\Superadmin\PPKController::class, 'index']);
                 Route::get('/get-all', [\App\Http\Controllers\Superadmin\PPKController::class, 'getPPK']);
+                Route::get('/{id}/delete', [\App\Http\Controllers\Superadmin\PPKController::class, 'delete']);
                 Route::get('/datatable', [\App\Http\Controllers\Superadmin\PPKController::class, 'datatable']);
             }
         );
@@ -75,6 +76,8 @@ Route::prefix('/')->middleware('auth')->group(
                 Route::post('/{idIndikator}', [\App\Http\Controllers\Superadmin\IndicatorController::class, 'storeSubIndikator']);
                 Route::get('/{idIndikator}/sub', [\App\Http\Controllers\Superadmin\IndicatorController::class, 'getSubIndicator']);
                 Route::get('/get-all', [\App\Http\Controllers\Superadmin\IndicatorController::class, 'getIndicator']);
+                Route::get('/{id}/delete', [\App\Http\Controllers\Superadmin\IndicatorController::class, 'deleteIndicator']);
+                Route::get('/{id}/sub/{subid}/delete', [\App\Http\Controllers\Superadmin\IndicatorController::class, 'deleteSubIndicator']);
             }
         );
 
@@ -93,6 +96,8 @@ Route::prefix('/')->middleware('auth')->group(
                 Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);
                 Route::get('/datatable', [\App\Http\Controllers\ScoreController::class, 'datatable']);
                 Route::get('/detail/{id}', [\App\Http\Controllers\ScoreController::class, 'detail']);
+                Route::get('/detail/{id}/comulative', [\App\Http\Controllers\ScoreController::class, 'getComutative']);
+                Route::post('/detail/{id}', [\App\Http\Controllers\ScoreController::class, 'uploadFile']);
                 Route::get('/results', [\App\Http\Controllers\ScoreController::class, 'getScore']);
                 Route::get('/radar', [\App\Http\Controllers\ScoreController::class, 'getRadarChart']);
                 Route::post('/set-score', [\App\Http\Controllers\ScoreController::class, 'setScore']);

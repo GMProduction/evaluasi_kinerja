@@ -8,6 +8,7 @@ use App\Helper\CustomController;
 use App\Models\Indicator;
 use App\Models\Package;
 use App\Models\Score;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
@@ -81,7 +82,7 @@ class ScoreController extends CustomController
                 case 1:
                     $scoreText = 'bad';
                     break;
-                case 3:
+                case 2:
                     $scoreText = 'medium';
                     break;
                 case 3:
@@ -124,6 +125,7 @@ class ScoreController extends CustomController
             $chkSum = 0;
             $scoreMin = 1;
             $scoreMax = 3;
+            $comulativeTotal = 0;
             foreach ($arrData as $v) {
                 $index = $v['name'];
                 $weight = $v['weight'];
@@ -151,6 +153,7 @@ class ScoreController extends CustomController
                 if ($value > 0) {
                     $radar = ($a * $value) + $b;
                     $cumulative = ($a_cumulative * $value) + $b_cumulative;
+                    $comulativeTotal = $comulativeTotal + $cumulative;
                 }
                 $transform = [
                     'index' => $index,
@@ -176,9 +179,41 @@ class ScoreController extends CustomController
                     'indicator' => $result,
                     'chk_summary' => round($chkSum, 0, PHP_ROUND_HALF_UP)
                 ],
+                'comulative' =>round($comulativeTotal, 2, PHP_ROUND_HALF_UP)
             ], 200);
         } catch (\Exception $e) {
             return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
         }
+    }
+
+    public function getComutative($id){
+        $score = Score::where([['package_id','=',$id],['evaluator_id','=',Auth::id()]])->groupBy(['score','text'])->selectRaw('sum(score) as score, text')->get();
+        $total = 0;
+        foreach ($score as $sc){
+            $total = $total + (int)$sc['score'];
+        }
+        Arr::set($score,'total', $total);
+        return $score;
+    }
+
+    public function uploadFile($id){
+        $score = Score::with(['package','subIndicator'])->find(request('id'));
+        if ($score->file){
+            if (file_exists('../public'.$score->file)) {
+                unlink('../public'.$score->file);
+            }
+        }
+        $files     = $this->request->file('file');
+        $extension = $files->getClientOriginalExtension();
+        $name      = str_replace(' ','-',$score->package->name).'-'.str_replace(' ','-',$score->subIndicator->name);
+        $value     = $name.'.'.$extension;
+
+        $stringImg = '/files/'.$value;
+        $this->uploadImage('file', $value, 'filesUpload');
+
+        $score->update(['file' => $stringImg]);
+
+        return response()->json(Auth::user()->roles[0]);
+
     }
 }

@@ -8,12 +8,17 @@
 @section('content')
 
     <section class="" style="margin-top: 100px">
-    {{--        <canvas id="myChart" height="400" width="400"></canvas>--}}
-    {{--        <canvas id="canvas" height="400" width="400"></canvas>--}}
     @if(auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin')
         @include('superuser.dashboard.superuser', ['data' => 'content'])
     @endif
 
+        <div class="mt-4" style="min-height: 23vh">
+            <div class="table-container">
+                <p class="fw-bold t-primary">Data Konstruksi Yang Masih Berlangsung</p>
+                <table id="table" class="table table-striped" style="width:100%">
+                </table>
+            </div>
+        </div>
     </section>
 @endsection
 
@@ -31,98 +36,64 @@
             // cahar11()
             roles = 'superuser';
             textRoles = 'Superuser'
+            datatable()
         });
 
-        function chart() {
+        function datatable() {
 
-            const data = {
-                labels: [
-                    'Eating',
-                    'Drinking',
-                    'Sleeping',
-                    'Designing',
-                    'Designing',
-                    'Designing',
-                    'Designing',
-                ],
-                datasets: [{
-                    label: 'My First Dataset',
-                    data: [60, 40, 35, 80, 75, 62, 55],
-                    fill: true,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    pointBackgroundColor: 'rgb(255, 99, 132)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgb(255, 99, 132)',
-
-                }],
-
-            };
-
-            const config = {
-                type: 'radar',
-                data: data,
-                options: {
-                    // elements: {
-                    // line: {
-                    //     borderWidth: 3
-                    // },
-                    responsive: false,
-                    maintainAspectRatio: true,
-                    scale: {
-                        reverse: false,
-                        max: 100,
-                        min: 0,
-                        stepSize: 20
-                    },
-
-                    // }
+            var url = '/datatable-package-ongoing';
+            var table = $('#table').DataTable({
+                destroy: true,
+                processing: true,
+                serverSide: true,
+                ajax: url,
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    // debugger;
+                    var numStart = this.fnPagingInfo().iStart;
+                    var index = numStart + iDisplayIndexFull + 1;
+                    // var index = iDisplayIndexFull + 1;
+                    $("td:first", nRow).html(index);
+                    return nRow;
                 },
-            };
-            var canvas = document.getElementById("myChart");
-            var radar = new Chart(canvas,
-                config
-            );
-        }
-
-        function cahar11() {
-            var options = {
-                responsive: false,
-                maintainAspectRatio: true,
-                scale: {
-                    scale: {
-                        min: 0,
-                        max: 5,
-                    },
-                }
-            };
-
-            var dataLiteracy = {
-                labels: [
-                    "1", "2", "3", "4", "5"
+                columnDefs: [
+                    {"title": "#", "searchable": false, "orderable": false, "targets": 0, "className": "text-center", "width": "100"},
+                    {"title": "Paket", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "No. Kontrak", 'targets': 2, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Tanggal Kontrak", 'targets': 3, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "PPK", 'targets': 4, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Penyedia Jasa", 'targets': 5, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Mulai", 'targets': 6, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Selesai", 'targets': 7, 'searchable': true, 'orderable': true, "className": "text-center"},
                 ],
-                datasets: [{
-                    label: "Literacy",
-                    backgroundColor: "rgba(179,181,198,0.2)",
-                    borderColor: "rgba(179,181,198,1)",
-                    pointBackgroundColor: "rgba(179,181,198,1)",
-                    pointBorderColor: "#fff",
-                    pointHoverBackgroundColor: "#fff",
-                    pointHoverBorderColor: "rgba(179,181,198,1)",
-                    data: [
-                        2, 3, 4, 1, 2
-                    ]
-                }]
-            };
 
-            var ctx = document.getElementById("canvas");
-            var myRadarChart = new Chart(ctx, {
-                type: 'radar',
-                data: dataLiteracy,
-                options: options
-            });
-            console.log(myRadarChart);
+                columns: [
+                    {
+                        "className": '',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": ''
+                    },
+                    {data: 'name', name: 'name'},
+                    {data: 'no_reference', name: 'no_reference'},
+                    {
+                        data: 'date', name: 'date', render: function (data) {
+                            return moment(data).format('DD MMMM YYYY')
+                        }
+                    },
+                    {data: 'ppk.name', name: 'ppk.name'},
+                    {data: 'vendor.vendor.name', name: 'vendor.vendor.name'},
+                    {
+                        data: 'start_at', name: 'start_at', render: function (data) {
+                            return moment(data).format('DD MMMM YYYY')
+                        }
+                    },
+                    {
+                        data: 'finish_at', name: 'finish_at', render: function (data) {
+                            return moment(data).format('DD MMMM YYYY')
+                        }
+                    },
+                ]
+            })
         }
 
 
