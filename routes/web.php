@@ -60,7 +60,7 @@ Route::prefix('/')->middleware('auth')->group(
             }
         );
 
-        Route::prefix('/paket-konstruksi')->group(
+        Route::prefix('/paket-konstruksi')->middleware('roles:superuser,admin,vendor')->group(
             function () {
                 Route::match(['post', 'get'], '/', [\App\Http\Controllers\PackageController::class, 'index']);
                 Route::match(['post', 'get'], '/detail/{id}', [\App\Http\Controllers\PackageController::class, 'detail']);
@@ -70,7 +70,7 @@ Route::prefix('/')->middleware('auth')->group(
             }
         );
 
-        Route::prefix('/indikator')->middleware('roles:superuser,admin')->group(
+        Route::prefix('/indikator')->middleware('roles:superuser')->group(
             function () {
                 Route::match(['post', 'get'], '/', [\App\Http\Controllers\Superadmin\IndicatorController::class, 'index']);
                 Route::post('/{idIndikator}', [\App\Http\Controllers\Superadmin\IndicatorController::class, 'storeSubIndikator']);

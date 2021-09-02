@@ -9,6 +9,13 @@
 @endsection
 
 @section('content')
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
     <section class="___class_+?0___" style="margin-top: 100px">
         <div class="mt-4 mb-5" style="min-height: 23vh">
             <!-- Tab panes -->
