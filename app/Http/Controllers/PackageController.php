@@ -21,15 +21,7 @@ class PackageController extends CustomController
 
     public function datatable()
     {
-        $data = Package::with(['vendor.vendor', 'ppk']);
-        if (Auth::user()->roles[0] == 'vendor'){
-            $data = $data->where('vendor_id','=',Auth::id());
-        }elseif (Auth::user()->roles[0] == 'accessorppk'){
-            $data = $data->whereHas('ppk.accessorppk', function ($query){
-                $query->where('user_id','=', Auth::id());
-            });
-        }
-        $data = $data->get();
+        $data = Package::with(['vendor.vendor', 'ppk'])->get();
         return DataTables::of($data)->make(true);
     }
 

@@ -23,7 +23,7 @@ class ScoreController extends CustomController
     {
         $roles = auth()->user()->roles[0];
         $userId = Auth::id();
-        $query = Package::with(['vendor.vendor', 'ppk']);
+        $query = Package::with(['vendor.vendor', 'ppk'])->where([['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))], ['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]]);
         if ($roles === 'vendor') {
             $query->where('vendor_id', $userId);
         }

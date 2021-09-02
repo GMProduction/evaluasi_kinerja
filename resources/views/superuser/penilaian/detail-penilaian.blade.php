@@ -507,7 +507,7 @@
             try {
                 let response = await $.get('/penilaian/radar?package=' + package_id + '&type=' + vType);
                 setComulative(response['comulative']);
-
+                penilaian(response['data']['score_count']);
                 chart(response['data']);
                 drawChart(response['data']['score_count']);
                 // await getScore(index);
@@ -515,6 +515,11 @@
             } catch (e) {
                 console.log(e)
             }
+        }
+
+        function penilaian(data) {
+            $('#faktorbelum').val(data[0])
+            $('#faktordinilai').val(parseInt(data[1] + data[2] + data[3]))
         }
 
         function setComulative(data) {
