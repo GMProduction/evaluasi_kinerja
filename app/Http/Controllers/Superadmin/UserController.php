@@ -17,8 +17,7 @@ class UserController extends Controller
 
     public function datatable($role)
     {
-        $data ='';
-        $data = User::with("$role")->whereJsonContains('roles', $role);
+        $data = User::with("$role")->whereJsonContains('roles', $role)->get();
 
         if ($role == 'accessorppk'){
             $data = User::with("accessorppk.ppk")->whereJsonContains('roles', $role);

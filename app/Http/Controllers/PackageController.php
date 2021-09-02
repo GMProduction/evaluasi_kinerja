@@ -9,6 +9,7 @@ use App\Models\Package;
 use App\Models\PackageDetail;
 use App\Models\PPK;
 use App\Models\Vendor;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
 class PackageController extends CustomController
@@ -20,7 +21,15 @@ class PackageController extends CustomController
 
     public function datatable()
     {
-        $data = Package::with(['vendor.vendor', 'ppk'])->get();
+        $data = Package::with(['vendor.vendor', 'ppk']);
+        if (Auth::user()->roles[0] == 'vendor'){
+            $data = $data->where('vendor_id','=',Auth::id());
+        }elseif (Auth::user()->roles[0] == 'accessorppk'){
+            $data = $data->whereHas('ppk.accessorppk', function ($query){
+                $query->where('user_id','=', Auth::id());
+            });
+        }
+        $data = $data->get();
         return DataTables::of($data)->make(true);
     }
 

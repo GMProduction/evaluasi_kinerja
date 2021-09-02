@@ -53,14 +53,15 @@
                     <a href="/users" id="users" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span
                             class="nav_name">Users</span> </a>
                 @endif
-                <a href="/ppk" id="ppk" class="nav_link"> <i
-                        class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">PPK</span> </a>
-
+                @if(auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin')
+                    <a href="/ppk" id="ppk" class="nav_link"> <i
+                            class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">PPK</span> </a>
+                @endif
                 <a href="/paket-konstruksi" id="paket-konstruksi" class="nav_link"> <i class='bx bx-building-house'></i>
                     <span class="nav_name">Paket Konstruksi</span> </a>
                 @if(auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin')
-                <a href="/indikator" id="indikator" class="nav_link"> <i class='bx bx-doughnut-chart'></i> <span
-                        class="nav_name">Indikator</span> </a>
+                    <a href="/indikator" id="indikator" class="nav_link"> <i class='bx bx-doughnut-chart'></i> <span
+                            class="nav_name">Indikator</span> </a>
                 @endif
                 <a href="/penilaian" id="penilaian" class="nav_link"> <i class='bx bxs-bar-chart-square'></i> <span
                         class="nav_name">Penilaian</span> </a>

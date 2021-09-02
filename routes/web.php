@@ -51,7 +51,7 @@ Route::prefix('/')->middleware('auth')->group(
             }
         );
 
-        Route::prefix('/ppk')->group(
+        Route::prefix('/ppk')->middleware('roles:superuser,admin')->group(
             function () {
                 Route::match(['post', 'get'], '/', [\App\Http\Controllers\Superadmin\PPKController::class, 'index']);
                 Route::get('/get-all', [\App\Http\Controllers\Superadmin\PPKController::class, 'getPPK']);
@@ -81,15 +81,7 @@ Route::prefix('/')->middleware('auth')->group(
             }
         );
 
-        Route::prefix('/penilaian')->group(
-            function () {
-                Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);
-                Route::get('/datatable', [\App\Http\Controllers\ScoreController::class, 'datatable']);
-                Route::get('/detail/{id}', [\App\Http\Controllers\ScoreController::class, 'detail']);
-                Route::get('/results', [\App\Http\Controllers\ScoreController::class, 'getScore']);
-                Route::get('/radar', [\App\Http\Controllers\ScoreController::class, 'getRadarChart']);
-            }
-        );
+
 
         Route::prefix('/penilaian')->group(
             function () {

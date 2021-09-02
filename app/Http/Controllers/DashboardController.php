@@ -56,14 +56,14 @@ class DashboardController extends Controller
     public function datatable()
     {
         $data = Package::with(['vendor.vendor', 'ppk'])->where([['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))], ['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]]);
-        if (auth()->user()->roles[0] == 'vendor'){
+        if (Auth::user()->roles[0] == 'vendor'){
             $data = $data->where('vendor_id','=',Auth::id());
         }elseif (Auth::user()->roles[0] == 'accessorppk'){
             $data = $data->whereHas('ppk.accessorppk', function ($query){
                 $query->where('user_id','=', Auth::id());
             });
         }
-        $data->get();
+        $data = $data->get();
         return DataTables::of($data)->make(true);
 
     }
