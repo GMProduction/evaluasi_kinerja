@@ -53,7 +53,6 @@ class ScoreController extends CustomController
         try {
             $packageId = request()->query->get('package');
             $type = request()->query->get('type');
-//            dd($packageId);
             $data = Indicator::with(['subIndicator.singleScore' => function ($query) use ($packageId, $type) {
                 $query->where('package_id', $packageId)->where('type', $type);
             }])->get();
@@ -76,6 +75,8 @@ class ScoreController extends CustomController
             $value = (int)$this->postField('value');
             $type = $this->postField('index');
             $authorId = Auth::id();
+            //add filter
+
             $score = Score::where('package_id', $packageId)->where('author_id', $authorId)->where('type', $type)->where('sub_indicator_id', $subIndicatorId)->first();
             $scoreText = 'bad';
             switch ($value) {
@@ -87,6 +88,21 @@ class ScoreController extends CustomController
                     break;
                 case 3:
                     $scoreText = 'good';
+                    break;
+                default:
+                    break;
+            }
+
+            $vType = 'default';
+            switch ($type){
+                case 'vendor':
+                    $vType = 'vendor';
+                    break;
+                case 'accessor':
+                    $vType = 'office';
+                    break;
+                case 'accessorppk':
+                    $vType = 'ppk';
                     break;
                 default:
                     break;
@@ -104,12 +120,12 @@ class ScoreController extends CustomController
                 $newScore->sub_indicator_id = $subIndicatorId;
                 $newScore->score = $value;
                 $newScore->text = $scoreText;
-                $newScore->type = $type;
+                $newScore->type = $vType;
                 $newScore->save();
             }
             return response()->json(['msg' => 'success'], 200);
         } catch (\Exception $e) {
-            return response()->json(['msg' => 'Terjadi Kesalahan Server..'], 500);
+            return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
         }
     }
 
@@ -117,8 +133,9 @@ class ScoreController extends CustomController
     {
         try {
             $packageId = request()->query->get('package');
-            $data = Indicator::with(['subIndicator.singleScore' => function ($query) use ($packageId) {
-                $query->where('package_id', $packageId);
+            $type = request()->query->get('type');
+            $data = Indicator::with(['subIndicator.singleScore' => function ($query) use ($packageId, $type) {
+                $query->where('package_id', $packageId)->where('type', $type);
             }])->get();
             $arrData = $data->toArray();
             $result = [];
@@ -126,6 +143,10 @@ class ScoreController extends CustomController
             $scoreMin = 1;
             $scoreMax = 3;
             $comulativeTotal = 0;
+            $goodScore = 0;
+            $mediumScore = 0;
+            $badScore = 0;
+            $emptyScore = 0;
             foreach ($arrData as $v) {
                 $index = $v['name'];
                 $weight = $v['weight'];
@@ -140,11 +161,26 @@ class ScoreController extends CustomController
                 $a = round(($radarMax - $radarMin) / ($max - $min), 3, PHP_ROUND_HALF_UP);
                 $b = round($radarMax - ($max * $a), 0, PHP_ROUND_HALF_UP);
                 foreach ($v['sub_indicator'] as $sub) {
-                    $tmpScore = $sub['single_score'] !== null ? $sub['single_score']['score'] : 0;
+                    $tmpScore = $sub['single_score'] !== null ? $sub['single_score']['score'] : 1;
                     $value += $tmpScore;
+                    if ($sub['single_score'] !== null) {
+                        switch ($sub['single_score']['score']) {
+                            case 1:
+                                $badScore += 1;
+                                break;
+                            case 2:
+                                $mediumScore += 1;
+                                break;
+                            case 3:
+                                $goodScore += 1;
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        $emptyScore += 1;
+                    }
                 }
-
-
                 $checkConversion = ($a * $max) + $b;
                 $a_cumulative = round(($maxFactor / ($max - $min)), 3, PHP_ROUND_HALF_UP);
                 $b_cumulative = round(($maxFactor - ($max * $a_cumulative)), 3, PHP_ROUND_HALF_UP);
@@ -153,7 +189,7 @@ class ScoreController extends CustomController
                 if ($value > 0) {
                     $radar = ($a * $value) + $b;
                     $cumulative = ($a_cumulative * $value) + $b_cumulative;
-                    $comulativeTotal = $comulativeTotal + $cumulative;
+                    $comulativeTotal += round($cumulative, 2, PHP_ROUND_HALF_UP);
                 }
                 $transform = [
                     'index' => $index,
@@ -168,8 +204,8 @@ class ScoreController extends CustomController
                     'a_cumulative' => $a_cumulative,
                     'b_cumulative' => $b_cumulative,
                     'value' => $value,
-                    'radar' => $radar,
-                    'cumulative' => $cumulative,
+                    'radar' => round($radar, 2, PHP_ROUND_HALF_UP),
+                    'cumulative' => round($cumulative, 2, PHP_ROUND_HALF_UP),
                 ];
                 array_push($result, $transform);
             }
@@ -177,38 +213,41 @@ class ScoreController extends CustomController
                 'msg' => 'success',
                 'data' => [
                     'indicator' => $result,
-                    'chk_summary' => round($chkSum, 0, PHP_ROUND_HALF_UP)
+                    'chk_summary' => round($chkSum, 0, PHP_ROUND_HALF_UP),
+                    'score_count' => [$emptyScore, $badScore, $mediumScore, $goodScore]
                 ],
-                'comulative' =>round($comulativeTotal, 2, PHP_ROUND_HALF_UP)
+                'comulative' => round($comulativeTotal, 2, PHP_ROUND_HALF_UP)
             ], 200);
         } catch (\Exception $e) {
             return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
         }
     }
 
-    public function getComutative($id){
-        $score = Score::where([['package_id','=',$id],['evaluator_id','=',Auth::id()]])->groupBy(['score','text'])->selectRaw('sum(score) as score, text')->get();
+    public function getComutative($id)
+    {
+        $score = Score::where([['package_id', '=', $id], ['evaluator_id', '=', Auth::id()]])->groupBy(['score', 'text'])->selectRaw('sum(score) as score, text')->get();
         $total = 0;
-        foreach ($score as $sc){
+        foreach ($score as $sc) {
             $total = $total + (int)$sc['score'];
         }
-        Arr::set($score,'total', $total);
+        Arr::set($score, 'total', $total);
         return $score;
     }
 
-    public function uploadFile($id){
-        $score = Score::with(['package','subIndicator'])->find(request('id'));
-        if ($score->file){
-            if (file_exists('../public'.$score->file)) {
-                unlink('../public'.$score->file);
+    public function uploadFile($id)
+    {
+        $score = Score::with(['package', 'subIndicator'])->find(request('id'));
+        if ($score->file) {
+            if (file_exists('../public' . $score->file)) {
+                unlink('../public' . $score->file);
             }
         }
-        $files     = $this->request->file('file');
+        $files = $this->request->file('file');
         $extension = $files->getClientOriginalExtension();
-        $name      = str_replace(' ','-',$score->package->name).'-'.str_replace(' ','-',$score->subIndicator->name);
-        $value     = $name.'.'.$extension;
+        $name = str_replace(' ', '-', $score->package->name) . '-' . str_replace(' ', '-', $score->subIndicator->name);
+        $value = $name . '.' . $extension;
 
-        $stringImg = '/files/'.$value;
+        $stringImg = '/files/' . $value;
         $this->uploadImage('file', $value, 'filesUpload');
 
         $score->update(['file' => $stringImg]);
