@@ -63,7 +63,7 @@
 
                         <div class="mb-3">
                             <label for="jenisasesmen" class="form-label">Jenis Asesmen</label>
-                            <input type="text" class="form-control" value="" readonly id="jenisasesmen">
+                            <input type="text" class="form-control" value="Penilaian Penyedia Jasa" readonly id="jenisasesmen">
                         </div>
 
                         <div class="mb-3">
@@ -78,12 +78,12 @@
 
                         <div class="mb-3">
                             <label for="terahkirupdate" class="form-label">Terahkir Update</label>
-                            <input type="text" class="form-control" value="21 Maret 2021" readonly id="terahkirupdate">
+                            <input type="text" class="form-control" value="Belum Ada Update" readonly id="terahkirupdate">
                         </div>
 
                         <div class="mb-3">
                             <label for="faktorupdate" class="form-label">Faktor Diupdate</label>
-                            <input type="text" class="form-control" value="3.5" readonly id="faktorupdate">
+                            <input type="text" class="form-control" value="Belum Ada Update" readonly id="faktorupdate">
                         </div>
                     </div>
                 </div>
@@ -398,12 +398,46 @@
 
                 });
                 await getRadarChart();
+
                 console.log(response)
             } catch (e) {
-                console.log(e);
+                alert('Terjadi Kesalahan Server...')
             }
         }
 
+        async function getLastUpdate(type)
+        {
+            let vType = 'default';
+            switch (type) {
+                case 'vendor':
+                    vType = 'vendor';
+                    break;
+                case 'accessor':
+                    vType = 'office';
+                    break;
+                case 'accessorppk':
+                    vType = 'ppk';
+                    break;
+                default:
+                    break;
+            }
+            try {
+                let response = await $.get('/penilaian/last-update?package=' + package_id + '&type=' + vType);
+                if(response['data'] !== null){
+                    let updated_at = getCurrentDateString(new Date(response['data']['updated_at']));
+                    let name = response['data']['sub_indicator']['name'];
+                    $('#faktorupdate').val(name);
+                    $('#terahkirupdate').val(updated_at);
+                }else{
+                    $('#faktorupdate').val('Belum Ada Update');
+                    $('#terahkirupdate').val('Belum Ada Update');
+                }
+                console.log('last_update')
+                console.log(response)
+            } catch (e) {
+                alert("Maaf, Sedang Terjadi Kesalahan Pada Server...")
+            }
+        }
         async function setScore(sub, value) {
             try {
                 let response = await $.post('/penilaian/set-score', {
@@ -545,6 +579,7 @@
 
         $(document).ready(function () {
             getScore('vendor');
+            getLastUpdate('vendor');
             $('.card-user').on('click', function () {
                 index = this.dataset.roles;
                 let title = '';
@@ -561,8 +596,10 @@
                     default:
                         break;
                 }
-                getScore(index)
+                getScore(index);
+                getLastUpdate(index);
                 $('#map-title').html('Peta Kinerja ' + title);
+                $('#jenisasesmen').val('Penilaian ' + title);
             })
         })
 

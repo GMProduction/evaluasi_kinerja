@@ -44,10 +44,38 @@ class ScoreController extends CustomController
 
     public function detail($id)
     {
-        $data = Package::with(['vendor.vendor', 'ppk'])->where('id', $id)->firstOrFail();
+        $roles = auth()->user()->roles[0];
+        $userId = Auth::id();
+        $query = Package::with(['vendor.vendor', 'ppk'])->where([['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))], ['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]])->where('id', $id);
+        if ($roles === 'vendor') {
+            $query->where('vendor_id', $userId);
+        }
+
+        if ($roles === 'accessorppk') {
+            $query->whereHas('ppk.accessorppk.user', function ($query) use ($userId) {
+                $query->where('id', $userId);
+            });
+        }
+//        $data = Package::with(['vendor.vendor', 'ppk'])->where('id', $id)->firstOrFail();
+        $data = $query->firstOrFail();
+
         return view('superuser/penilaian/detail-penilaian')->with(['data' => $data]);
     }
 
+    public function lastUpdate()
+    {
+        try {
+            $packageId = request()->query->get('package');
+            $type = request()->query->get('type');
+            $score = Score::with('subIndicator')->where('package_id', $packageId)->where('type', $type)->orderBy('updated_at', 'DESC')->first();
+            return response()->json([
+                'msg' => 'success',
+                'data' => $score
+            ], 200);
+        }catch (\Exception $e){
+            return response()->json(['msg' => 'Terjadi Kesalahan Server..'], 500);
+        }
+    }
     public function getScore()
     {
         try {

@@ -91,6 +91,7 @@ Route::prefix('/')->middleware('auth')->group(
                 Route::get('/detail/{id}/comulative', [\App\Http\Controllers\ScoreController::class, 'getComutative']);
                 Route::post('/detail/{id}', [\App\Http\Controllers\ScoreController::class, 'uploadFile']);
                 Route::get('/results', [\App\Http\Controllers\ScoreController::class, 'getScore']);
+                Route::get('/last-update', [\App\Http\Controllers\ScoreController::class, 'lastUpdate']);
                 Route::get('/radar', [\App\Http\Controllers\ScoreController::class, 'getRadarChart']);
                 Route::post('/set-score', [\App\Http\Controllers\ScoreController::class, 'setScore']);
             }
