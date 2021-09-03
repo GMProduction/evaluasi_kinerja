@@ -46,7 +46,13 @@ class ScoreController extends CustomController
     {
         $roles = auth()->user()->roles[0];
         $userId = Auth::id();
-        $query = Package::with(['vendor.vendor', 'ppk'])->where([['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))], ['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]])->where('id', $id);
+        $query = Package::with(['vendor.vendor', 'ppk'])
+            ->where(
+                [
+                    ['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))],
+                    ['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]
+                ]
+            )->where('id', $id);
         if ($roles === 'vendor') {
             $query->where('vendor_id', $userId);
         }
@@ -58,7 +64,6 @@ class ScoreController extends CustomController
         }
 //        $data = Package::with(['vendor.vendor', 'ppk'])->where('id', $id)->firstOrFail();
         $data = $query->firstOrFail();
-
         return view('superuser/penilaian/detail-penilaian')->with(['data' => $data]);
     }
 

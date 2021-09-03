@@ -30,10 +30,8 @@ class PackageController extends CustomController
         if (\request()->isMethod('POST')) {
             return $this->store();
         }
-        $package = Package::with(['vendor.vendor', 'ppk'])->get();
         $ppk = PPK::all();
         $vendor = Vendor::with('user')->get();
-//        return $package->toArray();
         return view('superuser/paket-konstruksi/paketKonstruksi')->with(['ppk' => $ppk, 'vendor' => $vendor]);
     }
 
