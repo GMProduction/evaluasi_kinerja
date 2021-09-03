@@ -77,7 +77,7 @@ class ScoreController extends CustomController
             $authorId = Auth::id();
             //add filter
 
-            $score = Score::where('package_id', $packageId)->where('author_id', $authorId)->where('type', $type)->where('sub_indicator_id', $subIndicatorId)->first();
+            $score = Score::where('package_id', $packageId)->where('type', $type)->where('sub_indicator_id', $subIndicatorId)->first();
             $scoreText = 'bad';
             switch ($value) {
                 case 1:
@@ -161,7 +161,7 @@ class ScoreController extends CustomController
                 $a = round(($radarMax - $radarMin) / ($max - $min), 3, PHP_ROUND_HALF_UP);
                 $b = round($radarMax - ($max * $a), 0, PHP_ROUND_HALF_UP);
                 foreach ($v['sub_indicator'] as $sub) {
-                    $tmpScore = $sub['single_score'] !== null ? $sub['single_score']['score'] : 1;
+                    $tmpScore = $sub['single_score'] !== null ? $sub['single_score']['score'] : 0;
                     $value += $tmpScore;
                     if ($sub['single_score'] !== null) {
                         switch ($sub['single_score']['score']) {
