@@ -13,10 +13,11 @@ function formatNumber(n) {
         n = n.replace(n, '0');
     }
     n = n.replace(/\D/g, "");
-    if (n.length < 3) {
-        n = n.replace(/\B(?=(\d{1}))/g, ".")
-        console.log(n)
-    }
+    // if (n.length <= 2) {
+    //     // n = n.replace(/\B(?=(\d{1}))/g, ".")
+    //     n = n.replace(/\B(?=(\d{1})+(?!\d))/g, ".")
+    //     console.log(n)
+    // }
     return n
 }
 

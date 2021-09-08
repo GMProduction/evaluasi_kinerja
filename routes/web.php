@@ -76,6 +76,7 @@ Route::prefix('/')->middleware('auth')->group(
                 Route::post('/{idIndikator}', [\App\Http\Controllers\Superadmin\IndicatorController::class, 'storeSubIndikator']);
                 Route::get('/{idIndikator}/sub', [\App\Http\Controllers\Superadmin\IndicatorController::class, 'getSubIndicator']);
                 Route::get('/get-all', [\App\Http\Controllers\Superadmin\IndicatorController::class, 'getIndicator']);
+                Route::get('/get-sum', [\App\Http\Controllers\Superadmin\IndicatorController::class, 'getTotalBobot']);
                 Route::get('/{id}/delete', [\App\Http\Controllers\Superadmin\IndicatorController::class, 'deleteIndicator']);
                 Route::get('/{id}/sub/{subid}/delete', [\App\Http\Controllers\Superadmin\IndicatorController::class, 'deleteSubIndicator']);
             }

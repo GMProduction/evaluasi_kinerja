@@ -70,4 +70,9 @@ class IndicatorController extends Controller
         Indicator::destroy($id);
         return response()->json(['msg' => 'success']);
     }
+
+    public function getTotalBobot(){
+        $indicator = Indicator::sum('weight');
+        return $indicator;
+    }
 }
