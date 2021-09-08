@@ -12,7 +12,7 @@
 
         <div class="mt-4  table-container" style="min-height: 23vh">
             <div class="header-table">
-                <p class="title-table fw-bold t-primary">Data Indikator</p>
+                <p class="title-table fw-bold t-primary">Data Indikator <span class="badge bg-danger">Total Bobot : <span id="sumBobot"></span></span></p>
 
                 <div>
                     <form class="d-flex">
@@ -67,6 +67,7 @@
     <script>
         var title, idSubIndikator, idIndikator;
         $(document).ready(function () {
+            getSum();
             getMainIndicator()
             currency('weight')
         });
@@ -246,7 +247,7 @@
         $(document).on('click', '#addData, #editData', function () {
             $('#tambahdata #id').val($(this).data('id'));
             $('#tambahdata #name').val($(this).data('name'));
-            $('#tambahdata #weight').val($(this).data('weight') ?? 0);
+            $('#tambahdata #weight').val($(this).data('weight') ?? '0.');
             title = 'Tambah';
             if ($(this).data('id')) {
                 title = 'Edit'
@@ -254,6 +255,12 @@
             $('#tambahdata #title').html(title);
             $('#tambahdata').modal('show');
         });
+
+        function getSum() {
+            $.get(window.location.pathname+'/get-sum', function (data) {
+                $('#sumBobot').html(data);
+            })
+        }
 
         function Save() {
             saveData(title + ' Data Main Indikator', 'form')
