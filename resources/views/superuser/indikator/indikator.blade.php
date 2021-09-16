@@ -12,14 +12,15 @@
 
         <div class="mt-4  table-container" style="min-height: 23vh">
             <div class="header-table">
-                <p class="title-table fw-bold t-primary">Data Indikator</p>
-                <div >
+                <p class="title-table fw-bold t-primary">Data Indikator <span class="badge bg-danger">Total Bobot : <span id="sumBobot"></span></span></p>
+
+                <div>
                     <form class="d-flex">
                         <input class="form-control" type="text" name="cari"
-                            style="border-top-right-radius: 0;border-bottom-right-radius: 0;"
-                            value="{{ request('cari') }}" placeholder="Cari master indikator">
+                               style="border-top-right-radius: 0;border-bottom-right-radius: 0;"
+                               value="{{ request('cari') }}" placeholder="Cari master indikator">
                         <button class="btn btn-warning me-3" style="border-top-left-radius: 0;border-bottom-left-radius: 0;"
-                            type="submit"><i class='bx bx-search-alt-2'></i></button>
+                                type="submit"><i class='bx bx-search-alt-2'></i></button>
                         {{-- <a class="btn btn-primary" href="/indikator"><i class='bx bx-reset'></i></a> --}}
                         <a class="bt-primary-sm " id="addData" style="min-width: 100px"><i class='bx bx-plus'></i> Tambah Data</a>
 
@@ -65,16 +66,28 @@
 @section('script')
     <script>
         var title, idSubIndikator, idIndikator;
-        $(document).ready(function() {
+        $(document).ready(function () {
+            getSum();
             getMainIndicator()
             currency('weight')
         });
 
-        $(document).on('click', '#addSubIndikaor', function() {
+        $(document).on('keypress', '#textNameSub', function (e) {
+
+            if (e.which === 13) {
+                var idIndikator = $(this).data('id-indikator');
+                var name = $(this).val();
+                var id = $(this).data('id');
+                //
+                saveSubIndicator(idIndikator, id, name)
+            }
+        })
+
+        $(document).on('click', '#addSubIndikaor', function () {
             $('.trInput').remove();
             var id = $(this).data('id');
             $('#table' + id + ' tr:last').after('<tr id="trInput" class="trInput">' +
-                '                                   <td><input type="text" class="form-control" name="name" value="" required></td>' +
+                '                                   <td colspan="2"><input id="textNameSub" data-id-indikator="' + id + '" type="text" class="form-control" name="name" value="" required></td>' +
                 '                                   <td class="text-center"><a class="btn btn-sm btn-success me-2"  style="border-radius: 50px; width: 50px" data-id-indikator="' +
                 id + '" id="saveSubIndicator"><i class=\'bx bxs-save\'></i></a>' +
                 '                                   <a class="btn btn-sm btn-danger"  style="border-radius: 50px; width: 50px" data-id-indikator="' +
@@ -83,16 +96,16 @@
             $('#trInput [name="name"]').focus();
         })
 
-        $(document).on('click', '#clearInputSubIndikator', function() {
+        $(document).on('click', '#clearInputSubIndikator', function () {
             $('.trInput').remove();
         })
 
-        $(document).on('click', '#editSubIndikator', function() {
+        $(document).on('click', '#editSubIndikator', function () {
             var $item = $(this).closest("tr")
             idSubIndikator = $(this).data('id');
             idIndikator = $(this).data('id-indikator')
             $item.html('' +
-                '                                   <td><input type="text" class="form-control" name="name" value="' +
+                '                                   <td colspan="2"><input type="text" class="form-control" name="name" value="' +
                 $(this).data('name') + '" required></td>' +
                 '                                   <td class="text-center"><a class="btn btn-sm btn-success me-2"  style="border-radius: 50px; width: 50px" data-id="' +
                 idSubIndikator + '" data-id-indikator="' + idIndikator +
@@ -101,17 +114,15 @@
                 idIndikator +
                 '" id="clearEditInputSubIndikator"><i class=\'bx bx-window-close\'></i></a></td>' +
                 '                                ');
-            console.log($item);
-            console.log($item[0].children);
-            console.log($item[0].cells[0]);
+
         })
 
-        $(document).on('click', '#clearEditInputSubIndikator', function() {
+        $(document).on('click', '#clearEditInputSubIndikator', function () {
 
             getSubIndikator($(this).data('id-indikator'))
         })
 
-        $(document).on('click', '#saveSubIndicator', function() {
+        $(document).on('click', '#saveSubIndicator', function () {
             var title = 'Tambah';
             if ($(this).data('id')) {
                 title = 'Edit'
@@ -126,19 +137,24 @@
             }
 
             var idIndikator = $(this).data('id-indikator');
+            var name = $('[name="name"]').val();
+            var id = $(this).data('id');
+
+            saveSubIndicator(idIndikator, id, name)
+        })
+
+        function saveSubIndicator(idIndikator, id, name) {
             var data = {
                 '_token': '{{ csrf_token() }}',
-                'id': $(this).data('id'),
-                'name': $('[name="name"]').val(),
+                'id': id,
+                'name': name,
             }
-            console.log(data)
             saveDataObject(title + ' Data Sub Indikator', data, window.location.pathname + '/' + idIndikator,
                 afterSaveSub)
             return false;
-        })
+        }
 
         function afterSaveSub(data) {
-            console.log(data)
             $('.trInput').remove();
 
             getSubIndikator(data['data'])
@@ -149,30 +165,30 @@
                 'cari': '{{ request('cari') }}'
             }
 
-            $.get('/indikator/get-all', filter, function(data) {
+            $.get('/indikator/get-all', filter, function (data) {
                 $('#rowIndikator').empty();
-                $.each(data, function(key, value) {
+                $.each(data, function (key, value) {
                     var name = value['name'];
 
                     $('#rowIndikator').append('<div class="col-sm-12  ">\n' +
                         '                        <div class="card-indikator table-container">\n' +
                         '                            <div class="header-indikator">\n' +
-                        '                                <div class="row"><p class="mb-0 fw-bold">' +
-                        name + ' <span class="badge bg-primary">Bobot : ' + value['weight'] +
+                        '                                <div class="row"><p class="mb-0 fw-bold">' +name + ' <span class="badge bg-primary">Bobot : ' + value['weight'] +
                         '</span> <span><a class="btn btn-sm" title="Edit Master Indikator" data-weight="' +
                         value['weight'] + '" data-name="' + name + '"  data-id="' + value['id'] +
                         '" id="editData"><i class=\'bx bx-edit-alt\'></i></a></span></p>\n' +
                         '                                      ' +
                         '                                 </div>' +
-                        '                                <a class="bt-success-sm" data-id="' + value[
-                            'id'] + '"  id="addSubIndikaor">Tambah Sub</a>\n' +
+                        '                               <div> <a class="bt-success-sm" data-name="'+name+'" data-id="' + value['id'] + '"  id="deleteIndikator">Delete IndiKator</a>\n' +
+                        '                                <a class="bt-success-sm" data-id="' + value['id'] + '"  id="addSubIndikaor">Tambah Sub</a>\n' +
+                        '                            </div>\n' +
                         '                            </div>\n' +
                         '                            <div class="body-indikator">\n' +
                         '                                <table class="table" id="table' + value['id'] +
                         '">\n' +
                         '                                    <thead>\n' +
                         '                                    <tr>\n' +
-                        '                                        <th style="width: 85%">Sub Indikator</th>\n' +
+                        '                                       <th colspan="2" style="width: 85%">Sub Indikator</th>\n' +
                         '                                        <th class="text-center"  colspan="2">Aksi</th>\n' +
                         '                                    </tr>\n' +
                         '                                    </thead>\n' +
@@ -182,12 +198,12 @@
                         '                            </div>\n' +
                         '                        </div>\n' +
                         '                    </div>');
-                    $.each(value['sub_indicator'], function(k, v) {
+                    $.each(value['sub_indicator'], function (k, v) {
                         $('#tbody' + value['id']).append(' <tr>\n' +
+                            '                                        <td>' + parseInt(k + 1) +
                             '                                        <td>' + v['name'] +
                             '</td>\n' +
-                            '                                        <td class="text-center" style="width: 150px;"><a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px; width: 50px" data-indikator="' +
-                            value['id'] + '" data-id="' + v['id'] +
+                            '                                        <td class="text-center" style="width: 150px;"><a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px; width: 50px" data-name="' + v['name'] + '" data-indikator="' + value['id'] + '" data-id="' + v['id'] +
                             '" id="deleteSubIndikator"><i class="bx bx-trash-alt"></i></a>' +
                             '                                             <a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px; width: 50px" data-name="' +
                             v['name'] + '"  data-id-indikator="' + value['id'] +
@@ -201,12 +217,13 @@
         }
 
         function getSubIndikator(id) {
-            $.get('/indikator/' + id + '/sub', function(data) {
+            $.get('/indikator/' + id + '/sub', function (data) {
                 $('#tbody' + id).empty();
-                $.each(data, function(k, v) {
+                $.each(data, function (k, v) {
                     $('#tbody' + v['indicator_id']).append(' <tr>\n' +
+                        '                                        <td >' + parseInt(k + 1) + '</td>\n' +
                         '                                        <td>' + v['name'] + '</td>\n' +
-                        '                                        <td><a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px; width: 50px"  data-id="' +
+                        '                                        <td class="text-center"><a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px; width: 50px" data-indikator="' + id + '" data-name="' + v['name'] + '"  data-id="' +
                         v['id'] + '" id="deleteSubIndikator"><i class="bx bx-trash-alt"></i></a>' +
                         '                                             <a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px; width: 50px"  data-id="' +
                         v['id'] + '" data-name="' + v['name'] + '"  data-id-indikator="' + v[
@@ -217,14 +234,20 @@
             })
         }
 
-        $(document).on('click', '#deleteSubIndikator', function() {
-
+        $(document).on('click', '#deleteSubIndikator', function () {
+            deleteData($(this).data('name'), window.location.pathname + '/' + $(this).data('indikator') + '/sub/' + $(this).data('id') + '/delete', getSubIndikator)
+            return false;
         })
 
-        $(document).on('click', '#addData, #editData', function() {
+        $(document).on('click', '#deleteIndikator', function () {
+            deleteData($(this).data('name'), window.location.pathname + '/' + $(this).data('id') + '/delete')
+            return false;
+        })
+
+        $(document).on('click', '#addData, #editData', function () {
             $('#tambahdata #id').val($(this).data('id'));
             $('#tambahdata #name').val($(this).data('name'));
-            $('#tambahdata #weight').val($(this).data('weight'));
+            $('#tambahdata #weight').val($(this).data('weight') ?? '0.');
             title = 'Tambah';
             if ($(this).data('id')) {
                 title = 'Edit'
@@ -232,6 +255,12 @@
             $('#tambahdata #title').html(title);
             $('#tambahdata').modal('show');
         });
+
+        function getSum() {
+            $.get(window.location.pathname+'/get-sum', function (data) {
+                $('#sumBobot').html(data);
+            })
+        }
 
         function Save() {
             saveData(title + ' Data Main Indikator', 'form')

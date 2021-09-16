@@ -120,14 +120,17 @@
                         "data": 'id',
                         "width": '100',
                         "render": function (data, type, row, meta) {
-                            return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px"  data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
+                            return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-name="'+row.name+'"  data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
                                 '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px"  data-name="'+row.name+'" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
                         }
                     },
                 ]
             })
         }
-
+        $(document).on('click', '#deleteData', function () {
+            deleteData($(this).data('name'), window.location.pathname+'/'+$(this).data('id')+'/delete', afterSave())
+            return false
+        })
 
     </script>
 @endsection

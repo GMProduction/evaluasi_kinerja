@@ -30,7 +30,7 @@ function saveData(title, form, url, resposeSuccess) {
                                 timer: 1000
                             }).then((dat) => {
                                 if (resposeSuccess) {
-                                    resposeSuccess()
+                                    resposeSuccess(data)
                                 } else {
                                     window.location.reload()
                                 }
@@ -41,6 +41,7 @@ function saveData(title, form, url, resposeSuccess) {
                         console.log(data);
                     },
                     xhr: function() {
+                        $('#progressbar').remove();
                         $('#'+form).append(' <div id="progressbar" class="progress mt-2">\n' +
                             '                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>\n' +
                             '                            </div>')
@@ -74,7 +75,7 @@ function saveData(title, form, url, resposeSuccess) {
                         console.log(xhr.status);
                         console.log(textStatus);
                         console.log(error.responseJSON);
-                        swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['msg'] )
+                        swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['message'] ? error.responseJSON['message'] : error.responseJSON['msg'] )
                     }
                 })
             }
@@ -131,7 +132,7 @@ function saveDataObject(title, form_data, url, resposeSuccess) {
                         console.log(xhr.status);
                         console.log(textStatus);
                         console.log(error.responseJSON);
-                        swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['msg'] )
+                        swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['message'] ? error.responseJSON['message'] : error.responseJSON['msg'] )
 
                     }
                 })
@@ -174,7 +175,7 @@ function deleteData(text, url, resposeSuccess) {
                                 timer: 1000
                             }).then((dat) => {
                                 if (resposeSuccess) {
-                                    resposeSuccess()
+                                    resposeSuccess(data)
                                 } else {
                                     window.location.reload()
                                 }
@@ -194,7 +195,8 @@ function deleteData(text, url, resposeSuccess) {
                         console.log(xhr.status);
                         console.log(textStatus);
                         console.log(error.responseJSON);
-                        swal(error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0])
+                        swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['message'] ? error.responseJSON['message'] : error.responseJSON['msg'] )
+
                     }
                 })
             }

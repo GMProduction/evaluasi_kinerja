@@ -60,4 +60,19 @@ class IndicatorController extends Controller
         $indicator = SubIndicator::where('indicator_id','=',$id)->get();
         return $indicator;
     }
+
+    public function deleteSubIndicator($id, $subid){
+        SubIndicator::destroy($subid);
+        return response()->json($id);
+    }
+
+    public function deleteIndicator($id){
+        Indicator::destroy($id);
+        return response()->json(['msg' => 'success']);
+    }
+
+    public function getTotalBobot(){
+        $indicator = Indicator::sum('weight');
+        return $indicator;
+    }
 }

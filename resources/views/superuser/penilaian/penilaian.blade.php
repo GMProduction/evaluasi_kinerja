@@ -14,23 +14,23 @@
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
 
-           
+
             <div class="table-container">
                 <div class="header-table">
                     <p class="title-table fw-bold t-primary">Data Hasil Evaluasi Paket</p>
                 </div>
                 <table id="table" class="table table-striped" style="width:100%">
-{{--                    <tr>--}}
-{{--                        <th>#</th>--}}
-{{--                        <th>Nama Paket Konstruksi</th>--}}
-{{--                        <th>Action</th>--}}
-{{--                    </tr>--}}
+                    {{--                    <tr>--}}
+                    {{--                        <th>#</th>--}}
+                    {{--                        <th>Nama Paket Konstruksi</th>--}}
+                    {{--                        <th>Action</th>--}}
+                    {{--                    </tr>--}}
 
-{{--                    <tr>--}}
-{{--                        <td>1</td>--}}
-{{--                        <td>Paket 1</td>--}}
-{{--                        <td><a class="bt-primary-xsm" href="/penilaian/detail/">Detail</a></td>--}}
-{{--                    </tr>--}}
+                    {{--                    <tr>--}}
+                    {{--                        <td>1</td>--}}
+                    {{--                        <td>Paket 1</td>--}}
+                    {{--                        <td><a class="bt-primary-xsm" href="/penilaian/detail/">Detail</a></td>--}}
+                    {{--                    </tr>--}}
                 </table>
             </div>
         </div>
@@ -41,7 +41,6 @@
 
     <script>
         var table;
-
 
         function datatable() {
 
@@ -77,9 +76,11 @@
                         "className": "text-center"
                     },
                     {"title": "PPK", 'targets': 4, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Mulai", 'targets': 5, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Selesai", 'targets': 6, 'searchable': true, 'orderable': true, "className": "text-center"},
                     {
                         "title": "Action",
-                        'targets': 5,
+                        'targets': 7,
                         'searchable': false,
                         'orderable': false,
                         "className": "text-center"
@@ -97,6 +98,18 @@
                     {data: 'vendor.vendor.name', name: 'vendor.vendor.name'},
                     {data: 'ppk.name', name: 'ppk.name'},
                     {
+                        data: 'start_at', name: 'ppk.start_at',
+                        render: function (data) {
+                            return moment(data).format('DD MMMM YYYY')
+                        }
+                    },
+                    {
+                        data: 'finish_at', name: 'finish_at.name',
+                        render: function (data) {
+                            return moment(data).format('DD MMMM YYYY')
+                        }
+                    },
+                    {
                         "data": 'id',
                         "width": '100',
                         "render": function (data, type, row, meta) {
@@ -106,6 +119,7 @@
                 ]
             })
         }
+
         $(document).ready(function () {
             datatable()
         });

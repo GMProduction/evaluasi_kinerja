@@ -8,73 +8,14 @@
 @section('content')
 
     <section class="" style="margin-top: 100px">
-        <canvas id="myChart"></canvas>
+    @if(auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin')
+        @include('superuser.dashboard.superuser', ['data' => 'content'])
+    @endif
 
-        <div role="tablist">
-            <div class="items-tab" id="menu-tab">
-                <a class="card-tab  d-block c-text card-user" id="usuperuser" data-roles="superuser" data-text-roles="Superuser">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-user-circle icon-size-lg '></i>
-                        <p class="number-card">0</p>
-                    </div>
-                    <div class="mt-2">
-                        Data User
-                    </div>
-                </a>
-
-                <a class="card-tab d-block c-text card-user" id="uadmin" data-roles="admin" data-text-roles="Admin">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-message-square-detail nav_icon'></i>
-                        <p class="number-card">0</p>
-                    </div>
-                    <div class="mt-2">
-                        Data PPK
-                    </div>
-                </a>
-
-                <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor" data-text-roles="Asesor Balai">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-building-house'></i>
-                        <p class="number-card">0</p>
-                    </div>
-                    <div class="mt-2">
-                        Data Paket Konstruksi
-                    </div>
-                </a>
-
-                <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk" data-text-roles="Asesor PPK">
-                    <div class="d-flex justify-content-between">
-                        <i class='bx bx-doughnut-chart'></i>
-                        <p class="number-card">0</p>
-                    </div>
-                    <div class="mt-2">
-                        Data Indikator
-                    </div>
-                </a>
-
-
-            </div>
-
-
-        </div>
-        <!-- Tab panes -->
         <div class="mt-4" style="min-height: 23vh">
-            <!-- Tab panes -->
-            {{-- @yield('contentUser') --}}
-
-
             <div class="table-container">
                 <p class="fw-bold t-primary">Data Konstruksi Yang Masih Berlangsung</p>
                 <table id="table" class="table table-striped" style="width:100%">
-                    <tr>
-                        <th>Paket</th>
-                        <th>No. Kontrak</th>
-                        <th>Tanggal Kontrak</th>
-                        <th>PPK</th>
-                        <th>Penyedia Jasa</th>
-                        <th>Mulai</th>
-                        <th>Selesai</th>
-                    </tr>
                 </table>
             </div>
         </div>
@@ -83,71 +24,77 @@
 
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @if(auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin')
+        @include('superuser.dashboard.superuser', ['data' => 'script'])
+    @endif
+
     <script>
         var roles, textRoles;
         var table;
         $(document).ready(function () {
-            chart()
+            // chart()
+            // cahar11()
             roles = 'superuser';
             textRoles = 'Superuser'
+            datatable()
         });
 
-        function chart() {
+        function datatable() {
 
-            const data = {
-                labels: [
-                    'Eating',
-                    'Drinking',
-                    'Sleeping',
-                    'Designing',
-                ],
-                datasets: [{
-                    label: 'My First Dataset',
-                    data: [65, 59, 90, 81],
-                    fill: true,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    pointBackgroundColor: 'rgb(255, 99, 132)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgb(255, 99, 132)',
-
-                }],
-
-            };
-
-            const config = {
-                type: 'radar',
-                data: data,
-                options: {
-                    elements: {
-                        line: {
-                            borderWidth: 3
-                        }
-                    }
+            var url = '/datatable-package-ongoing';
+            var table = $('#table').DataTable({
+                destroy: true,
+                processing: true,
+                serverSide: true,
+                ajax: url,
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    // debugger;
+                    var numStart = this.fnPagingInfo().iStart;
+                    var index = numStart + iDisplayIndexFull + 1;
+                    // var index = iDisplayIndexFull + 1;
+                    $("td:first", nRow).html(index);
+                    return nRow;
                 },
-            };
+                columnDefs: [
+                    {"title": "#", "searchable": false, "orderable": false, "targets": 0, "className": "text-center", "width": "100"},
+                    {"title": "Paket", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "No. Kontrak", 'targets': 2, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Tanggal Kontrak", 'targets': 3, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "PPK", 'targets': 4, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Penyedia Jasa", 'targets': 5, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Mulai", 'targets': 6, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Selesai", 'targets': 7, 'searchable': true, 'orderable': true, "className": "text-center"},
+                ],
 
-            new Chart(
-                document.getElementById('myChart'),
-                config,
-                options = {
-                    scales: {
-                        r: {
-                            angleLines: {
-                                display: false
-                            },
-                            min: 0,
-                            max: 100,
-                            // suggestedMin: 0,
-                            // suggestedMax: 100
+                columns: [
+                    {
+                        "className": '',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": ''
+                    },
+                    {data: 'name', name: 'name'},
+                    {data: 'no_reference', name: 'no_reference'},
+                    {
+                        data: 'date', name: 'date', render: function (data) {
+                            return moment(data).format('DD MMMM YYYY')
                         }
-                    }
-                }
-            );
+                    },
+                    {data: 'ppk.name', name: 'ppk.name'},
+                    {data: 'vendor.vendor.name', name: 'vendor.vendor.name'},
+                    {
+                        data: 'start_at', name: 'start_at', render: function (data) {
+                            return moment(data).format('DD MMMM YYYY')
+                        }
+                    },
+                    {
+                        data: 'finish_at', name: 'finish_at', render: function (data) {
+                            return moment(data).format('DD MMMM YYYY')
+                        }
+                    },
+                ]
+            })
         }
-
-
 
 
     </script>

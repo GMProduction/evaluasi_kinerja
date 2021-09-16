@@ -38,7 +38,7 @@
                 <a class="card-tab d-block {{ auth()->user()->roles[0] == 'admin' ? 'active' : '' }} c-text card-user"
                     id="uadmin" data-roles="admin" data-text-roles="Admin Balai">
                     <div class="d-flex justify-content-between">
-                        <i class='bx bx-user-voice'></i>
+                        <i class='bx bx-user-voice icon-size-lg'></i>
                         <p class="number-card">0</p>
                     </div>
                     <div class="mt-2">
@@ -51,7 +51,7 @@
                     <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor"
                         data-text-roles="Asesor Balai">
                         <div class="d-flex justify-content-between">
-                            <i class='bx bx-user'></i>
+                            <i class='bx bx-user icon-size-lg'></i>
                             <p class="number-card">0</p>
                         </div>
                         <div class="mt-2">
@@ -62,7 +62,7 @@
                     <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk"
                         data-text-roles="Asesor PPK">
                         <div class="d-flex justify-content-between">
-                            <i class='bx bx-user'></i>
+                            <i class='bx bx-user icon-size-lg'></i>
                             <p class="number-card">0</p>
                         </div>
                         <div class="mt-2">
@@ -73,7 +73,7 @@
                 <a class="card-tab d-block c-text card-user" id="uvendor" data-roles="vendor"
                     data-text-roles="Penyedia Jasa">
                     <div class="d-flex justify-content-between">
-                        <i class='bx bx-user'></i>
+                        <i class='bx bx-user icon-size-lg'></i>
                         <p class="number-card">0</p>
                     </div>
                     <div class="mt-2">
@@ -306,12 +306,8 @@
                         "width": '100',
                         "render": function(data, type, row, meta) {
                             var ppk = row[role].ppk !== undefined ? row[role].ppk.id : '';
-                            return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-position="" data-name="" data-id="' +
-                                data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
-                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="' +
-                                row.username + '" data-ppk="' + ppk + '" data-type="Edit" data-email="' +
-                                row.email + '" data-name="' + row[role].name + '" data-id="' + data +
-                                '" id="editData"><i class="bx bx-edit"></i></a>'
+                            return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-name="' + row[role].name + '" data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
+                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="' + row.username + '" data-ppk="' + ppk + '" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role].name + '" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
                         }
                     },
                 ]
@@ -324,6 +320,11 @@
             datatable(roles);
 
             $('.title-table').text('Data ' + textRoles);
+        })
+
+        $(document).on('click', '#deleteData', function () {
+            deleteData($(this).data('name'), window.location.pathname+'/'+$(this).data('id')+'/delete', afterSave())
+            return false
         })
     </script>
 @endsection
