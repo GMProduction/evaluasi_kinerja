@@ -15,6 +15,7 @@
             -webkit-user-select: none;
             -ms-user-select: none;
         }
+
     </style>
     <section class="___class_+?0___" style="margin-top: 100px">
         <div class="mt-4 mb-5" style="min-height: 23vh">
@@ -34,8 +35,8 @@
                         <hr>
                         <div class="mb-3">
                             <label for="namapenyedia" class="form-label">Nama Penyedia Jasa</label>
-                            <input type="text" class="form-control" value="{{$data->vendor->vendor->name}}" readonly
-                                   id="namapenyedia">
+                            <input type="text" class="form-control" value="{{ $data->vendor->vendor->name }}" readonly
+                                id="namapenyedia">
                         </div>
 
                         <div class="mb-3">
@@ -46,24 +47,25 @@
                         <div class="mb-3">
                             <label for="paketkonstruksi" class="form-label">Paket Konstruksi</label>
                             <input type="text" class="form-control" value="{{ $data->name }}" readonly
-                                   id="paketkonstruksi">
+                                id="paketkonstruksi">
                         </div>
 
                         <div class="mb-3">
                             <label for="nomorkontrak" class="form-label">Nomor Kontrak</label>
-                            <input type="text" class="form-control" value="{{$data->no_reference}}" readonly
-                                   id="nomorkontrak">
+                            <input type="text" class="form-control" value="{{ $data->no_reference }}" readonly
+                                id="nomorkontrak">
                         </div>
 
                         <div class="mb-3">
                             <label for="penggunajasa" class="form-label">Pengguna Jasa</label>
-                            <input type="text" class="form-control" value="{{$data->ppk->name}}" readonly
-                                   id="penggunajasa">
+                            <input type="text" class="form-control" value="{{ $data->ppk->name }}" readonly
+                                id="penggunajasa">
                         </div>
 
                         <div class="mb-3">
                             <label for="jenisasesmen" class="form-label">Jenis Asesmen</label>
-                            <input type="text" class="form-control" value="Penilaian Penyedia Jasa" readonly id="jenisasesmen">
+                            <input type="text" class="form-control" value="Penilaian Penyedia Jasa" readonly
+                                id="jenisasesmen">
                         </div>
 
                         <div class="mb-3">
@@ -86,16 +88,40 @@
                             <input type="text" class="form-control" value="Belum Ada Update" readonly id="faktorupdate">
                         </div>
                     </div>
+
+                    <div class="table-container">
+                        <p class="fw-bold t-primary">History Penilaian</p>
+                        <hr>
+
+                        <table>
+                            <tr style="vertical-align: text-top;">
+                                <td>Tanggal</td>
+                                <td>.</td>
+                                <td>
+                                    <p>INDIKATOR - SUB INDOKATOR YANG BERUBAH</p>
+                                    <p>- NILAI AWAL + CATATAN PENILAIAN + FILE UPLOAD</p>
+                                    <p>- NILAI AKHIR + CATATAN PENILAIAN + FILE UPLOAD</p>
+                                    <table>
+                                        <tr>
+                                            <td>Score Komulatif awal</td>
+                                            <td>Score Komulatif ahkir</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
                 </div>
 
                 <div class="col-8">
                     <div role="tablist" class="mb-3">
                         <div class="items-tab" id="menu-tab">
                             <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="vendor"
-                               data-text-roles="Superuser">
+                                data-text-roles="Superuser">
                                 <div class="d-flex justify-content-between">
                                     <i class='bx bx-message-square-edit'></i>
-                                    {{--                                    <p class="number-card t-bagus">89</p>--}}
+                                    {{-- <p class="number-card t-bagus">89</p> --}}
                                 </div>
                                 <div class="mt-2">
                                     Penyedia Jasa
@@ -103,10 +129,10 @@
                             </a>
 
                             <a class="card-tab d-block c-text card-user" id="uadmin" data-roles="accessorppk"
-                               data-text-roles="Admin">
+                                data-text-roles="Admin">
                                 <div class="d-flex justify-content-between">
                                     <i class='bx bx-message-square-edit'></i>
-                                    {{--                                    <p class="number-card t-cukup">67</p>--}}
+                                    {{-- <p class="number-card t-cukup">67</p> --}}
                                 </div>
                                 <div class="mt-2">
                                     Penilaian PPK
@@ -114,10 +140,10 @@
                             </a>
 
                             <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor"
-                               data-text-roles="Asesor Balai">
+                                data-text-roles="Asesor Balai">
                                 <div class="d-flex justify-content-between">
                                     <i class='bx bx-message-square-edit'></i>
-                                    {{--                                    <p class="number-card t-kurang">38</p>--}}
+                                    {{-- <p class="number-card t-kurang">38</p> --}}
                                 </div>
                                 <div class="mt-2">
                                     Penilaian Balai
@@ -149,9 +175,8 @@
                                 <p class="fw-bold t-primary">Nilai Komulatif</p>
                                 <hr>
                                 <h1 class=" text-center mt-5" style="font-size: 4rem" id="comulative_value"></h1>
-                                <p id="comulative_status"
-                                   class="b-cukup r-fullround text-center  ms-auto me-auto p-1 mt-3"
-                                   style="width: 200px"></p>
+                                <p id="comulative_status" class="b-cukup r-fullround text-center  ms-auto me-auto p-1 mt-3"
+                                    style="width: 200px"></p>
                             </div>
                         </div>
                     </div>
@@ -221,7 +246,7 @@
             ]);
 
             var options = {
-                title: 'Total Faktor Di Nilai '+(badScore + mediumScore + goodScore),
+                title: 'Total Faktor Di Nilai ' + (badScore + mediumScore + goodScore),
                 pieHole: 0.2,
                 chartArea: {
                     width: '100%'
@@ -240,7 +265,7 @@
         var header = document.getElementById("menu-tab");
         var btns = header.getElementsByClassName("card-tab");
         for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function () {
+            btns[i].addEventListener("click", function() {
 
                 var current = $('.card-tab.active')
                 current[0].className = current[0].className.replace(" active", "");
@@ -252,7 +277,8 @@
         function elFileDropdown(hasFile = false, hasAccess = false, hasScore = false, link, name, id) {
             let type1 = '<div class="dropdown-menu">' +
                 '<a class="dropdown-item" type="button" data-link="' + link + '" id="download">Download</a>' +
-                '<a class="dropdown-item" type="button" data-subname="' + name + '" data-scoreid="' + id + '" id="upload">Ganti File</a>' +
+                '<a class="dropdown-item" type="button" data-subname="' + name + '" data-scoreid="' + id +
+                '" id="upload">Ganti File</a>' +
                 '</div>';
 
             let type2 = '<div class="dropdown-menu">' +
@@ -260,22 +286,26 @@
                 '</div>';
 
             let type3 = '<div class="dropdown-menu">' +
-                '<a class="dropdown-item" type="button" data-subname="' + name + '" data-scoreid="' + id + '" id="upload">Upload File</a>' +
+                '<a class="dropdown-item" type="button" data-subname="' + name + '" data-scoreid="' + id +
+                '" id="upload">Upload File</a>' +
                 '</div>';
 
             if (hasAccess) {
                 if (!hasFile && hasScore) {
-                    return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Unggah</a>' + type3;
-                } else if(!hasFile && !hasScore) {
+                    return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Unggah</a>' +
+                        type3;
+                } else if (!hasFile && !hasScore) {
                     return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">-</a>';
                 } else {
-                    return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Unduh / Ganti</a>' + type1;
+                    return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Unduh / Ganti</a>' +
+                        type1;
                 }
             } else {
                 if (!hasFile) {
                     return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">-</a>';
                 } else {
-                    return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Unduh</a>' + type2;
+                    return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Unduh</a>' +
+                        type2;
                 }
             }
         }
@@ -291,7 +321,10 @@
         }
 
         function elSubIndicator(mainKey, key, value) {
-            const {single_score, id} = value;
+            const {
+                single_score,
+                id
+            } = value;
             const availableScore = ['', 'Kurang', 'Cukup', 'Baik'];
             const availableBtnClass = ['bt-primary-xsm', 'b-buruk-light-xsm', 'b-cukup-light-xsm', 'b-bagus-light-xsm'];
             let score = single_score !== null ? availableScore[single_score['score']] : 'Beri Nilai';
@@ -303,7 +336,9 @@
             let update_at = single_score !== null ? new Date(single_score['updated_at']) : null;
             let last_update = single_score !== null ? getCurrentDateString(update_at) : '-';
             let btn_class = single_score !== null ? availableBtnClass[single_score['score']] : 'bt-primary-xsm';
-            let button_upload = single_score !== null ? single_score['file'] !== null ? '<a class="bt-primary-xsm ms-2" data-subname="' + value['name'] + '" data-link="' + file_link + '" data-scoreid="' + single_score['id'] + '" id="upload">Upload File</a>' : '' : '';
+            let button_upload = single_score !== null ? single_score['file'] !== null ?
+                '<a class="bt-primary-xsm ms-2" data-subname="' + value['name'] + '" data-link="' + file_link +
+                '" data-scoreid="' + single_score['id'] + '" id="upload">Upload File</a>' : '' : '';
             let scoreid = single_score !== null ? single_score['id'] : '';
             let dropdown_active = '';
             let el_dropdown = '';
@@ -311,14 +346,19 @@
             if (roles === index) {
                 dropdown_active = 'dropdown';
                 hasAccess = true;
-                el_dropdown = '<div class="dropdown-menu"> <button class="dropdown-item nilai" type="button" data-value="3" data-subin="' + id + '">Baik</button>\n' +
-                    '<button class="dropdown-item nilai" type="button" data-value="2" data-subin="' + id + '">Cukup</button>\n' +
-                    '<button class="dropdown-item nilai" type="button" data-value="1" data-subin="' + id + '">Kurang</button></div>';
+                el_dropdown =
+                    '<div class="dropdown-menu"> <button class="dropdown-item nilai" type="button" data-value="3" data-subin="' +
+                    id + '">Baik</button>\n' +
+                    '<button class="dropdown-item nilai" type="button" data-value="2" data-subin="' + id +
+                    '">Cukup</button>\n' +
+                    '<button class="dropdown-item nilai" type="button" data-value="1" data-subin="' + id +
+                    '">Kurang</button></div>';
             }
             return '<tr>' +
                 '<td>' + mainKey + '.' + (key + 1) + '</td>\n' +
                 '<td>' + value['name'] + '</td>\n' +
-                '<td><a class="' + btn_class + ' " style="cursor: pointer"  data-bs-toggle="' + dropdown_active + '" aria-expanded="false">' + score + '</a>\n' +
+                '<td><a class="' + btn_class + ' " style="cursor: pointer"  data-bs-toggle="' + dropdown_active +
+                '" aria-expanded="false">' + score + '</a>\n' +
                 el_dropdown +
                 '</td>\n' +
                 '<td>' + last_update + '</td>\n' +
@@ -327,11 +367,11 @@
                 '</tr>';
         }
 
-        $(document).on('click', '#download', function () {
+        $(document).on('click', '#download', function() {
             $(this).attr('target', '_blank')
             $(this).attr('href', $(this).data('link'));
         })
-        $(document).on('click', '#upload', function () {
+        $(document).on('click', '#upload', function() {
             console.log($(this).data('scoreid'), $(this).data('subname'))
             $('#modalfile #fileNameSub').html($(this).data('subname'))
             $('#modalfile #id').val($(this).data('scoreid'))
@@ -356,7 +396,12 @@
         }
 
         function getCurrentDateString(date) {
-            return date.toLocaleDateString('id-ID', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+            return date.toLocaleDateString('id-ID', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            })
         }
 
         async function getScore(type) {
@@ -381,16 +426,16 @@
                 let data = response['data']['indicator'];
                 el.append(elTable());
                 let table = $('#table');
-                $.each(data, function (k, v) {
+                $.each(data, function(k, v) {
                     table.append(elMainIndicator(k, v));
                     let elMain = $('#indicator-' + k);
                     let sub = '';
-                    $.each(v['sub_indicator'], function (kSub, vSub) {
+                    $.each(v['sub_indicator'], function(kSub, vSub) {
                         sub += elSubIndicator((k + 1), kSub, vSub);
                     });
                     elMain.after(sub);
                 });
-                $('.nilai').on('click', function () {
+                $('.nilai').on('click', function() {
                     let value = this.dataset.value;
                     let sub_indicator = this.dataset.subin;
                     console.log(value, sub_indicator, package_id);
@@ -405,8 +450,7 @@
             }
         }
 
-        async function getLastUpdate(type)
-        {
+        async function getLastUpdate(type) {
             let vType = 'default';
             switch (type) {
                 case 'vendor':
@@ -423,12 +467,12 @@
             }
             try {
                 let response = await $.get('/penilaian/last-update?package=' + package_id + '&type=' + vType);
-                if(response['data'] !== null){
+                if (response['data'] !== null) {
                     let updated_at = getCurrentDateString(new Date(response['data']['updated_at']));
                     let name = response['data']['sub_indicator']['name'];
                     $('#faktorupdate').val(name);
                     $('#terahkirupdate').val(updated_at);
-                }else{
+                } else {
                     $('#faktorupdate').val('Belum Ada Update');
                     $('#terahkirupdate').val('Belum Ada Update');
                 }
@@ -441,7 +485,7 @@
         async function setScore(sub, value) {
             try {
                 let response = await $.post('/penilaian/set-score', {
-                    _token: '{{csrf_token()}}',
+                    _token: '{{ csrf_token() }}',
                     sub_indicator: sub,
                     value: value,
                     index: index,
@@ -460,7 +504,7 @@
 
             let labels = [];
             let values = [];
-            dataChart['indicator'].forEach(function (v, k) {
+            dataChart['indicator'].forEach(function(v, k) {
                 labels.push(v['index']);
                 values.push(v['radar']);
                 console.log(v)
@@ -501,8 +545,8 @@
                     },
                 },
                 plugins: [{
-                    beforeInit: function (chart) {
-                        chart.data.labels.forEach(function (e, i, a) {
+                    beforeInit: function(chart) {
+                        chart.data.labels.forEach(function(e, i, a) {
                             console.log()
                             var space = e.split(' ');
                             // if (space[2]) {
@@ -577,10 +621,10 @@
             }
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             getScore('vendor');
             getLastUpdate('vendor');
-            $('.card-user').on('click', function () {
+            $('.card-user').on('click', function() {
                 index = this.dataset.roles;
                 let title = '';
                 switch (index) {
@@ -602,6 +646,5 @@
                 $('#jenisasesmen').val('Penilaian ' + title);
             })
         })
-
     </script>
 @endsection
