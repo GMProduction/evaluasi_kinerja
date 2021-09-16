@@ -8,8 +8,10 @@ use App\Helper\CustomController;
 use App\Models\Indicator;
 use App\Models\Package;
 use App\Models\Score;
+use App\Models\ScoreHistory;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class ScoreController extends CustomController
@@ -77,10 +79,11 @@ class ScoreController extends CustomController
                 'msg' => 'success',
                 'data' => $score
             ], 200);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json(['msg' => 'Terjadi Kesalahan Server..'], 500);
         }
     }
+
     public function getScore()
     {
         try {
@@ -127,7 +130,7 @@ class ScoreController extends CustomController
             }
 
             $vType = 'default';
-            switch ($type){
+            switch ($type) {
                 case 'vendor':
                     $vType = 'vendor';
                     break;
@@ -140,12 +143,29 @@ class ScoreController extends CustomController
                 default:
                     break;
             }
+            DB::beginTransaction();
             if ($score !== null) {
-
+                $cumulativeBefore = $this->getCumulative($packageId, $vType);
                 $score->score = $value;
                 $score->text = $scoreText;
                 $score->save();
+
+                $cumulativeAfter = $this->getCumulative($packageId, $vType);
+                $history = new ScoreHistory();
+                $history->package_id = $packageId;
+                $history->author_id = $authorId;
+                $history->sub_indicator_id = $subIndicatorId;
+                $history->type = $vType;
+                $history->score_before = $score->score;
+                $history->text_before = $score->text;
+                $history->file_before = $score->file;
+                $history->score_after = $value;
+                $history->text_after = $scoreText;
+                $history->score_total_before = $cumulativeBefore;
+                $history->score_total_after = $cumulativeAfter;
+                $history->save();
             } else {
+                $cumulativeBefore = $this->getCumulative($packageId, $vType);
                 $newScore = new Score();
                 $newScore->package_id = $packageId;
                 $newScore->evaluator_id = $authorId;
@@ -155,11 +175,109 @@ class ScoreController extends CustomController
                 $newScore->text = $scoreText;
                 $newScore->type = $vType;
                 $newScore->save();
+
+                $cumulativeAfter = $this->getCumulative($packageId, $vType);
+                $history = new ScoreHistory();
+                $history->package_id = $packageId;
+                $history->author_id = $authorId;
+                $history->sub_indicator_id = $subIndicatorId;
+                $history->type = $vType;
+                $history->score_before = 0;
+                $history->text_before = 'bad';
+                $history->file_before = null;
+                $history->score_after = $value;
+                $history->text_after = $scoreText;
+                $history->score_total_before = $cumulativeBefore;
+                $history->score_total_after = $cumulativeAfter;
+                $history->save();
             }
+            DB::commit();
             return response()->json(['msg' => 'success'], 200);
         } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
         }
+    }
+
+    private function getCumulative($packageId, $type)
+    {
+        $data = Indicator::with(['subIndicator.singleScore' => function ($query) use ($packageId, $type) {
+            $query->where('package_id', $packageId)->where('type', $type);
+        }])->get();
+        $arrData = $data->toArray();
+        $result = [];
+        $chkSum = 0;
+        $scoreMin = 1;
+        $scoreMax = 3;
+        $comulativeTotal = 0;
+        $goodScore = 0;
+        $mediumScore = 0;
+        $badScore = 0;
+        $emptyScore = 0;
+        foreach ($arrData as $v) {
+            $index = $v['name'];
+            $weight = $v['weight'];
+            $value = 0;
+            $subLength = count($v['sub_indicator']);
+            $chkSum += $v['weight'];
+            $min = ($scoreMin * $subLength);
+            $max = ($scoreMax * $subLength);
+            $maxFactor = round((100 * $weight), 2, PHP_ROUND_HALF_UP);
+            $radarMin = 0;
+            $radarMax = 10;
+            $a = round(($radarMax - $radarMin) / ($max - $min), 3, PHP_ROUND_HALF_UP);
+            $b = round($radarMax - ($max * $a), 0, PHP_ROUND_HALF_UP);
+            foreach ($v['sub_indicator'] as $sub) {
+                $tmpScore = $sub['single_score'] !== null ? $sub['single_score']['score'] : 0;
+                $value += $tmpScore;
+                if ($sub['single_score'] !== null) {
+                    switch ($sub['single_score']['score']) {
+                        case 1:
+                            $badScore += 1;
+                            break;
+                        case 2:
+                            $mediumScore += 1;
+                            break;
+                        case 3:
+                            $goodScore += 1;
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    $emptyScore += 1;
+                }
+            }
+            $checkConversion = ($a * $max) + $b;
+            $a_cumulative = round(($maxFactor / ($max - $min)), 3, PHP_ROUND_HALF_UP);
+            $b_cumulative = round(($maxFactor - ($max * $a_cumulative)), 3, PHP_ROUND_HALF_UP);
+            $radar = 0;
+            $cumulative = 0;
+            if ($value > 0) {
+                $radar = ($a * $value) + $b;
+                $cumulative = ($a_cumulative * $value) + $b_cumulative;
+                $comulativeTotal += round($cumulative, 2, PHP_ROUND_HALF_UP);
+            }
+            $transform = [
+                'index' => $index,
+                'weight' => $weight,
+                'sub_length' => $subLength,
+                'min' => $min,
+                'max' => $max,
+                'max_factor' => $maxFactor,
+                'check_conversion' => round($checkConversion, 0, PHP_ROUND_HALF_UP),
+                'a' => $a,
+                'b' => $b,
+                'a_cumulative' => $a_cumulative,
+                'b_cumulative' => $b_cumulative,
+                'value' => $value,
+                'radar' => round($radar, 2, PHP_ROUND_HALF_UP),
+                'cumulative' => round($cumulative, 2, PHP_ROUND_HALF_UP),
+            ];
+            array_push($result, $transform);
+        }
+
+        return round($comulativeTotal, 2, PHP_ROUND_HALF_UP);
     }
 
     public function getRadarChart()
