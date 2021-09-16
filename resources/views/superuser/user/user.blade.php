@@ -18,13 +18,14 @@
         .select2-selection__arrow {
             height: 35px !important;
         }
+
     </style>
     <section class="___class_+?0___" style="margin-top: 100px">
         <div role="tablist">
             <div class="items-tab" id="menu-tab">
-                @if(auth()->user()->roles[0] == 'superuser')
+                @if (auth()->user()->roles[0] == 'superuser')
                     <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="superuser"
-                       data-text-roles="Superuser">
+                        data-text-roles="Superuser">
                         <div class="d-flex justify-content-between">
                             <i class='bx bx-user-circle icon-size-lg '></i>
                             <p class="number-card">0</p>
@@ -34,7 +35,8 @@
                         </div>
                     </a>
                 @endif
-                <a class="card-tab d-block {{auth()->user()->roles[0] == 'admin' ? 'active' : ''}} c-text card-user" id="uadmin" data-roles="admin" data-text-roles="Admin Balai">
+                <a class="card-tab d-block {{ auth()->user()->roles[0] == 'admin' ? 'active' : '' }} c-text card-user"
+                    id="uadmin" data-roles="admin" data-text-roles="Admin Balai">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user-voice'></i>
                         <p class="number-card">0</p>
@@ -44,10 +46,10 @@
                     </div>
                 </a>
 
-                @if(auth()->user()->roles[0] == 'superuser')
+                @if (auth()->user()->roles[0] == 'superuser')
 
                     <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor"
-                       data-text-roles="Asesor Balai">
+                        data-text-roles="Asesor Balai">
                         <div class="d-flex justify-content-between">
                             <i class='bx bx-user'></i>
                             <p class="number-card">0</p>
@@ -58,7 +60,7 @@
                     </a>
 
                     <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk"
-                       data-text-roles="Asesor PPK">
+                        data-text-roles="Asesor PPK">
                         <div class="d-flex justify-content-between">
                             <i class='bx bx-user'></i>
                             <p class="number-card">0</p>
@@ -69,7 +71,7 @@
                     </a>
                 @endif
                 <a class="card-tab d-block c-text card-user" id="uvendor" data-roles="vendor"
-                   data-text-roles="Penyedia Jasa">
+                    data-text-roles="Penyedia Jasa">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user'></i>
                         <p class="number-card">0</p>
@@ -83,13 +85,13 @@
 
             <!-- Modal Tambah-->
             <div class="modal fade" id="tambahdata" tabindex="-1" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="title"></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form id="form" onsubmit="return Save()">
@@ -119,7 +121,7 @@
                                 <div class="mb-3">
                                     <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
                                     <input type="password" class="form-control" id="password_confirmation"
-                                           name="password_confirmation">
+                                        name="password_confirmation">
                                 </div>
                                 <div class="mb-4"></div>
                                 <button type="submit" class="bt-primary">Simpan</button>
@@ -152,12 +154,12 @@
     <script>
         var roles, textRoles, title;
         var table;
-        $(document).ready(function () {
+        $(document).ready(function() {
             roles = 'superuser';
             textRoles = 'Superuser'
-            @if(auth()->user()->roles[0] == 'admin')
+            @if (auth()->user()->roles[0] == 'admin')
                 roles = 'admin';
-            textRoles = 'Admin Balai'
+                textRoles = 'Admin Balai'
             @endif
 
             getCountUser()
@@ -176,7 +178,7 @@
             getCountUser()
         }
 
-        $(document).on('click', '#addData, #editData', function () {
+        $(document).on('click', '#addData, #editData', function() {
             $('#tambahdata #id').val($(this).data('id'));
             $('#tambahdata #roles').val(roles);
             title = $(this).data('type');
@@ -210,7 +212,7 @@
         var header = document.getElementById("menu-tab");
         var btns = header.getElementsByClassName("card-tab");
         for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function () {
+            btns[i].addEventListener("click", function() {
 
                 var current = $('.card-tab.active')
                 current[0].className = current[0].className.replace(" active", "");
@@ -220,8 +222,8 @@
         }
 
         function getCountUser() {
-            $.get(window.location.pathname + '/count', function (data) {
-                $.each(data, function (key, val) {
+            $.get(window.location.pathname + '/count', function(data) {
+                $.each(data, function(key, val) {
                     $('#u' + val['roles']['0'] + ' p').html(val['count'])
                 })
             })
@@ -235,7 +237,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: url,
-                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // debugger;
                     var numStart = this.fnPagingInfo().iStart;
                     var index = numStart + iDisplayIndexFull + 1;
@@ -243,38 +245,80 @@
                     $("td:first", nRow).html(index);
                     return nRow;
                 },
-                columnDefs: [
-                    {"title": "#", "searchable": false, "orderable": false, "targets": 0, "className": "text-center"},
-                    {"title": "Nama", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Username", 'targets': 2, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Email", 'targets': 3, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Action", 'targets': 4, 'searchable': false, 'orderable': false, "className": "text-center"},
+                columnDefs: [{
+                        "title": "#",
+                        "searchable": false,
+                        "orderable": false,
+                        "targets": 0,
+                        "className": "text-center"
+                    },
+                    {
+                        "title": "Nama",
+                        'targets': 1,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
+                    {
+                        "title": "Username",
+                        'targets': 2,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
+                    {
+                        "title": "Email",
+                        'targets': 3,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
+                    {
+                        "title": "Action",
+                        'targets': 4,
+                        'searchable': false,
+                        'orderable': false,
+                        "className": "text-center"
+                    },
                 ],
 
                 columns: [{
-                    "className": '',
-                    "orderable": false,
-                    "data": null,
-                    "defaultContent": ''
-                },
-                    {data: role + '.name', name: role + '.name'},
-                    {data: 'username', name: 'username'},
-                    {data: 'email', name: 'email'},
+                        "className": '',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": ''
+                    },
+                    {
+                        data: role + '.name',
+                        name: role + '.name'
+                    },
+                    {
+                        data: 'username',
+                        name: 'username'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
                     {
                         "target": 2,
                         "data": 'id',
                         "width": '100',
-                        "render": function (data, type, row, meta) {
+                        "render": function(data, type, row, meta) {
                             var ppk = row[role].ppk !== undefined ? row[role].ppk.id : '';
-                            return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-position="" data-name="" data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
-                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="' + row.username + '" data-ppk="' + ppk + '" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role].name + '" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
+                            return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-position="" data-name="" data-id="' +
+                                data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
+                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="' +
+                                row.username + '" data-ppk="' + ppk + '" data-type="Edit" data-email="' +
+                                row.email + '" data-name="' + row[role].name + '" data-id="' + data +
+                                '" id="editData"><i class="bx bx-edit"></i></a>'
                         }
                     },
                 ]
             })
         }
 
-        $(document).on('click', '.card-user', function () {
+        $(document).on('click', '.card-user', function() {
             roles = $(this).data('roles');
             textRoles = $(this).data('text-roles')
             datatable(roles);
