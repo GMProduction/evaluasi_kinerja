@@ -114,6 +114,7 @@ class ScoreController extends CustomController
             //add filter
 
             $score = Score::where('package_id', $packageId)->where('type', $type)->where('sub_indicator_id', $subIndicatorId)->first();
+            return response()->json(['msg' => 'asoe'], 202);
             $scoreText = 'bad';
             switch ($value) {
                 case 1:
@@ -145,6 +146,7 @@ class ScoreController extends CustomController
             }
             DB::beginTransaction();
             if ($score !== null) {
+
                 $cumulativeBefore = $this->getCumulative($packageId, $vType);
                 $score->score = $value;
                 $score->text = $scoreText;
