@@ -111,10 +111,6 @@ class ScoreController extends CustomController
             $value = (int)$this->postField('value');
             $type = $this->postField('index');
             $authorId = Auth::id();
-            //add filter
-
-            $score = Score::where('package_id', $packageId)->where('type', $type)->where('sub_indicator_id', $subIndicatorId)->first();
-            return response()->json(['msg' => 'asoe'], 202);
             $scoreText = 'bad';
             switch ($value) {
                 case 1:
@@ -144,30 +140,35 @@ class ScoreController extends CustomController
                 default:
                     break;
             }
+            $score = Score::where('package_id', $packageId)->where('type', $vType)->where('sub_indicator_id', $subIndicatorId)->first();
             DB::beginTransaction();
             if ($score !== null) {
-
                 $cumulativeBefore = $this->getCumulative($packageId, $vType);
+                $scoreBefore = $score->score;
+                $scoreTextBefore = $score->text;
+                $scoreFileBefore = $score->file;
                 $score->score = $value;
                 $score->text = $scoreText;
                 $score->save();
-
                 $cumulativeAfter = $this->getCumulative($packageId, $vType);
-                $history = new ScoreHistory();
-                $history->package_id = $packageId;
-                $history->author_id = $authorId;
-                $history->sub_indicator_id = $subIndicatorId;
-                $history->type = $vType;
-                $history->score_before = $score->score;
-                $history->text_before = $score->text;
-                $history->file_before = $score->file;
-                $history->score_after = $value;
-                $history->text_after = $scoreText;
-                $history->score_total_before = $cumulativeBefore;
-                $history->score_total_after = $cumulativeAfter;
-                $history->save();
+
+                $data = [
+                    'package_id' => $packageId,
+                    'author_id' => $authorId,
+                    'sub_indicator_id' => $subIndicatorId,
+                    'type' => $vType,
+                    'score_before' => $scoreBefore,
+                    'score_text_before' => $scoreTextBefore,
+                    'file_before' => $scoreFileBefore,
+                    'score_after' => $value,
+                    'score_text_after' => $scoreText,
+                    'file_after' => $scoreFileBefore,
+                    'cumulative_before' => $cumulativeBefore,
+                    'cumulative_after' => $cumulativeAfter,
+                ];
+
+                $this->saveHistory($data);
             } else {
-                $cumulativeBefore = $this->getCumulative($packageId, $vType);
                 $newScore = new Score();
                 $newScore->package_id = $packageId;
                 $newScore->evaluator_id = $authorId;
@@ -177,21 +178,6 @@ class ScoreController extends CustomController
                 $newScore->text = $scoreText;
                 $newScore->type = $vType;
                 $newScore->save();
-
-                $cumulativeAfter = $this->getCumulative($packageId, $vType);
-                $history = new ScoreHistory();
-                $history->package_id = $packageId;
-                $history->author_id = $authorId;
-                $history->sub_indicator_id = $subIndicatorId;
-                $history->type = $vType;
-                $history->score_before = 0;
-                $history->text_before = 'bad';
-                $history->file_before = null;
-                $history->score_after = $value;
-                $history->text_after = $scoreText;
-                $history->score_total_before = $cumulativeBefore;
-                $history->score_total_after = $cumulativeAfter;
-                $history->save();
             }
             DB::commit();
             return response()->json(['msg' => 'success'], 200);
@@ -199,6 +185,37 @@ class ScoreController extends CustomController
             DB::rollBack();
             return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
         }
+    }
+
+    private function saveHistory($data)
+    {
+        $packageId = $data['package_id'];
+        $authorId = $data['author_id'];
+        $subIndicatorId = $data['sub_indicator_id'];
+        $type = $data['type'];
+        $scoreBefore = $data['score_before'];
+        $scoreTextBefore = $data['score_text_before'];
+        $fileBefore = $data['file_before'];
+        $scoreAfter = $data['score_after'];
+        $scoreTextAfter = $data['score_text_after'];
+        $fileAfter = $data['file_after'];
+        $cumulativeBefore = $data['cumulative_before'];
+        $cumulativeAfter = $data['cumulative_after'];
+
+        $history = new ScoreHistory();
+        $history->package_id = $packageId;
+        $history->author_id = $authorId;
+        $history->sub_indicator_id = $subIndicatorId;
+        $history->type = $type;
+        $history->score_before = $scoreBefore;
+        $history->text_before = $scoreTextBefore;
+        $history->file_before = $fileBefore;
+        $history->score_after = $scoreAfter;
+        $history->text_after = $scoreTextAfter;
+        $history->file_after = $fileAfter;
+        $history->score_total_before = $cumulativeBefore;
+        $history->score_total_after = $cumulativeAfter;
+        $history->save();
     }
 
     private function getCumulative($packageId, $type)
@@ -407,5 +424,17 @@ class ScoreController extends CustomController
 
         return response()->json(Auth::user()->roles[0]);
 
+    }
+
+    public function getScoreHistory()
+    {
+        try {
+            $packageId = $this->postField('package');
+            $type = $this->postField('index');
+            $history = ScoreHistory::with(['package', 'subIndicator'])->get();
+            return response()->json(['msg' => 'success', 'data' => $history], 200);
+        } catch (\Exception $e) {
+            return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
+        }
     }
 }
