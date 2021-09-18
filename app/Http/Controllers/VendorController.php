@@ -45,4 +45,5 @@ class VendorController extends CustomController
             return response()->json($e, 500);
         }
     }
+
 }
