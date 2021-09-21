@@ -25,4 +25,9 @@ class SubIndicator extends Model
     {
         return $this->hasOne(Score::class, 'sub_indicator_id');
     }
+
+    public function scoreHistory()
+    {
+        return $this->hasMany(ScoreHistory::class, 'sub_indicator_id');
+    }
 }
