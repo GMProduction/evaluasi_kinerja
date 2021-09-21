@@ -22,12 +22,12 @@
         }
 
     </style>
-    <section class="___class_+?0___" style="margin-top: 100px">
+    <section class="___class_+?0___ mt-content" >
         <div class="mt-4 mb-5" style="min-height: 23vh">
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
 
-            <div class="header-table">
+            <div class="header-table"  style="margin-bottom: 10px"> 
                 <p class="title-table">Hasil Evaluasi Kinerja Paket: <span
                         class="fw-bold t-primary">{{ $data->name }}</span></p>
             </div>
@@ -185,7 +185,7 @@
                             <input id="id" name="id" hidden>
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama Sub Indikator</label>
-                                <p id="fileNameSub"></p>
+                                <p class="fw-bold" id="fileNameSub"></p>
                             </div>
                             <div class="mb-3">
                                 <label for="weight" class="form-label">File</label>

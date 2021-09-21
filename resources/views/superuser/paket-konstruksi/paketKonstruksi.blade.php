@@ -10,7 +10,7 @@
 
 @section('content')
 
-    <section class="" style="margin-top: 100px">
+    <section class="mt-content">
 
         <!-- Tab panes -->
         <div class="mt-4" style="min-height: 23vh">

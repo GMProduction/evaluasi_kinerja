@@ -9,15 +9,15 @@
 @endsection
 
 @section('content')
-    <section class="" style="margin-top: 100px">
+    <section class="mt-content">
         <div class="mt-4" style="min-height: 23vh">
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
 
 
             <div class="table-container">
-                <div class="header-table">
-                    <p class="title-table fw-bold t-primary">Data Hasil Evaluasi Paket</p>
+                <div class="header-table" >
+                    <p class="title-table fw-bold t-primary" >Data Hasil Evaluasi Paket</p>
                 </div>
                 <table id="table" class="table table-striped" style="width:100%">
                     {{--                    <tr>--}}
