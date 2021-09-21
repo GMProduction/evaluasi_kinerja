@@ -98,7 +98,7 @@
                     <div class="table-container">
                         <p class="fw-bold t-primary">Riwayat Penilaian</p>
                         <hr>
-                        <div id="history-container">
+                        <div>
 
                         </div>
                         {{--                        <table>--}}
@@ -224,6 +224,36 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="modalHistory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="history-container">
+                        <div class="d-flex align-items-center justify-content-center w-100">
+                            <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
+                                 style="margin-right: 10px">
+                            </div>
+                            <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
+                                 style="margin-right: 10px">
+                            </div>
+                            <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
+                                 style="margin-right: 10px">
+                            </div>
+                            <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
+                                 style="margin-right: 10px">
+                            </div>
+                            <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status">
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <span>Sedang Mengunduh Riwayat Perubahan Terakhir....</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 @endsection
 
@@ -234,6 +264,7 @@
         var package_id = '{{ $data->id }}';
         var roles = '{{ auth()->user()->roles[0] }}';
         var index = 'vendor';
+        var _histId = '';
         google.charts.load("current", {
             packages: ["corechart"]
         });
@@ -320,6 +351,13 @@
             }
         }
 
+        function elButtonHistory(hasHistory, id) {
+            if (hasHistory) {
+                return '<a data-id="' + id + '" class="bt-primary-xsm bt-history"  style="cursor: pointer">Lihat</a>';
+            }
+            return '<a class="bt-primary-xsm"  style="cursor: pointer">-</a>';
+        }
+
         function elMainIndicator(key, value) {
             return '<tr class="bg-prim-light" id="indicator-' + key + '">' +
                 '<th>' + (key + 1) + '</th>' +
@@ -327,12 +365,14 @@
                 '<th style="min-width: 100px" ></th>' +
                 '<th>Update Terahkir</th>' +
                 '<th>File Terupload</th>' +
+                '<th>Riwayat Perubahan</th>' +
                 '</tr>'
         }
 
         function elSubIndicator(mainKey, key, value) {
             const {
                 single_score,
+                score_history,
                 id
             } = value;
             const availableScore = ['', 'Kurang', 'Cukup', 'Baik'];
@@ -353,6 +393,7 @@
             let dropdown_active = '';
             let el_dropdown = '';
             let hasAccess = false;
+            let hasHistory = score_history.length > 0;
             if (roles === index) {
                 dropdown_active = 'dropdown';
                 hasAccess = true;
@@ -374,6 +415,7 @@
                 '<td>' + last_update + '</td>\n' +
                 // '<td><a class="bt-primary-xsm" data-subname="' + value['name'] + '" data-link="' + file_link + '" data-scoreid="' + scoreid + '" id="' + file_Id + '">' + file_text + '</a></td>\n' +
                 '<td>' + elFileDropdown(hasFile, hasAccess, hasScore, file_link, value['name'], scoreid) + '</td>\n' +
+                '<td>' + elButtonHistory(hasHistory, id) + '</td>\n' +
                 '</tr>';
         }
 
@@ -382,7 +424,6 @@
             $(this).attr('href', $(this).data('link'));
         });
         $(document).on('click', '#upload', function () {
-            console.log($(this).data('scoreid'), $(this).data('subname'))
             $('#modalfile #fileNameSub').html($(this).data('subname'))
             $('#modalfile #id').val($(this).data('scoreid'))
             $('#modalfile #file').val('')
@@ -397,7 +438,7 @@
         function afterSaveFile(data) {
             $('#modalfile').modal('hide')
             getScore(data);
-            getHistoryScore(index);
+            // getHistoryScore(index);
         }
 
         function elTable() {
@@ -415,7 +456,7 @@
             })
         }
 
-        function getDateOnlyString(date){
+        function getDateOnlyString(date) {
             return date.toLocaleDateString('id-ID', {
                 year: 'numeric',
                 month: 'short',
@@ -457,8 +498,12 @@
                 $('.nilai').on('click', function () {
                     let value = this.dataset.value;
                     let sub_indicator = this.dataset.subin;
-                    console.log(value, sub_indicator, package_id);
                     setScore(sub_indicator, value);
+                });
+
+                $('.bt-history').on('click', function () {
+                    _histId = this.dataset.id;
+                    $('#modalHistory').modal('show');
 
                 });
                 await getRadarChart();
@@ -469,14 +514,29 @@
             }
         }
 
+        function onModalHistoryShow() {
+            $('#modalHistory').on('shown.bs.modal', function () {
+                getHistoryScore(index)
+                // let response = await $.get('/penilaian/get-last-history?package=' + package_id + '&type=' + vType + '&sub=' + _histId);
+                // console.log()
+            });
+        }
+
         function elHistory(data) {
-            const {created_at} = data;
+            const {created_at, score_after, score_before, } = data;
             let date = getDateOnlyString(new Date(created_at));
             return '<div class="d-flex">' +
                 '<p class="font-date-history" style="margin-right: 10px">' + date + '</p>' +
                 '<div class="flex-grow-1">' +
-                '<p class="font-date-history">'+data['sub_indicator']['name']+'</p>' +
+                // '<p class="font-date-history">' + data['sub_indicator']['name'] + '</p>' +
+                '<div class="d-flex align-items-center justify-content-between">' +
+                '<div>' +
                 '<p class="font-date-history" style="font-weight: bold">- Penilaian Awal</p>' +
+                '</div>' +
+                '<div>' +
+                '<p class="font-date-history" style="font-weight: bold">- Penilaian Akhir</p>' +
+                '</div>' +
+                '</div>'+
                 '</div>' +
                 '</div>';
         }
@@ -499,12 +559,11 @@
                         break;
                 }
                 el.empty();
-                let response = await $.get('/penilaian/get-history?package=' + package_id + '&type=' + vType);
+                let response = await $.get('/penilaian/get-history?package=' + package_id + '&type=' + vType+ '&sub=' + _histId);
+                console.log(response)
                 $.each(response['data'], function (k, v) {
-                    console.log('asoe')
                     el.append(elHistory(v));
                 });
-                console.log(response)
             } catch (e) {
                 console.log(e)
             }
@@ -537,7 +596,6 @@
                     $('#terahkirupdate').val('Belum Ada Update');
                 }
                 console.log('last_update')
-                console.log(response)
             } catch (e) {
                 alert("Maaf, Sedang Terjadi Kesalahan Pada Server...")
             }
@@ -553,8 +611,7 @@
                     package: package_id
                 });
                 await getScore(index);
-                await getHistoryScore(index);
-                console.log(response)
+                // await getHistoryScore(index);
             } catch (e) {
                 alert('Terjadi Kesalahan Server...')
             }
@@ -569,7 +626,6 @@
             dataChart['indicator'].forEach(function (v, k) {
                 labels.push(v['index']);
                 values.push(v['radar']);
-                console.log(v)
             });
             const data = {
                 labels: labels,
@@ -609,7 +665,6 @@
                 plugins: [{
                     beforeInit: function (chart) {
                         chart.data.labels.forEach(function (e, i, a) {
-                            console.log()
                             var space = e.split(' ');
                             // if (space[2]) {
                             //     a[i] = e.split(' ');
@@ -651,7 +706,6 @@
                 chart(response['data']);
                 drawChart(response['data']['score_count']);
                 // await getScore(index);
-                console.log(response)
             } catch (e) {
                 console.log(e)
             }
@@ -684,8 +738,9 @@
         }
 
         $(document).ready(function () {
+            onModalHistoryShow();
             getScore('vendor');
-            getHistoryScore('vendor');
+            // getHistoryScore('vendor');
             getLastUpdate('vendor');
             $('.card-user').on('click', function () {
                 index = this.dataset.roles;
@@ -704,7 +759,7 @@
                         break;
                 }
                 getScore(index);
-                getHistoryScore(index);
+                // getHistoryScore(index);
                 getLastUpdate(index);
                 $('#map-title').html('Peta Kinerja ' + title);
                 $('#jenisasesmen').val('Penilaian ' + title);

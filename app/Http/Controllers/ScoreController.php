@@ -91,7 +91,9 @@ class ScoreController extends CustomController
             $type = request()->query->get('type');
             $data = Indicator::with(['subIndicator.singleScore' => function ($query) use ($packageId, $type) {
                 $query->where('package_id', $packageId)->where('type', $type);
-            }])->get();
+            }, 'subIndicator.scoreHistory' => function ($query) use ($packageId, $type) {
+                $query->where('package_id', $packageId)->where('type', $type);
+            } ])->get();
             return response()->json([
                 'msg' => 'success',
                 'data' => [
@@ -429,11 +431,38 @@ class ScoreController extends CustomController
     public function getScoreHistory()
     {
         try {
-            $packageId = $this->postField('package');
-            $type = $this->postField('index');
-            $history = ScoreHistory::with(['package', 'subIndicator'])->get();
+            $packageId = request()->query->get('package');
+            $type = request()->query->get('type');
+            $subIndicatorId = request()->query->get('sub');
+            $history = ScoreHistory::with(['package', 'subIndicator'])
+                ->where('package_id', $packageId)
+                ->where('type', $type)
+                ->where('sub_indicator_id', $subIndicatorId)
+                ->orderBy('id', 'DESC')
+                ->get();
             return response()->json(['msg' => 'success', 'data' => $history], 200);
         } catch (\Exception $e) {
+            return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
+        }
+    }
+
+    public function getLastScoreHistory()
+    {
+
+        try {
+            $packageId = request()->query->get('package');
+            $type = request()->query->get('type');
+            $subIndicatorId = request()->query->get('sub');
+            $history = ScoreHistory::with(['package', 'subIndicator'])
+                ->where('package_id', $packageId)
+                ->where('type', $type)
+                ->where('sub_indicator_id', $subIndicatorId)
+                ->first();
+            if($history === null){
+                return response()->json(['msg' => 'Tidak Ada Riwayat...', 'code' => 202], 202);
+            }
+            return response()->json(['msg' => 'success', 'data' => $history, 'code' => 200], 200);
+        }catch (\Exception $e){
             return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
         }
     }
