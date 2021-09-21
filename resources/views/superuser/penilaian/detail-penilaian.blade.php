@@ -94,32 +94,6 @@
                             <input type="text" class="form-control" value="Belum Ada Update" readonly id="faktorupdate">
                         </div>
                     </div>
-
-                    <div class="table-container">
-                        <p class="fw-bold t-primary">Riwayat Penilaian</p>
-                        <hr>
-                        <div>
-
-                        </div>
-                        {{--                        <table>--}}
-                        {{--                            <tr style="vertical-align: text-top;">--}}
-                        {{--                                <td>Tanggal</td>--}}
-                        {{--                                <td>.</td>--}}
-                        {{--                                <td>--}}
-                        {{--                                    <p>INDIKATOR - SUB INDOKATOR YANG BERUBAH</p>--}}
-                        {{--                                    <p>- NILAI AWAL + CATATAN PENILAIAN + FILE UPLOAD</p>--}}
-                        {{--                                    <p>- NILAI AKHIR + CATATAN PENILAIAN + FILE UPLOAD</p>--}}
-                        {{--                                    <table>--}}
-                        {{--                                        <tr>--}}
-                        {{--                                            <td>Score Komulatif awal</td>--}}
-                        {{--                                            <td>Score Komulatif ahkir</td>--}}
-                        {{--                                        </tr>--}}
-                        {{--                                    </table>--}}
-                        {{--                                </td>--}}
-                        {{--                            </tr>--}}
-                        {{--                        </table>--}}
-
-                    </div>
                 </div>
 
                 <div class="col-8">
@@ -365,7 +339,6 @@
                 '<th style="min-width: 100px" ></th>' +
                 '<th>Update Terahkir</th>' +
                 '<th>File Terupload</th>' +
-                '<th>Riwayat Perubahan</th>' +
                 '</tr>'
         }
 
@@ -416,7 +389,6 @@
                 '<td>' + last_update + '</td>\n' +
                 // '<td><a class="bt-primary-xsm" data-subname="' + value['name'] + '" data-link="' + file_link + '" data-scoreid="' + scoreid + '" id="' + file_Id + '">' + file_text + '</a></td>\n' +
                 '<td>' + elFileDropdown(hasFile, hasAccess, hasScore, file_link, value['name'], scoreid) + '</td>\n' +
-                '<td>' + elButtonHistory(hasHistory, id) + '</td>\n' +
                 '</tr>';
         }
 
@@ -524,18 +496,54 @@
         }
 
         function elHistory(data) {
-            const {created_at, score_after, score_before,} = data;
+            const {created_at, score_after, score_before, score_total_after, score_total_before, file_after, file_before} = data;
+            let sa = '';
+            let sb = '';
+            switch (score_after) {
+                case 1:
+                    sa = 'Buruk';
+                    break;
+                case 2:
+                    sa = 'Cukup';
+                    break;
+                case 3:
+                    sa = 'Baik';
+                    break;
+                default:
+                    break;
+            }
+            switch (score_before) {
+                case 1:
+                    sb = 'Buruk';
+                    break;
+                case 2:
+                    sb = 'Cukup';
+                    break;
+                case 3:
+                    sb = 'Baik';
+                    break;
+                default:
+                    break;
+            }
+
+
             let date = getDateOnlyString(new Date(created_at));
-            return '<div class="d-flex">' +
-                '<p class="font-date-history" style="margin-right: 10px">' + date + '</p>' +
-                '<div class="flex-grow-1">' +
-                // '<p class="font-date-history">' + data['sub_indicator']['name'] + '</p>' +
-                '<div class="d-flex align-items-center justify-content-between">' +
-                '<div>' +
-                '<p class="font-date-history" style="font-weight: bold">- Penilaian Awal</p>' +
+            return '<div class="d-flex mb-2">' +
+            '<p class="font-date-history" style="margin-right: 10px">' + date + '</p>' +
+            '<div class="flex-grow-1">' +
+            // '<p class="font-date-history">' + data['sub_indicator']['name'] + '</p>' +
+            '<div class="row">' +
+            '<div class="col-6">' +
+            '<p class="font-date-history mb-0" style="font-weight: bold">Penilaian Awal</p>' +
+            '<p class="font-date-history mb-0">  Nilai : <span>' + sb + '</span></p>' +
+
+            '<p class="font-date-history mb-0">  Komulatif : <span>' + score_total_before.toFixed(2) + '</span></p>' +
+            '<p class="font-date-history mb-0">  File : ' + file_before === null ? '' : '<a href="' + window.location.origin + file_before + '"></a>' + '</p>' +
                 '</div>' +
-                '<div>' +
-                '<p class="font-date-history" style="font-weight: bold">- Penilaian Akhir</p>' +
+                '<div class="col-6">' +
+                '<p class="font-date-history mb-0" style="font-weight: bold">Penilaian Akhir</p>' +
+                '<p class="font-date-history mb-0">  Nilai : <span>' + sa + '</span></p>' +
+                '<p class="font-date-history mb-0">  Komulatif : <span>' + score_total_after.toFixed(2) + '</span></p>' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -786,7 +794,7 @@
                 default:
                     break;
             }
-            $('#'+index).addClass('active');
+            $('#' + index).addClass('active');
             getScore(index);
             // getHistoryScore(index);
             getLastUpdate(index);
