@@ -353,9 +353,9 @@
 
         function elButtonHistory(hasHistory, id) {
             if (hasHistory) {
-                return '<a data-id="' + id + '" class="bt-primary-xsm bt-history"  style="cursor: pointer">Lihat</a>';
+                return '<a data-id="' + id + '" class="bt-history"  style="cursor: pointer; font-style: italic; display: block; font-size: 10">Riwayat Perubahan</a>';
             }
-            return '<a class="bt-primary-xsm"  style="cursor: pointer">-</a>';
+            return '';
         }
 
         function elMainIndicator(key, value) {
@@ -407,7 +407,8 @@
             }
             return '<tr>' +
                 '<td>' + mainKey + '.' + (key + 1) + '</td>\n' +
-                '<td>' + value['name'] + '</td>\n' +
+                '<td><div>' + value['name'] + elButtonHistory(hasHistory, id) + '' +
+                '</div></td>\n' +
                 '<td><a class="' + btn_class + ' " style="cursor: pointer"  data-bs-toggle="' + dropdown_active +
                 '" aria-expanded="false">' + score + '</a>\n' +
                 el_dropdown +
@@ -523,7 +524,7 @@
         }
 
         function elHistory(data) {
-            const {created_at, score_after, score_before, } = data;
+            const {created_at, score_after, score_before,} = data;
             let date = getDateOnlyString(new Date(created_at));
             return '<div class="d-flex">' +
                 '<p class="font-date-history" style="margin-right: 10px">' + date + '</p>' +
@@ -536,7 +537,7 @@
                 '<div>' +
                 '<p class="font-date-history" style="font-weight: bold">- Penilaian Akhir</p>' +
                 '</div>' +
-                '</div>'+
+                '</div>' +
                 '</div>' +
                 '</div>';
         }
@@ -559,7 +560,7 @@
                         break;
                 }
                 el.empty();
-                let response = await $.get('/penilaian/get-history?package=' + package_id + '&type=' + vType+ '&sub=' + _histId);
+                let response = await $.get('/penilaian/get-history?package=' + package_id + '&type=' + vType + '&sub=' + _histId);
                 console.log(response)
                 $.each(response['data'], function (k, v) {
                     el.append(elHistory(v));
