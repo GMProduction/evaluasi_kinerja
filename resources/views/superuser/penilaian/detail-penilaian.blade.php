@@ -125,7 +125,7 @@
                 <div class="col-8">
                     <div role="tablist" class="mb-3">
                         <div class="items-tab" id="menu-tab">
-                            <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="vendor"
+                            <a class="card-tab d-block c-text card-user" id="vendor" data-roles="vendor"
                                data-text-roles="Superuser">
                                 <div class="d-flex justify-content-between">
                                     <i class='bx bx-message-square-edit'></i>
@@ -136,7 +136,7 @@
                                 </div>
                             </a>
 
-                            <a class="card-tab d-block c-text card-user" id="uadmin" data-roles="accessorppk"
+                            <a class="card-tab d-block c-text card-user" id="accessorppk" data-roles="accessorppk"
                                data-text-roles="Admin">
                                 <div class="d-flex justify-content-between">
                                     <i class='bx bx-message-square-edit'></i>
@@ -147,7 +147,7 @@
                                 </div>
                             </a>
 
-                            <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor"
+                            <a class="card-tab d-block c-text card-user" id="accessor" data-roles="accessor"
                                data-text-roles="Asesor Balai">
                                 <div class="d-flex justify-content-between">
                                     <i class='bx bx-message-square-edit'></i>
@@ -684,9 +684,9 @@
         }
 
         $(document).ready(function () {
-            getScore('vendor');
-            getHistoryScore('vendor');
-            getLastUpdate('vendor');
+            // getScore('vendor');
+            // getHistoryScore('vendor');
+            // getLastUpdate('vendor');
             $('.card-user').on('click', function () {
                 index = this.dataset.roles;
                 let title = '';
@@ -709,6 +709,34 @@
                 $('#map-title').html('Peta Kinerja ' + title);
                 $('#jenisasesmen').val('Penilaian ' + title);
             })
+
+            getRole();
         })
+
+        function getRole() {
+            console.log(roles)
+            switch (roles) {
+                case 'vendor':
+                    title = 'Peneyedia jasa';
+                    index = 'vendor';
+                    break;
+                case 'accessor':
+                    title = 'Balai';
+                    index = 'accessor';
+                    break;
+                case 'ppk':
+                    title = 'PPK';
+                    index = 'accessorppk';
+                    break;
+                default:
+                    break;
+            }
+            $('#'+index).addClass('active');
+            getScore(index);
+            getHistoryScore(index);
+            getLastUpdate(index);
+            $('#map-title').html('Peta Kinerja ' + title);
+            $('#jenisasesmen').val('Penilaian ' + title);
+        }
     </script>
 @endsection

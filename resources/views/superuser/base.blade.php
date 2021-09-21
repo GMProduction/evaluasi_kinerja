@@ -112,7 +112,7 @@
         if (lok1){
             brod = "<a href='/'><i class='bx bx-home'></i></a> / <a href='/"+lok1+"'>"+lok1+"</a>"
             if (lok2){
-            brod = brod+" / <a href='"+lok2+"'>"+lok2+"</a>"
+            brod = brod+" / <a href='/"+lok1+"/"+lok2+"/"+lok3+"'>"+lok2+"</a>"
             }
         }
         $('#brodcum').html(brod);
