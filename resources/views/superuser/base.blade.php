@@ -1,8 +1,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Evaluasi Kinerja | {{ auth()->user()->roles[0] }}</title>
 
     <meta charset="utf-8">
@@ -13,34 +13,36 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:ital,wght@0,400;0,700;1,400&display=swap"
-        rel="stylesheet">
+          rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/myStyle.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/shimer.css') }}" type="text/css">
     {{-- <link rel="stylesheet" href="{{ asset('css/boxicon.min.css') }}" type="text/css"> --}}
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" /> --}}
-    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap5.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
-        rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+          rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 
     <script src="{{ asset('js/swal.js') }}"></script>
     @yield('moreCss')
 </head>
 
-<body id="body-pd" class="body-pd">
-    <header class="header body-pd" id="header" style="justify-content: end">
-{{--        <div class="header_toggle"><i class='bx bx-menu bx-x' id="header-toggle"></i></div>--}}
+<body id="body-pd" class="{{auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin' ? 'body-pd' : ''}}">
+<header class="header {{auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin' ? 'body-pd' : ''}}" id="header" style="justify-content: end">
+    {{--        <div class="header_toggle"><i class='bx bx-menu bx-x' id="header-toggle"></i></div>--}}
 
-        <div class="d-flex align-items-center">
-            <p class="me-2 mb-0">Hi, {{ auth()->user()->username }} </p>
-            <div class="header_img"><img
-                    src="https://awsimages.detik.net.id/community/media/visual/2021/05/05/takeuchi-miyu_43.jpeg?w=700&q=90"
-                    style="object-fit: cover" alt=""></div>
-        </div>
-    </header>
+    <div class="d-flex align-items-center">
+        <a class="mx-3" href="#!"><i class='bx bx-bell'></i></a>
+        <p class="me-2 mb-0">Hi, {{ auth()->user()->username }} </p>
+        <div class="header_img"><img
+                src="https://awsimages.detik.net.id/community/media/visual/2021/05/05/takeuchi-miyu_43.jpeg?w=700&q=90"
+                style="object-fit: cover" alt=""></div>
+    </div>
+</header>
+@if(auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin')
     <div class="l-navbar showside" id="nav-bar">
         <nav class="nav">
             <div><a href="#" class="nav_logo">
@@ -76,45 +78,61 @@
             </a>
         </nav>
     </div>
-    <!--Container Main start-->
-    <section>
-        @yield('content')
+@endif
+<!--Container Main start-->
+<section>
+    <div id="brodcum"></div>
+    @yield('content')
 
-    </section>
-    <!--Container Main end-->
+</section>
+<!--Container Main end-->
 
 
-    <script src="{{ asset('bootstrap/js/jquery.js') }}"></script>
-    <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/myStyle.js') }}"></script>
+<script src="{{ asset('bootstrap/js/jquery.js') }}"></script>
+<script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('js/myStyle.js') }}"></script>
 {{--    <script src="{{ asset('js/sidebar.js') }}"></script>--}}
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap5.min.js"></script>
-    <script type="text/javascript"
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap5.min.js"></script>
+<script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <script src="{{ asset('js/currency.js') }}"></script>
-    <script src="{{ asset('js/dialog.js') }}"></script>
-    <script src="{{ asset('js/moment.js') }}"></script>
+<script src="{{ asset('js/currency.js') }}"></script>
+<script src="{{ asset('js/dialog.js') }}"></script>
+<script src="{{ asset('js/moment.js') }}"></script>
 
-    {{-- <script src="{{ asset('js/myStyle.js') }}"></script> --}}
-    <script>
-        jQuery.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
-            return {
-                "iStart": oSettings._iDisplayStart,
-                "iEnd": oSettings.fnDisplayEnd(),
-                "iLength": oSettings._iDisplayLength,
-                "iTotal": oSettings.fnRecordsTotal(),
-                "iFilteredTotal": oSettings.fnRecordsDisplay(),
-                "iPage": oSettings._iDisplayLength === -1 ?
-                    0 : Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
-                "iTotalPages": oSettings._iDisplayLength === -1 ?
-                    0 : Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
-            };
+{{-- <script src="{{ asset('js/myStyle.js') }}"></script> --}}
+<script>
+    $(document).ready(function () {
+        broadcum()
+    })
+    function broadcum() {
+        var brod;
+        if (lok1){
+            brod = "<a href='/'><i class='bx bx-home'></i></a> / <a href='/"+lok1+"'>"+lok1+"</a>"
+            if (lok2){
+            brod = brod+" / <a href='"+lok2+"'>"+lok2+"</a>"
+            }
+        }
+        $('#brodcum').html(brod);
+    }
+
+    jQuery.fn.dataTableExt.oApi.fnPagingInfo = function (oSettings) {
+        return {
+            "iStart": oSettings._iDisplayStart,
+            "iEnd": oSettings.fnDisplayEnd(),
+            "iLength": oSettings._iDisplayLength,
+            "iTotal": oSettings.fnRecordsTotal(),
+            "iFilteredTotal": oSettings.fnRecordsDisplay(),
+            "iPage": oSettings._iDisplayLength === -1 ?
+                0 : Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+            "iTotalPages": oSettings._iDisplayLength === -1 ?
+                0 : Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
         };
-    </script>
-    @yield('script')
+    };
+</script>
+@yield('script')
 </body>
 
 </html>

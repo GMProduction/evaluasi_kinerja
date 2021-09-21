@@ -88,6 +88,7 @@ Route::prefix('/')->middleware('auth')->group(
             function () {
                 Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);
                 Route::get('/datatable', [\App\Http\Controllers\ScoreController::class, 'datatable']);
+                Route::get('/datatable/vendor/{id}', [\App\Http\Controllers\ScoreController::class, 'datatableByVendorId']);
                 Route::get('/detail/{id}', [\App\Http\Controllers\ScoreController::class, 'detail']);
                 Route::get('/detail/{id}/comulative', [\App\Http\Controllers\ScoreController::class, 'getComutative']);
                 Route::post('/detail/{id}', [\App\Http\Controllers\ScoreController::class, 'uploadFile']);

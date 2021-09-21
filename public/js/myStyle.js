@@ -17,3 +17,9 @@ function setAktiv() {
         $('#sidebar #' + lok1).addClass('active');
     }
 }
+
+function getParameter(param) {
+    var queryString = window.location.search;
+    var urlParams = new URLSearchParams(queryString);
+    return urlParams.get(param);
+}

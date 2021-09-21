@@ -16,7 +16,7 @@
             vendor.empty();
             $.get('/vendor',function (data) {
                 $.each(data, function (key, value) {
-                    vendor.append(' <a class="card-tab  d-block c-text card-user" id="">\n' +
+                    vendor.append(' <a href="/penilaian?vendor='+value['user_id']+'" class="card-tab  d-block c-text card-user" id="">\n' +
                         '                    <div class="d-flex justify-content-center">\n' +
                         '                        <i class=\'bx bx-user-circle \' style="font-size: 3rem"></i>\n' +
                         '                    </div>\n' +

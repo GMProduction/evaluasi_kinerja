@@ -43,8 +43,10 @@
         var table;
 
         function datatable() {
-
             var url = 'penilaian/datatable';
+            if (getParameter('vendor')){
+                url = url+'/vendor/'+getParameter('vendor')
+            }
             table = $('#table').DataTable({
                 destroy: true,
                 processing: true,

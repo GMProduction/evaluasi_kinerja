@@ -21,11 +21,16 @@ class ScoreController extends CustomController
         parent::__construct();
     }
 
+    public function getDatatable(){
+        $query = Package::with(['vendor.vendor', 'ppk'])->where([['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))], ['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]]);
+        return $query;
+    }
+
     public function datatable()
     {
         $roles = auth()->user()->roles[0];
         $userId = Auth::id();
-        $query = Package::with(['vendor.vendor', 'ppk'])->where([['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))], ['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]]);
+        $query = $this->getDatatable();
         if ($roles === 'vendor') {
             $query->where('vendor_id', $userId);
         }
@@ -35,8 +40,17 @@ class ScoreController extends CustomController
                 $query->where('id', $userId);
             });
         }
-        $data = $query->get();
-        return DataTables::of($data)->make(true);
+        return DataTables::of($query)->make(true);
+    }
+
+    public function datatableByVendorId($id){
+        $roles = auth()->user()->roles[0];
+        $query = $this->getDatatable();
+        if ($roles === 'accessor'){
+            $query->where('vendor_id','=',$id);
+        }
+//        $data = $this->getDatatable();
+        return DataTables::of($query)->make(true);
     }
 
     public function index()
