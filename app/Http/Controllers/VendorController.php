@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 
 use App\Helper\CustomController;
 use App\Models\AccessorPPK;
+use App\Models\Package;
 use App\Models\User;
 use App\Models\Vendor;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,6 +24,20 @@ class VendorController extends CustomController
     {
         $vendors = Vendor::with('user')->get();
         return $vendors->toArray();
+    }
+
+    public function getVendorPackage(){
+        $roles = auth()->user()->roles[0];
+        $package = User::with(['vendor','package']);
+        if ($roles == 'accessor'){
+            $package = $package->has('package');
+        }else{
+            $package = $package->whereHas('package.ppk.accessorppk.user', function ($query){
+               $query->where('id',Auth::id());
+            });
+        }
+
+        return $package->get();
     }
 
     public function store()

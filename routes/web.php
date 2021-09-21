@@ -38,7 +38,7 @@ Route::prefix('/')->middleware('auth')->group(
                 return view('superuser/dashboard');
             }
         );
-        Route::get('/vendor',[\App\Http\Controllers\VendorController::class,'index']);
+        Route::get('/vendor',[\App\Http\Controllers\VendorController::class,'getVendorPackage']);
         Route::get('/get-count-dashboard', [\App\Http\Controllers\DashboardController::class, 'getAllCountData']);
         Route::get('/datatable-package-ongoing', [\App\Http\Controllers\DashboardController::class, 'datatable']);
         Route::prefix('/users')->middleware('roles:superuser,admin')->group(

@@ -3,6 +3,7 @@ var lok2 = url[2];
 var lok1 = url[1];
 var lok3 = url[3];
 $(document).ready(function() {
+    $('.dropdown-toggle').dropdown()
     setAktiv();
     $('#tambahdata').modal({
         backdrop: 'static',

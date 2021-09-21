@@ -16,11 +16,11 @@
             vendor.empty();
             $.get('/vendor',function (data) {
                 $.each(data, function (key, value) {
-                    vendor.append(' <a href="/penilaian?vendor='+value['user_id']+'" class="card-tab  d-block c-text card-user" id="">\n' +
+                    vendor.append(' <a href="/penilaian?vendor='+value['id']+'" class="card-tab  d-block c-text card-user" id="">\n' +
                         '                    <div class="d-flex justify-content-center">\n' +
                         '                        <i class=\'bx bx-user-circle \' style="font-size: 3rem"></i>\n' +
                         '                    </div>\n' +
-                        '                    <h6 class="mt-2 text-center">'+value['name']+'</h6>\n' +
+                        '                    <h6 class="mt-2 text-center">'+value['vendor']['name']+'</h6>\n' +
                         '                </a>')
                 })
             })

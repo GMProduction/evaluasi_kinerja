@@ -67,4 +67,8 @@ class User extends Authenticatable
     public function accessor(){
         return $this->hasOne(Accessor::class, 'user_id');
     }
+
+    public function package(){
+        return $this->hasMany(Package::class,'vendor_id');
+    }
 }

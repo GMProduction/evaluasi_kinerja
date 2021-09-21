@@ -36,10 +36,16 @@
 
     <div class="d-flex align-items-center">
         <a class="mx-3" href="#!"><i class='bx bx-bell'></i></a>
-        <p class="me-2 mb-0">Hi, {{ auth()->user()->username }} </p>
-        <div class="header_img"><img
-                src="https://awsimages.detik.net.id/community/media/visual/2021/05/05/takeuchi-miyu_43.jpeg?w=700&q=90"
-                style="object-fit: cover" alt=""></div>
+
+        <div class="dropdown show">
+            <a class="dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Hi, {{ auth()->user()->username }}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" type="button">Profile</a>
+                <a class="dropdown-item" type="button" href="/logout">logout</a>
+            </div>
+        </div>
     </div>
 </header>
 @if(auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin')

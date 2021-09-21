@@ -779,7 +779,7 @@
                     title = 'Balai';
                     index = 'accessor';
                     break;
-                case 'ppk':
+                case 'accessorppk':
                     title = 'PPK';
                     index = 'accessorppk';
                     break;

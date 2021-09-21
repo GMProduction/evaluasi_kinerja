@@ -11,7 +11,7 @@
         @if(auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin')
             @include('superuser.dashboard.superuser', ['data' => 'content'])
             @include('superuser.dashboard.table', ['data' => 'content'])
-        @elseif(auth()->user()->roles[0] == 'accessor')
+        @elseif(auth()->user()->roles[0] == 'accessor' || auth()->user()->roles[0] == 'accessorppk')
             @include('superuser.dashboard.accessor',['data' => 'content'])
         @endif
 
@@ -23,7 +23,7 @@
     @if(auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin')
         @include('superuser.dashboard.superuser', ['data' => 'script'])
         @include('superuser.dashboard.table', ['data' => 'script'])
-    @elseif(auth()->user()->roles[0] == 'accessor')
+    @elseif(auth()->user()->roles[0] == 'accessor' || auth()->user()->roles[0] == 'accessorppk')
         @include('superuser.dashboard.accessor',['data' => 'script'])
     @endif
 
