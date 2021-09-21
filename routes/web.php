@@ -96,6 +96,7 @@ Route::prefix('/')->middleware('auth')->group(
                 Route::get('/last-update', [\App\Http\Controllers\ScoreController::class, 'lastUpdate']);
                 Route::get('/radar', [\App\Http\Controllers\ScoreController::class, 'getRadarChart']);
                 Route::post('/set-score', [\App\Http\Controllers\ScoreController::class, 'setScore']);
+                Route::get('/get-history', [\App\Http\Controllers\ScoreController::class, 'getScoreHistory']);
             }
         );
 

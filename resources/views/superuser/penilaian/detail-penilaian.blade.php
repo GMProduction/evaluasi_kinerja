@@ -2,6 +2,11 @@
 
 @section('moreCss')
     {{-- <link rel="stylesheet" href="{{ asset('css/tab.css') }}" type="text/css"> --}}
+    <style>
+        .font-date-history {
+            font-size: 12px;
+        }
+    </style>
 @endsection
 
 @section('title')
@@ -36,7 +41,7 @@
                         <div class="mb-3">
                             <label for="namapenyedia" class="form-label">Nama Penyedia Jasa</label>
                             <input type="text" class="form-control" value="{{ $data->vendor->vendor->name }}" readonly
-                                id="namapenyedia">
+                                   id="namapenyedia">
                         </div>
 
                         <div class="mb-3">
@@ -47,25 +52,25 @@
                         <div class="mb-3">
                             <label for="paketkonstruksi" class="form-label">Paket Konstruksi</label>
                             <input type="text" class="form-control" value="{{ $data->name }}" readonly
-                                id="paketkonstruksi">
+                                   id="paketkonstruksi">
                         </div>
 
                         <div class="mb-3">
                             <label for="nomorkontrak" class="form-label">Nomor Kontrak</label>
                             <input type="text" class="form-control" value="{{ $data->no_reference }}" readonly
-                                id="nomorkontrak">
+                                   id="nomorkontrak">
                         </div>
 
                         <div class="mb-3">
                             <label for="penggunajasa" class="form-label">Pengguna Jasa</label>
                             <input type="text" class="form-control" value="{{ $data->ppk->name }}" readonly
-                                id="penggunajasa">
+                                   id="penggunajasa">
                         </div>
 
                         <div class="mb-3">
                             <label for="jenisasesmen" class="form-label">Jenis Asesmen</label>
                             <input type="text" class="form-control" value="Penilaian Penyedia Jasa" readonly
-                                id="jenisasesmen">
+                                   id="jenisasesmen">
                         </div>
 
                         <div class="mb-3">
@@ -80,7 +85,8 @@
 
                         <div class="mb-3">
                             <label for="terahkirupdate" class="form-label">Terahkir Update</label>
-                            <input type="text" class="form-control" value="Belum Ada Update" readonly id="terahkirupdate">
+                            <input type="text" class="form-control" value="Belum Ada Update" readonly
+                                   id="terahkirupdate">
                         </div>
 
                         <div class="mb-3">
@@ -90,26 +96,28 @@
                     </div>
 
                     <div class="table-container">
-                        <p class="fw-bold t-primary">History Penilaian</p>
+                        <p class="fw-bold t-primary">Riwayat Penilaian</p>
                         <hr>
+                        <div id="history-container">
 
-                        <table>
-                            <tr style="vertical-align: text-top;">
-                                <td>Tanggal</td>
-                                <td>.</td>
-                                <td>
-                                    <p>INDIKATOR - SUB INDOKATOR YANG BERUBAH</p>
-                                    <p>- NILAI AWAL + CATATAN PENILAIAN + FILE UPLOAD</p>
-                                    <p>- NILAI AKHIR + CATATAN PENILAIAN + FILE UPLOAD</p>
-                                    <table>
-                                        <tr>
-                                            <td>Score Komulatif awal</td>
-                                            <td>Score Komulatif ahkir</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
+                        </div>
+                        {{--                        <table>--}}
+                        {{--                            <tr style="vertical-align: text-top;">--}}
+                        {{--                                <td>Tanggal</td>--}}
+                        {{--                                <td>.</td>--}}
+                        {{--                                <td>--}}
+                        {{--                                    <p>INDIKATOR - SUB INDOKATOR YANG BERUBAH</p>--}}
+                        {{--                                    <p>- NILAI AWAL + CATATAN PENILAIAN + FILE UPLOAD</p>--}}
+                        {{--                                    <p>- NILAI AKHIR + CATATAN PENILAIAN + FILE UPLOAD</p>--}}
+                        {{--                                    <table>--}}
+                        {{--                                        <tr>--}}
+                        {{--                                            <td>Score Komulatif awal</td>--}}
+                        {{--                                            <td>Score Komulatif ahkir</td>--}}
+                        {{--                                        </tr>--}}
+                        {{--                                    </table>--}}
+                        {{--                                </td>--}}
+                        {{--                            </tr>--}}
+                        {{--                        </table>--}}
 
                     </div>
                 </div>
@@ -118,7 +126,7 @@
                     <div role="tablist" class="mb-3">
                         <div class="items-tab" id="menu-tab">
                             <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="vendor"
-                                data-text-roles="Superuser">
+                               data-text-roles="Superuser">
                                 <div class="d-flex justify-content-between">
                                     <i class='bx bx-message-square-edit'></i>
                                     {{-- <p class="number-card t-bagus">89</p> --}}
@@ -129,7 +137,7 @@
                             </a>
 
                             <a class="card-tab d-block c-text card-user" id="uadmin" data-roles="accessorppk"
-                                data-text-roles="Admin">
+                               data-text-roles="Admin">
                                 <div class="d-flex justify-content-between">
                                     <i class='bx bx-message-square-edit'></i>
                                     {{-- <p class="number-card t-cukup">67</p> --}}
@@ -140,7 +148,7 @@
                             </a>
 
                             <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor"
-                                data-text-roles="Asesor Balai">
+                               data-text-roles="Asesor Balai">
                                 <div class="d-flex justify-content-between">
                                     <i class='bx bx-message-square-edit'></i>
                                     {{-- <p class="number-card t-kurang">38</p> --}}
@@ -175,8 +183,9 @@
                                 <p class="fw-bold t-primary">Nilai Komulatif</p>
                                 <hr>
                                 <h1 class=" text-center mt-5" style="font-size: 4rem" id="comulative_value"></h1>
-                                <p id="comulative_status" class="b-cukup r-fullround text-center  ms-auto me-auto p-1 mt-3"
-                                    style="width: 200px"></p>
+                                <p id="comulative_status"
+                                   class="b-cukup r-fullround text-center  ms-auto me-auto p-1 mt-3"
+                                   style="width: 200px"></p>
                             </div>
                         </div>
                     </div>
@@ -228,6 +237,7 @@
         google.charts.load("current", {
             packages: ["corechart"]
         });
+
         // google.charts.setOnLoadCallback(drawChart);
 
         function drawChart(score) {
@@ -265,7 +275,7 @@
         var header = document.getElementById("menu-tab");
         var btns = header.getElementsByClassName("card-tab");
         for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function() {
+            btns[i].addEventListener("click", function () {
 
                 var current = $('.card-tab.active')
                 current[0].className = current[0].className.replace(" active", "");
@@ -367,11 +377,11 @@
                 '</tr>';
         }
 
-        $(document).on('click', '#download', function() {
+        $(document).on('click', '#download', function () {
             $(this).attr('target', '_blank')
             $(this).attr('href', $(this).data('link'));
-        })
-        $(document).on('click', '#upload', function() {
+        });
+        $(document).on('click', '#upload', function () {
             console.log($(this).data('scoreid'), $(this).data('subname'))
             $('#modalfile #fileNameSub').html($(this).data('subname'))
             $('#modalfile #id').val($(this).data('scoreid'))
@@ -386,7 +396,8 @@
 
         function afterSaveFile(data) {
             $('#modalfile').modal('hide')
-            getScore(data)
+            getScore(data);
+            getHistoryScore(index);
         }
 
         function elTable() {
@@ -400,6 +411,14 @@
                 weekday: 'long',
                 year: 'numeric',
                 month: 'long',
+                day: 'numeric'
+            })
+        }
+
+        function getDateOnlyString(date){
+            return date.toLocaleDateString('id-ID', {
+                year: 'numeric',
+                month: 'short',
                 day: 'numeric'
             })
         }
@@ -426,16 +445,16 @@
                 let data = response['data']['indicator'];
                 el.append(elTable());
                 let table = $('#table');
-                $.each(data, function(k, v) {
+                $.each(data, function (k, v) {
                     table.append(elMainIndicator(k, v));
                     let elMain = $('#indicator-' + k);
                     let sub = '';
-                    $.each(v['sub_indicator'], function(kSub, vSub) {
+                    $.each(v['sub_indicator'], function (kSub, vSub) {
                         sub += elSubIndicator((k + 1), kSub, vSub);
                     });
                     elMain.after(sub);
                 });
-                $('.nilai').on('click', function() {
+                $('.nilai').on('click', function () {
                     let value = this.dataset.value;
                     let sub_indicator = this.dataset.subin;
                     console.log(value, sub_indicator, package_id);
@@ -447,6 +466,47 @@
                 console.log(response)
             } catch (e) {
                 alert('Terjadi Kesalahan Server...')
+            }
+        }
+
+        function elHistory(data) {
+            const {created_at} = data;
+            let date = getDateOnlyString(new Date(created_at));
+            return '<div class="d-flex">' +
+                '<p class="font-date-history" style="margin-right: 10px">' + date + '</p>' +
+                '<div class="flex-grow-1">' +
+                '<p class="font-date-history">'+data['sub_indicator']['name']+'</p>' +
+                '<p class="font-date-history" style="font-weight: bold">- Penilaian Awal</p>' +
+                '</div>' +
+                '</div>';
+        }
+
+        async function getHistoryScore(type) {
+            let el = $('#history-container');
+            try {
+                let vType = 'default';
+                switch (type) {
+                    case 'vendor':
+                        vType = 'vendor';
+                        break;
+                    case 'accessor':
+                        vType = 'office';
+                        break;
+                    case 'accessorppk':
+                        vType = 'ppk';
+                        break;
+                    default:
+                        break;
+                }
+                el.empty();
+                let response = await $.get('/penilaian/get-history?package=' + package_id + '&type=' + vType);
+                $.each(response['data'], function (k, v) {
+                    console.log('asoe')
+                    el.append(elHistory(v));
+                });
+                console.log(response)
+            } catch (e) {
+                console.log(e)
             }
         }
 
@@ -482,6 +542,7 @@
                 alert("Maaf, Sedang Terjadi Kesalahan Pada Server...")
             }
         }
+
         async function setScore(sub, value) {
             try {
                 let response = await $.post('/penilaian/set-score', {
@@ -492,6 +553,7 @@
                     package: package_id
                 });
                 await getScore(index);
+                await getHistoryScore(index);
                 console.log(response)
             } catch (e) {
                 alert('Terjadi Kesalahan Server...')
@@ -504,7 +566,7 @@
 
             let labels = [];
             let values = [];
-            dataChart['indicator'].forEach(function(v, k) {
+            dataChart['indicator'].forEach(function (v, k) {
                 labels.push(v['index']);
                 values.push(v['radar']);
                 console.log(v)
@@ -545,8 +607,8 @@
                     },
                 },
                 plugins: [{
-                    beforeInit: function(chart) {
-                        chart.data.labels.forEach(function(e, i, a) {
+                    beforeInit: function (chart) {
+                        chart.data.labels.forEach(function (e, i, a) {
                             console.log()
                             var space = e.split(' ');
                             // if (space[2]) {
@@ -621,10 +683,11 @@
             }
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             getScore('vendor');
+            getHistoryScore('vendor');
             getLastUpdate('vendor');
-            $('.card-user').on('click', function() {
+            $('.card-user').on('click', function () {
                 index = this.dataset.roles;
                 let title = '';
                 switch (index) {
@@ -641,6 +704,7 @@
                         break;
                 }
                 getScore(index);
+                getHistoryScore(index);
                 getLastUpdate(index);
                 $('#map-title').html('Peta Kinerja ' + title);
                 $('#jenisasesmen').val('Penilaian ' + title);
