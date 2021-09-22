@@ -72,9 +72,9 @@
                     @endif
                     <a href="/penilaian" id="penilaian" class="nav_link"> <i class='bx bxs-bar-chart-square'></i>
                         <span class="nav_name">Penilaian</span> </a>
-
+{{-- 
                     <a href="/hist" id="penilaian" class="nav_link"> <i class='bx bxs-bar-chart-square'></i>
-                        <span class="nav_name">Penilaian</span> </a>
+                        <span class="nav_name">Penilaian</span> </a> --}}
 
                 </div>
             </div>
