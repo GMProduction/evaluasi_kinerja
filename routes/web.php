@@ -30,12 +30,7 @@ Route::get(
     }
 );
 
-Route::get(
-    '/profil',
-    function () {
-        return view('superuser.user.profil');
-    }
-);
+
 
 Route::prefix('/')->middleware('auth')->group(
     function () {
@@ -115,6 +110,18 @@ Route::prefix('/')->middleware('auth')->group(
                 return view('superuser/penilaian/detail-penilaian');
             }
         );
+
+        Route::prefix('profile')->group(function (){
+            Route::get(
+                '/',
+                function () {
+                    return view('superuser.user.profil');
+                }
+            );
+            Route::post('update-image', [\App\Http\Controllers\ProfileController::class, 'updateImg']);
+            Route::get('show',[\App\Http\Controllers\ProfileController::class, 'profile']);
+            Route::get('package',[\App\Http\Controllers\ProfileController::class, 'package']);
+        });
     }
 );
 

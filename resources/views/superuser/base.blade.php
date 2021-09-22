@@ -67,7 +67,7 @@
                     Hi, {{ auth()->user()->username }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" type="button">Profile</a>
+                    <a class="dropdown-item" type="button" href="/profile">Profile</a>
                     <a class="dropdown-item" type="button" href="/logout">logout</a>
                 </div>
             </div>
@@ -144,8 +144,6 @@
         })
 
         function showNotif() {
-            moment.locale('id')
-
             $.get('/show-notif', function (data) {
                 $('#notif').empty();
                 if (data){
