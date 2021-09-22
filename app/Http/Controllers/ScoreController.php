@@ -6,9 +6,11 @@ namespace App\Http\Controllers;
 
 use App\Helper\CustomController;
 use App\Models\Indicator;
+use App\Models\Notification;
 use App\Models\Package;
 use App\Models\Score;
 use App\Models\ScoreHistory;
+use App\Models\SubIndicator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -170,6 +172,30 @@ class ScoreController extends CustomController
                 $score->save();
                 $cumulativeAfter = $this->getCumulative($packageId, $vType);
 
+                if ($value === 3) {
+                    $notification = Notification::where('score_id', $score->id)->first();
+                    if ($notification) {
+                        $notification->is_active = false;
+                        $notification->save();
+                    }
+                }else{
+                    $notification = Notification::where('score_id', $score->id)->first();
+                    if ($notification) {
+                        $notification->is_active = true;
+                        $notification->save();
+                    }else{
+                        $newNotification = new Notification();
+                        $package = Package::with('vendor')->find($packageId);
+                        $subIndicator = SubIndicator::find($subIndicatorId);
+                        $newNotification->title = 'Peringatan Nilai';
+                        $newNotification->description = 'Hasil Penilaian dari Indikator ' . $subIndicator->name . ' Masih Belum Memenuhi Standar Baik. Silahkan Melakukan Perbaikan.';
+                        $newNotification->vendor_id = $package->vendor->id;
+                        $newNotification->sender_id = $authorId;
+                        $newNotification->score_id = $score->id;
+                        $newNotification->is_active = true;
+                        $newNotification->save();
+                    }
+                }
                 $data = [
                     'package_id' => $packageId,
                     'author_id' => $authorId,
@@ -196,6 +222,20 @@ class ScoreController extends CustomController
                 $newScore->text = $scoreText;
                 $newScore->type = $vType;
                 $newScore->save();
+
+                if ($value < 3) {
+                    $package = Package::with('vendor')->find($packageId);
+                    $subIndicator = SubIndicator::find($subIndicatorId);
+                    $notification = new Notification();
+                    $notification->title = 'Peringatan Nilai';
+
+                    $notification->description = 'Hasil Penilaian dari Indikator ' . $subIndicator->name . ' Masih Belum Memenuhi Standar Baik. Silahkan Melakukan Perbaikan.';
+                    $notification->vendor_id = $package->vendor->id;
+                    $notification->sender_id = $authorId;
+                    $notification->score_id = $newScore->id;
+                    $notification->is_active = true;
+                    $notification->save();
+                }
             }
             DB::commit();
             return response()->json(['msg' => 'success'], 200);
