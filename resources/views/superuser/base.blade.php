@@ -37,24 +37,101 @@
         id="header" style="justify-content: space-between">
         {{-- <div class="header_toggle"><i class='bx bx-menu bx-x' id="header-toggle"></i></div> --}}
 
-            <div id="brodcum" style="display: flex; align-items: center; "></div>
+        <div id="brodcum" style="display: flex; align-items: center; "></div>
 
 
-            <div class="d-flex align-items-center" style="justify-content: space-between">
+        <div class="d-flex align-items-center" style="justify-content: space-between">
 
-                <a class="mx-3 t-black" href="#!"><i class='bx bx-bell'></i></a>
 
-                <div class="dropdown show ">
-                    <a class="dropdown-toggle t-black" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        Hi, {{ auth()->user()->username }}
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" type="button">Profile</a>
-                        <a class="dropdown-item" type="button" href="/logout">logout</a>
+
+            <div class="btn-group">
+                <a class="t-black klikable me-3" id="dropdownMenuClickableInside" data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside" aria-expanded="false">
+                    <i class='bx bx-bell bx-sm'></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
+                    <p class="title-notif">Pemberitahuan</p>
+                    <div>
+                        <a class="notifdiv">
+                            <div class="div-image">
+                                <img
+                                    src="http://1.bp.blogspot.com/-6wgnCxmn_Jc/Tk9Recl6PII/AAAAAAAABFw/8neHTaGo6SM/s1600/Avril-Lavigne-Photos.jpg" />
+                            </div>
+
+                            <div class="div-content">
+                                <div class="div-header">
+                                    <p class="nama t-black">Avril</p>
+                                    <p class="tanggal " style="color: gray">12 September 2021</p>
+                                </div>
+
+
+                                <p class="sub-indikator">
+                                    Sub Indikator 1
+                                </p>
+                            </div>
+                        </a>
+                        <hr class="hr-notif">
                     </div>
+                    <div>
+                        <a class="notifdiv isread">
+                            <div class="div-image">
+                                <img
+                                    src="http://1.bp.blogspot.com/-6wgnCxmn_Jc/Tk9Recl6PII/AAAAAAAABFw/8neHTaGo6SM/s1600/Avril-Lavigne-Photos.jpg" />
+                            </div>
+
+                            <div class="div-content">
+                                <div class="div-header">
+                                    <p class="nama t-black">Avril</p>
+                                    <p class="tanggal " style="color: gray">12 September 2021</p>
+                                </div>
+
+
+                                <p class="sub-indikator">
+                                    Sub Indikator 1
+                                </p>
+                            </div>
+                        </a>
+                        <hr class="hr-notif">
+                    </div>
+                    <div>
+                        <a class="notifdiv isread">
+                            <div class="div-image">
+                                <img
+                                    src="http://1.bp.blogspot.com/-6wgnCxmn_Jc/Tk9Recl6PII/AAAAAAAABFw/8neHTaGo6SM/s1600/Avril-Lavigne-Photos.jpg" />
+                            </div>
+
+                            <div class="div-content">
+                                <div class="div-header">
+                                    <p class="nama t-black">Avril</p>
+                                    <p class="tanggal " style="color: gray">12 September 2021</p>
+                                </div>
+
+
+                                <p class="sub-indikator">
+                                    Sub Indikator 1
+                                </p>
+                            </div>
+                        </a>
+                        <hr class="hr-notif">
+                    </div>
+
+                    <a class="lihatsemuanotif">Lihat Semua</a>
                 </div>
             </div>
+
+
+
+            <div class="dropdown show ">
+                <a class="dropdown-toggle t-black" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside" aria-expanded="false">
+                    Hi, {{ auth()->user()->username }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" type="button">Profile</a>
+                    <a class="dropdown-item" type="button" href="/logout">logout</a>
+                </div>
+            </div>
+
         </div>
     </header>
     @if (auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin')
@@ -128,10 +205,13 @@
         function broadcum() {
             var brod;
             if (lok1) {
-                brod = "<a href='/' class='me-1'>Dashboard</a> <i class='bx bx-chevron-right me-1'></i> <a class='me-1' href='/" + lok1 + "'>" + lok1 +
+                brod =
+                    "<a href='/' class='me-1'>Dashboard</a> <i class='bx bx-chevron-right me-1'></i> <a class='me-1' href='/" +
+                    lok1 + "'>" + lok1 +
                     "</a>"
                 if (lok2) {
-                    brod = brod + " <i class='bx bx-chevron-right me-1'></i> <a class='me-1' href='/" + lok1 + "/" + lok2 + "/" + lok3 +
+                    brod = brod + " <i class='bx bx-chevron-right me-1'></i> <a class='me-1' href='/" + lok1 + "/" + lok2 +
+                        "/" + lok3 +
                         "'>" + lok2 + "</a>"
                 }
             }
