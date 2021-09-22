@@ -20,7 +20,7 @@
         }
 
     </style>
-    <section class="___class_+?0___" style="margin-top: 100px">
+    <section class="___class_+?0___ mt-content">
         <div role="tablist">
             <div class="items-tab" id="menu-tab">
                 @if (auth()->user()->roles[0] == 'superuser')

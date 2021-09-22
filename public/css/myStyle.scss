@@ -10,298 +10,414 @@ $cukupcolorlight: #ffab40;
 $burukcolorlight: #ff4081;
 $shadowactivecolor: #887df355;
 $shadowsuccessecolor: #0ebb4855;
+$shadowdangercolor: #ff000055;
 
-.b-cukup{
-    background-color: $cukupcolorlight;
-    color: white;
-} 
-.r-fullround{
-    border-radius: 50px;
+td {
+  font-size: 0.8rem;
+}
+
+.mt-content {
+  margin-top: 100px;
+}
+.b-cukup {
+  background-color: $cukupcolorlight;
+  color: white;
+}
+.r-fullround {
+  border-radius: 50px;
 }
 
 .icon-size-lg {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .c-text {
-    color: $text-color;
+  color: $text-color;
 }
 
 .header-table {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
 
-    .title-table {
-        margin-bottom: 10px;
-        font-weight: 600;
-    }
+  .title-table {
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
 }
 
 .bg-prim-light {
-    background-color: $shadowactivecolor;
+  background-color: $shadowactivecolor;
 }
 
-.b-primary{
-    background-color: $activecolor;
+.b-primary {
+  background-color: $activecolor;
 }
 .t-primary {
-    color: $activecolor;
+  color: $activecolor;
 }
 
+.t-black {
+  color: black;
+}
 .t-bagus {
-    color: green;
+  color: green;
 }
 
 .t-cukup {
-    color: orange;
+  color: orange;
 }
 
 .t-kurang {
-    color: red;
+  color: red;
+}
+
+.bt-success-xsm {
+  all: unset;
+  background-color: $successcolor;
+  border-radius: 5px;
+  color: white;
+  padding: 5px 10px;
+  font-size: 0.6rem;
+  transition: all 300ms;
+  box-shadow: none;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+    box-shadow: $shadowsuccessecolor 0px 7px 29px 0px;
+  }
 }
 
 .bt-success-sm {
-    all: unset;
-    background-color: $successcolor;
-    border-radius: 5px;
-    color: white;
-    padding: 10px;
-    font-size: 0.8rem;
-    transition: all 300ms;
-    box-shadow: none;
-    cursor: pointer;
+  all: unset;
+  background-color: $successcolor;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  font-size: 0.8rem;
+  transition: all 300ms;
+  box-shadow: none;
+  cursor: pointer;
 
-    &:hover {
-        color: white;
-        box-shadow: $shadowsuccessecolor 0px 7px 29px 0px;
-    }
+  &:hover {
+    color: white;
+    box-shadow: $shadowsuccessecolor 0px 7px 29px 0px;
+  }
 }
 
 .bt-success {
-    all: unset;
-    background-color: $successcolor;
-    border-radius: 5px;
-    color: white;
-    padding: 10px;
-    transition: all 300ms;
-    box-shadow: none;
-    cursor: pointer;
+  all: unset;
+  background-color: $successcolor;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  transition: all 300ms;
+  box-shadow: none;
+  cursor: pointer;
 
-    &:hover {
-        color: white;
-        box-shadow: $shadowsuccessecolor 0px 7px 29px 0px;
-    }
+  &:hover {
+    color: white;
+    box-shadow: $shadowsuccessecolor 0px 7px 29px 0px;
+  }
 }
 
 .b-bagus-light-xsm {
-    all: unset;
-    background-color: $successcolorlight;
-    border-radius: 5px;
-    color: black;
-    padding: 5px 10px;
-    font-size: 0.6rem;
-    transition: all 300ms;
-    box-shadow: none;
+  all: unset;
+  background-color: $successcolorlight;
+  border-radius: 5px;
+  color: black;
+  padding: 5px 10px;
+  font-size: 0.6rem;
+  transition: all 300ms;
+  box-shadow: none;
 
-    &:hover {
-        color: white;
-        box-shadow: $shadowsuccessecolor 0px 7px 29px 0px;
-    }
+  &:hover {
+    color: white;
+    box-shadow: $shadowsuccessecolor 0px 7px 29px 0px;
+  }
 }
 
 .b-cukup-light-xsm {
-    all: unset;
-    background-color: $cukupcolorlight;
-    border-radius: 5px;
-    color: black;
-    padding: 5px 10px;
-    font-size: 0.6rem;
-    transition: all 300ms;
-    box-shadow: none;
+  all: unset;
+  background-color: $cukupcolorlight;
+  border-radius: 5px;
+  color: black;
+  padding: 5px 10px;
+  font-size: 0.6rem;
+  transition: all 300ms;
+  box-shadow: none;
 
-    &:hover {
-        color: white;
-        box-shadow: $shadowsuccessecolor 0px 7px 29px 0px;
-    }
+  &:hover {
+    color: white;
+    box-shadow: $shadowsuccessecolor 0px 7px 29px 0px;
+  }
 }
 
 .b-buruk-light-xsm {
-    all: unset;
-    background-color: $burukcolorlight;
-    border-radius: 5px;
-    color: black;
-    padding: 5px 10px;
-    font-size: 0.6rem;
-    transition: all 300ms;
-    box-shadow: none;
+  all: unset;
+  background-color: $burukcolorlight;
+  border-radius: 5px;
+  color: black;
+  padding: 5px 10px;
+  font-size: 0.6rem;
+  transition: all 300ms;
+  box-shadow: none;
 
-    &:hover {
-        color: white;
-        box-shadow: $shadowsuccessecolor 0px 7px 29px 0px;
-    }
+  &:hover {
+    color: white;
+    box-shadow: $shadowsuccessecolor 0px 7px 29px 0px;
+  }
 }
 
-
 .bt-primary-xsm {
-    all: unset;
-    background-color: $activecolor;
-    border-radius: 5px;
-    color: white;
-    padding: 5px 10px;
-    font-size: 0.6rem;
-    transition: all 300ms;
-    box-shadow: none;
-    cursor: pointer;
+  all: unset;
+  background-color: $activecolor;
+  border-radius: 5px;
+  color: white;
+  padding: 5px 10px;
+  font-size: 0.6rem;
+  transition: all 300ms;
+  box-shadow: none;
+  cursor: pointer;
 
-    &:hover {
-        color: white;
-        box-shadow: $shadowactivecolor 0px 7px 29px 0px;
-    }
+  &:hover {
+    color: white;
+    box-shadow: $shadowactivecolor 0px 7px 29px 0px;
+  }
+}
+
+.bt-danger-xsm {
+  all: unset;
+  background-color: red;
+  border-radius: 5px;
+  color: white;
+  padding: 5px 10px;
+  font-size: 0.6rem;
+  transition: all 300ms;
+  box-shadow: none;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+    box-shadow: $shadowdangercolor 0px 7px 29px 0px;
+  }
 }
 
 .bt-primary-sm {
-    all: unset;
-    background-color: $activecolor;
-    border-radius: 5px;
-    color: white;
-    padding: 10px;
-    font-size: 0.8rem;
-    transition: all 300ms;
-    box-shadow: none;
-    cursor: pointer;
+  all: unset;
+  background-color: $activecolor;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  font-size: 0.8rem;
+  transition: all 300ms;
+  box-shadow: none;
+  cursor: pointer;
 
-    &:hover {
-        color: white;
-        box-shadow: $shadowactivecolor 0px 7px 29px 0px;
-    }
+  &:hover {
+    color: white;
+    box-shadow: $shadowactivecolor 0px 7px 29px 0px;
+  }
 }
 
 .bt-primary {
-    all: unset;
-    background-color: $activecolor;
-    border-radius: 5px;
-    color: white;
-    padding: 10px;
-    transition: all 300ms;
-    box-shadow: none;
-    cursor: pointer;
+  all: unset;
+  background-color: $activecolor;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  transition: all 300ms;
+  box-shadow: none;
+  cursor: pointer;
 
-    &:hover {
-        color: white;
-        box-shadow: $shadowactivecolor 0px 7px 29px 0px;
-    }
+  &:hover {
+    color: white;
+    box-shadow: $shadowactivecolor 0px 7px 29px 0px;
+  }
 }
 
 .table-container {
-    border-radius: 5px;
-    padding: 24px;
-    background-color: white;
-    box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px,
-        rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
-    margin-bottom: 50px;
+  border-radius: 5px;
+  padding: 24px;
+  background-color: white;
+  box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
+  margin-bottom: 50px;
+}
+
+.t-right{
+  text-align: right;
 }
 
 .items-tab {
-    display: flex;
+  display: flex;
 
-    .card-tab {
-        padding: 16px;
-        box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px,
-            rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
-        background-color: white;
-        border-radius: 10px;
-        width: 200px;
-        margin-right: 16px;
-        cursor: pointer;
-        transition: all 300ms;
+  .card-tab {
+    padding: 16px;
+    box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
+    background-color: white;
+    border-radius: 10px;
+    width: 200px;
+    margin-right: 16px;
+    cursor: pointer;
+    transition: all 300ms;
 
-        &.active {
-            background-color: $activecolor;
-            color: white;
-            box-shadow: $shadowactivecolor 0px 7px 29px 0px;
+    &.active {
+      background-color: $activecolor;
+      color: white;
+      box-shadow: $shadowactivecolor 0px 7px 29px 0px;
 
-            .t-bagus{
-                color: $successcolorlight;
-            }
+      .t-bagus {
+        color: $successcolorlight;
+      }
 
-            .t-cukup{
-                color: $cukupcolorlight;
-            }
+      .t-cukup {
+        color: $cukupcolorlight;
+      }
 
-            .t-kurang{
-                color: #f8bbd0;
-            }
-        }
-
-        .number-card {
-            margin-bottom: 0;
-            font-size: 1.4rem;
-            font-weight: bold;
-        }
+      .t-kurang {
+        color: #f8bbd0;
+      }
     }
+
+    .number-card {
+      margin-bottom: 0;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+  }
 }
 
+.card-vendor {
+    padding: 16px;
+    box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
+    background-color: white;
+    border-radius: 10px;
+    width: 300px;
+    margin-right: 16px;
+    cursor: pointer;
+    transition: all 300ms;
+
+    .nama{
+      font-weight: bold;
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+
+    .email{
+      font-size: .8rem;
+      margin-bottom: 0;
+      color: gray;
+    }
+
+    .number{
+      font-size: 2.2rem;
+      margin-bottom: 0;
+      font-weight: bold;
+      color: $activecolor;
+    }
+
+    .div-image{
+
+      border: 1px solid #eaeaea;
+      border-radius: 10px;
+      margin-right: 10px;
+      height: 75px;
+      width: 75px;
+      img{
+        height: 75px;
+        width: 75px;
+        object-fit: contain;
+      }
+
+    }
+ 
+    &:hover {
+      box-shadow: $shadowactivecolor 0px 7px 29px 0px;
+
+      .t-bagus {
+        color: $successcolorlight;
+      }
+
+      .t-cukup {
+        color: $cukupcolorlight;
+      }
+
+      .t-kurang {
+        color: #f8bbd0;
+      }
+    }
+
+    .number-card {
+      margin-bottom: 0;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+}
 // INDIKATOR
 
 .card-indikator {
-    padding: 16px;
-    border-radius: 5px;
-    position: relative;
-    width: 100%;
+  padding: 16px;
+  border-radius: 5px;
+  position: relative;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
-    .header-indikator {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+  .header-indikator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 //DATA TABLES
 
 td.details-control {
-    background: url("../static-images/arrow-down.png") no-repeat center;
-    background-size: cover;
-    cursor: pointer;
+  background: url('../static-images/arrow-down.png') no-repeat center;
+  background-size: cover;
+  cursor: pointer;
 }
 tr.shown td.details-control {
-    background: url("../static-images/arrow-down.png") no-repeat center;
-    transform: rotate(180deg);
-    background-size: cover;
-    cursor: pointer;
+  background: url('../static-images/arrow-down.png') no-repeat center;
+  transform: rotate(180deg);
+  background-size: cover;
+  cursor: pointer;
 }
 
 // PAGINATION
 
 .pagination > li > a {
-    background-color: white;
-    color: $activecolor;
+  background-color: white;
+  color: $activecolor;
 }
 
 .pagination > li > a:focus,
 .pagination > li > a:hover,
 .pagination > li > span:focus,
 .pagination > li > span:hover {
-    color: #5a5a5a;
-    background-color: #eee;
-    border-color: #ddd;
+  color: #5a5a5a;
+  background-color: #eee;
+  border-color: #ddd;
 }
 
 .pagination > .active > a {
-    color: white;
-    background-color: $activecolor !important;
-    border: solid 1px $activecolor !important;
-    box-shadow: $shadowactivecolor 0px 7px 29px 0px;
+  color: white;
+  background-color: $activecolor !important;
+  border: solid 1px $activecolor !important;
+  box-shadow: $shadowactivecolor 0px 7px 29px 0px;
 }
 
 .pagination > .active > a:hover {
-    background-color: $activecolor !important;
-    border: solid 1px $activecolor;
+  background-color: $activecolor !important;
+  border: solid 1px $activecolor;
 }
 
 // DATE
 .input-daterange input {
-    text-align: left !important;
+  text-align: left !important;
 }
 
 .datepicker table tr td.active.active,
@@ -324,52 +440,174 @@ tr.shown td.details-control {
 .datepicker table tr td.active:hover:hover,
 .datepicker table tr td.active:hover[disabled],
 .datepicker table tr td.active[disabled] {
-    background-color: $activecolor !important;
-    box-shadow: $shadowactivecolor 0px 7px 29px 0px !important;
+  background-color: $activecolor !important;
+  box-shadow: $shadowactivecolor 0px 7px 29px 0px !important;
 }
 
 .datepicker table tr td.active,
 .datepicker table tr td.active.disabled,
 .datepicker table tr td.active.disabled:hover,
 .datepicker table tr td.active:hover {
-    background-color: #006dcc;
-    background-image: -moz-linear-gradient(
-        to bottom,
-        $activecolor,
-        $activecolor
-    ) !important;
-    background-image: -ms-linear-gradient(
-        to bottom,
-        $activecolor,
-        $activecolor
-    ) !important;
-    background-image: -webkit-gradient(
-        linear,
-        0 0,
-        0 100%,
-        from($activecolor),
-        to($activecolor)
-    ) !important;
-    background-image: -webkit-linear-gradient(
-        to bottom,
-        $activecolor,
-        $activecolor
-    ) !important;
-    background-image: -o-linear-gradient(
-        to bottom,
-        $activecolor,
-        $activecolor
-    ) !important;
-    background-image: linear-gradient(
-        to bottom,
-        $activecolor,
-        $activecolor
-    ) !important;
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$activecolor', endColorstr='#0044cc', GradientType=0);
-    border-color: $activecolor $activecolor #002a80;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-    color: #fff;
-    // text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
+  background-color: #006dcc;
+  background-image: -moz-linear-gradient(
+    to bottom,
+    $activecolor,
+    $activecolor
+  ) !important;
+  background-image: -ms-linear-gradient(
+    to bottom,
+    $activecolor,
+    $activecolor
+  ) !important;
+  background-image: -webkit-gradient(
+    linear,
+    0 0,
+    0 100%,
+    from($activecolor),
+    to($activecolor)
+  ) !important;
+  background-image: -webkit-linear-gradient(
+    to bottom,
+    $activecolor,
+    $activecolor
+  ) !important;
+  background-image: -o-linear-gradient(
+    to bottom,
+    $activecolor,
+    $activecolor
+  ) !important;
+  background-image: linear-gradient(
+    to bottom,
+    $activecolor,
+    $activecolor
+  ) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$activecolor', endColorstr='#0044cc', GradientType=0);
+  border-color: $activecolor $activecolor #002a80;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  color: #fff;
+  // text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
 }
+
+.search {
+  --background: #ffffff;
+  --text-color: #414856;
+  --primary-color: #4F29F0;
+  --border-radius: 50px;
+  --width: 190px;    
+  --height: 40px;  
+    background: var(--background);
+    width: auto;
+    height: var(--height);
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(#414856, 0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    input[type='text'] {
+      position: relative;
+      width: var(--height);
+      height: var(--height);
+      // font: 400 16px 'Varela Round', sans-serif;
+      color: var(--text-color);
+      border: 0;
+      box-sizing: border-box;
+      outline: none;
+      padding: 0 0 0 40px;
+      transition: width 0.6s ease;
+      z-index: 10;
+      opacity: 0;
+      cursor: pointer;
+      &:focus {
+        z-index: 0;
+        opacity: 1;
+        width: var(--width);
+        ~ .symbol {
+          &::before {
+            width: 0%;
+          }
+          &:after {
+            clip-path: inset(0% 0% 0% 100%);
+            transition: clip-path 0.04s linear 0.105s;
+          }
+          .cloud {
+            top: -30px;
+            left: -30px;
+            transform: translate(0, 0);
+            transition: all 0.6s ease;
+          }
+          .lens {
+            top: 20px;
+            left: 15px;
+            transform: translate(0, 0);
+            fill: var(--primary-color);
+            transition: top 0.5s ease 0.1s, left 0.5s ease 0.1s, fill 0.3s ease;
+          }
+        }
+      }
+    }
+    .symbol {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:before {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--primary-color);
+        z-index: -1;
+        transition: width 0.6s ease;
+      }
+      &:after {
+        content: '';
+        position: absolute;
+        top: 21px;
+        left: 21px;
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        background: var(--primary-color);
+        z-index: 1;
+        clip-path: inset(0% 0% 0% 0%);
+        transition: clip-path 0.04s linear 0.225s;
+      }
+      .cloud,
+      .lens {
+        position: absolute;
+        fill: #fff;
+        stroke: none;
+        top: 50%;
+        left: 50%;
+      }
+      .cloud {
+        width: 35px;
+        height: 32px;
+        transform: translate(-50%, -60%);
+        transition: all 0.6s ease;
+      }
+      .lens {
+        fill: #fff;
+        width: 16px;
+        height: 16px;
+        z-index: 2;
+        top: 24px;
+        left: 24px;
+        transition: top 0.3s ease, left 0.3s ease, fill 0.2s ease 0.2s;
+      }
+    }
+  }
+  
+
+//--- ## BASIC #############
+
+

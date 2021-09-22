@@ -8,18 +8,20 @@
 
 @section('content')
 
-    <section class="___class_+?0___" style="margin-top: 100px">
+    <section class="___class_+?0___ mt-content">
 
         <div class="mt-4  table-container" style="min-height: 23vh">
             <div class="header-table">
-                <p class="title-table fw-bold t-primary">Data Indikator <span class="badge bg-danger">Total Bobot : <span id="sumBobot"></span></span></p>
-
+                <div>
+                <p class="title-table fw-bold t-primary mb-0">Data Indikator </p>
+                <span class="badge bg-danger">Total Bobot : <span id="sumBobot"></span></span>
+            </div>
                 <div>
                     <form class="d-flex">
                         <input class="form-control" type="text" name="cari"
                                style="border-top-right-radius: 0;border-bottom-right-radius: 0;"
                                value="{{ request('cari') }}" placeholder="Cari master indikator">
-                        <button class="btn btn-warning me-3" style="border-top-left-radius: 0;border-bottom-left-radius: 0;"
+                        <button class="btn btn-primary me-3" style="border-top-left-radius: 0;border-bottom-left-radius: 0;"
                                 type="submit"><i class='bx bx-search-alt-2'></i></button>
                         {{-- <a class="btn btn-primary" href="/indikator"><i class='bx bx-reset'></i></a> --}}
                         <a class="bt-primary-sm " id="addData" style="min-width: 100px"><i class='bx bx-plus'></i> Tambah Data</a>
@@ -173,14 +175,16 @@
                     $('#rowIndikator').append('<div class="col-sm-12  ">\n' +
                         '                        <div class="card-indikator table-container">\n' +
                         '                            <div class="header-indikator">\n' +
-                        '                                <div class="row"><p class="mb-0 fw-bold">' +name + ' <span class="badge bg-primary">Bobot : ' + value['weight'] +
-                        '</span> <span><a class="btn btn-sm" title="Edit Master Indikator" data-weight="' +
-                        value['weight'] + '" data-name="' + name + '"  data-id="' + value['id'] +
-                        '" id="editData"><i class=\'bx bx-edit-alt\'></i></a></span></p>\n' +
+                        '                                <div class="row"><p class="mb-0 fw-bold">' +name + ' <span class="badge bg-primary">Bobot : ' + value['weight'] + '</span> </p>'+
+                       
                         '                                      ' +
                         '                                 </div>' +
-                        '                               <div> <a class="bt-success-sm" data-name="'+name+'" data-id="' + value['id'] + '"  id="deleteIndikator">Delete IndiKator</a>\n' +
-                        '                                <a class="bt-success-sm" data-id="' + value['id'] + '"  id="addSubIndikaor">Tambah Sub</a>\n' +
+                        '                               <div> '+
+                            '<span><a class="bt-primary-xsm me-1" title="Edit Master Indikator" data-weight="' +
+                        value['weight'] + '" data-name="' + name + '"  data-id="' + value['id'] +
+                        '" id="editData"><i class=\'bx bx-edit-alt\'></i> edit </a></span>\n' +
+                        '    <a class="bt-success-xsm " data-id="' + value['id'] + '"  id="addSubIndikaor"><i class="bx bx-plus" ></i>Tambah Sub</a> \n' +
+                        '                                <a class="bt-danger-xsm " data-name="'+name+'" data-id="' + value['id'] + '"  id="deleteIndikator"><i class="bx bx-x"></i></a> \n' +
                         '                            </div>\n' +
                         '                            </div>\n' +
                         '                            <div class="body-indikator">\n' +
