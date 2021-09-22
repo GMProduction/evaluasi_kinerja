@@ -2,6 +2,8 @@
 
 @section('moreCss')
     {{-- <link rel="stylesheet" href="{{ asset('css/tab.css') }}" type="text/css"> --}}
+    <link href="{{ asset('css/dropify/css/dropify.css') }}" rel="stylesheet">
+
 @endsection
 
 
@@ -18,7 +20,9 @@
         .select2-selection__arrow {
             height: 35px !important;
         }
-
+        td{
+            vertical-align: middle;
+        }
     </style>
     <section class="___class_+?0___ mt-content">
         <div role="tablist">
@@ -94,10 +98,17 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="form" onsubmit="return Save()">
+                            <form id="form" onsubmit="return SaveUser()">
                                 @csrf
                                 <input id="id" name="id" hidden>
                                 <input name="roles" id="roles" hidden>
+                                <div class="mb-3">
+                                    <input type="file" id="image" class="fotoprofile" data-min-height="10"
+                                           data-heigh="400"
+                                           accept="image/jpeg, image/jpg, image/png"
+                                           data-allowed-file-extensions="jpg jpeg png"
+                                    />
+                                </div>
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
                                     <input type="text" class="form-control" id="name" name="name">
@@ -150,7 +161,10 @@
 @endsection
 
 @section('script')
-
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
+    <script src="{{ asset('css/dropify/js/dropify.js') }}"></script>
+    <script src="{{ asset('js/handler_image.js') }}"></script>
     <script>
         var roles, textRoles, title;
         var table;
@@ -167,9 +181,10 @@
             datatable(roles);
         });
 
-        function Save() {
-            saveData(title + ' Data ' + textRoles, 'form', null, afterSave)
-            return false;
+       function SaveUser() {
+           saveData(title + ' Data ' + textRoles, 'form', null, afterSave, 'image')
+           return false
+
         }
 
         function afterSave() {
@@ -188,10 +203,7 @@
             $('#tambahdata #username').val($(this).data('username'));
             $('#tambahdata #password_confirmation').val('');
             $('#tambahdata #password').val('');
-            if ($(this).data('id')) {
-                $('#tambahdata #password_confirmation').val('********');
-                $('#tambahdata #password').val('********');
-            }
+
             $('#ppkDiv').empty()
             if (roles === 'accessorppk') {
                 $('#ppkDiv').html(' <div class="mb-3">\n' +
@@ -204,7 +216,25 @@
                     dropdownParent: $('#tambahdata')
                 });
             }
-
+            var icon = $('.fotoprofile').dropify({
+                messages: {
+                    'default': 'Masukkan Foto',
+                    'replace': 'Drag and drop or click to replace',
+                    'remove': 'Remove',
+                    'error': 'Ooops, something wrong happended.'
+                }
+            });
+            $('.dropify-wrapper').height(200);
+            icon = icon.data('dropify');
+            icon.resetPreview();
+            icon.clearElement();
+            if ($(this).data('id')) {
+                $('#tambahdata #password_confirmation').val('********');
+                $('#tambahdata #password').val('********');
+                icon.settings.defaultFile = $(this).data('image');
+                icon.destroy();
+                icon.init();
+            }
             $('#tambahdata').modal('show');
         })
 
@@ -253,29 +283,36 @@
                         "className": "text-center"
                     },
                     {
-                        "title": "Nama",
+                        "title": "Image",
                         'targets': 1,
                         'searchable': true,
                         'orderable': true,
                         "className": "text-center"
                     },
                     {
-                        "title": "Username",
+                        "title": "Nama",
                         'targets': 2,
                         'searchable': true,
                         'orderable': true,
                         "className": "text-center"
                     },
                     {
-                        "title": "Email",
+                        "title": "Username",
                         'targets': 3,
                         'searchable': true,
                         'orderable': true,
                         "className": "text-center"
                     },
                     {
-                        "title": "Action",
+                        "title": "Email",
                         'targets': 4,
+                        'searchable': true,
+                        'orderable': true,
+                        "className": "text-center"
+                    },
+                    {
+                        "title": "Action",
+                        'targets': 5,
                         'searchable': false,
                         'orderable': false,
                         "className": "text-center"
@@ -287,6 +324,13 @@
                         "orderable": false,
                         "data": null,
                         "defaultContent": ''
+                    },
+                    {
+                        data: 'image',
+                        render: function (data) {
+                            var img = data ?? '{{asset('images/noimage.png')}}';
+                            return '<img style="height: 70px" src="'+img+'" onerror="this.onerror=null; this.src=\'{{ asset('/images/noimage.png') }}\'" alt=""/>'
+                        }
                     },
                     {
                         data: role + '.name',
@@ -307,7 +351,7 @@
                         "render": function(data, type, row, meta) {
                             var ppk = row[role].ppk !== undefined ? row[role].ppk.id : '';
                             return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-name="' + row[role].name + '" data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
-                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-username="' + row.username + '" data-ppk="' + ppk + '" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role].name + '" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
+                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-image="'+row.image+'" data-username="' + row.username + '" data-ppk="' + ppk + '" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role].name + '" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
                         }
                     },
                 ]

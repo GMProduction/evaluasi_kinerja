@@ -1,6 +1,7 @@
-function saveData(title, form, url, resposeSuccess) {
+async function saveData(title, form, url, resposeSuccess, image = null) {
     var form_data = new FormData($('#' + form)[0]);
 
+    console.log(form_data)
     swal({
         title: title,
         text: "Apa kamu yakin ?",
@@ -8,8 +9,14 @@ function saveData(title, form, url, resposeSuccess) {
         buttons: true,
         primariMode: true,
     })
-        .then((res) => {
+        .then(async (res) => {
             if (res) {
+                if (image){
+                    if ($('#'+image).val()) {
+                        let image1 = await handleImageUpload($('#'+image));
+                        form_data.append('profile', image1, image1.name);
+                    }
+                }
                 $.ajax({
                     type: "POST",
                     data: form_data,

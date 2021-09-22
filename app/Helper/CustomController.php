@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Ramsey\Uuid\Uuid;
 
 class CustomController extends Controller
 {
@@ -39,5 +40,10 @@ class CustomController extends Controller
         $file = $this->request->file($field);
 
         return Storage::disk($disk)->put($targetName, File::get($file));
+    }
+
+    public function uuidGenerator()
+    {
+        return Uuid::uuid1()->toString();
     }
 }

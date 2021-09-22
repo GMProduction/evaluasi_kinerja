@@ -20,7 +20,7 @@
                     vendor.append(' <a href="/penilaian?vendor=' + value['id'] +
                         '" class="card-vendor  d-block c-text card-user" id="">\n' +
                         '                    <div class="d-flex justify-content-left">\n' +
-                        '                        <div class="div-image"> <img src="https://1.bp.blogspot.com/-zO8hzjH7BrQ/W9wXmTIy5qI/AAAAAAAAPiY/Qqb70x0AnMAksHofqiT7APHhZXTchM1nACLcBGAs/w1200-h630-p-k-no-nu/Wika.png"/> </div>\n' +
+                        '                        <div class="div-image"> <img src="'+value['image']+'" onerror="this.onerror=null; this.src=\'{{ asset('/images/noimage.png') }}\'"/> </div>\n' +
                         ' <div class="w-100"><p  class="nama">'+ value['vendor']['name'] +'</p><p class="email">email@gmail.com</p> <h6 class="t-right number"> '+value['package_going'].length+' </h6> </div>' +
                         '                    </div>\n' +
 
