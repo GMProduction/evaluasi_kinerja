@@ -21,7 +21,8 @@ class ScoreController extends CustomController
         parent::__construct();
     }
 
-    public function getDatatable(){
+    public function getDatatable()
+    {
         $query = Package::with(['vendor.vendor', 'ppk'])->where([['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))], ['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]]);
         return $query;
     }
@@ -43,11 +44,12 @@ class ScoreController extends CustomController
         return DataTables::of($query)->make(true);
     }
 
-    public function datatableByVendorId($id){
+    public function datatableByVendorId($id)
+    {
         $roles = auth()->user()->roles[0];
         $query = $this->getDatatable();
-        if ($roles === 'accessor'){
-            $query->where('vendor_id','=',$id);
+        if ($roles === 'accessor') {
+            $query->where('vendor_id', '=', $id);
         }
 //        $data = $this->getDatatable();
         return DataTables::of($query)->make(true);
@@ -107,7 +109,7 @@ class ScoreController extends CustomController
                 $query->where('package_id', $packageId)->where('type', $type);
             }, 'subIndicator.scoreHistory' => function ($query) use ($packageId, $type) {
                 $query->where('package_id', $packageId)->where('type', $type);
-            } ])->get();
+            }])->get();
             return response()->json([
                 'msg' => 'success',
                 'data' => [
@@ -422,24 +424,58 @@ class ScoreController extends CustomController
 
     public function uploadFile($id)
     {
-        $score = Score::with(['package', 'subIndicator'])->find(request('id'));
-        if ($score->file) {
-            if (file_exists('../public' . $score->file)) {
-                unlink('../public' . $score->file);
+        try {
+            $authorId = Auth::id();
+            $score = Score::with(['package', 'subIndicator'])->find(request('id'));
+            if ($score === null) {
+                return response()->json(['msg' => 'Penilaian Sub Indicator Tidak Ditemukan...'], 202);
             }
+            DB::beginTransaction();
+//            if ($score->file) {
+//                if (file_exists('../public' . $score->file)) {
+//                    unlink('../public' . $score->file);
+//                }
+//            }
+            $files = $this->request->file('file');
+            $extension = $files->getClientOriginalExtension();
+            $name = str_replace(' ', '-', $score->package->name) . '-' . str_replace(' ', '-', $score->subIndicator->name) . strtotime("now");
+            $value = $name . '.' . $extension;
+
+            $stringImg = '/files/' . $value;
+            $this->uploadImage('file', $value, 'filesUpload');
+
+            $scoreBefore = $score->score;
+            $scoreTextBefore = $score->text;
+            $scoreFileBefore = $score->file;
+            $packageId = $score->package_id;
+            $vType = $score->type;
+            $subIndicatorId = $score->sub_indicator_id;
+
+            $cumulativeBefore = $this->getCumulative($packageId, $vType);
+            $score->update(['file' => $stringImg]);
+            $cumulativeAfter = $this->getCumulative($packageId, $vType);
+
+            $data = [
+                'package_id' => $packageId,
+                'author_id' => $authorId,
+                'sub_indicator_id' => $subIndicatorId,
+                'type' => $vType,
+                'score_before' => $scoreBefore,
+                'score_text_before' => $scoreTextBefore,
+                'file_before' => $scoreFileBefore,
+                'score_after' => $scoreBefore,
+                'score_text_after' => $scoreTextBefore,
+                'file_after' => $stringImg,
+                'cumulative_before' => $cumulativeBefore,
+                'cumulative_after' => $cumulativeAfter,
+            ];
+            $this->saveHistory($data);
+            DB::commit();
+            return response()->json(['msg' => 'success'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
         }
-        $files = $this->request->file('file');
-        $extension = $files->getClientOriginalExtension();
-        $name = str_replace(' ', '-', $score->package->name) . '-' . str_replace(' ', '-', $score->subIndicator->name);
-        $value = $name . '.' . $extension;
-
-        $stringImg = '/files/' . $value;
-        $this->uploadImage('file', $value, 'filesUpload');
-
-        $score->update(['file' => $stringImg]);
-
-        return response()->json(Auth::user()->roles[0]);
-
     }
 
     public function getScoreHistory()
@@ -472,11 +508,11 @@ class ScoreController extends CustomController
                 ->where('type', $type)
                 ->where('sub_indicator_id', $subIndicatorId)
                 ->first();
-            if($history === null){
+            if ($history === null) {
                 return response()->json(['msg' => 'Tidak Ada Riwayat...', 'code' => 202], 202);
             }
             return response()->json(['msg' => 'success', 'data' => $history, 'code' => 200], 200);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
         }
     }
