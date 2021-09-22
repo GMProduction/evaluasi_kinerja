@@ -154,7 +154,7 @@
                                     <p style="color: gray; font-size: .8rem;  bottom: 0;">25% Dari Faktor Penilaian</p>
                                     <p id="faktorbelum" class="fw-bold text-primary" style="font-size: 2rem">0</p>
                                 </div>
-                                <div class="progress" style="height: 20px;">
+                                <div class="progress" style="height: 10px;">
                                     <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="50"
                                         aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
