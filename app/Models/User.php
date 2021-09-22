@@ -71,4 +71,8 @@ class User extends Authenticatable
     public function package(){
         return $this->hasMany(Package::class,'vendor_id');
     }
+
+    public function packageGoing(){
+        return $this->hasMany(Package::class, 'vendor_id')->where('finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta'))));
+    }
 }

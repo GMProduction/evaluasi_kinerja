@@ -28,7 +28,7 @@ class VendorController extends CustomController
 
     public function getVendorPackage(){
         $roles = auth()->user()->roles[0];
-        $package = User::with(['vendor','package']);
+        $package = User::with(['vendor','packageGoing']);
         if ($roles == 'accessor'){
             $package = $package->has('package');
         }else{
