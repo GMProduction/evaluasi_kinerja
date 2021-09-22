@@ -51,68 +51,8 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
                     <p class="title-notif">Pemberitahuan</p>
-                    <div>
-                        <a class="notifdiv">
-                            <div class="div-image">
-                                <img
-                                    src="http://1.bp.blogspot.com/-6wgnCxmn_Jc/Tk9Recl6PII/AAAAAAAABFw/8neHTaGo6SM/s1600/Avril-Lavigne-Photos.jpg" />
-                            </div>
+                    <div id="notif">
 
-                            <div class="div-content">
-                                <div class="div-header">
-                                    <p class="nama t-black">Avril</p>
-                                    <p class="tanggal " style="color: gray">12 September 2021</p>
-                                </div>
-
-
-                                <p class="sub-indikator">
-                                    Sub Indikator 1
-                                </p>
-                            </div>
-                        </a>
-                        <hr class="hr-notif">
-                    </div>
-                    <div>
-                        <a class="notifdiv isread">
-                            <div class="div-image">
-                                <img
-                                    src="http://1.bp.blogspot.com/-6wgnCxmn_Jc/Tk9Recl6PII/AAAAAAAABFw/8neHTaGo6SM/s1600/Avril-Lavigne-Photos.jpg" />
-                            </div>
-
-                            <div class="div-content">
-                                <div class="div-header">
-                                    <p class="nama t-black">Avril</p>
-                                    <p class="tanggal " style="color: gray">12 September 2021</p>
-                                </div>
-
-
-                                <p class="sub-indikator">
-                                    Sub Indikator 1
-                                </p>
-                            </div>
-                        </a>
-                        <hr class="hr-notif">
-                    </div>
-                    <div>
-                        <a class="notifdiv isread">
-                            <div class="div-image">
-                                <img
-                                    src="http://1.bp.blogspot.com/-6wgnCxmn_Jc/Tk9Recl6PII/AAAAAAAABFw/8neHTaGo6SM/s1600/Avril-Lavigne-Photos.jpg" />
-                            </div>
-
-                            <div class="div-content">
-                                <div class="div-header">
-                                    <p class="nama t-black">Avril</p>
-                                    <p class="tanggal " style="color: gray">12 September 2021</p>
-                                </div>
-
-
-                                <p class="sub-indikator">
-                                    Sub Indikator 1
-                                </p>
-                            </div>
-                        </a>
-                        <hr class="hr-notif">
                     </div>
 
                     <a class="lihatsemuanotif">Lihat Semua</a>
@@ -200,7 +140,39 @@
     <script>
         $(document).ready(function() {
             broadcum()
+            showNotif();
         })
+
+        function showNotif() {
+            moment.locale('id')
+
+            $.get('/show-notif', function (data) {
+                $('#notif').empty();
+                if (data){
+                    $.each(data, function (key, value) {
+                        var read = value['is_active'] === 1 ? 'isRead' : '';
+                        $('#notif').append('<div>\n' +
+                            '                        <a class="notifdiv '+read+'">\n' +
+                            '                            <div class="div-image">\n' +
+                            '                                <img\n' +
+                            '                                    src="http://1.bp.blogspot.com/-6wgnCxmn_Jc/Tk9Recl6PII/AAAAAAAABFw/8neHTaGo6SM/s1600/Avril-Lavigne-Photos.jpg" />\n' +
+                            '                            </div>\n' +
+                            '                            <div class="div-content">\n' +
+                            '                                <div class="div-header">\n' +
+                            '                                    <p class="nama t-black">'+value['title']+'</p>\n' +
+                            '                                    <p class="tanggal " style="color: gray">'+moment(value['created_at']).format('LLL')+'</p>\n' +
+                            '                                </div>\n' +
+                            '                                <p class="sub-indikator">\n' +
+                            '                                    '+value['description']+'\n' +
+                            '                                </p>\n' +
+                            '                            </div>\n' +
+                            '                        </a>\n' +
+                            '                        <hr class="hr-notif">\n' +
+                            '                    </div>')
+                    })
+                }
+            })
+        }
 
         function broadcum() {
             var brod;
