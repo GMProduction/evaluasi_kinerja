@@ -30,6 +30,13 @@ Route::get(
     }
 );
 
+Route::get(
+    '/profil',
+    function () {
+        return view('superuser.user.profil');
+    }
+);
+
 Route::prefix('/')->middleware('auth')->group(
     function () {
         Route::get(
