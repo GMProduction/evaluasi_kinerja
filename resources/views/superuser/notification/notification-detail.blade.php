@@ -55,7 +55,7 @@
                 <form id="form" onsubmit="return save()">
                     <div class="mb-3">
                         <label for="description" class="form-label">Catatan Sanggah</label>
-                        <textarea type="email" class="form-control" id="description" name="description">{{$data->claim->description}}</textarea>
+                        <textarea type="email" class="form-control" id="description" name="description">{{$data->claim->description ?? ''}}</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="file" class="form-label">File</label>
