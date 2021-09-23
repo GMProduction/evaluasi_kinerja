@@ -19,7 +19,7 @@ class NotificationController extends Controller
             $notif = ClaimNotification::where('recipient_id', '=', Auth::id())->limit(5)->get();
 //            $data = Vendor::
         } elseif (Auth::user()->roles[0] == 'vendor') {
-            $notif = Notification::where('vendor_id', '=', Auth::id())->limit(5)->get();
+            $notif = Notification::where([['vendor_id', '=', Auth::id()], ['is_active' , '=', true]])->limit(5)->get();
         }
         return $notif;
     }
@@ -30,7 +30,7 @@ class NotificationController extends Controller
         if (Auth::user()->roles[0] == 'accessor' || Auth::user()->roles[0] == 'accessorppk') {
             $notif = ClaimNotification::where([['recipient_id', '=', Auth::id()], ['is_read', '=', 0]])->count('*');
         } elseif (Auth::user()->roles[0] == 'vendor') {
-            $notif = Notification::where([['vendor_id', '=', Auth::id()], ['is_read', '=', 0]])->count('*');
+            $notif = Notification::where([['vendor_id', '=', Auth::id()], ['is_active', '=', true]])->count('*');
         }
         return $notif;
     }
@@ -38,6 +38,8 @@ class NotificationController extends Controller
     public function detailNotification($type, $id)
     {
         $notification = Notification::with(['sender.' . $type, 'vendor', 'score.subIndicator'])->where('id', $id)->firstOrFail();
+        $notification->is_read = true;
+        $notification->save();
 //        return $notification->toArray();
         return view('superuser.notification.notification-detail')->with(['data' => $notification]);
     }
