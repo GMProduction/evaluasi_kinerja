@@ -56,7 +56,7 @@
 
                 </div>
 
-                <a class="lihatsemuanotif">Lihat Semua</a>
+                <a class="lihatsemuanotif" href="/peringatan">Lihat Semua</a>
             </div>
         </div>
 

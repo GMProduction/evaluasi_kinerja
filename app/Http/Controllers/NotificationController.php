@@ -55,4 +55,8 @@ class NotificationController extends Controller
 //        return $notification->toArray();
         return view('superuser.notification.notification-detail')->with(['data' => $notification]);
     }
+
+    public function index(){
+        return view('super.notification.all-notif');
+    }
 }

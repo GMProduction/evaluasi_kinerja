@@ -30,12 +30,6 @@ Route::get(
     }
 );
 
-Route::get(
-    '/notif',
-    function () {
-        return view('superuser.notification.all-notif');
-    }
-);
 
 
 Route::prefix('/')->middleware('auth')->group(
@@ -112,7 +106,7 @@ Route::prefix('/')->middleware('auth')->group(
         );
 
         Route::prefix('/peringatan')->group(function (){
-            Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);
+            Route::get('/', [\App\Http\Controllers\NotificationController::class, 'index']);
             Route::post('/claim', [\App\Http\Controllers\ClaimNotificationController::class, 'store']);
             Route::get('/{type}/{id}', [\App\Http\Controllers\NotificationController::class, 'detailNotification']);
         });
