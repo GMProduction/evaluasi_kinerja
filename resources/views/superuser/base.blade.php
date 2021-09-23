@@ -153,6 +153,7 @@
                     const {id, type} = value;
                     var read = value['is_read'] === 0 ? 'isRead' : '';
                     var img = value['sender']['image'] ?? '';
+                    var senderName = value['sender']['vendor'] ? value['sender']['vendor']['name'] : value['sender']['data']['name'];
                     $('#notif').append('<div>\n' +
                         '                        <a class="notifdiv ' + read + '" href="/peringatan/' + type + '/' + id + '">\n' +
                         '                            <div class="div-image">\n' +
@@ -161,9 +162,10 @@
                         '                            </div>\n' +
                         '                            <div class="div-content">\n' +
                         '                                <div class="div-header">\n' +
-                        '                                    <p class="nama t-black">' + value['title'] + '</p>\n' +
+                        '                                    <p class="nama t-black">' + senderName + '</p>\n' +
                         '                                    <p class="tanggal " style="color: gray">' + moment(value['created_at']).format('LLL') + '</p>\n' +
                         '                                </div>\n' +
+                        '                                    <p class="nama t-black mb-0">' + value['title'] + '</p>\n' +
                         '                                <p class="sub-indikator">\n' +
                         '                                    ' + value['description'] + '\n' +
                         '                                </p>\n' +
