@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ClaimNotification;
 use App\Models\Notification;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,8 +16,9 @@ class NotificationController extends Controller
         $notif ='';
         if (Auth::user()->roles[0] == 'accessor' || Auth::user()->roles[0] == 'accessorppk' ){
             $notif = ClaimNotification::where('recipient_id','=',Auth::id())->limit(5)->get();
+//            $data = Vendor::
         }elseif (Auth::user()->roles[0] == 'vendor'){
-            $notif = Notification::with('vendor')->where('vendor_id','=',Auth::id())->limit(5)->get();
+            $notif = Notification::where('vendor_id','=',Auth::id())->limit(5)->get();
         }
         return $notif;
     }
