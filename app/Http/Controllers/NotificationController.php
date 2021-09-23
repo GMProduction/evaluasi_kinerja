@@ -34,7 +34,7 @@ class NotificationController extends Controller
     public function detailNotification($id)
     {
         $notification = Notification::with(['sender', 'vendor', 'score'])->where('id', $id)->firstOrFail();
-        return $notification->toArray();
+//        return $notification->toArray();
         return view('superuser.notification.notification-detail');
     }
 }
