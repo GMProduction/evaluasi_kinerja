@@ -65,6 +65,10 @@ td {
   color: red;
 }
 
+.t-active {
+  color: #887df3;
+}
+
 .bt-success-xsm {
   all: unset;
   background-color: #0ebb48;
@@ -297,6 +301,7 @@ td {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .notifdiv .div-content .div-header .nama {
   font-weight: bold;
@@ -308,10 +313,15 @@ td {
   margin-bottom: 0;
 }
 .notifdiv .div-content .sub-indikator {
-  font-weight: bold;
   font-size: 0.8rem;
   color: gray;
   margin-bottom: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* number of lines to show */
+  -webkit-box-orient: vertical;
 }
 
 .title-notif {

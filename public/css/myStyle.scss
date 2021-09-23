@@ -77,6 +77,9 @@ td {
     color: red;
 }
 
+.t-active {
+    color: $activecolor;
+}
 .bt-success-xsm {
     all: unset;
     background-color: $successcolor;
@@ -330,6 +333,7 @@ td {
             width: 100%;
             display: flex;
             justify-content: space-between;
+            align-items: center;
 
             .nama {
                 font-weight: bold;
@@ -344,10 +348,15 @@ td {
         }
 
         .sub-indikator {
-            font-weight: bold;
             font-size: 0.8rem;
             color: gray;
             margin-bottom: 0;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* number of lines to show */
+            -webkit-box-orient: vertical;
         }
     }
 }
