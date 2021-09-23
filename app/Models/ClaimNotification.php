@@ -10,17 +10,20 @@ class ClaimNotification extends Model
     use HasFactory;
     protected $table = 'claim_notification';
 
+    protected $with = ['sender','recipient'];
+
     public function sender()
     {
-        $this->belongsTo(User::class, 'sender_id');
+        return $this->belongsTo(User::class, 'sender_id');
     }
 
     public function recipient()
     {
-        $this->belongsTo(User::class, 'recipient_id');
+        return $this->belongsTo(User::class, 'recipient_id');
     }
+
     public function notification()
     {
-        $this->belongsTo(Notification::class, 'notification_id');
+        return $this->belongsTo(Notification::class, 'notification_id');
     }
 }

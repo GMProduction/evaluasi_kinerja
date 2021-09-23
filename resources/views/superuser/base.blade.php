@@ -155,7 +155,7 @@
                         '                        <a class="notifdiv ' + read + '">\n' +
                         '                            <div class="div-image">\n' +
                         '                                <img\n' +
-                        '                                    src="http://1.bp.blogspot.com/-6wgnCxmn_Jc/Tk9Recl6PII/AAAAAAAABFw/8neHTaGo6SM/s1600/Avril-Lavigne-Photos.jpg" />\n' +
+                        '                                    src="'+value['sender']['image']+'" onerror="this.onerror=null; this.src=\'{{ asset('/images/noimage.png') }}\'"/>\n' +
                         '                            </div>\n' +
                         '                            <div class="div-content">\n' +
                         '                                <div class="div-header">\n' +
