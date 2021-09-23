@@ -145,7 +145,7 @@
     })
 
     function showNotif() {
-        $.get('/show-notif', function (data) {
+        $.get('/show-notif/5', function (data) {
             $('#notif').empty();
             if (data) {
                 console.log('anuu ', data);
