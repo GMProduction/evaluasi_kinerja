@@ -55,12 +55,12 @@
                 <form id="form" onsubmit="return save()">
                     <div class="mb-3">
                         <label for="description" class="form-label">Catatan Sanggah</label>
-                        <textarea type="email" class="form-control" id="description" name="description">{{$data->claim->description ?? ''}}</textarea>
+                        <textarea type="email" class="form-control" id="description" name="description">{{$data->claim && $data->claim->description ? $data->claim->description : ''}}</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="file" class="form-label">File</label>
                         <input type="file" id="file" name="file" class="form-control">
-                        <a class="{{$data->claim->file ? '' : 'd-none'}}" target="_blank" href="{{$data->claim->file ?? ''}}">{{$data->claim->file ?? ''}}</a>
+                        <a class="{{$data->claim && $data->claim->file ? '' : 'd-none'}}" target="_blank" href="{{$data->claim && $data->claim->file ? $data->claim->file : ''}}">{{$data->claim && $data->claim->file ? $data->claim->file : ''}}</a>
                     </div>
                     <button type="submit" class="btn bt-primary">Simpan</button>
                 </form>
