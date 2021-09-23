@@ -35,7 +35,7 @@
     <script>
         var roles, textRoles;
         var table;
-        $(document).ready(function () {
+        $(document).ready(function() {
             // chart()
             // cahar11()
             roles = 'superuser';
