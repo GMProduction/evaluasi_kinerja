@@ -118,6 +118,7 @@ Route::prefix('/')->middleware('auth')->group(
                     return view('superuser.user.profil');
                 }
             );
+            Route::post('/',[\App\Http\Controllers\ProfileController::class,'update']);
             Route::post('update-image', [\App\Http\Controllers\ProfileController::class, 'updateImg']);
             Route::get('show',[\App\Http\Controllers\ProfileController::class, 'profile']);
             Route::get('package',[\App\Http\Controllers\ProfileController::class, 'package']);

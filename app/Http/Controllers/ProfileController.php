@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends CustomController
 {
@@ -76,6 +78,67 @@ class ProfileController extends CustomController
         $stringImg = '/images/profile/'.$name;
         $this->uploadImage('profile', $name, 'imagesProfile');
         $user->update(['image' => $stringImg]);
+
         return response()->json(['msg' => 'berhasil']);
+    }
+
+    public function update()
+    {
+        $field         = \request()->validate(
+            [
+                'name' => 'required',
+            ]
+        );
+        $fieldPassword = \request()->validate(
+            [
+                'password' => 'required|confirmed',
+            ]
+        );
+
+        $fieldUserEdit = \request()->validate(
+            [
+                'email'    => 'required|string',
+                'username' => 'required|string',
+            ]
+        );
+        $cekEmail      = User::where([['email', '=', \request('email')], ['id', '!=', \request('id')]])->first();
+        if ($cekEmail) {
+            return \request()->validate(
+                [
+                    'email' => 'required|string|unique:users,email',
+                ]
+            );
+        }
+
+        $cekUsername = User::where([['username', '=', \request('username')], ['id', '!=', \request('id')]])->first();
+        if ($cekUsername) {
+            return \request()->validate(
+                [
+                    'username' => 'required|string|unique:users,username',
+                ]
+            );
+        }
+
+        $roles = Auth::user()->roles[0];
+        DB::beginTransaction();
+        try {
+            Arr::set($field, 'username', $fieldUserEdit['username']);
+            Arr::set($field, 'email', $fieldUserEdit['email']);
+
+            $user = Auth::user();
+            if (strpos($fieldPassword['password'], '*') === false) {
+                $password = Hash::make($fieldPassword['password']);
+                Arr::set($field, 'password', $password);
+            }
+            $user->update($field);
+            $user->$roles()->update(['name' => $field['name']]);
+            DB::commit();
+
+            return response()->json(['msg' => 'success']);
+        } catch (\Exception $er) {
+            DB::rollBack();
+
+            return response()->json(['msg' => $er->getMessage()], 500);
+        }
     }
 }

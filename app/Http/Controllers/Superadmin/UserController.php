@@ -38,7 +38,6 @@ class UserController extends CustomController
 
     public function store()
     {
-
         $field         = \request()->validate(
             [
                 'name' => 'required',

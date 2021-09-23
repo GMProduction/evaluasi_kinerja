@@ -11,7 +11,7 @@ class NotificationController extends Controller
     //
 
     public function notif(){
-        $notif = Notification::where('vendor_id','=',Auth::id())->get();
+        $notif = Notification::where('vendor_id','=',Auth::id())->limit(5)->get();
         return $notif;
     }
 }
