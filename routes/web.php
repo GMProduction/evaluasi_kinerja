@@ -30,6 +30,8 @@ Route::get(
     }
 );
 
+
+
 Route::prefix('/')->middleware('auth')->group(
     function () {
         Route::get(
@@ -38,6 +40,7 @@ Route::prefix('/')->middleware('auth')->group(
                 return view('superuser/dashboard');
             }
         );
+        Route::get('/show-notif',[\App\Http\Controllers\NotificationController::class,'notif']);
         Route::get('/vendor',[\App\Http\Controllers\VendorController::class,'getVendorPackage']);
         Route::get('/get-count-dashboard', [\App\Http\Controllers\DashboardController::class, 'getAllCountData']);
         Route::get('/datatable-package-ongoing', [\App\Http\Controllers\DashboardController::class, 'datatable']);
@@ -107,6 +110,18 @@ Route::prefix('/')->middleware('auth')->group(
                 return view('superuser/penilaian/detail-penilaian');
             }
         );
+
+        Route::prefix('profile')->group(function (){
+            Route::get(
+                '/',
+                function () {
+                    return view('superuser.user.profil');
+                }
+            );
+            Route::post('update-image', [\App\Http\Controllers\ProfileController::class, 'updateImg']);
+            Route::get('show',[\App\Http\Controllers\ProfileController::class, 'profile']);
+            Route::get('package',[\App\Http\Controllers\ProfileController::class, 'package']);
+        });
     }
 );
 

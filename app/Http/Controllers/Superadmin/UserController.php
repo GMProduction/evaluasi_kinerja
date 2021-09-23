@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Superadmin;
 
+use App\Helper\CustomController;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Yajra\DataTables\DataTables;
 
-class UserController extends Controller
+class UserController extends CustomController
 {
     //
 
@@ -37,6 +38,7 @@ class UserController extends Controller
 
     public function store()
     {
+
         $field         = \request()->validate(
             [
                 'name' => 'required',
@@ -85,6 +87,7 @@ class UserController extends Controller
 
         $roles         = \request('roles');
         Arr::set($field, 'roles', ["$roles"]);
+        $files = \request()->file('profile');
         DB::beginTransaction();
         try {
             if (\request('id')) {
@@ -94,6 +97,18 @@ class UserController extends Controller
 
 
                 $user = User::find(\request('id'));
+                if ($files){
+                    if ($user->image){
+                        if (file_exists('../public' . $user->image)) {
+                            unlink('../public' . $user->image);
+                        }
+                    }
+                    $extension = $files->getClientOriginalExtension();
+                    $name = $this->uuidGenerator().'.'.$extension;
+                    $stringImg = '/images/profile/'.$name;
+                    $this->uploadImage('profile',$name,'imagesProfile');
+                    $user->update(['image' => $stringImg]);
+                }
                 if (strpos($fieldPassword['password'], '*') === false) {
                     $password = Hash::make($fieldPassword['password']);
                     Arr::set($field, 'password', $password);
@@ -106,6 +121,13 @@ class UserController extends Controller
                 Arr::set($field, 'email', \request('email'));
                 $password = Hash::make($fieldPassword['password']);
                 Arr::set($field, 'password', $password);
+                if ($files){
+                    $extension = $files->getClientOriginalExtension();
+                    $name = $this->uuidGenerator().'.'.$extension;
+                    $stringImg = '/images/profile/'.$name;
+                    $this->uploadImage('profile',$name,'imagesProfile');
+                    Arr::set($field,'image',$stringImg);
+                }
                 $user = User::create($field);
                 if (\request('roles') == 'accessorppk'){
                     Arr::set($field, 'ppk_id', \request('selectPPK'));

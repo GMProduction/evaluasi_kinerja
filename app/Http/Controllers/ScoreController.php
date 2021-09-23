@@ -53,6 +53,11 @@ class ScoreController extends CustomController
         if ($roles === 'accessor') {
             $query->where('vendor_id', '=', $id);
         }
+        if ($roles === 'accessorppk') {
+            $query->whereHas('ppk.accessorppk.user', function ($query)  {
+                $query->where('id', Auth::id());
+            });
+        }
 //        $data = $this->getDatatable();
         return DataTables::of($query)->make(true);
     }
