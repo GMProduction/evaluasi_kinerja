@@ -785,6 +785,7 @@
             // getScore('vendor');
             // getHistoryScore('vendor');
             // getLastUpdate('vendor');
+            console.log(getParameter('q'))
             $('.card-user').on('click', function () {
                 index = this.dataset.roles;
                 let title = '';
