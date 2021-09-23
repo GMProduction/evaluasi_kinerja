@@ -165,7 +165,7 @@
                         '                                    <p class="nama t-black">' + senderName + '</p>\n' +
                         '                                    <p class="tanggal " style="color: gray">' + moment(value['created_at']).format('LLL') + '</p>\n' +
                         '                                </div>\n' +
-                        '                                    <p class="nama t-black mb-0">' + value['title'] + '</p>\n' +
+                        '                                    <p class="title mb-1 mt-2 t-active" style="font-size: .8rem; font-weight: bold">' + value['title'] + '</p>\n' +
                         '                                <p class="sub-indikator">\n' +
                         '                                    ' + value['description'] + '\n' +
                         '                                </p>\n' +
