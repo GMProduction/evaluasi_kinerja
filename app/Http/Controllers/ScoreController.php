@@ -199,7 +199,7 @@ class ScoreController extends CustomController
                             $newNotification->sender_id = $authorId;
                             $newNotification->score_id = $score->id;
                             $newNotification->is_active = true;
-                            $newNotification->type = $vType;
+                            $newNotification->type = $type;
                             $newNotification->save();
                         }
                     }
@@ -242,7 +242,7 @@ class ScoreController extends CustomController
                     $notification->sender_id = $authorId;
                     $notification->score_id = $newScore->id;
                     $notification->is_active = true;
-                    $notification->type = $vType;
+                    $notification->type = $type;
                     $notification->save();
                 }
             }
