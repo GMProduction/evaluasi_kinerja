@@ -14,4 +14,9 @@ class NotificationController extends Controller
         $notif = Notification::where('vendor_id','=',Auth::id())->limit(5)->get();
         return $notif;
     }
+
+    public function notifUnread(){
+        $notif = Notification::where([['vendor_id','=',Auth::id()],['is_read','=',0]])->count('*');
+        return $notif;
+    }
 }

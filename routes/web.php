@@ -41,6 +41,7 @@ Route::prefix('/')->middleware('auth')->group(
             }
         );
         Route::get('/show-notif',[\App\Http\Controllers\NotificationController::class,'notif']);
+        Route::get('/show-notif-unread',[\App\Http\Controllers\NotificationController::class,'notifUnread']);
         Route::get('/vendor',[\App\Http\Controllers\VendorController::class,'getVendorPackage']);
         Route::get('/get-count-dashboard', [\App\Http\Controllers\DashboardController::class, 'getAllCountData']);
         Route::get('/datatable-package-ongoing', [\App\Http\Controllers\DashboardController::class, 'datatable']);

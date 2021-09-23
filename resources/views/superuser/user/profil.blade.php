@@ -37,13 +37,13 @@
                 <div class="profile-card__txt" id="email">Alamat Email</div>
 
 
-                <div class="profile-card-inf">
-                    <div class="profile-card-inf__item">
+                <div class="profile-card-inf" style="height: 91px">
+                    <div class="profile-card-inf__item d-none" id="cardVendor">
                         <div class="profile-card-inf__title" id="vendor">0</div>
                         <div class="profile-card-inf__txt">Penyedia Jasa</div>
                     </div>
 
-                    <div class="profile-card-inf__item">
+                    <div class="profile-card-inf__item d-none" id="cardPackage">
                         <div class="profile-card-inf__title" id="package">0</div>
                         <div class="profile-card-inf__txt">Proyek Berjalan</div>
                     </div>
@@ -187,8 +187,20 @@
         function package() {
             $.get(window.location.pathname + '/package', function (data) {
                 if (data) {
-                    $('#package').html(data['packageGoing'])
-                    $('#vendor').html(data['vendor'])
+                    if (data['packageGoing']){
+                        $('#cardPackage').removeClass('d-none')
+                        $('#package').html(data['packageGoing'])
+                    }else{
+                        $('#cardPackage').addClass('d-none')
+                    }
+
+                    if (data['vendor']){
+                        $('#cardVendor').removeClass('d-none')
+                        $('#vendor').html(data['vendor'])
+                    }else {
+                        $('#cardVendor').addClass('d-none')
+
+                    }
                 }
             })
         }

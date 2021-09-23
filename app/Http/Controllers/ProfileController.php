@@ -58,6 +58,9 @@ class ProfileController extends CustomController
             Arr::set($pakage, 'packageGoing', $packageGoing);
             Arr::set($pakage, 'packagePast', $packagePast);
             Arr::set($pakage, 'vendor', count($vendor));
+        }elseif ($roles == 'vendor'){
+            $packageGoing = Package::where([['vendor_id','=',Auth::id()],['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))], ['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]])->count('*');
+            Arr::set($pakage, 'packageGoing', $packageGoing);
 
         }
 
