@@ -1,6 +1,6 @@
 @if ($data == 'content')
-    <div role="tablist" id="tablist">
-        <div class="items-tab" id="menu-vendor">
+    <div role="tablist" class="row" id="tablist">
+        <div class="items-tab col-3" id="menu-vendor">
 
         </div>
     </div>

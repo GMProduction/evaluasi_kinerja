@@ -20,9 +20,11 @@
         .select2-selection__arrow {
             height: 35px !important;
         }
-        td{
+
+        td {
             vertical-align: middle;
         }
+
     </style>
     <section class="___class_+?0___ mt-content">
         <div role="tablist">
@@ -104,10 +106,8 @@
                                 <input name="roles" id="roles" hidden>
                                 <div class="mb-3">
                                     <input type="file" id="image" class="fotoprofile" data-min-height="10"
-                                           data-heigh="400"
-                                           accept="image/jpeg, image/jpg, image/png"
-                                           data-allowed-file-extensions="jpg jpeg png"
-                                    />
+                                        data-heigh="400" accept="image/jpeg, image/jpg, image/png"
+                                        data-allowed-file-extensions="jpg jpeg png" />
                                 </div>
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
@@ -162,7 +162,7 @@
 
 @section('script')
     <script type="text/javascript"
-            src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
+        src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
     <script src="{{ asset('css/dropify/js/dropify.js') }}"></script>
     <script src="{{ asset('js/handler_image.js') }}"></script>
     <script>
@@ -181,9 +181,9 @@
             datatable(roles);
         });
 
-       function SaveUser() {
-           saveData(title + ' Data ' + textRoles, 'form', null, afterSave, 'image')
-           return false
+        function SaveUser() {
+            saveData(title + ' Data ' + textRoles, 'form', null, afterSave, 'image')
+            return false
 
         }
 
@@ -327,9 +327,10 @@
                     },
                     {
                         data: 'image',
-                        render: function (data) {
-                            var img = data ?? '{{asset('images/noimage.png')}}';
-                            return '<img style="height: 70px" src="'+img+'" onerror="this.onerror=null; this.src=\'{{ asset('/images/noimage.png') }}\'" alt=""/>'
+                        render: function(data) {
+                            var img = data ?? '{{ asset('images/noimage.png') }}';
+                            return '<img style="height: 70px" src="' + img +
+                                '" onerror="this.onerror=null; this.src=\'{{ asset('/images/noimage.png') }}\'" alt=""/>'
                         }
                     },
                     {
@@ -350,8 +351,14 @@
                         "width": '100',
                         "render": function(data, type, row, meta) {
                             var ppk = row[role].ppk !== undefined ? row[role].ppk.id : '';
-                            return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-name="' + row[role].name + '" data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
-                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-image="'+row.image+'" data-username="' + row.username + '" data-ppk="' + ppk + '" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role].name + '" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
+                            return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-name="' +
+                                row[role].name + '" data-id="' + data +
+                                '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
+                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-image="' +
+                                row.image + '" data-username="' + row.username + '" data-ppk="' + ppk +
+                                '" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role]
+                                .name + '" data-id="' + data +
+                                '" id="editData"><i class="bx bx-edit"></i></a>'
                         }
                     },
                 ]
@@ -366,8 +373,9 @@
             $('.title-table').text('Data ' + textRoles);
         })
 
-        $(document).on('click', '#deleteData', function () {
-            deleteData($(this).data('name'), window.location.pathname+'/'+$(this).data('id')+'/delete', afterSave())
+        $(document).on('click', '#deleteData', function() {
+            deleteData($(this).data('name'), window.location.pathname + '/' + $(this).data('id') + '/delete',
+                afterSave())
             return false
         })
     </script>

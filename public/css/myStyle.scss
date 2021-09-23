@@ -772,6 +772,39 @@ $primary-font: "Lato";
     -o-transition: all $timing $easing;
     transition: all $timing $easing;
 }
+
+.tombol-notif{
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 20px 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+
+    p{
+        font-weight: bold;
+    }
+
+    &:hover{
+        background-color: $shadowactivecolorlight;
+    }
+
+    &.active{
+        background-color: $activecolor;
+        color: white;
+
+        p{
+            color: white;
+        }
+
+        i{
+            color: white;
+        }
+    }
+}
+
+
+
 .wrapper {
     border: 1px solid lighten($primary-blue, 25%);
     max-width: 458px;
@@ -1097,21 +1130,21 @@ $primary-font: "Lato";
     margin-top: 0;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700&subset=latin-ext');
+// @import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700&subset=latin-ext');
 
-html {
-  position: relative;
-  overflow-x: hidden!important;
-}
+// html {
+//   position: relative;
+//   overflow-x: hidden!important;
+// }
 
-* {
-  box-sizing: border-box;
-}
+// * {
+//   box-sizing: border-box;
+// }
 
-body {
-  font-family: 'Quicksand', sans-serif;
-  color: #324e63;
-}
+// body {
+//   font-family: 'Quicksand', sans-serif;
+//   color: #324e63;
+// }
 
 a, a:hover {
   text-decoration: none;

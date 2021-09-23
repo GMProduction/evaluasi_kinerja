@@ -30,6 +30,12 @@ Route::get(
     }
 );
 
+Route::get(
+    '/notif',
+    function () {
+        return view('superuser.notification.all-notif');
+    }
+);
 
 
 Route::prefix('/')->middleware('auth')->group(
