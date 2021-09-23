@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Accessor;
+use App\Models\AccessorPPK;
 use App\Models\ClaimNotification;
 use App\Models\Notification;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
@@ -13,12 +16,22 @@ class NotificationController extends Controller
     //
 
     public function notif(){
-        $notif ='';
+        $notif =[];
         if (Auth::user()->roles[0] == 'accessor' || Auth::user()->roles[0] == 'accessorppk' ){
             $notif = ClaimNotification::where('recipient_id','=',Auth::id())->limit(5)->get();
-//            $data = Vendor::
         }elseif (Auth::user()->roles[0] == 'vendor'){
-            $notif = Notification::where('vendor_id','=',Auth::id())->limit(5)->get();
+            $data = Notification::where('vendor_id','=',Auth::id())->limit(5)->get();
+            foreach ($data as $key => $d){
+                $notif[$key] = $d;
+                if ($d->type == 'accessor'){
+                    $s = Accessor::where('user_id','=', $d->sender_id)->first();
+                    Arr::add($notif[$key]['sender'],'data',$s);
+                }
+                if ($d->type == 'accessorppk'){
+                    $s = AccessorPPK::where('user_id','=', $d->sender_id)->first();
+                    Arr::add($notif[$key]['sender'],'data',$s);
+                }
+            }
         }
         return $notif;
     }

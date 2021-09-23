@@ -5,17 +5,6 @@
             <p class="title-table fw-bold t-primary" >Data Hasil Evaluasi Paket</p>
         </div>
         <table id="table" class="table table-striped" style="width:100%">
-            {{--                    <tr>--}}
-            {{--                        <th>#</th>--}}
-            {{--                        <th>Nama Paket Konstruksi</th>--}}
-            {{--                        <th>Action</th>--}}
-            {{--                    </tr>--}}
-
-            {{--                    <tr>--}}
-            {{--                        <td>1</td>--}}
-            {{--                        <td>Paket 1</td>--}}
-            {{--                        <td><a class="bt-primary-xsm" href="/penilaian/detail/">Detail</a></td>--}}
-            {{--                    </tr>--}}
         </table>
     </div>
 

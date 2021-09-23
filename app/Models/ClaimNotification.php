@@ -10,7 +10,7 @@ class ClaimNotification extends Model
     use HasFactory;
     protected $table = 'claim_notification';
 
-    protected $with = ['sender','recipient'];
+    protected $with = ['sender.vendor','recipient'];
 
     public function sender()
     {
