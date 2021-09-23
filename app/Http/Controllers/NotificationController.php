@@ -20,7 +20,7 @@ class NotificationController extends Controller
         if (Auth::user()->roles[0] == 'accessor' || Auth::user()->roles[0] == 'accessorppk' ){
             $notif = ClaimNotification::where('recipient_id','=',Auth::id())->limit(5)->get();
         }elseif (Auth::user()->roles[0] == 'vendor'){
-            $data = Notification::where('vendor_id','=',Auth::id())->limit(5)->get();
+            $data = Notification::where([['vendor_id', '=', Auth::id()], ['is_active', '=', true]])->limit(5)->get();
             foreach ($data as $key => $d){
                 $notif[$key] = $d;
                 if ($d->type == 'accessor'){
