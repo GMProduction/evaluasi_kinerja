@@ -40,7 +40,7 @@ Route::prefix('/')->middleware('auth')->group(
                 return view('superuser/dashboard');
             }
         );
-        Route::get('/show-notif/{limit}',[\App\Http\Controllers\NotificationController::class,'notif']);
+        Route::get('/show-notif',[\App\Http\Controllers\NotificationController::class,'notif']);
         Route::get('/show-notif-unread',[\App\Http\Controllers\NotificationController::class,'notifUnread']);
         Route::get('/vendor',[\App\Http\Controllers\VendorController::class,'getVendorPackage']);
         Route::get('/get-count-dashboard', [\App\Http\Controllers\DashboardController::class, 'getAllCountData']);

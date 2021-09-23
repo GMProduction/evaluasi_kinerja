@@ -19,25 +19,28 @@ class ClaimNotificationController extends CustomController
 
     public function store()
     {
-        try {
+//        try {
             $notification = Notification::with(['score.subIndicator'])->find($this->postField('id'));
             if (!$notification) {
                 return response()->json(['msg' => 'Notifikasi Tidak Di Temukan...'], 202);
             }
             $claimId = $this->postField('claim_id');
+            $files = \request()->file('file');
             if(!$claimId){
                 $senderId = Auth::id();
-                $files = \request()->file('file');
-                $extension = $files->getClientOriginalExtension();
-                $name = $this->uuidGenerator() . '.' . $extension;
-                $stringImg = '/files/' . $name;
-                $this->uploadImage('file', $name, 'filesUpload');
-
                 $claim = new ClaimNotification();
+
+                if ($files){
+                    $extension = $files->getClientOriginalExtension();
+                    $name = $this->uuidGenerator() . '.' . $extension;
+                    $stringImg = '/files/' . $name;
+                    $this->uploadImage('file', $name, 'filesUpload');
+                    $claim->file = $stringImg;
+                }
+
                 $claim->title = 'Pesan Sanggahan';
                 $claim->description = 'Pesan Sanggahan Terhadap Penilaian Indicator ' . $notification->score->subIndicator->name . '.';
-                $claim->text = $this->postField('description');
-                $claim->file = $stringImg;
+                $claim->text = $this->postField('text');
                 $claim->sender_id = $senderId;
                 $claim->recipient_id = $notification->sender_id;
                 $claim->notification_id = $notification->id;
@@ -45,7 +48,7 @@ class ClaimNotificationController extends CustomController
                 return response()->json(['msg' => 'success'], 200);
             }else{
                 $claim = ClaimNotification::find($claimId);
-                $files = \request()->file('file');
+
                 if($files){
                     $extension = $files->getClientOriginalExtension();
                     $name = $this->uuidGenerator() . '.' . $extension;
@@ -53,13 +56,13 @@ class ClaimNotificationController extends CustomController
                     $this->uploadImage('file', $name, 'filesUpload');
                     $claim->file = $stringImg;
                 }
-                $claim->text = $this->postField('description');
+                $claim->text = $this->postField('text');
                 $claim->save();
                 return response()->json(['msg' => 'success'], 200);
             }
 
-        } catch (\Exception $e) {
-            return response()->json(['msg' => 'Terjadi Kesalahan Server..'], 500);
-        }
+//        } catch (\Exception $e) {
+//            return response()->json(['msg' => 'Terjadi Kesalahan Server..'], 500);
+//        }
     }
 }

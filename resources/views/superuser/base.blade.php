@@ -145,7 +145,7 @@
     })
 
     function showNotif() {
-        $.get('/show-notif/5', function (data) {
+        $.get('/show-notif?limit=5', function (data) {
             $('#notif').empty();
             if (data) {
                 console.log('anuu ', data);
@@ -154,8 +154,9 @@
                     var read = value['is_read'] === 0 ? 'isRead' : '';
                     var img = value['sender']['image'] ?? '';
                     var senderName = value['sender']['vendor'] ? value['sender']['vendor']['name'] : value['sender']['data']['name'];
+                    var tipeRole = type ?? 'vendor';
                     $('#notif').append('<div>\n' +
-                        '                        <a class="notifdiv ' + read + '" href="/peringatan/' + type + '/' + id + '">\n' +
+                        '                        <a class="notifdiv ' + read + '" href="/peringatan/' + tipeRole + '/' + id + '">\n' +
                         '                            <div class="div-image">\n' +
                         '                                <img\n' +
                         '                                    src="' + img + '" onerror="this.onerror=null; this.src=\'{{ asset('/images/noimage.png') }}\'"/>\n' +
@@ -163,7 +164,7 @@
                         '                            <div class="div-content">\n' +
                         '                                <div class="div-header">\n' +
                         '                                    <p class="nama t-black">' + senderName + '</p>\n' +
-                        '                                    <p class="tanggal " style="color: gray">' + moment(value['created_at']).format('LLL') + '</p>\n' +
+                        '                                    <p class="tanggal " style="color: gray">' + moment(value['updated_at']).format('LLL') + '</p>\n' +
                         '                                </div>\n' +
                         '                                    <p class="title mb-1 mt-2 t-active" style="font-size: .8rem; font-weight: bold">' + value['title'] + '</p>\n' +
                         '                                <p class="sub-indikator">\n' +

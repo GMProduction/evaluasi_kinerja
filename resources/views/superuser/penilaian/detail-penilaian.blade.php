@@ -7,6 +7,12 @@
             font-size: 12px;
         }
 
+        .trFocus{
+            border-color: #86b7fe;
+            border-radius: 15px;
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%)
+        }
     </style>
 @endsection
 
@@ -395,7 +401,7 @@
                     '<button class="dropdown-item nilai" type="button" data-value="1" data-subin="' + id +
                     '">Kurang</button></div>';
             }
-            return '<tr>' +
+            return '<tr id="tr'+scoreid+'">' +
                 '<td>' + mainKey + '.' + (key + 1) + '</td>\n' +
                 '<td><div>' + value['name'] + elButtonHistory(hasHistory, id) + '' +
                 '</div></td>\n' +
@@ -648,6 +654,9 @@
                     index: index,
                     package: package_id
                 });
+                if (getParameter('q')){
+                    window.location.replace(removeParam('q'))
+                }
                 await getScore(index);
                 // await getHistoryScore(index);
             } catch (e) {
@@ -781,10 +790,18 @@
             }
         }
 
+        $(document).ajaxStop(function () {
+            if (getParameter('q')){
+                $(window).scrollTop($('table #tr'+getParameter('q')).offset().top);
+                $('table #tr'+getParameter('q')).focus().addClass('trFocus');
+            }
+        })
         $(document).ready(function() {
             // getScore('vendor');
             // getHistoryScore('vendor');
             // getLastUpdate('vendor');
+            console.log(window.location)
+
             $('.card-user').on('click', function() {
                 index = this.dataset.roles;
                 let title = '';

@@ -11,7 +11,7 @@ class Notification extends Model
     use HasFactory;
     protected $table = 'notifications';
 
-    protected $with = ['sender','vendor'];
+    protected $with = ['sender','vendor','score'];
 
     public function score()
     {
