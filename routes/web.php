@@ -104,6 +104,9 @@ Route::prefix('/')->middleware('auth')->group(
             }
         );
 
+        Route::prefix('/peringatan')->group(function (){
+            Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);
+        });
         Route::get(
             '/detail-penilaian',
             function () {
