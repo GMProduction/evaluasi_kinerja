@@ -150,14 +150,14 @@
             if (data) {
                 console.log('anuu ', data);
                 $.each(data, function (key, value) {
-                    const {id} = value;
+                    const {id, type} = value;
                     var read = value['is_read'] === 0 ? 'isRead' : '';
                     var img = value['sender']['image'] ?? '';
                     $('#notif').append('<div>\n' +
-                        '                        <a class="notifdiv ' + read + '" href="/peringatan/' + id + '">\n' +
+                        '                        <a class="notifdiv ' + read + '" href="/peringatan/' + type + '/' + id + '">\n' +
                         '                            <div class="div-image">\n' +
                         '                                <img\n' +
-                        '                                    src="'+img+'" onerror="this.onerror=null; this.src=\'{{ asset('/images/noimage.png') }}\'"/>\n' +
+                        '                                    src="' + img + '" onerror="this.onerror=null; this.src=\'{{ asset('/images/noimage.png') }}\'"/>\n' +
                         '                            </div>\n' +
                         '                            <div class="div-content">\n' +
                         '                                <div class="div-header">\n' +
