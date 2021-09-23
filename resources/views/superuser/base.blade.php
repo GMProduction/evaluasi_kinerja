@@ -152,11 +152,12 @@
                 $.each(data, function (key, value) {
                     const {id} = value;
                     var read = value['is_read'] === 0 ? 'isRead' : '';
+                    var img = value['sender']['image'] ?? '';
                     $('#notif').append('<div>\n' +
                         '                        <a class="notifdiv ' + read + '" href="/peringatan/' + id + '">\n' +
                         '                            <div class="div-image">\n' +
                         '                                <img\n' +
-                        '                                    src="'+value['sender']['image']+'" onerror="this.onerror=null; this.src=\'{{ asset('/images/noimage.png') }}\'"/>\n' +
+                        '                                    src="'+img+'" onerror="this.onerror=null; this.src=\'{{ asset('/images/noimage.png') }}\'"/>\n' +
                         '                            </div>\n' +
                         '                            <div class="div-content">\n' +
                         '                                <div class="div-header">\n' +
