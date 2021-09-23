@@ -147,8 +147,9 @@
             $.get('/show-notif', function (data) {
                 $('#notif').empty();
                 if (data){
+                    console.log('anuu ', data);
                     $.each(data, function (key, value) {
-                        var read = value['is_active'] === 1 ? 'isRead' : '';
+                        var read = value['is_read'] === 0 ? 'isRead' : '';
                         $('#notif').append('<div>\n' +
                             '                        <a class="notifdiv '+read+'">\n' +
                             '                            <div class="div-image">\n' +

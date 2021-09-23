@@ -54,7 +54,7 @@ class ScoreController extends CustomController
             $query->where('vendor_id', '=', $id);
         }
         if ($roles === 'accessorppk') {
-            $query->whereHas('ppk.accessorppk.user', function ($query)  {
+            $query->whereHas('ppk.accessorppk.user', function ($query) {
                 $query->where('id', Auth::id());
             });
         }
@@ -177,28 +177,30 @@ class ScoreController extends CustomController
                 $score->save();
                 $cumulativeAfter = $this->getCumulative($packageId, $vType);
 
-                if ($value === 3) {
+                if ($value === 3 && $vType !== 'vendor') {
                     $notification = Notification::where('score_id', $score->id)->first();
                     if ($notification) {
                         $notification->is_active = false;
                         $notification->save();
                     }
-                }else{
-                    $notification = Notification::where('score_id', $score->id)->first();
-                    if ($notification) {
-                        $notification->is_active = true;
-                        $notification->save();
-                    }else{
-                        $newNotification = new Notification();
-                        $package = Package::with('vendor')->find($packageId);
-                        $subIndicator = SubIndicator::find($subIndicatorId);
-                        $newNotification->title = 'Peringatan Nilai';
-                        $newNotification->description = 'Hasil Penilaian dari Indikator ' . $subIndicator->name . ' Masih Belum Memenuhi Standar Baik. Silahkan Melakukan Perbaikan.';
-                        $newNotification->vendor_id = $package->vendor->id;
-                        $newNotification->sender_id = $authorId;
-                        $newNotification->score_id = $score->id;
-                        $newNotification->is_active = true;
-                        $newNotification->save();
+                } else {
+                    if ($vType !== 'vendor') {
+                        $notification = Notification::where('score_id', $score->id)->first();
+                        if ($notification) {
+                            $notification->is_active = true;
+                            $notification->save();
+                        } else {
+                            $newNotification = new Notification();
+                            $package = Package::with('vendor')->find($packageId);
+                            $subIndicator = SubIndicator::find($subIndicatorId);
+                            $newNotification->title = 'Peringatan Nilai';
+                            $newNotification->description = 'Hasil Penilaian dari Indikator ' . $subIndicator->name . ' Masih Belum Memenuhi Standar Baik. Silahkan Melakukan Perbaikan.';
+                            $newNotification->vendor_id = $package->vendor->id;
+                            $newNotification->sender_id = $authorId;
+                            $newNotification->score_id = $score->id;
+                            $newNotification->is_active = true;
+                            $newNotification->save();
+                        }
                     }
                 }
                 $data = [
@@ -228,7 +230,7 @@ class ScoreController extends CustomController
                 $newScore->type = $vType;
                 $newScore->save();
 
-                if ($value < 3) {
+                if ($value < 3 && $vType !== 'vendor') {
                     $package = Package::with('vendor')->find($packageId);
                     $subIndicator = SubIndicator::find($subIndicatorId);
                     $notification = new Notification();
