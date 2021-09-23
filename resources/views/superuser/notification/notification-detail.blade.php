@@ -53,9 +53,14 @@
                 </table>
 
                 <form id="form" onsubmit="return save()">
+                    @csrf
+                    <input type="hidden" value="{{$data->id}}" name="id">
+                    @if($data->claim != null)
+                        <input type="hidden" value="{{$data->claim->id}}" name="claim_id">
+                    @endif
                     <div class="mb-3">
                         <label for="description" class="form-label">Catatan Sanggah</label>
-                        <textarea type="email" class="form-control" id="description" name="description">{{$data->claim && $data->claim->description ? $data->claim->description : ''}}</textarea>
+                        <textarea type="text" class="form-control" id="description" name="description">{{$data->claim && $data->claim->description ? $data->claim->description : ''}}</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="file" class="form-label">File</label>
@@ -73,12 +78,12 @@
 @section('script')
     <script>
         function save() {
-            saveData('Sanggah', 'form', null, aftersave)
+            saveData('Sanggah', 'form', '/peringatan/claim', aftersave)
             return false;
         }
 
         function aftersave() {
-
+            window.location.href = '/peringatan';
         }
     </script>
 @endsection
