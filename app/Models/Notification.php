@@ -12,16 +12,16 @@ class Notification extends Model
 
     public function score()
     {
-        $this->belongsTo(Score::class, 'score_id');
+        return $this->belongsTo(Score::class, 'score_id');
     }
 
     public function sender()
     {
-        $this->belongsTo(User::class, 'sender_id');
+        return $this->belongsTo(User::class, 'sender_id');
     }
 
     public function vendor()
     {
-        $this->belongsTo(User::class, 'vendor_id');
+        return $this->belongsTo(User::class, 'vendor_id');
     }
 }

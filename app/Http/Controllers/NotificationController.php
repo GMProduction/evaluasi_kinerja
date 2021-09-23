@@ -19,4 +19,11 @@ class NotificationController extends Controller
         $notif = Notification::where([['vendor_id','=',Auth::id()],['is_read','=',0]])->count('*');
         return $notif;
     }
+
+    public function detailNotification($id)
+    {
+        $notification = Notification::with(['sender', 'vendor', 'score'])->where('id', $id)->firstOrFail();
+        return $notification->toArray();
+        return view('superuser.notification.notification-detail');
+    }
 }

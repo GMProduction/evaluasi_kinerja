@@ -107,6 +107,7 @@ Route::prefix('/')->middleware('auth')->group(
 
         Route::prefix('/peringatan')->group(function (){
             Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);
+            Route::get('/{id}', [\App\Http\Controllers\NotificationController::class, 'detailNotification']);
         });
         Route::get(
             '/detail-penilaian',

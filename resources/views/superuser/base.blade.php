@@ -150,9 +150,10 @@
             if (data) {
                 console.log('anuu ', data);
                 $.each(data, function (key, value) {
+                    const {id} = value;
                     var read = value['is_read'] === 0 ? 'isRead' : '';
                     $('#notif').append('<div>\n' +
-                        '                        <a class="notifdiv ' + read + '">\n' +
+                        '                        <a class="notifdiv ' + read + '" href="/peringatan/' + id + '">\n' +
                         '                            <div class="div-image">\n' +
                         '                                <img\n' +
                         '                                    src="http://1.bp.blogspot.com/-6wgnCxmn_Jc/Tk9Recl6PII/AAAAAAAABFw/8neHTaGo6SM/s1600/Avril-Lavigne-Photos.jpg" />\n' +
