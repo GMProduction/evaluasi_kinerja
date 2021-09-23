@@ -17,7 +17,7 @@
                         break;
                     default:
                         break;
-                }
+            }
             @endphp
 
             <div class="col-8 table-container ">
@@ -51,8 +51,34 @@
                     </tr>
                     </tbody>
                 </table>
+
+                <form id="form" onsubmit="return save()">
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Catatan Sanggah</label>
+                        <textarea type="email" class="form-control" id="description" name="description">{{$data->claim->description}}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="file" class="form-label">File</label>
+                        <input type="file" id="file" name="file" class="form-control">
+                        <a class="{{$data->claim->file ? '' : 'd-none'}}" target="_blank" href="{{$data->claim->file ?? ''}}">{{$data->claim->file ?? ''}}</a>
+                    </div>
+                    <button type="submit" class="btn bt-primary">Simpan</button>
+                </form>
             </div>
         </div>
     </section>
 
+@endsection
+
+@section('script')
+    <script>
+        function save() {
+            saveData('Sanggah', 'form', null, aftersave)
+            return false;
+        }
+
+        function aftersave() {
+
+        }
+    </script>
 @endsection

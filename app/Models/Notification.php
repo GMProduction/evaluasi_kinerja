@@ -27,4 +27,8 @@ class Notification extends Model
     {
         return $this->belongsTo(User::class, 'vendor_id');
     }
+
+    public function claim(){
+        return $this->hasOne(ClaimNotification::class, 'notification_id');
+    }
 }
