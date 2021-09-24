@@ -31,7 +31,8 @@
 </head>
 
 <body id="body-pd"
-      class="{{ auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin' ? 'body-pd' : '' }}">
+      class="{{ auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin' ? 'body-pd' : '' }}"
+      style="{{ auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin' ? '' : 'padding-left: 16px' }}">
 <header
     class="header {{ auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin' ? 'body-pd' : '' }}"
     id="header" style="justify-content: space-between">

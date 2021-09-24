@@ -16,7 +16,7 @@
 @section('content')
 
 
-    <div class="" style=" margin-top: 160px">
+    <div class="" style=" margin: 160px 0">
         <div class="profile-card js-profile-card">
             <div class="profile-card__img ">
                 {{--                <img src="https://img.okezone.com/content/2012/02/07/452/570827/2y210LhfJH.jpg" alt="profile card">--}}
