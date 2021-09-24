@@ -7,12 +7,13 @@
             font-size: 12px;
         }
 
-        .trFocus{
+        .trFocus {
             border-color: #86b7fe;
             border-radius: 15px;
             outline: 0;
             box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%)
         }
+
     </style>
 @endsection
 
@@ -34,14 +35,12 @@
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
 
-            <div class="header-table" style="margin-bottom: 10px">
-                <p class="title-table">Hasil Evaluasi Kinerja Paket: <span
-                        class="fw-bold t-primary">{{ $data->name }}</span></p>
-            </div>
+            <p class="title-table mb-0" style="font-size: .8rem; color: gray">Hasil Evaluasi Kinerja Paket </p>
+            <p class="fw-bold t-primary" style="font-size: 2rem">{{ $data->name }}</p>
 
             <div class="row">
                 <div class="col-4">
-                    <div class="table-container">
+                    <div class="table-container sticky-top" style="z-index: 0">
                         <p class="fw-bold t-primary">Data Paket Konstruksi</p>
 
                         <hr>
@@ -160,7 +159,7 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="table-container">
+                            <div class="table-container sticky-top" style="z-index: 0">
                                 <p class="fw-bold t-primary" id="map-title">Peta Kinerja Penyedia Jasa</p>
                                 <hr>
                                 <canvas class="myChart" id="myChart" width="200" height="50"></canvas>
@@ -185,6 +184,9 @@
                             </div>
                         </div>
                     </div>
+
+                </div>
+                <div style="padding: 0 16px;">
                     <div class="table-container">
                         <p class="fw-bold t-primary">Detail Penilaian</p>
                         <div id="result-container">
@@ -401,11 +403,12 @@
                     '<button class="dropdown-item nilai" type="button" data-value="1" data-subin="' + id +
                     '">Kurang</button></div>';
             }
-            return '<tr id="tr'+scoreid+'">' +
+            return '<tr id="tr' + scoreid + '">' +
                 '<td>' + mainKey + '.' + (key + 1) + '</td>\n' +
                 '<td><div>' + value['name'] + elButtonHistory(hasHistory, id) + '' +
                 '</div></td>\n' +
-                '<td><div class="dropdown"><a class="' + btn_class + ' dropup "  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">' + score + '</a>\n' +
+                '<td><div class="dropdown"><a class="' + btn_class +
+                ' dropup "  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">' + score + '</a>\n' +
                 el_dropdown +
                 '</div></td>\n' +
                 '<td>' + last_update + '</td>\n' +
@@ -654,7 +657,7 @@
                     index: index,
                     package: package_id
                 });
-                if (getParameter('q')){
+                if (getParameter('q')) {
                     window.location.replace(removeParam('q'))
                 }
                 await getScore(index);
@@ -790,10 +793,10 @@
             }
         }
 
-        $(document).ajaxStop(function () {
-            if (getParameter('q')){
-                $(window).scrollTop($('table #tr'+getParameter('q')).offset().top);
-                $('table #tr'+getParameter('q')).focus().addClass('trFocus');
+        $(document).ajaxStop(function() {
+            if (getParameter('q')) {
+                $(window).scrollTop($('table #tr' + getParameter('q')).offset().top);
+                $('table #tr' + getParameter('q')).focus().addClass('trFocus');
             }
         })
         $(document).ready(function() {
