@@ -10,18 +10,20 @@
 
 @section('content')
 
-    <section class="" style="margin-top: 100px">
+    <section class="mt-content" >
 
         <!-- Tab panes -->
         <div class="mt-4" style="min-height: 23vh">
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
 
-            <div class="header-table">
-                <p class="title-table">Data PPK</p>
-                <a class="bt-primary-sm" id="addData"><i class='bx bx-plus'></i> Tambah Data</a>
-            </div>
+
             <div class="table-container">
+                <div class="header-table">
+                    <p class="title-table fw-bold t-primary ">Data PPK</p>
+                    <a class="bt-primary-sm" id="addData"><i class='bx bx-plus'></i> Tambah Data</a>
+                </div>
+
                 <table id="table" class="table table-striped" style="width:100%">
                 </table>
             </div>
@@ -57,9 +59,6 @@
     <script>
         var table, title;
         $(document).ready(function() {
-
-            $("#ppk").addClass("active");
-
             datatable()
         });
 
@@ -103,7 +102,7 @@
                     return nRow;
                 },
                 columnDefs: [
-                    {"title": "#", "searchable": false, "orderable": false, "targets": 0,"className": "text-center"},
+                    {"title": "#", "searchable": false, "orderable": false, "targets": 0,"className": "text-center", "width": "100"},
                     {"title": "Nama", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
                     {"title": "Action", 'targets': 2, 'searchable': false, 'orderable': false, "className": "text-center"},
                 ],
@@ -121,14 +120,17 @@
                         "data": 'id',
                         "width": '100',
                         "render": function (data, type, row, meta) {
-                            return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px"  data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
+                            return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-name="'+row.name+'"  data-id="' + data + '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
                                 '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px"  data-name="'+row.name+'" data-id="' + data + '" id="editData"><i class="bx bx-edit"></i></a>'
                         }
                     },
                 ]
             })
         }
-
+        $(document).on('click', '#deleteData', function () {
+            deleteData($(this).data('name'), window.location.pathname+'/'+$(this).data('id')+'/delete', afterSave())
+            return false
+        })
 
     </script>
 @endsection

@@ -1,6 +1,7 @@
-function saveData(title, form, url, resposeSuccess) {
+async function saveData(title, form, url, resposeSuccess, image = null) {
     var form_data = new FormData($('#' + form)[0]);
 
+    console.log(form_data)
     swal({
         title: title,
         text: "Apa kamu yakin ?",
@@ -8,8 +9,14 @@ function saveData(title, form, url, resposeSuccess) {
         buttons: true,
         primariMode: true,
     })
-        .then((res) => {
+        .then(async (res) => {
             if (res) {
+                if (image){
+                    if ($('#'+image).val()) {
+                        let image1 = await handleImageUpload($('#'+image));
+                        form_data.append('profile', image1, image1.name);
+                    }
+                }
                 $.ajax({
                     type: "POST",
                     data: form_data,
@@ -30,7 +37,7 @@ function saveData(title, form, url, resposeSuccess) {
                                 timer: 1000
                             }).then((dat) => {
                                 if (resposeSuccess) {
-                                    resposeSuccess()
+                                    resposeSuccess(data)
                                 } else {
                                     window.location.reload()
                                 }
@@ -41,6 +48,7 @@ function saveData(title, form, url, resposeSuccess) {
                         console.log(data);
                     },
                     xhr: function() {
+                        $('#progressbar').remove();
                         $('#'+form).append(' <div id="progressbar" class="progress mt-2">\n' +
                             '                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>\n' +
                             '                            </div>')
@@ -74,7 +82,7 @@ function saveData(title, form, url, resposeSuccess) {
                         console.log(xhr.status);
                         console.log(textStatus);
                         console.log(error.responseJSON);
-                        swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['msg'] )
+                        swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['message'] ? error.responseJSON['message'] : error.responseJSON['msg'] )
                     }
                 })
             }
@@ -131,7 +139,8 @@ function saveDataObject(title, form_data, url, resposeSuccess) {
                         console.log(xhr.status);
                         console.log(textStatus);
                         console.log(error.responseJSON);
-                        swal(error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0])
+                        swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['message'] ? error.responseJSON['message'] : error.responseJSON['msg'] )
+
                     }
                 })
             }
@@ -173,7 +182,7 @@ function deleteData(text, url, resposeSuccess) {
                                 timer: 1000
                             }).then((dat) => {
                                 if (resposeSuccess) {
-                                    resposeSuccess()
+                                    resposeSuccess(data)
                                 } else {
                                     window.location.reload()
                                 }
@@ -193,7 +202,8 @@ function deleteData(text, url, resposeSuccess) {
                         console.log(xhr.status);
                         console.log(textStatus);
                         console.log(error.responseJSON);
-                        swal(error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0])
+                        swal(error.responseJSON.errors ? error.responseJSON.errors[Object.keys(error.responseJSON.errors)[0]][0] : error.responseJSON['message'] ? error.responseJSON['message'] : error.responseJSON['msg'] )
+
                     }
                 })
             }
@@ -214,4 +224,15 @@ function getSelect(id, url, nameValue, idValue) {
             }
         })
     })
+}
+
+function currency(field) {
+    $('#' + field).on({
+        keyup: function () {
+            formatCurrency($(this));
+        },
+        blur: function () {
+            formatCurrency($(this), "blur");
+        }
+    });
 }

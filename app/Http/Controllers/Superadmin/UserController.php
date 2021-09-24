@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Superadmin;
 
+use App\Helper\CustomController;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,13 +12,17 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Yajra\DataTables\DataTables;
 
-class UserController extends Controller
+class UserController extends CustomController
 {
     //
 
     public function datatable($role)
     {
-        $data = User::with("$role")->whereJsonContains('roles', $role);
+        $data = User::with("$role")->whereJsonContains('roles', $role)->get();
+
+        if ($role == 'accessorppk'){
+            $data = User::with("accessorppk.ppk")->whereJsonContains('roles', $role);
+        }
 
         return DataTables::of($data)->make(true);
     }
@@ -81,6 +86,7 @@ class UserController extends Controller
 
         $roles         = \request('roles');
         Arr::set($field, 'roles', ["$roles"]);
+        $files = \request()->file('profile');
         DB::beginTransaction();
         try {
             if (\request('id')) {
@@ -90,11 +96,22 @@ class UserController extends Controller
 
 
                 $user = User::find(\request('id'));
+                if ($files){
+                    if ($user->image){
+                        if (file_exists('../public' . $user->image)) {
+                            unlink('../public' . $user->image);
+                        }
+                    }
+                    $extension = $files->getClientOriginalExtension();
+                    $name = $this->uuidGenerator().'.'.$extension;
+                    $stringImg = '/images/profile/'.$name;
+                    $this->uploadImage('profile',$name,'imagesProfile');
+                    $user->update(['image' => $stringImg]);
+                }
                 if (strpos($fieldPassword['password'], '*') === false) {
                     $password = Hash::make($fieldPassword['password']);
-                    Arr::add($field, 'password', $password);
+                    Arr::set($field, 'password', $password);
                 }
-
                 $user->update($field);
                 $user->$roles()->update(['name' => $field['name']]);
             } else {
@@ -103,8 +120,19 @@ class UserController extends Controller
                 Arr::set($field, 'email', \request('email'));
                 $password = Hash::make($fieldPassword['password']);
                 Arr::set($field, 'password', $password);
+                if ($files){
+                    $extension = $files->getClientOriginalExtension();
+                    $name = $this->uuidGenerator().'.'.$extension;
+                    $stringImg = '/images/profile/'.$name;
+                    $this->uploadImage('profile',$name,'imagesProfile');
+                    Arr::set($field,'image',$stringImg);
+                }
                 $user = User::create($field);
+                if (\request('roles') == 'accessorppk'){
+                    Arr::set($field, 'ppk_id', \request('selectPPK'));
+                }
                 $user->$roles()->create($field);
+
             }
             DB::commit();
 
@@ -121,8 +149,11 @@ class UserController extends Controller
         return $user;
     }
 
-    public function delete($id){
 
+
+    public function delete($id){
+        User::destroy($id);
+        return response()->json(['msg' => 'success']);
     }
 
 }

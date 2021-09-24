@@ -15,8 +15,12 @@ class PPK extends Model
       'name'
     ];
 
-    public function accessorPpk()
+    public function accessorppk()
     {
         return $this->hasMany(AccessorPPK::class, 'ppk_id');
+    }
+
+    public function package(){
+        return $this->hasMany(Package::class,'ppk_id');
     }
 }

@@ -10,18 +10,20 @@
 
 @section('content')
 
-    <section class="" style="margin-top: 100px">
+    <section class="mt-content">
 
         <!-- Tab panes -->
         <div class="mt-4" style="min-height: 23vh">
             <!-- Tab panes -->
             {{-- @yield('contentUser') --}}
 
-            <div class="header-table">
-                <p class="title-table">Data Paket Konstruksi</p>
-                <a class="bt-primary-sm" id="addData"><i class='bx bx-plus'></i> Tambah Data</a>
-            </div>
+
             <div class="table-container">
+                <div class="header-table">
+                    <p class="title-table fw-bold t-primary">Data Paket Konstruksi</p>
+                    <a class="bt-primary-sm" id="addData"><i class='bx bx-plus'></i> Tambah Data</a>
+                </div>
+
                 <table id="table" class="table table-striped" style="width:100%">
 
                 </table>
@@ -41,12 +43,12 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama Paket</label>
-                                <input type="text" class="form-control" id="name" name="name">
+                                <input type="text" class="form-control" id="name" name="name" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="reference" class="form-label">No. Kontrak</label>
-                                <input type="text" class="form-control" id="reference" name="reference">
+                                <input type="text" class="form-control" id="reference" name="reference" required>
                             </div>
 
                             <div class="mb-3 input-daterange">
@@ -56,7 +58,8 @@
 
                             <div class="mb-3">
                                 <label for="ppk" class="form-label">PPK</label>
-                                <select class=" me-2 w-100 form-control" aria-label="select" id="ppk" name="ppk">
+                                <select class=" me-2 w-100 form-control" aria-label="select" id="ppk" name="ppk" required>
+                                    <option value="">Pilih PPK</option>
                                     @foreach($ppk as $v)
                                         <option value="{{$v->id}}">{{$v->name}}</option>
                                     @endforeach
@@ -65,7 +68,8 @@
 
                             <div class="mb-3">
                                 <label for="vendor" class="form-label">Penyedia Jasa</label>
-                                <select class=" me-2 w-100 form-control" aria-label="select" id="vendor" name="vendor">
+                                <select class=" me-2 w-100 form-control" aria-label="select" id="vendor" name="vendor" required>
+                                    <option value="">Pilih Penyedia Jasa</option>
                                     @foreach($vendor as $v)
                                         <option value="{{$v->user->id}}">{{$v->name}}</option>
                                     @endforeach
@@ -177,11 +181,24 @@
                     },
                     {data: 'name', name: 'name'},
                     {data: 'no_reference', name: 'no_reference'},
-                    {data: 'date', name: 'date'},
+                    {
+                        data: 'date', name: 'date',
+                        "render": function (data) {
+                            return moment(data).format('DD MMMM YYYY')
+                        }
+                    },
                     {data: 'ppk.name', name: 'ppk.name'},
                     {data: 'vendor.vendor.name', name: 'vendor.vendor.name'},
-                    {data: 'start_at', name: 'start_at'},
-                    {data: 'finish_at', name: 'finish_at'},
+                    {
+                        data: 'start_at', name: 'start_at', "render": function (data) {
+                            return moment(data).format('DD MMMM YYYY')
+                        }
+                    },
+                    {
+                        data: 'finish_at', name: 'finish_at', "render": function (data) {
+                            return moment(data).format('DD MMMM YYYY')
+                        }
+                    },
                     {
                         "data": 'id',
                         "width": '100',
@@ -194,7 +211,6 @@
         }
 
         $(document).ready(function () {
-            $("#paketKonstruksi").addClass("active");
             $('#tambahdata').modal({
                 backdrop: 'static',
                 keyboard: false
@@ -208,7 +224,8 @@
             });
         });
 
-        $(document).on('click', '#addData, #editData', function () {
+        $(document).on('click', '#addData', function () {
+            $('#tambahdata #form .form-control').val('');
             $('#tambahdata').modal('show');
         })
     </script>

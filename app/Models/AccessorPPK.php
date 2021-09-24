@@ -13,11 +13,17 @@ class AccessorPPK extends Model
 
     protected $fillable = [
         'user_id',
-        'name'
+        'name',
+        'ppk_id'
     ];
 
     public function ppk()
     {
         return $this->belongsTo(PPK::class, 'ppk_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
