@@ -9,10 +9,14 @@
             box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px, rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
             background-color: white;
             border-radius: 10px;
-            margin-right: 16px;
+            height: 150px;
             cursor: pointer;
             -webkit-transition: all 300ms;
             transition: all 300ms;
+        }
+
+        .card-vendor-2:hover {
+            box-shadow: #1F9CAC55 0px 7px 29px 0px;
         }
     </style>
 @endsection
