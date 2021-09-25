@@ -94,10 +94,15 @@
                             <input type="text" class="form-control" value="Belum Ada Update" readonly id="terahkirupdate">
                         </div>
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="faktorupdate" class="form-label">Faktor Diupdate</label>
-                            <input type="text" class="form-control" value="Belum Ada Update" readonly id="faktorupdate">
-                        </div>
+                            <input type="text" class="form-control" value="Belum Ada Update" readonly >
+                        </div> --}}
+
+                        <div class="form-group mb-3">
+                            <label for="faktorupdate">Faktor Diupdate</label>
+                            <textarea class="form-control" id="faktorupdate" rows="3" readonly id="faktorupdate"></textarea>
+                          </div>
                     </div>
                 </div>
 
