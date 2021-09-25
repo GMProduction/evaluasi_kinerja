@@ -2,6 +2,19 @@
 
 @section('moreCss')
     {{-- <link rel="stylesheet" href="{{ asset('css/tab.css') }}" type="text/css"> --}}
+    <style>
+        .card-vendor-2 {
+            padding: 16px;
+            -webkit-box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px, rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
+            box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px, rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
+            background-color: white;
+            border-radius: 10px;
+            margin-right: 16px;
+            cursor: pointer;
+            -webkit-transition: all 300ms;
+            transition: all 300ms;
+        }
+    </style>
 @endsection
 
 
