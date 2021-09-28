@@ -19,18 +19,18 @@ class ClaimNotificationController extends CustomController
 
     public function store()
     {
-//        try {
+        try {
             $notification = Notification::with(['score.subIndicator'])->find($this->postField('id'));
             if (!$notification) {
                 return response()->json(['msg' => 'Notifikasi Tidak Di Temukan...'], 202);
             }
             $claimId = $this->postField('claim_id');
             $files = \request()->file('file');
-            if(!$claimId){
+            if (!$claimId) {
                 $senderId = Auth::id();
                 $claim = new ClaimNotification();
 
-                if ($files){
+                if ($files) {
                     $extension = $files->getClientOriginalExtension();
                     $name = $this->uuidGenerator() . '.' . $extension;
                     $stringImg = '/files/' . $name;
@@ -46,10 +46,10 @@ class ClaimNotificationController extends CustomController
                 $claim->notification_id = $notification->id;
                 $claim->save();
                 return response()->json(['msg' => 'success'], 200);
-            }else{
+            } else {
                 $claim = ClaimNotification::find($claimId);
 
-                if($files){
+                if ($files) {
                     $extension = $files->getClientOriginalExtension();
                     $name = $this->uuidGenerator() . '.' . $extension;
                     $stringImg = '/files/' . $name;
@@ -61,8 +61,19 @@ class ClaimNotificationController extends CustomController
                 return response()->json(['msg' => 'success'], 200);
             }
 
-//        } catch (\Exception $e) {
-//            return response()->json(['msg' => 'Terjadi Kesalahan Server..'], 500);
-//        }
+        } catch (\Exception $e) {
+            return response()->json(['msg' => 'Terjadi Kesalahan Server..'], 500);
+        }
+    }
+
+    public function getCountClaim()
+    {
+        try {
+            $claim = ClaimNotification::where('recipient_id', Auth::id())->get();
+            $count = count($claim);
+            return response()->json(['msg' => 'success', 'data' => $count], 200);
+        } catch (\Exception $e) {
+            return response()->json(['msg' => 'Terjadi Kesalahan Server..'.$e->getMessage()], 500);
+        }
     }
 }

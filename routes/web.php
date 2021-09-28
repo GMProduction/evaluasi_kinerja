@@ -107,6 +107,7 @@ Route::prefix('/')->middleware('auth')->group(
 
         Route::prefix('/peringatan')->group(function (){
             Route::get('/', [\App\Http\Controllers\NotificationController::class, 'index']);
+            Route::get('/count', [\App\Http\Controllers\ClaimNotificationController::class, 'getCountClaim']);
             Route::post('/claim', [\App\Http\Controllers\ClaimNotificationController::class, 'store']);
             Route::get('/{type}/{id}', [\App\Http\Controllers\NotificationController::class, 'detailNotification']);
         });

@@ -7,7 +7,7 @@
                     id="user">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user-circle icon-size-lg '></i>
-                        <p class="number-card">0</p>
+                        <p class="number-card" id="vendor-count">0</p>
                     </div>
                     <div class="mt-2">
                         Data Penyedia Jasa
@@ -18,7 +18,7 @@
                     id="package">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-building-house icon-size-lg'></i>
-                        <p class="number-card">0</p>
+                        <p class="number-card" id="package-count">0</p>
                     </div>
                     <div class="mt-2">
                         Data Paket Konstruksi
@@ -29,7 +29,7 @@
                     id="indicator">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-receipt icon-size-lg'></i>
-                        <p class="number-card">0</p>
+                        <p class="number-card" id="claim-count">0</p>
                     </div>
                     <div class="mt-2">
                         Data Sanggahan
@@ -90,6 +90,7 @@
     <script>
         $(document).ready(function() {
             getVendor();
+            countClaim();
         });
 
         function elVendor(data) {
@@ -102,10 +103,12 @@
             var vendor = $('#menu-vendor');
             vendor.empty();
             $.get('/vendor', function(data) {
-                console.log(data)
+                console.log(data);
+                let allVendor = data.length;
+                let ongoing = 0;
                 $.each(data, function(key, value) {
                     // vendor.append(elVendor(value));
-
+                    ongoing += value['package_vendor_going'].length;
                     vendor.append(' <div class="items-tab col-3"><a href="/penilaian?vendor=' + value[
                         'id'] +
                         '" class="card-vendor d-block c-text card-user" id="">\n' +
@@ -120,7 +123,20 @@
 
                         '                </a></div>')
                 })
+                $('#package-count').html(ongoing);
+                $('#vendor-count').html(allVendor);
             })
+        }
+
+        async function countClaim() {
+            try {
+                let response = await $.get('/peringatan/count');
+                let count = response['data'];
+                $('#claim-count').html(count);
+                console.log(response)
+            }catch(e) {
+                console.log(e)
+            }
         }
     </script>
 @endif
