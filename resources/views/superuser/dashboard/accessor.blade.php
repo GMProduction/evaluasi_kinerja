@@ -1,6 +1,6 @@
 @if ($data == 'content')
     <div class="mb-3" style="padding-right: 30px; padding-left: 30px">
-        <p class="fw-bold t-primary">Dashboard</p>
+        {{-- <p class="fw-bold t-primary">Dashboard</p> --}}
         <div role="tablist" id="tablist">
             <div class="items-tab" id="menu-tab">
                 <a class="card-tab  d-block c-text card-user" style="background-color: rgba(255, 224, 224, 20)" id="user">
