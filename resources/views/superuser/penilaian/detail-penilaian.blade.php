@@ -38,48 +38,98 @@
             <p class="title-table mb-0" style="font-size: .8rem; color: gray">Hasil Evaluasi Kinerja Paket </p>
             <p class="fw-bold t-primary" style="font-size: 2rem">{{ $data->name }}</p>
 
-            <div class="row">
-                <div class="col-4">
-                    <div class="table-container sticky-top" style="z-index: 0">
-                        <p class="fw-bold t-primary">Data Paket Konstruksi</p>
-
-                        <hr>
-                        <div class="mb-3">
-                            <label for="namapenyedia" class="form-label">Nama Penyedia Jasa</label>
-                            <input type="text" class="form-control" value="{{ $data->vendor->vendor->name }}" readonly
-                                id="namapenyedia">
+            <div role="tablist" class="mb-3">
+                <div class="items-tab" id="menu-tab">
+                    <a class="card-tab d-block c-text card-user" id="vendor" data-roles="vendor" data-text-roles="Superuser">
+                        <div class="d-flex justify-content-between">
+                            <i class='bx bx-message-square-edit'></i>
+                            {{-- <p class="number-card t-bagus">89</p> --}}
                         </div>
-
-                        <div class="mb-3">
-                            <label for="kualifikasi" class="form-label">Kualifikasi Perusahaan</label>
-                            <input type="text" class="form-control" readonly id="kualifikasi">
+                        <div class="mt-2">
+                            Penyedia Jasa
                         </div>
+                    </a>
 
-                        <div class="mb-3">
-                            <label for="paketkonstruksi" class="form-label">Paket Konstruksi</label>
-                            <input type="text" class="form-control" value="{{ $data->name }}" readonly
-                                id="paketkonstruksi">
+                    <a class="card-tab d-block c-text card-user" id="accessorppk" data-roles="accessorppk"
+                        data-text-roles="Admin">
+                        <div class="d-flex justify-content-between">
+                            <i class='bx bx-message-square-edit'></i>
+                            {{-- <p class="number-card t-cukup">67</p> --}}
                         </div>
-
-                        <div class="mb-3">
-                            <label for="nomorkontrak" class="form-label">Nomor Kontrak</label>
-                            <input type="text" class="form-control" value="{{ $data->no_reference }}" readonly
-                                id="nomorkontrak">
+                        <div class="mt-2">
+                            Penilaian PPK
                         </div>
+                    </a>
 
-                        <div class="mb-3">
-                            <label for="penggunajasa" class="form-label">Pengguna Jasa</label>
-                            <input type="text" class="form-control" value="{{ $data->ppk->name }}" readonly
-                                id="penggunajasa">
+                    <a class="card-tab d-block c-text card-user" id="accessor" data-roles="accessor"
+                        data-text-roles="Asesor Balai">
+                        <div class="d-flex justify-content-between">
+                            <i class='bx bx-message-square-edit'></i>
+                            {{-- <p class="number-card t-kurang">38</p> --}}
                         </div>
-
-                        <div class="mb-3">
-                            <label for="jenisasesmen" class="form-label">Jenis Asesmen</label>
-                            <input type="text" class="form-control" value="Penilaian Penyedia Jasa" readonly
-                                id="jenisasesmen">
+                        <div class="mt-2">
+                            Penilaian Balai
                         </div>
+                    </a>
 
-                        {{-- <div class="mb-3">
+
+                </div>
+
+            </div>
+
+            <ul class="nav nav-tabs normal mt-5">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" id="info">Informasi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="detail-nilai">Detail Penilaian</a>
+                </li>
+
+            </ul>
+
+            <div class="content-tab">
+                <div class="row" id="content-info">
+                    <div class="col-4">
+                        <div class="table-container sticky-top" style="z-index: 0">
+                            <p class="fw-bold t-primary">Data Paket Konstruksi</p>
+
+                            <hr>
+                            <div class="mb-3">
+                                <label for="namapenyedia" class="form-label">Nama Penyedia Jasa</label>
+                                <input type="text" class="form-control" value="{{ $data->vendor->vendor->name }}"
+                                    readonly id="namapenyedia">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="kualifikasi" class="form-label">Kualifikasi Perusahaan</label>
+                                <input type="text" class="form-control" readonly id="kualifikasi">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="paketkonstruksi" class="form-label">Paket Konstruksi</label>
+                                <input type="text" class="form-control" value="{{ $data->name }}" readonly
+                                    id="paketkonstruksi">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="nomorkontrak" class="form-label">Nomor Kontrak</label>
+                                <input type="text" class="form-control" value="{{ $data->no_reference }}" readonly
+                                    id="nomorkontrak">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="penggunajasa" class="form-label">Pengguna Jasa</label>
+                                <input type="text" class="form-control" value="{{ $data->ppk->name }}" readonly
+                                    id="penggunajasa">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="jenisasesmen" class="form-label">Jenis Asesmen</label>
+                                <input type="text" class="form-control" value="Penilaian Penyedia Jasa" readonly
+                                    id="jenisasesmen">
+                            </div>
+
+                            {{-- <div class="mb-3">
                             <label for="faktordinilai" class="form-label">Faktor Sudah Di Nilai</label>
                             <input type="text" class="form-control" value="0" readonly id="faktordinilai">
                         </div>
@@ -89,118 +139,81 @@
                             <input type="text" class="form-control" value="0" readonly id="faktorbelum">
                         </div> --}}
 
-                        <div class="mb-3">
-                            <label for="terahkirupdate" class="form-label">Terahkir Update</label>
-                            <input type="text" class="form-control" value="Belum Ada Update" readonly id="terahkirupdate">
-                        </div>
+                            <div class="mb-3">
+                                <label for="terahkirupdate" class="form-label">Terahkir Update</label>
+                                <input type="text" class="form-control" value="Belum Ada Update" readonly
+                                    id="terahkirupdate">
+                            </div>
 
-                        {{-- <div class="mb-3">
+                            {{-- <div class="mb-3">
                             <label for="faktorupdate" class="form-label">Faktor Diupdate</label>
                             <input type="text" class="form-control" value="Belum Ada Update" readonly >
                         </div> --}}
 
-                        <div class="form-group mb-3">
-                            <label for="faktorupdate">Faktor Diupdate</label>
-                            <textarea class="form-control" id="faktorupdate" rows="3" readonly id="faktorupdate"></textarea>
-                          </div>
+                            <div class="form-group mb-3">
+                                <label for="faktorupdate">Faktor Diupdate</label>
+                                <textarea class="form-control" id="faktorupdate" rows="3" readonly
+                                    id="faktorupdate"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-container" id="parentofchart">
+                                    <p class="fw-bold t-primary">Faktor Penilaian</p>
+                                    <hr>
+                                    <div class="d-flex justify-content-between " style="align-items: end;">
+                                        <p id="faktorternilai" style="color: gray; font-size: .8rem;  bottom: 0;">25% Dari
+                                            Faktor Penilaian</p>
+                                        <p id="faktorbelum" class="fw-bold text-primary" style="font-size: 2rem">0</p>
+                                    </div>
+                                    <div class="progress" style="height: 10px;">
+                                        <div id="progress-bar-faktor" class="progress-bar" role="progressbar"
+                                            aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="table-container sticky-top" style="z-index: 0">
+                                    <p class="fw-bold t-primary" id="map-title">Peta Kinerja Penyedia Jasa</p>
+                                    <hr>
+                                    <canvas class="myChart" id="myChart" width="200" height="50"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+
+
+                                <div class="table-container" id="parentofchart">
+                                    <p class="fw-bold t-primary">Risalah Hasil Penilaian Faktor</p>
+                                    <hr>
+                                    <div id="donutchart" style="width: 100%;"></div>
+                                </div>
+
+                                <div class="table-container" id="parentofchart">
+                                    <p class="fw-bold t-primary">Nilai Komulatif</p>
+                                    <hr>
+                                    <h1 class=" text-center mt-5" style="font-size: 4rem" id="comulative_value"></h1>
+                                    <p id="comulative_status"
+                                        class="b-cukup r-fullround text-center  ms-auto me-auto p-1 mt-3"
+                                        style="width: 200px"></p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-
-                <div class="col-8">
-                    <div role="tablist" class="mb-3">
-                        <div class="items-tab" id="menu-tab">
-                            <a class="card-tab d-block c-text card-user" id="vendor" data-roles="vendor"
-                                data-text-roles="Superuser">
-                                <div class="d-flex justify-content-between">
-                                    <i class='bx bx-message-square-edit'></i>
-                                    {{-- <p class="number-card t-bagus">89</p> --}}
-                                </div>
-                                <div class="mt-2">
-                                    Penyedia Jasa
-                                </div>
-                            </a>
-
-                            <a class="card-tab d-block c-text card-user" id="accessorppk" data-roles="accessorppk"
-                                data-text-roles="Admin">
-                                <div class="d-flex justify-content-between">
-                                    <i class='bx bx-message-square-edit'></i>
-                                    {{-- <p class="number-card t-cukup">67</p> --}}
-                                </div>
-                                <div class="mt-2">
-                                    Penilaian PPK
-                                </div>
-                            </a>
-
-                            <a class="card-tab d-block c-text card-user" id="accessor" data-roles="accessor"
-                                data-text-roles="Asesor Balai">
-                                <div class="d-flex justify-content-between">
-                                    <i class='bx bx-message-square-edit'></i>
-                                    {{-- <p class="number-card t-kurang">38</p> --}}
-                                </div>
-                                <div class="mt-2">
-                                    Penilaian Balai
-                                </div>
-                            </a>
-
-
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="table-container" id="parentofchart">
-                                <p class="fw-bold t-primary">Faktor Penilaian</p>
-                                <hr>
-                                <div class="d-flex justify-content-between " style="align-items: end;">
-                                    <p id="faktorternilai" style="color: gray; font-size: .8rem;  bottom: 0;">25% Dari
-                                        Faktor Penilaian</p>
-                                    <p id="faktorbelum" class="fw-bold text-primary" style="font-size: 2rem">0</p>
-                                </div>
-                                <div class="progress" style="height: 10px;">
-                                    <div id="progress-bar-faktor" class="progress-bar" role="progressbar"
-                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="table-container sticky-top" style="z-index: 0">
-                                <p class="fw-bold t-primary" id="map-title">Peta Kinerja Penyedia Jasa</p>
-                                <hr>
-                                <canvas class="myChart" id="myChart" width="200" height="50"></canvas>
-                            </div>
-                        </div>
-
-                        <div class="col-6">
-
-
-                            <div class="table-container" id="parentofchart">
-                                <p class="fw-bold t-primary">Risalah Hasil Penilaian Faktor</p>
-                                <hr>
-                                <div id="donutchart" style="width: 100%;"></div>
-                            </div>
-
-                            <div class="table-container" id="parentofchart">
-                                <p class="fw-bold t-primary">Nilai Komulatif</p>
-                                <hr>
-                                <h1 class=" text-center mt-5" style="font-size: 4rem" id="comulative_value"></h1>
-                                <p id="comulative_status" class="b-cukup r-fullround text-center  ms-auto me-auto p-1 mt-3"
-                                    style="width: 200px"></p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div style="padding: 0 16px;">
-                    <div class="table-container">
-                        <p class="fw-bold t-primary">Detail Penilaian</p>
-                        <div id="result-container">
-                        </div>
+                <div class="table-container d-none" id="content-detail-nilai">
+                    <p class="fw-bold t-primary">Detail Penilaian</p>
+                    <div id="result-container">
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="modal fade" id="modalfile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -862,5 +875,20 @@
             $('#map-title').html('Peta Kinerja ' + title);
             $('#jenisasesmen').val('Penilaian ' + title);
         }
+
+
+        $("#info").click(function() {
+            $("#detail-nilai").removeClass("active");
+            $("#info").addClass("active")
+            $("#content-detail-nilai").addClass("d-none")
+            $("#content-info").removeClass("d-none")
+        });
+
+        $("#detail-nilai").click(function() {
+            $("#detail-nilai").addClass("active");
+            $("#info").removeClass("active")
+            $("#content-detail-nilai").removeClass("d-none")
+            $("#content-info").addClass("d-none")
+        });
     </script>
 @endsection
