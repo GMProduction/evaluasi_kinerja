@@ -3,7 +3,8 @@
         {{-- <p class="fw-bold t-primary">Dashboard</p> --}}
         <div role="tablist" id="tablist">
             <div class="items-tab" id="menu-tab">
-                <a class="card-tab  d-block c-text card-user" style="background-color: rgba(255, 224, 224, 20)" id="user">
+                <a class="card-tab  d-block c-text card-user" style="background-color: rgba(255, 224, 224, 20)"
+                    id="user">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user-circle icon-size-lg '></i>
                         <p class="number-card">0</p>
@@ -13,7 +14,8 @@
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text card-user" style="background-color: rgba(224, 255, 224, 20)" id="package">
+                <a class="card-tab d-block c-text card-user" style="background-color: rgba(224, 255, 224, 20)"
+                    id="package">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-building-house icon-size-lg'></i>
                         <p class="number-card">0</p>
@@ -23,7 +25,8 @@
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text card-user" style="background-color: rgba(224, 224, 255, 20)" id="indicator">
+                <a class="card-tab d-block c-text card-user" style="background-color: rgba(224, 224, 255, 20)"
+                    id="indicator">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-receipt icon-size-lg'></i>
                         <p class="number-card">0</p>
@@ -74,8 +77,8 @@
             </div>
         </div> --}}
 
-        <div role="tablist" class="row" id="tablist">
-            <div class="items-tab col-3" id="menu-vendor">
+        <div role="tablist"  id="tablist">
+            <div id="menu-vendor" class="row">
 
             </div>
         </div>
@@ -103,7 +106,8 @@
                 $.each(data, function(key, value) {
                     // vendor.append(elVendor(value));
 
-                    vendor.append(' <a href="/penilaian?vendor=' + value['id'] +
+                    vendor.append(' <div class="items-tab col-3"><a href="/penilaian?vendor=' + value[
+                        'id'] +
                         '" class="card-vendor d-block c-text card-user" id="">\n' +
                         '                    <div class="d-flex justify-content-left">\n' +
                         '                        <div class="div-image"> <img src="' + value['image'] +
@@ -114,7 +118,7 @@
                         '                    <h6 class="t-right number"> ' +
                         value['package_vendor_going'].length + ' </h6></div></div>\n' +
 
-                        '                </a>')
+                        '                </a></div>')
                 })
             })
         }
