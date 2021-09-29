@@ -16,7 +16,8 @@ class Score extends Model
         'sub_indicator_id',
         'score',
         'text',
-        'file'
+        'file',
+        'note'
     ];
 
     public function package(){
