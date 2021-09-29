@@ -172,6 +172,7 @@ class ScoreController extends CustomController
                 $scoreBefore = $score->score;
                 $scoreTextBefore = $score->text;
                 $scoreFileBefore = $score->file;
+                $scoreNoteBefore = $score->note;
                 $score->score = $value;
                 $score->text = $scoreText;
                 $score->save();
@@ -212,9 +213,11 @@ class ScoreController extends CustomController
                     'score_before' => $scoreBefore,
                     'score_text_before' => $scoreTextBefore,
                     'file_before' => $scoreFileBefore,
+                    'note_before' => $scoreNoteBefore,
                     'score_after' => $value,
                     'score_text_after' => $scoreText,
                     'file_after' => $scoreFileBefore,
+                    'note_after' => $scoreNoteBefore,
                     'cumulative_before' => $cumulativeBefore,
                     'cumulative_after' => $cumulativeAfter,
                 ];
@@ -262,9 +265,11 @@ class ScoreController extends CustomController
         $type = $data['type'];
         $scoreBefore = $data['score_before'];
         $scoreTextBefore = $data['score_text_before'];
+        $scoreNoteBefore = $data['note_before'];
         $fileBefore = $data['file_before'];
         $scoreAfter = $data['score_after'];
         $scoreTextAfter = $data['score_text_after'];
+        $scoreNoteAfter = $data['note_after'];
         $fileAfter = $data['file_after'];
         $cumulativeBefore = $data['cumulative_before'];
         $cumulativeAfter = $data['cumulative_after'];
@@ -277,9 +282,11 @@ class ScoreController extends CustomController
         $history->score_before = $scoreBefore;
         $history->text_before = $scoreTextBefore;
         $history->file_before = $fileBefore;
+        $history->note_before = $scoreNoteBefore;
         $history->score_after = $scoreAfter;
         $history->text_after = $scoreTextAfter;
         $history->file_after = $fileAfter;
+        $history->note_after = $scoreNoteAfter;
         $history->score_total_before = $cumulativeBefore;
         $history->score_total_after = $cumulativeAfter;
         $history->save();
@@ -496,6 +503,7 @@ class ScoreController extends CustomController
             $scoreBefore = $score->score;
             $scoreTextBefore = $score->text;
             $scoreFileBefore = $score->file;
+            $scoreNoteBefore = $score->note;
             $packageId = $score->package_id;
             $vType = $score->type;
             $subIndicatorId = $score->sub_indicator_id;
@@ -512,9 +520,11 @@ class ScoreController extends CustomController
                 'score_before' => $scoreBefore,
                 'score_text_before' => $scoreTextBefore,
                 'file_before' => $scoreFileBefore,
+                'note_before' => $scoreNoteBefore,
                 'score_after' => $scoreBefore,
                 'score_text_after' => $scoreTextBefore,
                 'file_after' => $stringImg,
+                'note_after' => $scoreNoteBefore,
                 'cumulative_before' => $cumulativeBefore,
                 'cumulative_after' => $cumulativeAfter,
             ];
@@ -527,6 +537,51 @@ class ScoreController extends CustomController
         }
     }
 
+    public function addNote()
+    {
+        try {
+            $authorId = Auth::id();
+            $score = Score::with(['package', 'subIndicator'])->find(request('id-note'));
+            if ($score === null) {
+                return response()->json(['msg' => 'Penilaian Sub Indicator Tidak Ditemukan...'], 202);
+            }
+            DB::beginTransaction();
+            $scoreBefore = $score->score;
+            $scoreTextBefore = $score->text;
+            $scoreFileBefore = $score->file;
+            $scoreNoteBefore = $score->note;
+            $packageId = $score->package_id;
+            $vType = $score->type;
+            $subIndicatorId = $score->sub_indicator_id;
+
+            $cumulativeBefore = $this->getCumulative($packageId, $vType);
+            $score->update(['note' => request('note')]);
+            $cumulativeAfter = $this->getCumulative($packageId, $vType);
+
+            $data = [
+                'package_id' => $packageId,
+                'author_id' => $authorId,
+                'sub_indicator_id' => $subIndicatorId,
+                'type' => $vType,
+                'score_before' => $scoreBefore,
+                'score_text_before' => $scoreTextBefore,
+                'file_before' => $scoreFileBefore,
+                'note_before' => $scoreNoteBefore,
+                'score_after' => $scoreBefore,
+                'score_text_after' => $scoreTextBefore,
+                'file_after' => $scoreFileBefore,
+                'note_after' => request('note'),
+                'cumulative_before' => $cumulativeBefore,
+                'cumulative_after' => $cumulativeAfter,
+            ];
+            $this->saveHistory($data);
+            DB::commit();
+            return response()->json(['msg' => 'success'], 200);
+        }catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
+        }
+    }
     public function getScoreHistory()
     {
         try {

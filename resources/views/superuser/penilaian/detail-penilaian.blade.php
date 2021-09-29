@@ -40,7 +40,8 @@
 
             <div role="tablist" class="mb-3">
                 <div class="items-tab" id="menu-tab">
-                    <a class="card-tab d-block c-text card-user" id="vendor" data-roles="vendor" data-text-roles="Superuser">
+                    <a class="card-tab d-block c-text card-user" id="vendor" data-roles="vendor"
+                       data-text-roles="Superuser">
                         <div class="d-flex justify-content-between">
                             <i class='bx bx-message-square-edit'></i>
                             {{-- <p class="number-card t-bagus">89</p> --}}
@@ -51,7 +52,7 @@
                     </a>
 
                     <a class="card-tab d-block c-text card-user" id="accessorppk" data-roles="accessorppk"
-                        data-text-roles="Admin">
+                       data-text-roles="Admin">
                         <div class="d-flex justify-content-between">
                             <i class='bx bx-message-square-edit'></i>
                             {{-- <p class="number-card t-cukup">67</p> --}}
@@ -62,7 +63,7 @@
                     </a>
 
                     <a class="card-tab d-block c-text card-user" id="accessor" data-roles="accessor"
-                        data-text-roles="Asesor Balai">
+                       data-text-roles="Asesor Balai">
                         <div class="d-flex justify-content-between">
                             <i class='bx bx-message-square-edit'></i>
                             {{-- <p class="number-card t-kurang">38</p> --}}
@@ -97,7 +98,7 @@
                             <div class="mb-3">
                                 <label for="namapenyedia" class="form-label">Nama Penyedia Jasa</label>
                                 <input type="text" class="form-control" value="{{ $data->vendor->vendor->name }}"
-                                    readonly id="namapenyedia">
+                                       readonly id="namapenyedia">
                             </div>
 
                             <div class="mb-3">
@@ -108,25 +109,25 @@
                             <div class="mb-3">
                                 <label for="paketkonstruksi" class="form-label">Paket Konstruksi</label>
                                 <input type="text" class="form-control" value="{{ $data->name }}" readonly
-                                    id="paketkonstruksi">
+                                       id="paketkonstruksi">
                             </div>
 
                             <div class="mb-3">
                                 <label for="nomorkontrak" class="form-label">Nomor Kontrak</label>
                                 <input type="text" class="form-control" value="{{ $data->no_reference }}" readonly
-                                    id="nomorkontrak">
+                                       id="nomorkontrak">
                             </div>
 
                             <div class="mb-3">
                                 <label for="penggunajasa" class="form-label">Pengguna Jasa</label>
                                 <input type="text" class="form-control" value="{{ $data->ppk->name }}" readonly
-                                    id="penggunajasa">
+                                       id="penggunajasa">
                             </div>
 
                             <div class="mb-3">
                                 <label for="jenisasesmen" class="form-label">Jenis Asesmen</label>
                                 <input type="text" class="form-control" value="Penilaian Penyedia Jasa" readonly
-                                    id="jenisasesmen">
+                                       id="jenisasesmen">
                             </div>
 
                             {{-- <div class="mb-3">
@@ -142,7 +143,7 @@
                             <div class="mb-3">
                                 <label for="terahkirupdate" class="form-label">Terahkir Update</label>
                                 <input type="text" class="form-control" value="Belum Ada Update" readonly
-                                    id="terahkirupdate">
+                                       id="terahkirupdate">
                             </div>
 
                             {{-- <div class="mb-3">
@@ -153,7 +154,7 @@
                             <div class="form-group mb-3">
                                 <label for="faktorupdate">Faktor Diupdate</label>
                                 <textarea class="form-control" id="faktorupdate" rows="3" readonly
-                                    id="faktorupdate"></textarea>
+                                          id="faktorupdate"></textarea>
                             </div>
                         </div>
                     </div>
@@ -167,13 +168,14 @@
                                     <p class="fw-bold t-primary">Faktor Penilaian</p>
                                     <hr>
                                     <div class="d-flex justify-content-between " style="align-items: end;">
-                                        <p id="faktorternilai" style="color: gray; font-size: .8rem;  bottom: 0;">25% Dari
+                                        <p id="faktorternilai" style="color: gray; font-size: .8rem;  bottom: 0;">25%
+                                            Dari
                                             Faktor Penilaian</p>
                                         <p id="faktorbelum" class="fw-bold text-primary" style="font-size: 2rem">0</p>
                                     </div>
                                     <div class="progress" style="height: 10px;">
                                         <div id="progress-bar-faktor" class="progress-bar" role="progressbar"
-                                            aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                             aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
@@ -199,8 +201,8 @@
                                     <hr>
                                     <h1 class=" text-center mt-5" style="font-size: 4rem" id="comulative_value"></h1>
                                     <p id="comulative_status"
-                                        class="b-cukup r-fullround text-center  ms-auto me-auto p-1 mt-3"
-                                        style="width: 200px"></p>
+                                       class="b-cukup r-fullround text-center  ms-auto me-auto p-1 mt-3"
+                                       style="width: 200px"></p>
                                 </div>
                             </div>
                         </div>
@@ -249,22 +251,82 @@
                     <div class="modal-body" id="history-container">
                         <div class="d-flex align-items-center justify-content-center w-100">
                             <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
-                                style="margin-right: 10px">
+                                 style="margin-right: 10px">
                             </div>
                             <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
-                                style="margin-right: 10px">
+                                 style="margin-right: 10px">
                             </div>
                             <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
-                                style="margin-right: 10px">
+                                 style="margin-right: 10px">
                             </div>
                             <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
-                                style="margin-right: 10px">
+                                 style="margin-right: 10px">
                             </div>
                             <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status">
                             </div>
                         </div>
                         <div class="text-center">
                             <span>Sedang Mengunduh Riwayat Perubahan Terakhir....</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalCatatan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="note-container">
+                        <form id="form-note" onsubmit="return SaveNote()">
+                            @csrf
+                            <input type="hidden" name="id-note" id="id-note" value="">
+                            <div class="mb-3">
+                                <label for="note" class="form-label">Catatan</label>
+                                <textarea class="form-control" id="note" name="note"></textarea>
+                            </div>
+                            <button type="submit" class="bt-primary">Simpan</button>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalCatatan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="note-container">
+                        <form id="form-note" onsubmit="return SaveNote()">
+                            @csrf
+                            <input type="hidden" name="id-note" id="id-note" value="">
+                            <div class="mb-3">
+                                <label for="note" class="form-label">Catatan</label>
+                                <textarea class="form-control" id="note" name="note"></textarea>
+                            </div>
+                            <button type="submit" class="bt-primary">Simpan</button>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalCatatanLihat" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Catatan</label>
+                            <p id="note-see"></p>
                         </div>
                     </div>
                 </div>
@@ -322,7 +384,7 @@
         var header = document.getElementById("menu-tab");
         var btns = header.getElementsByClassName("card-tab");
         for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function() {
+            btns[i].addEventListener("click", function () {
 
                 var current = $('.card-tab.active')
                 current[0].className = current[0].className.replace(" active", "");
@@ -367,6 +429,41 @@
             }
         }
 
+        function elNoteDropdown(hasNote = false, hasAccess = false, hasScore = false, id, note = '') {
+            let type1 = '<div class="dropdown-menu">' +
+                '<a class="dropdown-item see-note" type="button" data-note="' + note + '" data-scoreid="' + id + '">Lihat</a>' +
+                '<a class="dropdown-item edit-note" type="button" data-note="' + note + '" data-scoreid="' + id +
+                '" id="edit-note">Ganti Catatan</a>' +
+                '</div>';
+
+            let type2 = '<div class="dropdown-menu">' +
+                '<a class="dropdown-item see-note" type="button" data-note="' + note + '" data-scoreid="' + id + '">Lihat</a>' +
+                '</div>';
+
+            let type3 = '<div class="dropdown-menu">' +
+                '<a class="dropdown-item add-note" type="button" data-scoreid="' + id +
+                '">Tambah Catatan</a>' +
+                '</div>';
+            if (hasAccess) {
+                if (!hasNote && hasScore) {
+                    return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Detail</a>' +
+                        type3;
+                } else if (!hasNote && !hasScore) {
+                    return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">-</a>';
+                } else {
+                    return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Detail</a>' +
+                        type1;
+                }
+            } else {
+                if (!hasNote) {
+                    return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">-</a>';
+                } else {
+                    return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Detail</a>' +
+                        type2;
+                }
+            }
+        }
+
         function elButtonHistory(hasHistory, id) {
             if (hasHistory) {
                 return '<a data-id="' + id +
@@ -382,6 +479,7 @@
                 '<th style="min-width: 100px" ></th>' +
                 '<th>Update Terahkir</th>' +
                 '<th>File Terupload</th>' +
+                '<th>Catatan</th>' +
                 '</tr>'
         }
 
@@ -397,6 +495,8 @@
             let hasScore = single_score !== null;
             let file_text = single_score !== null ? single_score['file'] !== null ? 'Download' : 'Upload File' : '-';
             let hasFile = single_score !== null ? single_score['file'] !== null : false;
+            let hasNote = single_score !== null ? single_score['note'] !== null : false;
+            let note = single_score !== null ? single_score['note'] : '';
             let file_Id = single_score !== null ? single_score['file'] !== null ? 'download' : 'upload' : '-';
             let file_link = single_score !== null ? single_score['file'] : 'Upload File';
             let update_at = single_score !== null ? new Date(single_score['updated_at']) : null;
@@ -432,22 +532,49 @@
                 '<td>' + last_update + '</td>\n' +
                 // '<td><a class="bt-primary-xsm" data-subname="' + value['name'] + '" data-link="' + file_link + '" data-scoreid="' + scoreid + '" id="' + file_Id + '">' + file_text + '</a></td>\n' +
                 '<td>' + elFileDropdown(hasFile, hasAccess, hasScore, file_link, value['name'], scoreid) + '</td>\n' +
+                '<td>' + elNoteDropdown(hasNote, hasAccess, hasScore, scoreid, note) + '</td>\n' +
                 '</tr>';
         }
 
-        $(document).on('click', '#download', function() {
+        $(document).on('click', '#download', function () {
             $(this).attr('target', '_blank')
             $(this).attr('href', $(this).data('link'));
         });
-        $(document).on('click', '#upload', function() {
+        $(document).on('click', '#upload', function () {
             $('#modalfile #fileNameSub').html($(this).data('subname'))
             $('#modalfile #id').val($(this).data('scoreid'))
             $('#modalfile #file').val('')
             $('#modalfile').modal('show')
         })
 
+        $(document).on('click', '.add-note', function () {
+            let id = this.dataset.scoreid;
+            $('#modalCatatan #id-note').val(id)
+            $('#modalCatatan').modal('show');
+        });
+
+        $(document).on('click', '.edit-note', function () {
+            let id = this.dataset.scoreid;
+            let note = this.dataset.note;
+            $('#modalCatatan #id-note').val(id);
+            $('#modalCatatan #note').val(note);
+            $('#modalCatatan').modal('show');
+        });
+
+        $(document).on('click', '.see-note', function () {
+            let id = this.dataset.scoreid;
+            let note = this.dataset.note;
+            $('#modalCatatanLihat #note-see').html(note);
+            $('#modalCatatanLihat').modal('show');
+        });
+
         function Save() {
             saveData('Upload File', 'form', null, afterSaveFile)
+            return false;
+        }
+
+        function SaveNote() {
+            saveData('Catatan', 'form-note', '/penilaian/add-note', afterSaveNote)
             return false;
         }
 
@@ -455,6 +582,11 @@
             $('#modalfile').modal('hide')
             getScore(index);
             // getHistoryScore(index);
+        }
+
+        function afterSaveNote() {
+            $('#modalCatatan').modal('hide')
+            getScore(index);
         }
 
         function elTable() {
@@ -502,22 +634,22 @@
                 let data = response['data']['indicator'];
                 el.append(elTable());
                 let table = $('#table');
-                $.each(data, function(k, v) {
+                $.each(data, function (k, v) {
                     table.append(elMainIndicator(k, v));
                     let elMain = $('#indicator-' + k);
                     let sub = '';
-                    $.each(v['sub_indicator'], function(kSub, vSub) {
+                    $.each(v['sub_indicator'], function (kSub, vSub) {
                         sub += elSubIndicator((k + 1), kSub, vSub);
                     });
                     elMain.after(sub);
                 });
-                $('.nilai').on('click', function() {
+                $('.nilai').on('click', function () {
                     let value = this.dataset.value;
                     let sub_indicator = this.dataset.subin;
                     setScore(sub_indicator, value);
                 });
 
-                $('.bt-history').on('click', function() {
+                $('.bt-history').on('click', function () {
                     _histId = this.dataset.id;
                     $('#modalHistory').modal('show');
 
@@ -531,7 +663,7 @@
         }
 
         function onModalHistoryShow() {
-            $('#modalHistory').on('shown.bs.modal', function() {
+            $('#modalHistory').on('shown.bs.modal', function () {
                 getHistoryScore(index)
                 // let response = await $.get('/penilaian/get-last-history?package=' + package_id + '&type=' + vType + '&sub=' + _histId);
                 // console.log()
@@ -543,9 +675,11 @@
                 created_at,
                 score_after,
                 score_before,
+                note_before,
                 score_total_after,
                 score_total_before,
                 file_after,
+                note_after,
                 file_before
             } = data;
             let sa = '';
@@ -581,6 +715,8 @@
                 file_before + '">Download</a>';
             let elFIleAfter = file_after === null ? '-' : '<a target="_blank" href="' + window.location.origin +
                 file_after + '">Download</a>';
+            let elNoteBefore = note_before !== null ? note_before : '-';
+            let elNoteAfter = note_after !== null ? note_after : '-';
             let date = getDateOnlyString(new Date(created_at));
             return '<div class="d-flex mb-2">' +
                 '<p class="font-date-history" style="margin-right: 10px">' + date + '</p>' +
@@ -593,12 +729,14 @@
 
                 '<p class="font-date-history mb-0">  Komulatif : <span>' + score_total_before.toFixed(2) + '</span></p>' +
                 '<p class="font-date-history mb-0">  File : ' + elFileBefore + '</p>' +
+                '<p class="font-date-history mb-0">  Catatan : ' + elNoteBefore + '</p>' +
                 '</div>' +
                 '<div class="col-6">' +
                 '<p class="font-date-history mb-0" style="font-weight: bold">Penilaian Akhir</p>' +
                 '<p class="font-date-history mb-0">  Nilai : <span>' + sa + '</span></p>' +
                 '<p class="font-date-history mb-0">  Komulatif : <span>' + score_total_after.toFixed(2) + '</span></p>' +
                 '<p class="font-date-history mb-0">  File : ' + elFIleAfter + '</p>' +
+                '<p class="font-date-history mb-0">  Catatan : ' + elNoteAfter + '</p>' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -626,7 +764,7 @@
                 let response = await $.get('/penilaian/get-history?package=' + package_id + '&type=' + vType + '&sub=' +
                     _histId);
                 console.log(response)
-                $.each(response['data'], function(k, v) {
+                $.each(response['data'], function (k, v) {
                     el.append(elHistory(v));
                 });
             } catch (e) {
@@ -691,7 +829,7 @@
 
             let labels = [];
             let values = [];
-            dataChart['indicator'].forEach(function(v, k) {
+            dataChart['indicator'].forEach(function (v, k) {
                 labels.push(v['index']);
                 values.push(v['radar']);
             });
@@ -731,8 +869,8 @@
                     },
                 },
                 plugins: [{
-                    beforeInit: function(chart) {
-                        chart.data.labels.forEach(function(e, i, a) {
+                    beforeInit: function (chart) {
+                        chart.data.labels.forEach(function (e, i, a) {
                             var space = e.split(' ');
                             // if (space[2]) {
                             //     a[i] = e.split(' ');
@@ -811,19 +949,19 @@
             }
         }
 
-        $(document).ajaxStop(function() {
+        $(document).ajaxStop(function () {
             if (getParameter('q')) {
                 $(window).scrollTop($('table #tr' + getParameter('q')).offset().top);
                 $('table #tr' + getParameter('q')).focus().addClass('trFocus');
             }
         })
-        $(document).ready(function() {
+        $(document).ready(function () {
             // getScore('vendor');
             // getHistoryScore('vendor');
             // getLastUpdate('vendor');
             console.log(window.location)
 
-            $('.card-user').on('click', function() {
+            $('.card-user').on('click', function () {
                 index = this.dataset.roles;
                 let title = '';
                 switch (index) {
@@ -877,14 +1015,14 @@
         }
 
 
-        $("#info").click(function() {
+        $("#info").click(function () {
             $("#detail-nilai").removeClass("active");
             $("#info").addClass("active")
             $("#content-detail-nilai").addClass("d-none")
             $("#content-info").removeClass("d-none")
         });
 
-        $("#detail-nilai").click(function() {
+        $("#detail-nilai").click(function () {
             $("#detail-nilai").addClass("active");
             $("#info").removeClass("active")
             $("#content-detail-nilai").removeClass("d-none")
