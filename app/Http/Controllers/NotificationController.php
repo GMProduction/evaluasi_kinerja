@@ -72,10 +72,10 @@ class NotificationController extends Controller
         $notif = '';
         if (Auth::user()->roles[0] == 'accessor' || Auth::user()->roles[0] == 'accessorppk') {
             $notif = ClaimNotification::where('recipient_id', '=', Auth::id())->whereHas('notification', function ($q){
-                $q->where('is_active', '=', true);
+                $q->where('is_read', '=', false);
             })->count('*');
         } elseif (Auth::user()->roles[0] == 'vendor') {
-            $notif = Notification::where([['vendor_id', '=', Auth::id()], ['is_active', '=', true]])->count('*');
+            $notif = Notification::where([['vendor_id', '=', Auth::id()], ['is_read', '=', false]])->count('*');
         }
 
         return $notif;

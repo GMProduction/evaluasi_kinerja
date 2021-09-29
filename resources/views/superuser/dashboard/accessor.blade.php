@@ -109,7 +109,7 @@
                 $.each(data, function(key, value) {
                     // vendor.append(elVendor(value));
                     ongoing += value['package_vendor_going'].length;
-                    vendor.append(' <div class="items-tab col-3 mb-1"><a href="/penilaian?vendor=' + value[
+                    vendor.append(' <div class="items-tab col-3 mb-4"><a href="/penilaian?vendor=' + value[
                         'id'] +
                         '" class="card-vendor d-block c-text card-user" id="">\n' +
                         '                    <div class="d-flex justify-content-left">\n' +
