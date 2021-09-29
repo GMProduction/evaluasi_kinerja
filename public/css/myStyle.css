@@ -76,6 +76,10 @@ td {
   color: #1f9cac;
 }
 
+.t-gray {
+  color: gray;
+}
+
 .t-black {
   color: black;
 }
