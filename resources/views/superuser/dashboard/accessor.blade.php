@@ -82,12 +82,6 @@
 
             </div>
         </div>
-
-{{--        <div role="tablist" class="row" id="tablist">--}}
-{{--            <div class="items-tab col-3"  id="menu-vendor">--}}
-
-{{--            </div>--}}
-{{--        </div>--}}
     </div>
 
 
@@ -105,11 +99,6 @@
                 '</a>';
         }
 
-        function elVendor(data) {
-            return '<a href="/penilaian?vendor=' + data['id'] +'" class="card-vendor-2 d-block c-text card-user">' +
-                'abcd' +
-                '</a>';
-        }
         function getVendor() {
             var vendor = $('#menu-vendor');
             vendor.empty();
@@ -120,7 +109,7 @@
                 $.each(data, function(key, value) {
                     // vendor.append(elVendor(value));
                     ongoing += value['package_vendor_going'].length;
-                    vendor.append(' <div class="items-tab col-3"><a href="/penilaian?vendor=' + value[
+                    vendor.append(' <div class="items-tab col-3 mb-1"><a href="/penilaian?vendor=' + value[
                         'id'] +
                         '" class="card-vendor d-block c-text card-user" id="">\n' +
                         '                    <div class="d-flex justify-content-left">\n' +
