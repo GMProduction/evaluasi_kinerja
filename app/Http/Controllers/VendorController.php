@@ -75,4 +75,6 @@ class VendorController extends CustomController
             ->get();
         return view('superuser/penilaian/index')->with(['data' => $data, 'vendor' => $vendor]);
     }
+
+
 }

@@ -112,6 +112,12 @@ class ScoreController extends CustomController
         try {
             $packageId = request()->query->get('package');
             $type = request()->query->get('type');
+            if (!$packageId) {
+                return response()->json([
+                    'code' => 202,
+                    'msg' => 'Paket Tidak Di Temukan'
+                ]);
+            }
             $data = Indicator::with(['subIndicator.singleScore' => function ($query) use ($packageId, $type) {
                 $query->where('package_id', $packageId)->where('type', $type);
             }, 'subIndicator.scoreHistory' => function ($query) use ($packageId, $type) {
@@ -119,6 +125,7 @@ class ScoreController extends CustomController
             }])->get();
             return response()->json([
                 'msg' => 'success',
+                'code' => 200,
                 'data' => [
                     'indicator' => $data->toArray()
                 ]
@@ -577,11 +584,12 @@ class ScoreController extends CustomController
             $this->saveHistory($data);
             DB::commit();
             return response()->json(['msg' => 'success'], 200);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
         }
     }
+
     public function getScoreHistory()
     {
         try {

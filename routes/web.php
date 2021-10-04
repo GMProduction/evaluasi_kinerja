@@ -63,13 +63,14 @@ Route::prefix('/')->middleware('auth')->group(
                 Route::get('/datatable', [\App\Http\Controllers\Superadmin\PPKController::class, 'datatable']);
             }
         );
-
+        Route::get('/package/data-detail', [\App\Http\Controllers\PackageController::class, 'getDetailPackage']);
         Route::prefix('/paket-konstruksi')->middleware('roles:superuser,admin')->group(
             function () {
                 Route::match(['post', 'get'], '/', [\App\Http\Controllers\PackageController::class, 'index']);
                 Route::match(['post', 'get'], '/detail/{id}', [\App\Http\Controllers\PackageController::class, 'detail']);
                 Route::get('/datatable', [\App\Http\Controllers\PackageController::class, 'datatable'])->name('package_datatable');
                 Route::get('/addendum-datatable/{id}', [\App\Http\Controllers\PackageController::class, 'datatableAddendum']);
+
                 Route::post('/addendum/add', [\App\Http\Controllers\PackageController::class, 'addDetail']);
             }
         );
