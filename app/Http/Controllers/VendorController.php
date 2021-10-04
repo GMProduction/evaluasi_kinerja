@@ -73,6 +73,11 @@ class VendorController extends CustomController
                 ]
             )->where('vendor_id', $id)
             ->get();
+        if (request('st') == 'past'){
+            $data = Package::with(['vendor'])
+                          ->where('finish_at', '<', date('Y-m-d', strtotime(now('Asia/Jakarta'))))->where('vendor_id', $id)
+                          ->get();
+        }
         return view('superuser/penilaian/index')->with(['data' => $data, 'vendor' => $vendor]);
     }
 }

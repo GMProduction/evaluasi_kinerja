@@ -60,8 +60,9 @@ class ProfileController extends CustomController
             Arr::set($pakage, 'vendor', count($vendor));
         }elseif ($roles == 'vendor'){
             $packageGoing = Package::where([['vendor_id','=',Auth::id()],['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))], ['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]])->count('*');
+            $packagePast  = Package::where([['vendor_id','=',Auth::id()],['finish_at', '<', date('Y-m-d', strtotime(now('Asia/Jakarta')))]])->count('*');
             Arr::set($pakage, 'packageGoing', $packageGoing);
-
+            Arr::set($pakage, 'packagePast', $packagePast);
         }
 
         return $pakage;
@@ -124,7 +125,7 @@ class ProfileController extends CustomController
 
         $roles = Auth::user()->roles[0];
         DB::beginTransaction();
-        try {
+//        try {
             Arr::set($field, 'username', $fieldUserEdit['username']);
             Arr::set($field, 'email', $fieldUserEdit['email']);
 
@@ -135,13 +136,22 @@ class ProfileController extends CustomController
             }
             $user->update($field);
             $user->$roles()->update(['name' => $field['name']]);
+            if (\request('roles') == 'vendor'){
+                $fieldVendor = \request()->validate([
+                    'phone' => 'required',
+                    'npwp' => 'required',
+                    'iujk' => 'required',
+                    'address' => 'required',
+                ]);
+                $user->$roles()->update($fieldVendor);
+            }
             DB::commit();
 
             return response()->json(['msg' => 'success']);
-        } catch (\Exception $er) {
-            DB::rollBack();
-
-            return response()->json(['msg' => $er->getMessage()], 500);
-        }
+//        } catch (\Exception $er) {
+//            DB::rollBack();
+//
+//            return response()->json(['msg' => $er->getMessage()], 500);
+//        }
     }
 }
