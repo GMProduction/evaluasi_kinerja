@@ -14,6 +14,8 @@ $burukcolorlight: #e3242b;
 $shadowactivecolor: #34506e;
 // $shadowactivecolor: #887df355;
 $shadowactivecolorlight: #9e958311;
+$shadowactivecolorlight2: #fcae1e11;
+$shadowactivecolorlight3: #fcae1e55;
 // $shadowactivecolorlight: #887df311;
 // 77AB53
 $shadowsuccessecolor: #0ebb4855;
@@ -21,23 +23,38 @@ $shadowdangercolor: #ff000055;
 $background-card: #1d3752;
 $color-accent: #dfa01e;
 $bg-activecolor: #34506e;
-$bg-activecolor2:rgb(44, 71, 102);
+$bg-activecolor2: rgb(44, 71, 102);
+$bg-activecolor3: rgb(58, 87, 121);
+$bg-activecolor4: rgb(133, 157, 185);
 
-.form-control:disabled, .form-control[readonly] {
+.form-control:disabled,
+.form-control[readonly] {
     background-color: $bg-activecolor;
     opacity: 1;
     border: none;
     color: $text-color;
 }
 
+.dropdown-menu {
+    background-color: $bg-activecolor3;
+}
+
+.dropdown-item {
+    color: $text-color;
+
+    &:hover {
+        background-color: $shadowactivecolorlight3;
+    }
+}
+
 .form-select {
     background-color: $bg-activecolor;
     color: $text-color;
     border: none;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='white' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e")
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='white' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
 }
 
-.select-paket{
+.select-paket {
     padding: 10px;
     border-radius: 10px;
     border: 1px solid $bg-activecolor;
@@ -45,21 +62,19 @@ $bg-activecolor2:rgb(44, 71, 102);
     font-weight: bold;
     color: $activecolor;
 
-    
-    &:focus{
+    &:focus {
         outline: none;
     }
 
-    &:active{
+    &:active {
         border: none !important;
     }
 }
 
-.select-paket option{
-
-    padding:20px !important;
+.select-paket option {
+    padding: 20px !important;
     min-height: 100px;
-  }
+}
 
 div.dataTables_wrapper div.dataTables_filter input {
     background-color: $bg-activecolor;
@@ -67,10 +82,14 @@ div.dataTables_wrapper div.dataTables_filter input {
     color: $text-color;
 }
 
-#brodcum{
-    a{
-        color: $color-accent;
+#brodcum {
+    a {
+        color: $text-color2;
     }
+}
+
+.t-text-color2 {
+    color: $text-color2;
 }
 .nav {
     &.normal {
@@ -121,28 +140,27 @@ td {
     margin-top: 100px;
 }
 
-
 .b-cukup {
     background-color: $sedangcolorlight;
     color: white;
 }
 
-.b-kurang{
+.b-kurang {
     background-color: $cukupcolorlight;
     color: white;
 }
 
-.b-baik{
+.b-baik {
     background-color: $successcolorlight;
     color: white;
 }
 
-.b-sangatkurang{
+.b-sangatkurang {
     background-color: $burukcolorlight;
     color: white;
 }
 
-.b-sangatbaik{
+.b-sangatbaik {
     background-color: $sbaikcolorlight;
     color: white;
 }
@@ -386,16 +404,14 @@ td {
     color: #ddd;
 }
 
-
 tbody,
 td,
-
 thead,
 tr {
     border: 0 solid #1114;
 }
 
-body{
+body {
     color: whitesmoke;
 }
 
@@ -405,9 +421,12 @@ body{
 
 .items-tab {
     display: flex;
+    position: relative;
 
     .card-tab {
         padding: 16px;
+        position: relative;
+        display: block;
         box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px,
             rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
         background-color: $bg-activecolor;
@@ -435,7 +454,7 @@ body{
             }
         }
 
-        &:hover{
+        &:hover {
             color: $text-color;
         }
 
@@ -455,15 +474,15 @@ body{
     transition: all 300ms;
 
     &.isread {
-        background-color: $shadowactivecolorlight;
+        background-color: $shadowactivecolorlight2;
 
         &:hover {
-            background-color: #eaeaea;
+            background-color: $shadowactivecolorlight3;
         }
     }
 
     &:hover {
-        background-color: #eaeaea;
+        background-color: $shadowactivecolorlight3;
     }
 
     img {
@@ -493,12 +512,13 @@ body{
             .tanggal {
                 font-size: 0.7rem;
                 margin-bottom: 0;
+                color: $text-color2;
             }
         }
 
         .sub-indikator {
             font-size: 0.8rem;
-            color: gray;
+            color: $text-color2;
             margin-bottom: 0;
 
             overflow: hidden;
@@ -514,7 +534,7 @@ body{
     margin: 10px;
     font-weight: bold;
     font-size: 0.8rem;
-    color: gray;
+    color: $text-color;
 }
 
 .hr-notif {
@@ -533,6 +553,7 @@ body{
 }
 
 .card-vendor {
+    position: relative;
     padding: 16px;
     box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px,
         rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
@@ -937,8 +958,29 @@ $primary-font: "Lato";
     transition: all $timing $easing;
 }
 
+.modal-content {
+    background-color: $bg-activecolor;
+}
+
+.form-control {
+    background-color: $bg-activecolor4;
+    border: none;
+    &:focus {
+        background-color: $bg-activecolor4;
+    }
+}
+
+.dropify-wrapper {
+    background-color: $bg-activecolor !important;
+}
+
+.card {
+background-color: $bg-activecolor;
+}
+
 .tombol-notif {
-    background-color: white;
+    transition: all 300ms;
+    background-color: $background-card;
     border-radius: 30px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     padding: 20px 20px;
@@ -950,7 +992,7 @@ $primary-font: "Lato";
     }
 
     &:hover {
-        background-color: $shadowactivecolorlight;
+        background-color: $shadowactivecolorlight3;
     }
 
     &.active {
@@ -1331,7 +1373,7 @@ a:hover {
     min-height: 460px;
     margin: auto;
     box-shadow: 0px 8px 60px -10px rgba(13, 28, 39, 0.6);
-    background: #fff;
+    background: $background-card;
     border-radius: 12px;
     max-width: 700px;
     position: relative;
@@ -1391,14 +1433,14 @@ a:hover {
     &__name {
         font-weight: 700;
         font-size: 24px;
-        color: #6944ff;
+        color: $activecolor;
         margin-bottom: 15px;
     }
 
     &__txt {
         font-size: 18px;
         font-weight: 500;
-        color: #324e63;
+        color: white;
         margin-bottom: 15px;
 
         strong {
@@ -1443,12 +1485,13 @@ a:hover {
             font-weight: 700;
             font-size: 27px;
             //color: #6944ff;
-            color: #324e63;
+            color: $text-color;
         }
 
         &__txt {
             font-weight: 500;
             margin-top: 7px;
+            color: white;
         }
     }
 
