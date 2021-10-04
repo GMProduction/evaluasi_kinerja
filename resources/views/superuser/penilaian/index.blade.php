@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
-        
+
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/myStyle.css') }}" type="text/css">
     {{-- <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}" type="text/css"> --}}
@@ -109,7 +109,7 @@
     <style>
         body {
             background-color: #778797;
-            font-family: "Segoe UI", sans-serif;
+            /* font-family: "Segoe UI", sans-serif; */
         }
 
         .card-panel {
@@ -361,7 +361,7 @@
                         <div class="card-panel  table-container" id="content-detail-nilai">
                             <p class="fw-bold t-primary">Detail Penilaian</p>
                             <hr>
-                            <div id="result-container">
+                            <div id="result-container" style="height: 1000px">
                             </div>
                         </div>
                     </div>
