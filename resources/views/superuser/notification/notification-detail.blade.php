@@ -55,6 +55,7 @@
                             <tr>
                                 <td>Nilai</td>
                                 <td>Nilai Angka</td>
+                                <td>Note</td>
                                 <td>File Lampiran</td>
                             </tr>
                         </thead>
@@ -65,6 +66,9 @@
                                 </td>
                                 <td>
                                     {{ $data->notification->score->score }}
+                                </td>
+                                <td>
+                                    {{ $data->notification->score->note ?? '-' }}
                                 </td>
                                 <td>
                                     @if ($data->notification->score->file == null)
@@ -142,6 +146,7 @@
                             <tr>
                                 <td>Nilai</td>
                                 <td>Nilai Angka</td>
+                                <td>Note</td>
                                 <td>File Lampiran</td>
                             </tr>
                         </thead>
@@ -152,6 +157,9 @@
                                 </td>
                                 <td>
                                     {{ $data->score->score }}
+                                </td>
+                                <td>
+                                    {{ $data->score->note ?? '-' }}
                                 </td>
                                 <td>
                                     @if ($data->score->file == null)

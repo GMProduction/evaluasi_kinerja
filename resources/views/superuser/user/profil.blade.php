@@ -262,23 +262,24 @@
                             '                        <div class="profile-card-inf__txt">Vendor</div>\n' +
                             '                    </div></a>')
                     }
-                    if (data['packageGoing']) {
-                        $('#cardCount').append('<a class="" style="cursor:pointer; color: black"><div class="profile-card-inf__item border shadow-sm mx-2" style="border-radius: 20px">\n' +
+
+                    if (data['packagePast'] || data['packageGoing']) {
+                        var url = '#', urlpast = '#'
+                        var target;
+                        if (roles === 'vendor'){
+                            urlpast = '/?st=past';
+                            url = '/';
+                            target = 'target="_blank"'
+                        }
+                        $('#cardCount').append('<a class=""  '+target+' href="'+url+'" style="cursor:pointer; color: black"><div class="profile-card-inf__item border shadow-sm mx-2" style="border-radius: 20px">\n' +
                             '                        <div class="profile-card-inf__title">' + data['packageGoing'] + '</div>\n' +
                             '                        <div class="profile-card-inf__txt">Proyek Berjalan</div>\n' +
                             '                    </div></a>')
-                    }
-                    if (data['packagePast']) {
-                        var url = '#'
-                        var target;
-                        if (roles === 'vendor'){
-                            url = '/scoring/{{auth()->id()}}?st=past';
-                            target = 'target="_blank"'
-                        }
-                        $('#cardCount').append('<a class="" '+target+' href="'+url+'" style="cursor:pointer; color: black"><div class="profile-card-inf__item border shadow-sm mx-2" style="border-radius: 20px;" >\n' +
+                        $('#cardCount').append('<a class="" '+target+' href="'+urlpast+'" style="cursor:pointer; color: black"><div class="profile-card-inf__item border shadow-sm mx-2" style="border-radius: 20px;" >\n' +
                             '                        <div class="profile-card-inf__title">' + data['packagePast'] + '</div>\n' +
                             '                        <div class="profile-card-inf__txt">Proyek Selesai</div>\n' +
                             '                    </div></a>')
+
                     }
 
                 }

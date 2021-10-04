@@ -64,7 +64,8 @@ class ScoreController extends CustomController
 
     public function index()
     {
-        return view('superuser.penilaian.penilaian');
+//        return view('superuser.penilaian.penilaian');
+        return view('superuser.penilaian.vendor');
     }
 
     public function detail($id)

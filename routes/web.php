@@ -30,19 +30,12 @@ Route::get(
     }
 );
 
-
-
 Route::prefix('/')->middleware('auth')->group(
     function () {
-        Route::get(
-            '/',
-            function () {
-                return view('superuser/dashboard');
-            }
-        );
-        Route::get('/show-notif',[\App\Http\Controllers\NotificationController::class,'notif']);
-        Route::get('/show-notif-unread',[\App\Http\Controllers\NotificationController::class,'notifUnread']);
-        Route::get('/vendor',[\App\Http\Controllers\VendorController::class,'getVendorPackage']);
+        Route::get('/',[\App\Http\Controllers\DashboardController::class,'index']);
+        Route::get('/show-notif', [\App\Http\Controllers\NotificationController::class, 'notif']);
+        Route::get('/show-notif-unread', [\App\Http\Controllers\NotificationController::class, 'notifUnread']);
+        Route::get('/vendor', [\App\Http\Controllers\VendorController::class, 'getVendorPackage']);
         Route::get('/get-count-dashboard', [\App\Http\Controllers\DashboardController::class, 'getAllCountData']);
         Route::get('/datatable-package-ongoing', [\App\Http\Controllers\DashboardController::class, 'datatable']);
 
@@ -107,19 +100,24 @@ Route::prefix('/')->middleware('auth')->group(
                 Route::post('/set-score', [\App\Http\Controllers\ScoreController::class, 'setScore']);
                 Route::get('/get-history', [\App\Http\Controllers\ScoreController::class, 'getScoreHistory']);
                 Route::get('/get-last-history', [\App\Http\Controllers\ScoreController::class, 'getLastScoreHistory']);
+                Route::get('/{id}', [\App\Http\Controllers\VendorController::class, 'detailVendor']);
             }
         );
 
-        Route::prefix('/scoring')->group(function (){
-            Route::get('/{id}', [\App\Http\Controllers\VendorController::class, 'detailVendor']);
-        });
+//        Route::prefix('/scoring')->group(
+//            function () {
+//
+//            }
+//        );
 
-        Route::prefix('/peringatan')->group(function (){
-            Route::get('/', [\App\Http\Controllers\NotificationController::class, 'index']);
-            Route::get('/count', [\App\Http\Controllers\ClaimNotificationController::class, 'getCountClaim']);
-            Route::post('/claim', [\App\Http\Controllers\ClaimNotificationController::class, 'store']);
-            Route::get('/{type}/{id}', [\App\Http\Controllers\NotificationController::class, 'detailNotification']);
-        });
+        Route::prefix('/peringatan')->group(
+            function () {
+                Route::get('/', [\App\Http\Controllers\NotificationController::class, 'index']);
+                Route::get('/count', [\App\Http\Controllers\ClaimNotificationController::class, 'getCountClaim']);
+                Route::post('/claim', [\App\Http\Controllers\ClaimNotificationController::class, 'store']);
+                Route::get('/{type}/{id}', [\App\Http\Controllers\NotificationController::class, 'detailNotification']);
+            }
+        );
         Route::get(
             '/detail-penilaian',
             function () {
@@ -127,18 +125,20 @@ Route::prefix('/')->middleware('auth')->group(
             }
         );
 
-        Route::prefix('profile')->group(function (){
-            Route::get(
-                '/',
-                function () {
-                    return view('superuser.user.profil');
-                }
-            );
-            Route::post('/',[\App\Http\Controllers\ProfileController::class,'update']);
-            Route::post('update-image', [\App\Http\Controllers\ProfileController::class, 'updateImg']);
-            Route::get('show',[\App\Http\Controllers\ProfileController::class, 'profile']);
-            Route::get('package',[\App\Http\Controllers\ProfileController::class, 'package']);
-        });
+        Route::prefix('profile')->group(
+            function () {
+                Route::get(
+                    '/',
+                    function () {
+                        return view('superuser.user.profil');
+                    }
+                );
+                Route::post('/', [\App\Http\Controllers\ProfileController::class, 'update']);
+                Route::post('update-image', [\App\Http\Controllers\ProfileController::class, 'updateImg']);
+                Route::get('show', [\App\Http\Controllers\ProfileController::class, 'profile']);
+                Route::get('package', [\App\Http\Controllers\ProfileController::class, 'package']);
+            }
+        );
     }
 );
 

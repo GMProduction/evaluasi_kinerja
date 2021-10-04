@@ -552,7 +552,7 @@
         let el_dropdown = '';
         let hasAccess = false;
         let hasHistory = score_history.length > 0;
-        if (roles === index) {
+        if (roles === index && !getParameter('st')) {
             dropdown_active = 'dropdown';
             hasAccess = true;
             el_dropdown =

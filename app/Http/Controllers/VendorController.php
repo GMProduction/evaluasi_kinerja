@@ -28,12 +28,20 @@ class VendorController extends CustomController
 
     public function getVendorPackage(){
         $roles = auth()->user()->roles[0];
-        $package = User::with(['vendor','packageVendorGoing']);
-        if ($roles == 'accessor'){
-            $package = $package->has('package');
-        }else{
+        $package = User::with(['vendor','packageVendorGoing'])->vendor(request('name'))->whereJsonContains('roles', 'vendor');
+//        if ($roles == 'accessor'){
+////            $package = $package->has('package');
+//        }else if ($roles == 'admin' ||$roles == 'superadmin'){
+//            $package = $package->has('package');
+//        }else{
+//            $package = $package->whereHas('package.ppk.accessorppk.user', function ($query){
+//               $query->where('id',Auth::id());
+//            });
+//        }
+
+        if ($roles == 'accessorppk'){
             $package = $package->whereHas('package.ppk.accessorppk.user', function ($query){
-               $query->where('id',Auth::id());
+                $query->where('id',Auth::id());
             });
         }
 
@@ -77,6 +85,25 @@ class VendorController extends CustomController
             $data = Package::with(['vendor'])
                           ->where('finish_at', '<', date('Y-m-d', strtotime(now('Asia/Jakarta'))))->where('vendor_id', $id)
                           ->get();
+        }
+        return view('superuser/penilaian/index')->with(['data' => $data, 'vendor' => $vendor]);
+    }
+
+    public function detailThisVendor(){
+        $id = Auth::id();
+        $vendor = User::with('vendor')->where('id', $id)->firstOrFail();
+        $data = Package::with(['vendor'])
+                       ->where(
+                           [
+                               ['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))],
+                               ['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]
+                           ]
+                       )->where('vendor_id', $id)
+                       ->get();
+        if (request('st') == 'past'){
+            $data = Package::with(['vendor'])
+                           ->where('finish_at', '<', date('Y-m-d', strtotime(now('Asia/Jakarta'))))->where('vendor_id', $id)
+                           ->get();
         }
         return view('superuser/penilaian/index')->with(['data' => $data, 'vendor' => $vendor]);
     }

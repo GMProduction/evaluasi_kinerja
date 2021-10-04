@@ -13,6 +13,15 @@ use Yajra\DataTables\DataTables;
 class DashboardController extends Controller
 {
     //
+
+    public function index(){
+        if (\auth()->user()->roles[0] == 'vendor'){
+            $vendor = new VendorController();
+            return $vendor->detailVendor(Auth::id());
+        }
+        return view('superuser/dashboard');
+    }
+
     public function getAllCountUser()
     {
         $user = User::count('*');

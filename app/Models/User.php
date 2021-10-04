@@ -22,7 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'roles',
-        'image'
+        'image',
     ];
 
     /**
@@ -42,12 +42,12 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'roles' => 'array'
+        'roles'             => 'array',
     ];
 
     public function vendor()
     {
-        return $this->hasOne(Vendor::class,'user_id');
+        return $this->hasOne(Vendor::class, 'user_id');
     }
 
     public function accessorppk()
@@ -65,20 +65,41 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class, 'user_id');
     }
 
-    public function accessor(){
+    public function accessor()
+    {
         return $this->hasOne(Accessor::class, 'user_id');
     }
 
-    public function package(){
-        return $this->hasMany(Package::class,'vendor_id');
+    public function package()
+    {
+        return $this->hasMany(Package::class, 'vendor_id');
     }
 
-    public function packageVendorGoing(){
-        return $this->hasMany(Package::class, 'vendor_id')->where([['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))],['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]]);
+    public function packageVendorGoing()
+    {
+        return $this->hasMany(Package::class, 'vendor_id')->where(
+            [['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))], ['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]]
+        );
     }
 
-    public function packageVendorPast(){
+    public function packageVendorPast()
+    {
         return $this->hasMany(Package::class, 'vendor_id')->where('start_at', '>', date('Y-m-d', strtotime(now('Asia/Jakarta'))));
+    }
+
+    public function scopeVendor($query, $filter)
+    {
+        $query->when(
+            $filter ?? false,
+            function ($query, $filter) {
+                return $query->whereHas(
+                    'vendor',
+                    function ($q) use ($filter) {
+                        $q->where('name', 'like', '%'.$filter.'%');
+                    }
+                );
+            }
+        );
     }
 
 }
