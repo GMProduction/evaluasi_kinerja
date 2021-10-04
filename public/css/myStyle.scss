@@ -1,6 +1,6 @@
 $primary-color: #fe61b6;
 $surface-color: #fff;
-$text-color: #666;
+$text-color: #e8ebee;
 $text-color2: #666;
 $curve: 40;
 $activecolor: #1f9cac;
@@ -16,6 +16,8 @@ $shadowactivecolorlight: #1f9cac11;
 // 77AB53
 $shadowsuccessecolor: #0ebb4855;
 $shadowdangercolor: #ff000055;
+$background-card: #1D3752;
+$color-accent: #DFA01E;
 
 .nav {
     &.normal {
@@ -306,16 +308,17 @@ td {
         padding: 16px;
         box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px,
             rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
-        background-color: white;
+        background-color: $background-card;
         border-radius: 10px;
         width: 200px;
         margin-right: 16px;
         cursor: pointer;
         transition: all 300ms;
+        
 
         &.active {
-            background-color: $activecolor;
-            color: white;
+            background-color: $color-accent;
+            color: $text-color;
             box-shadow: $shadowactivecolor 0px 7px 29px 0px;
 
             .t-bagus {
