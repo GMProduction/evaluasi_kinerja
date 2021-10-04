@@ -3,7 +3,7 @@
         {{-- <p class="fw-bold t-primary">Dashboard</p> --}}
         <div role="tablist" id="tablist">
             <div class="items-tab" id="menu-tab">
-                <a class="card-tab  d-block c-text card-user" style="background-color: rgba(255, 224, 224, 20)"
+                <a class="card-tab  d-block c-text card-user"
                     id="user">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user-circle icon-size-lg '></i>
@@ -14,7 +14,7 @@
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text card-user" style="background-color: rgba(224, 255, 224, 20)"
+                <a class="card-tab d-block c-text card-user" 
                     id="package">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-building-house icon-size-lg'></i>
@@ -25,7 +25,7 @@
                     </div>
                 </a>
 
-                <a class="card-tab d-block c-text card-user" style="background-color: rgba(224, 224, 255, 20)"
+                <a class="card-tab d-block c-text card-user" 
                     id="indicator">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-receipt icon-size-lg'></i>
@@ -43,7 +43,7 @@
     <div style="padding-right: 30px; padding-left: 30px" class="mt-5">
         <div class="d-flex justify-content-between">
 
-            <p class="fw-bold t-primary">Data Penyedia Jasa</p>
+            <p class="fw-bold t-black">Data Penyedia Jasa</p>
             {{-- <div class="search"> --}}
             {{-- <input type="text" placeholder="search"/> --}}
             {{-- <div class="symbol"> --}}
