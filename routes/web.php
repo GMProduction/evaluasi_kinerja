@@ -90,9 +90,9 @@ Route::prefix('/')->middleware('auth')->group(
                 Route::get('/', [\App\Http\Controllers\ScoreController::class, 'index']);
                 Route::get('/datatable', [\App\Http\Controllers\ScoreController::class, 'datatable']);
                 Route::get('/datatable/vendor/{id}', [\App\Http\Controllers\ScoreController::class, 'datatableByVendorId']);
-                Route::get('/detail/{id}', [\App\Http\Controllers\ScoreController::class, 'detail']);
+//                Route::get('/detail/{id}', [\App\Http\Controllers\ScoreController::class, 'detail']);
                 Route::get('/detail/{id}/comulative', [\App\Http\Controllers\ScoreController::class, 'getComutative']);
-                Route::post('/detail/{id}', [\App\Http\Controllers\ScoreController::class, 'uploadFile']);
+                Route::post('/upload', [\App\Http\Controllers\ScoreController::class, 'uploadFile']);
                 Route::post('/add-note', [\App\Http\Controllers\ScoreController::class, 'addNote']);
                 Route::get('/results', [\App\Http\Controllers\ScoreController::class, 'getScore']);
                 Route::get('/last-update', [\App\Http\Controllers\ScoreController::class, 'lastUpdate']);
@@ -100,7 +100,7 @@ Route::prefix('/')->middleware('auth')->group(
                 Route::post('/set-score', [\App\Http\Controllers\ScoreController::class, 'setScore']);
                 Route::get('/get-history', [\App\Http\Controllers\ScoreController::class, 'getScoreHistory']);
                 Route::get('/get-last-history', [\App\Http\Controllers\ScoreController::class, 'getLastScoreHistory']);
-                Route::get('/{id}', [\App\Http\Controllers\VendorController::class, 'detailVendor']);
+                Route::get('/{id}/vendor', [\App\Http\Controllers\VendorController::class, 'detailVendor']);
             }
         );
 

@@ -486,7 +486,7 @@ class ScoreController extends CustomController
         return $score;
     }
 
-    public function uploadFile($id)
+    public function uploadFile()
     {
         try {
             $authorId = Auth::id();

@@ -31,7 +31,7 @@
     @yield('moreCss')
 </head>
 
-<body id="body-pd" 
+<body id="body-pd"
     class="bg-color {{ auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin' ? 'body-pd' : '' }}"
     style="{{ auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin' ? '' : 'padding-left: 16px' }}; ">
     <header
@@ -39,8 +39,10 @@
         id="header" style="justify-content: space-between">
         {{-- <div class="header_toggle"><i class='bx bx-menu bx-x' id="header-toggle"></i></div> --}}
 
-        <div id="brodcum" style="display: flex; align-items: center; "></div>
-
+        <div class="d-flex">
+            <img src="{{ asset('/images/Logo2.png') }}" height="50px" style="margin-right: 30px" />
+            <div id="brodcum" style="display: flex; align-items: center; "></div>
+        </div>
 
         <div class="d-flex align-items-center" style="justify-content: space-between">
             <div class="btn-group">
@@ -114,7 +116,7 @@
         </div>
     @endif
     <!--Container Main start-->
-    <section >
+    <section>
 
         @yield('content')
 
@@ -207,7 +209,8 @@
                     lok1 + "'>" + lok1 +
                     "</a>"
                 if (lok2) {
-                    brod = brod + " <i class='bx bx-chevron-right me-1 t-primary'></i> <a class='me-1' href='/" + lok1 + "/" + lok2 +
+                    brod = brod + " <i class='bx bx-chevron-right me-1 t-primary'></i> <a class='me-1' href='/" + lok1 +
+                        "/" + lok2 +
                         "/" + lok3 +
                         "'>" + lok2 + "</a>"
                 }
