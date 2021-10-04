@@ -18,7 +18,7 @@ class UserController extends CustomController
 
     public function datatable($role)
     {
-        $data = User::with("$role")->whereJsonContains('roles', $role)->get();
+        $data = User::with("$role")->whereJsonContains('roles', $role);
 
         if ($role == 'accessorppk'){
             $data = User::with("accessorppk.ppk")->whereJsonContains('roles', $role);
@@ -83,7 +83,6 @@ class UserController extends CustomController
                 ]
             );
         }
-
         $roles         = \request('roles');
         Arr::set($field, 'roles', ["$roles"]);
         $files = \request()->file('profile');
@@ -114,6 +113,12 @@ class UserController extends CustomController
                 }
                 $user->update($field);
                 $user->$roles()->update(['name' => $field['name']]);
+                if (\request('roles') == 'accessorppk'){
+                    $user->$roles()->update(['ppk_id' => \request('selectPPK')]);
+                }
+                if (\request('roles') == 'vendor'){
+                    $user->$roles()->update(['kualifikasi' => \request('kualifikasi')]);
+                }
             } else {
 
                 Arr::set($field, 'username', \request('username'));
@@ -131,6 +136,9 @@ class UserController extends CustomController
                 if (\request('roles') == 'accessorppk'){
                     Arr::set($field, 'ppk_id', \request('selectPPK'));
                 }
+                if (\request('roles') == 'vendor'){
+                    Arr::set($field, 'kualifikasi', \request('kualifikasi'));
+                }
                 $user->$roles()->create($field);
 
             }
@@ -142,6 +150,18 @@ class UserController extends CustomController
 
             return response()->json(['msg' => $er->getMessage()], 500);
         }
+    }
+
+    public function getDetailUser(){
+        $role = \request('role');
+        $id = \request('id');
+        $data = User::with("$role")->whereJsonContains('roles', $role)->find($id);
+
+        if ($role == 'accessorppk'){
+            $data = User::with("accessorppk.ppk")->whereJsonContains('roles', $role)->find($id);
+        }
+
+        return $data;
     }
 
     public function getCountUser(){

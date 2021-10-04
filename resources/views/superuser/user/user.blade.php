@@ -157,6 +157,40 @@
                 </table>
             </div>
         </div>
+
+        <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detail <span id="detailTitle"></span></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table id="tbDetail" class="table table-borderless">
+                            <tr>
+                                <td style="width: 150px">Nama <span id="name"></span></td>
+                                <td style="width: 10px">:</td>
+                                <td id="dName"></td>
+                            </tr>
+                            <tr>
+                                <td>Username</td>
+                                <td>:</td>
+                                <td id="dUser"></td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>:</td>
+                                <td id="dEmail"></td>
+                            </tr>
+                            <tbody id="trOther"></tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </section>
 @endsection
 
@@ -193,6 +227,68 @@
             getCountUser()
         }
 
+        $(document).on('click', '#detailData', function () {
+            getUser($(this).data('id'))
+            $('#detail').modal('show')
+
+        })
+
+        function getUser(id) {
+            let data = {
+                'id' : id,
+                'role' : roles
+            }
+            $.get(window.location.pathname+'/detail',data, function (data) {
+                console.log(data)
+                $('#detail #detailTitle').html(textRoles+' '+data[roles]['name'])
+                $('#detail #dName').html(data[roles]['name'])
+                $('#detail #dUser').html(data['username'])
+                $('#detail #dEmail').html(data['email'])
+                $('#tbDetail #name').html(textRoles)
+                $('#trOther').empty();
+                if (roles === 'vendor'){
+                    var phone = data[roles]['phone'] ?? '-';
+                    var kualifikasi = data[roles]['kualifikasi'] ?? '-';
+                    var npwp = data[roles]['npwp'] ?? '-';
+                    var iujk = data[roles]['iujk'] ?? '-';
+                    var address = data[roles]['iujk'] ?? '-';
+                    $('#trOther').append('<tr>' +
+                        '<td>Phone</td>' +
+                        '<td>:</td>' +
+                        '<td>'+phone+'</td>' +
+                        '</tr>')
+                        .append('<tr>' +
+                            '<td>Kualifikasi</td>' +
+                            '<td>:</td>' +
+                            '<td>'+kualifikasi+'</td>' +
+                            '</tr>')
+                        .append('<tr>' +
+                            '<td>NPWP</td>' +
+                            '<td>:</td>' +
+                            '<td>'+npwp+'</td>' +
+                            '</tr>')
+                        .append('<tr>' +
+                            '<td>IUJK</td>' +
+                            '<td>:</td>' +
+                            '<td>'+iujk+'</td>' +
+                            '</tr>')
+                        .append('<tr>' +
+                            '<td>Alamat</td>' +
+                            '<td>:</td>' +
+                            '<td>'+address+'</td>' +
+                            '</tr>')
+                }
+
+                if (roles === 'accessorppk'){
+                    $('#trOther').append('<tr>' +
+                        '<td>PPK</td>' +
+                        '<td>:</td>' +
+                        '<td>'+data['accessorppk']['ppk']['name']+'</td>' +
+                        '</tr>')
+                }
+            })
+        }
+
         $(document).on('click', '#addData, #editData', function() {
             $('#tambahdata #id').val($(this).data('id'));
             $('#tambahdata #roles').val(roles);
@@ -216,6 +312,15 @@
                     dropdownParent: $('#tambahdata')
                 });
             }
+
+            if (roles === 'vendor') {
+                $('#ppkDiv').html(' <div class="mb-3">\n' +
+                    '                                    <label for="name" class="form-label">Kualifikasi</label>\n' +
+                    '                                    <input type="text" name="kualifikasi" value="'+$(this).data('kualifikasi')+'" id="kualifikasi" class="form-control">' +
+                    '                                </div>')
+            }
+
+
             var icon = $('.fotoprofile').dropify({
                 messages: {
                     'default': 'Masukkan Foto',
@@ -258,6 +363,8 @@
                 })
             })
         }
+
+
 
         function datatable(role) {
 
@@ -348,17 +455,19 @@
                     {
                         "target": 2,
                         "data": 'id',
-                        "width": '100',
+                        "width": '150',
                         "render": function(data, type, row, meta) {
                             var ppk = row[role].ppk !== undefined ? row[role].ppk.id : '';
+                            var kualifikasi = row[role].kualifikasi ?? '';
                             return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-name="' +
                                 row[role].name + '" data-id="' + data +
                                 '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
-                                '<a href="#!" class="btn btn-sm btn-success btn-sm" style="border-radius: 50px" data-image="' +
+                                '<a href="#!" class="btn btn-sm btn-success btn-sm me-2" style="border-radius: 50px" data-kualifikasi="'+kualifikasi+'" data-image="' +
                                 row.image + '" data-username="' + row.username + '" data-ppk="' + ppk +
                                 '" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role]
                                 .name + '" data-id="' + data +
-                                '" id="editData"><i class="bx bx-edit"></i></a>'
+                                '" id="editData"><i class="bx bx-edit"></i></a>' +
+                                '<a class="btn btn-sm btn-info btn-sm" id="detailData" data-id="'+row.id+'" style="border-radius: 50px; color: white"><i class=\'bx bxs-user-detail\'></i></a>'
                         }
                     },
                 ]

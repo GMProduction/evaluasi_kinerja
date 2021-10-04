@@ -9,6 +9,9 @@
             position: unset !important;
             border: unset !important;
         }
+        td {
+            font-size: unset !important;
+        }
     </style>
 @endsection
 
@@ -35,18 +38,23 @@
             <div class="profile-card__cnt js-profile-cnt">
                 <div class="profile-card__name" id="name">Nama Perusahaan</div>
                 <div class="profile-card__txt" id="email">Alamat Email</div>
-
-
-                <div class="profile-card-inf" style="height: 91px">
-                    <div class="profile-card-inf__item d-none" id="cardVendor">
-                        <div class="profile-card-inf__title" id="vendor">0</div>
-                        <div class="profile-card-inf__txt">Penyedia Jasa</div>
+                <div class="d-flex justify-content-center" style="">
+                    <div class="d-none" style="width: 400px;" id="detail">
+                        <table class="table table-borderless">
+                        </table>
                     </div>
+                </div>
 
-                    <div class="profile-card-inf__item d-none" id="cardPackage">
-                        <div class="profile-card-inf__title" id="package">0</div>
-                        <div class="profile-card-inf__txt">Proyek Berjalan</div>
-                    </div>
+                <div class="profile-card-inf" id="cardCount" style="height: 91px">
+                    {{--                    <div class="profile-card-inf__item d-none" id="cardVendor">--}}
+                    {{--                        <div class="profile-card-inf__title" id="vendor">0</div>--}}
+                    {{--                        <div class="profile-card-inf__txt">Penyedia Jasa</div>--}}
+                    {{--                    </div>--}}
+
+                    {{--                    <div class="profile-card-inf__item d-none" id="cardPackage">--}}
+                    {{--                        <div class="profile-card-inf__title" id="package">0</div>--}}
+                    {{--                        <div class="profile-card-inf__txt">Proyek Berjalan</div>--}}
+                    {{--                    </div>--}}
 
 
                 </div>
@@ -80,7 +88,6 @@
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="emailForm" name="email">
                             </div>
-
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
                                 <input type="text" class="form-control" id="username" name="username">
@@ -96,6 +103,8 @@
                                 <input type="password" class="form-control" id="password_confirmation"
                                        name="password_confirmation">
                             </div>
+                            <div id="addDiv"></div>
+
                             <div class="mb-4"></div>
                             <button type="submit" class="bt-primary">Simpan</button>
                         </form>
@@ -116,6 +125,8 @@
     <script src="{{ asset('js/handler_image.js') }}"></script>
     <script>
         var roles, image, icon, name, username, email, id;
+        var phone, kualifikasi, npwp, iujk, address;
+
         $(document).ready(function () {
             roles = '{{auth()->user()->roles[0]}}'
             getProfile();
@@ -150,6 +161,26 @@
             $('#username').val(username)
             $('#tambahdata #password_confirmation').val('********');
             $('#tambahdata #password').val('********');
+            $('#addDiv').empty()
+
+            if (roles === 'vendor'){
+                $('#addDiv').append(' <div class="mb-3">\n' +
+                    '                                <label for="phone" class="form-label">Phone</label>\n' +
+                    '                                <input type="text" class="form-control" id="phone" name="phone" value="'+phone+'">\n' +
+                    '                            </div>')
+                    .append(' <div class="mb-3">\n' +
+                        '                                <label for="npwp" class="form-label">NPWP</label>\n' +
+                        '                                <input type="text" class="form-control" id="npwp" name="npwp" value="'+npwp+'">\n' +
+                        '                            </div>')
+                    .append(' <div class="mb-3">\n' +
+                        '                                <label for="iujk" class="form-label">IUJK</label>\n' +
+                        '                                <input type="text" class="form-control" id="iujk" name="iujk" value="'+iujk+'">\n' +
+                        '                            </div>')
+                    .append(' <div class="mb-3">\n' +
+                        '                                <label for="address" class="form-label">Alamat</label>\n' +
+                        '                                <textarea class="form-control" id="address" name="address">'+address+'</textarea>\n' +
+                        '                            </div>')
+            }
 
             $('#tambahdata').modal('show');
         })
@@ -166,6 +197,7 @@
 
         function getProfile() {
             $.get(window.location.pathname + '/show', function (data) {
+                $('#detail').addClass('d-none')
                 if (data) {
                     name = data[roles]['name']
                     username = data['username']
@@ -173,6 +205,42 @@
                     id = data['id']
                     $('#name').html(name)
                     $('#email').html(email)
+                    phone = '', kualifikasi = '', npwp = '', iujk = '', address = '';
+                    if (roles === 'vendor'){
+                        $('#detail').removeClass('d-none')
+                        $('#detail table').empty()
+                        phone = data[roles]['phone'] ?? '-';
+                        kualifikasi = data[roles]['kualifikasi'] ?? '-';
+                        npwp = data[roles]['npwp'] ?? '-';
+                        iujk = data[roles]['iujk'] ?? '-';
+                        address = data[roles]['iujk'] ?? '-';
+                        $('#detail table').append('<tr>' +
+                            '<td >Phone</td>' +
+                            '<td>:</td>' +
+                            '<td>'+phone+'</td>' +
+                            '</tr>')
+                            .append('<tr>' +
+                                '<td>Kualifikasi</td>' +
+                                '<td>:</td>' +
+                                '<td>'+kualifikasi+'</td>' +
+                                '</tr>')
+                            .append('<tr>' +
+                                '<td>NPWP</td>' +
+                                '<td>:</td>' +
+                                '<td>'+npwp+'</td>' +
+                                '</tr>')
+                            .append('<tr>' +
+                                '<td>IUJK</td>' +
+                                '<td>:</td>' +
+                                '<td>'+iujk+'</td>' +
+                                '</tr>')
+                            .append('<tr>' +
+                                '<td>Alamat</td>' +
+                                '<td>:</td>' +
+                                '<td>'+address+'</td>' +
+                                '</tr>')
+                    }
+
                     image = data['image']
                     icon = icon.data('dropify');
                     icon.resetPreview();
@@ -186,21 +254,33 @@
 
         function package() {
             $.get(window.location.pathname + '/package', function (data) {
+                $('#cardCount').empty()
                 if (data) {
-                    if (data['packageGoing']){
-                        $('#cardPackage').removeClass('d-none')
-                        $('#package').html(data['packageGoing'])
-                    }else{
-                        $('#cardPackage').addClass('d-none')
+                    if (data['vendor']) {
+                        $('#cardCount').append('<a class="" style="cursor:pointer; color: black"><div class="profile-card-inf__item  border shadow-sm mx-2" style="border-radius: 20px">\n' +
+                            '                        <div class="profile-card-inf__title">' + data['vendor'] + '</div>\n' +
+                            '                        <div class="profile-card-inf__txt">Vendor</div>\n' +
+                            '                    </div></a>')
+                    }
+                    if (data['packageGoing']) {
+                        $('#cardCount').append('<a class="" style="cursor:pointer; color: black"><div class="profile-card-inf__item border shadow-sm mx-2" style="border-radius: 20px">\n' +
+                            '                        <div class="profile-card-inf__title">' + data['packageGoing'] + '</div>\n' +
+                            '                        <div class="profile-card-inf__txt">Proyek Berjalan</div>\n' +
+                            '                    </div></a>')
+                    }
+                    if (data['packagePast']) {
+                        var url = '#'
+                        var target;
+                        if (roles === 'vendor'){
+                            url = '/scoring/{{auth()->id()}}?st=past';
+                            target = 'target="_blank"'
+                        }
+                        $('#cardCount').append('<a class="" '+target+' href="'+url+'" style="cursor:pointer; color: black"><div class="profile-card-inf__item border shadow-sm mx-2" style="border-radius: 20px;" >\n' +
+                            '                        <div class="profile-card-inf__title">' + data['packagePast'] + '</div>\n' +
+                            '                        <div class="profile-card-inf__txt">Proyek Selesai</div>\n' +
+                            '                    </div></a>')
                     }
 
-                    if (data['vendor']){
-                        $('#cardVendor').removeClass('d-none')
-                        $('#vendor').html(data['vendor'])
-                    }else {
-                        $('#cardVendor').addClass('d-none')
-
-                    }
                 }
             })
         }

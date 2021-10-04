@@ -13,7 +13,12 @@ class Vendor extends Model
 
     protected $fillable = [
         'user_id',
-        'name'
+        'name',
+        'phone',
+        'kualifikasi',
+        'npwp',
+        'iujk',
+        'address',
     ];
 
     public function user()

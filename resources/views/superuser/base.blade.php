@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
-        
+
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/myStyle.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}" type="text/css">
@@ -31,9 +31,9 @@
     @yield('moreCss')
 </head>
 
-<body id="body-pd"
-    class="{{ auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin' ? 'body-pd' : '' }}"
-    style="{{ auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin' ? '' : 'padding-left: 16px' }}">
+<body id="body-pd" 
+    class="bg-color {{ auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin' ? 'body-pd' : '' }}"
+    style="{{ auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin' ? '' : 'padding-left: 16px' }}; ">
     <header
         class="header {{ auth()->user()->roles[0] == 'superuser' || auth()->user()->roles[0] == 'admin' ? 'body-pd' : '' }}"
         id="header" style="justify-content: space-between">
@@ -43,8 +43,6 @@
 
 
         <div class="d-flex align-items-center" style="justify-content: space-between">
-
-
             <div class="btn-group">
                 <a class="t-black klikable me-3" id="dropdownMenuClickableInside" data-bs-toggle="dropdown"
                     data-bs-auto-close="outside" aria-expanded="false">
@@ -116,7 +114,7 @@
         </div>
     @endif
     <!--Container Main start-->
-    <section>
+    <section >
 
         @yield('content')
 
@@ -205,11 +203,11 @@
             var brod;
             if (lok1) {
                 brod =
-                    "<a href='/' class='me-1'>Dashboard</a> <i class='bx bx-chevron-right me-1'></i> <a class='me-1' href='/" +
+                    "<a href='/' class='me-1'>Dashboard</a> <i class='bx bx-chevron-right me-1 t-primary'></i> <a class='me-1' href='/" +
                     lok1 + "'>" + lok1 +
                     "</a>"
                 if (lok2) {
-                    brod = brod + " <i class='bx bx-chevron-right me-1'></i> <a class='me-1' href='/" + lok1 + "/" + lok2 +
+                    brod = brod + " <i class='bx bx-chevron-right me-1 t-primary'></i> <a class='me-1' href='/" + lok1 + "/" + lok2 +
                         "/" + lok3 +
                         "'>" + lok2 + "</a>"
                 }
