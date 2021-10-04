@@ -41,8 +41,9 @@
         </div>
     </div>
     <div style="padding-right: 30px; padding-left: 30px" class="mt-5">
-        <div class="d-flex justify-content-end">
-            <form id="form" onsubmit="return cariVendor()">
+        <div class="d-flex justify-content-between">
+            <p class="fw-bold t-black">Data Penyedia Jasa</p>
+            <form id="form" onsubmit="return cariVendor()" class="mb-0">
                 <div class="input-group mb-3">
                 <input class="form-control" type="text" name="name" id="txtCari"
                        style="border-top-right-radius: 0;border-bottom-right-radius: 0;"

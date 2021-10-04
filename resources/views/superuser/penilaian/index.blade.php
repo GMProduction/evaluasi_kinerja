@@ -569,14 +569,14 @@
                 return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Unggah</a>' +
                     type3;
             } else if (!hasFile && !hasScore) {
-                return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">-</a>';
+                return '<a class="bt-primary-xsm"  style="cursor: pointer" >-</a>';
             } else {
                 return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Unduh / Ganti</a>' +
                     type1;
             }
         } else {
             if (!hasFile) {
-                return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">-</a>';
+                return '<a class="bt-primary-xsm"  style="cursor: pointer">-</a>';
             } else {
                 return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Unduh</a>' +
                     type2;
@@ -606,14 +606,14 @@
                 return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Detail</a>' +
                     type3;
             } else if (!hasNote && !hasScore) {
-                return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">-</a>';
+                return '<a class="bt-primary-xsm"  style="cursor: pointer">-</a>';
             } else {
                 return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Detail</a>' +
                     type1;
             }
         } else {
             if (!hasNote) {
-                return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">-</a>';
+                return '<a class="bt-primary-xsm"  style="cursor: pointer">-</a>';
             } else {
                 return '<a class="bt-primary-xsm"  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">Detail</a>' +
                     type2;
@@ -666,10 +666,12 @@
         let dropdown_active = '';
         let el_dropdown = '';
         let hasAccess = false;
+        let attribe = ''
         let hasHistory = score_history.length > 0;
         if (roles === index && !getParameter('st')) {
             dropdown_active = 'dropdown';
             hasAccess = true;
+            attribe = ' data-bs-toggle="dropdown" aria-expanded="false"'
             el_dropdown =
                 '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink"> <button class="dropdown-item nilai" type="button" data-value="3" data-subin="' +
                 id + '">Baik</button>\n' +
@@ -683,7 +685,7 @@
             '<td><div class="primary-light-text">' + value['name'] + elButtonHistory(hasHistory, id) + '' +
             '</div></td>\n' +
             '<td><div class="dropdown"><a class="' + btn_class +
-            ' dropup "  style="cursor: pointer"  data-bs-toggle="dropdown" aria-expanded="false">' + score + '</a>\n' +
+            ' dropup "  style="cursor: pointer" '+attribe+'>' + score + '</a>\n' +
             el_dropdown +
             '</div></td>\n' +
             '<td class="primary-light-text">' + last_update + '</td>\n' +
