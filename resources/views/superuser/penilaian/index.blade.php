@@ -283,7 +283,7 @@
                         </div>
                     </a>
 
-                    <a class="card-tab d-block c-text card-user active" id="accessor" data-roles="accessor">
+                    <a class="card-tab d-block c-text card-user " id="accessor" data-roles="accessor">
                         <div class="d-flex justify-content-between">
                             <i class='bx bx-message-square-edit'></i>
                             {{-- <p class="number-card t-kurang">38</p> --}}
