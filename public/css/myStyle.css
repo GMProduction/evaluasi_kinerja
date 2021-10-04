@@ -1,8 +1,20 @@
-.form-control:disabled, .form-control[readonly] {
+.form-control:disabled,
+.form-control[readonly] {
   background-color: #34506e;
   opacity: 1;
   border: none;
   color: #e8ebee;
+}
+
+.dropdown-menu {
+  background-color: #3a5779;
+}
+
+.dropdown-item {
+  color: #e8ebee;
+}
+.dropdown-item:hover {
+  background-color: #fcae1e55;
 }
 
 .form-select {
@@ -39,7 +51,11 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 #brodcum a {
-  color: #dfa01e;
+  color: #a5afba;
+}
+
+.t-text-color2 {
+  color: #a5afba;
 }
 
 .nav.normal {
@@ -357,9 +373,12 @@ body {
 
 .items-tab {
   display: flex;
+  position: relative;
 }
 .items-tab .card-tab {
   padding: 16px;
+  position: relative;
+  display: block;
   box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px, rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
   background-color: #34506e;
   border-radius: 10px;
@@ -399,13 +418,13 @@ body {
   transition: all 300ms;
 }
 .notifdiv.isread {
-  background-color: #9e958311;
+  background-color: #fcae1e11;
 }
 .notifdiv.isread:hover {
-  background-color: #eaeaea;
+  background-color: #fcae1e55;
 }
 .notifdiv:hover {
-  background-color: #eaeaea;
+  background-color: #fcae1e55;
 }
 .notifdiv img {
   -o-object-fit: cover;
@@ -433,10 +452,11 @@ body {
 .notifdiv .div-content .div-header .tanggal {
   font-size: 0.7rem;
   margin-bottom: 0;
+  color: #a5afba;
 }
 .notifdiv .div-content .sub-indikator {
   font-size: 0.8rem;
-  color: gray;
+  color: #a5afba;
   margin-bottom: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -450,7 +470,7 @@ body {
   margin: 10px;
   font-weight: bold;
   font-size: 0.8rem;
-  color: gray;
+  color: #e8ebee;
 }
 
 .hr-notif {
@@ -469,6 +489,7 @@ body {
 }
 
 .card-vendor {
+  position: relative;
   padding: 16px;
   box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px, rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
   background-color: #1d3752;

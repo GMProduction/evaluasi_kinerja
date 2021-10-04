@@ -1,12 +1,25 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+:root {
+    --header-height: 3rem;
+    --nav-width: 68px;
+    --first-color: white;
+    --first-color-light: #a5afba;
+    --white-color: #f7f6fb;
+    --text-color: #e8ebee;
+    --body-font: "Nunito", sans-serif;
+    --normal-font-size: 1rem;
+    --z-fixed: 100;
+    --bg-activecolor: #34506e;
+    --background-card: #1d3752;
+    --bg-color: #778797;
+}
 
 * {
     box-sizing: border-box;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    background: #f6f5f7;
+    background: var(--background-card);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -52,7 +65,7 @@ a {
 }
 
 .form-container form {
-    background: #fff;
+    background: var(--bg-activecolor);
     display: flex;
     flex-direction: column;
     padding:  0 50px;
