@@ -106,6 +106,10 @@ Route::prefix('/')->middleware('auth')->group(
             }
         );
 
+        Route::prefix('/scoring')->group(function (){
+            Route::get('/{id}', [\App\Http\Controllers\VendorController::class, 'detailVendor']);
+        });
+
         Route::prefix('/peringatan')->group(function (){
             Route::get('/', [\App\Http\Controllers\NotificationController::class, 'index']);
             Route::get('/count', [\App\Http\Controllers\ClaimNotificationController::class, 'getCountClaim']);

@@ -460,8 +460,9 @@
                     <button class="ghost" id="signIn">Sign In</button>
                 </div>
                 <div class="overlay-panel overlay-right">
-                    <h1>Evaluasi Kinerja Penyedia Jasa</h1>
-                    <p>Hitung penilaian kinerja penyedia jasa disini</p>
+                    <img src="{{ asset('/images/Logo1.png') }}" height="120">
+                    <h1 class="mb-0">Evaluasi Kinerja Penyedia Jasa</h1>
+                    <p class="mt-0">Hitung penilaian kinerja penyedia jasa disini</p>
                     {{-- <button class="ghost" id="signUp">Sign Up</button> --}}
                 </div>
             </div>

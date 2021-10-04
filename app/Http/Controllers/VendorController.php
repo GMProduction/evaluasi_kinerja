@@ -62,4 +62,17 @@ class VendorController extends CustomController
         }
     }
 
+    public function detailVendor($id)
+    {
+        $vendor = User::with('vendor')->where('id', $id)->firstOrFail();
+        $data = Package::with(['vendor'])
+            ->where(
+                [
+                    ['start_at', '<=', date('Y-m-d', strtotime(now('Asia/Jakarta')))],
+                    ['finish_at', '>=', date('Y-m-d', strtotime(now('Asia/Jakarta')))]
+                ]
+            )->where('vendor_id', $id)
+            ->get();
+        return view('superuser/penilaian/index')->with(['data' => $data, 'vendor' => $vendor]);
+    }
 }
