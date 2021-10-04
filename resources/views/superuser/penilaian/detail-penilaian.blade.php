@@ -7,12 +7,12 @@
             font-size: 12px;
         }
 
-        .trFocus {
+        /* .trFocus {
             border-color: #86b7fe;
             border-radius: 15px;
             outline: 0;
             box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%)
-        }
+        } */
 
     </style>
 @endsection

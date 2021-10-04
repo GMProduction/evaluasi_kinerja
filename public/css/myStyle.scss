@@ -6,12 +6,14 @@ $curve: 40;
 $activecolor: #dfa01e;
 // $activecolor: #887df3;
 $successcolor: #0ebb48;
-$successcolorlight: #69f0ae;
-$cukupcolorlight: #ffab40;
-$burukcolorlight: #ff4081;
-$shadowactivecolor: #dfa01e55;
+$successcolorlight: #3ded97;
+$cukupcolorlight: #fcae1e;
+$sedangcolorlight: #f9e076;
+$sbaikcolorlight: #63c5da;
+$burukcolorlight: #e3242b;
+$shadowactivecolor: #34506e;
 // $shadowactivecolor: #887df355;
-$shadowactivecolorlight: #dfa01e11;
+$shadowactivecolorlight: #9e958311;
 // $shadowactivecolorlight: #887df311;
 // 77AB53
 $shadowsuccessecolor: #0ebb4855;
@@ -21,12 +23,43 @@ $color-accent: #dfa01e;
 $bg-activecolor: #34506e;
 $bg-activecolor2:rgb(44, 71, 102);
 
+.form-control:disabled, .form-control[readonly] {
+    background-color: $bg-activecolor;
+    opacity: 1;
+    border: none;
+    color: $text-color;
+}
+
 .form-select {
     background-color: $bg-activecolor;
     color: $text-color;
     border: none;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='white' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e")
 }
+
+.select-paket{
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid $bg-activecolor;
+    background-color: $background-card;
+    font-weight: bold;
+    color: $activecolor;
+
+    
+    &:focus{
+        outline: none;
+    }
+
+    &:active{
+        border: none !important;
+    }
+}
+
+.select-paket option{
+
+    padding:20px !important;
+    min-height: 100px;
+  }
 
 div.dataTables_wrapper div.dataTables_filter input {
     background-color: $bg-activecolor;
@@ -87,10 +120,33 @@ td {
 .mt-content {
     margin-top: 100px;
 }
+
+
 .b-cukup {
+    background-color: $sedangcolorlight;
+    color: white;
+}
+
+.b-kurang{
     background-color: $cukupcolorlight;
     color: white;
 }
+
+.b-baik{
+    background-color: $successcolorlight;
+    color: white;
+}
+
+.b-sangatkurang{
+    background-color: $burukcolorlight;
+    color: white;
+}
+
+.b-sangatbaik{
+    background-color: $sbaikcolorlight;
+    color: white;
+}
+
 .r-fullround {
     border-radius: 50px;
 }
