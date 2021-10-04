@@ -51,7 +51,7 @@ td {
 }
 
 .c-text {
-  color: #666;
+  color: #e8ebee;
 }
 
 .header-table {
@@ -273,7 +273,7 @@ td {
 .items-tab .card-tab {
   padding: 16px;
   box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px, rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
-  background-color: white;
+  background-color: #1D3752;
   border-radius: 10px;
   width: 200px;
   margin-right: 16px;
@@ -281,8 +281,8 @@ td {
   transition: all 300ms;
 }
 .items-tab .card-tab.active {
-  background-color: #1f9cac;
-  color: white;
+  background-color: #DFA01E;
+  color: #e8ebee;
   box-shadow: #1f9cac55 0px 7px 29px 0px;
 }
 .items-tab .card-tab.active .t-bagus {

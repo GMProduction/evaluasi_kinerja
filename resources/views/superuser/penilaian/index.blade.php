@@ -14,8 +14,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
+        
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css">
-    {{-- <link rel="stylesheet" href="{{ asset('css/myStyle.css') }}" type="text/css"> --}}
+    <link rel="stylesheet" href="{{ asset('css/myStyle.css') }}" type="text/css">
     {{-- <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}" type="text/css"> --}}
     <link rel="stylesheet" href="{{ asset('css/shimer.css') }}" type="text/css">
     {{-- <link rel="stylesheet" href="{{ asset('css/boxicon.min.css') }}" type="text/css"> --}}
@@ -118,6 +119,10 @@
             padding: 30px 40px;
         }
 
+        .table-container {
+            margin-bottom: 20px
+        }
+
         .header-profile {
             background-color: #1D3752;
             border-radius: 10px;
@@ -169,43 +174,59 @@
 
     </style>
     <section class="container-fluid p-lg-3 p-xl-3">
-        <div class="header-profile row">
-            <div class="col-xl-9 col-lg-9 d-flex">
-                <img src="{{ $vendor->image }}" height="150" width="150" class="header-image mr-5" />
-                <div class="d-flex flex-column">
-                    <div class="flex-grow-1">
-                        <p class="header-name secondary-color-text">{{ $vendor->vendor->name }}</p>
-                        <p class="header-qualified secondary-light-text">{{ $vendor->vendor->kualifikasi }}</p>
-                    </div>
-                    <div>
-                        <select class="color-accent" id="package-list">
-                            <option value="">--Pilih Paket--</option>
-                            @foreach ($data as $v)
-                                <option value="{{ $v->id }}">{{ $v->name }}</option>
-                            @endforeach
-                        </select>
+        <div class=" row">
+            <div class="col-xl-12 ">
+                <div class="header-profile mb-5">
+                    <div class=" row">
+                        <div class="col-xl-9 col-lg-9 d-flex">
+                            <img src="{{ $vendor->image }}" height="150" width="150" class="header-image mr-5" />
+                            <div class="d-flex flex-column">
+                                <div class="flex-grow-1">
+                                    <p class="header-name secondary-color-text">{{ $vendor->vendor->name }}</p>
+                                    <p class="header-qualified secondary-light-text">
+                                        {{ $vendor->vendor->kualifikasi }}</p>
+                                </div>
+                                <div>
+                                    <select class="color-accent" id="package-list">
+                                        <option value="">--Pilih Paket--</option>
+                                        @foreach ($data as $v)
+                                            <option value="{{ $v->id }}">{{ $v->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 header-profile-right">
+                            <div class="d-flex align-items-start">
+                                <i class="bx bx-home secondary-light-text"
+                                    style="margin-right: 5px; margin-top: 5px"></i>
+                                <span class="secondary-light-text">{{ $vendor->vendor->address }}</span>
+                            </div>
+                            <div class="d-flex align-items-start">
+                                <i class="bx bxs-phone secondary-light-text"
+                                    style="margin-right: 5px; margin-top: 5px"></i>
+                                <p class="secondary-light-text">{{ $vendor->vendor->phone }}</p>
+                            </div>
+                            <div class="d-flex align-items-start">
+                                <i class="bx bx-user-pin secondary-light-text"
+                                    style="margin-right: 5px; margin-top: 5px"></i>
+                                <p class="secondary-light-text">{{ $vendor->vendor->npwp }}</p>
+                            </div>
+                            <div class="d-flex align-items-start">
+                                <i class="bx bx-receipt secondary-light-text"
+                                    style="margin-right: 5px; margin-top: 5px"></i>
+                                <p class="secondary-light-text">{{ $vendor->vendor->iujk }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-3 header-profile-right">
-                <div class="d-flex align-items-start">
-                    <i class="bx bx-home secondary-light-text" style="margin-right: 5px; margin-top: 5px"></i>
-                    <span class="secondary-light-text">{{ $vendor->vendor->address }}</span>
-                </div>
-                <div class="d-flex align-items-start">
-                    <i class="bx bxs-phone secondary-light-text" style="margin-right: 5px; margin-top: 5px"></i>
-                    <p class="secondary-light-text">{{ $vendor->vendor->phone }}</p>
-                </div>
-                <div class="d-flex align-items-start">
-                    <i class="bx bx-user-pin secondary-light-text" style="margin-right: 5px; margin-top: 5px"></i>
-                    <p class="secondary-light-text">{{ $vendor->vendor->npwp }}</p>
-                </div>
-                <div class="d-flex align-items-start">
-                    <i class="bx bx-receipt secondary-light-text" style="margin-right: 5px; margin-top: 5px"></i>
-                    <p class="secondary-light-text">{{ $vendor->vendor->iujk }}</p>
-                </div>
-            </div>
+
         </div>
+
+
+        <p class="title-table mb-0" style="font-size: .8rem; color: gray">Hasil Evaluasi Kinerja Paket </p>
+        <p class="fw-bold t-primary" style="font-size: 2rem">Nama Project</p>
 
         <div class="mb-5 mt-3">
 
@@ -244,9 +265,56 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-xl-9 col-lg-9">
+
+                <div role="tablist" class="mb-3">
+
+                    <div class="items-tab" id="menu-tab">
+                        <a class="card-tab d-block c-text card-user" id="vendor" data-roles="vendor">
+                            <div class="d-flex justify-content-between">
+                                <i class='bx bx-message-square-edit'></i>
+                                {{-- <p class="number-card t-bagus">89</p> --}}
+                            </div>
+                            <div class="mt-2">
+                                Penyedia Jasa
+                            </div>
+                        </a>
+
+                        <a class="card-tab d-block c-text card-user" id="accessorppk" data-roles="accessorppk">
+                            <div class="d-flex justify-content-between">
+                                <i class='bx bx-message-square-edit'></i>
+                                {{-- <p class="number-card t-cukup">67</p> --}}
+                            </div>
+                            <div class="mt-2">
+                                Penilaian PPK
+                            </div>
+                        </a>
+
+                        <a class="card-tab d-block c-text card-user active" id="accessor" data-roles="accessor">
+                            <div class="d-flex justify-content-between">
+                                <i class='bx bx-message-square-edit'></i>
+                                {{-- <p class="number-card t-kurang">38</p> --}}
+                            </div>
+                            <div class="mt-2">
+                                Penilaian Balai
+                            </div>
+                        </a>
+
+                        <a class="card-tab d-block c-text card-user" id="komulatif" data-roles="komulatif">
+                            <div class="d-flex justify-content-between">
+                                <i class='bx bx-message-square-edit'></i>
+                                {{-- <p class="number-card t-kurang">38</p> --}}
+                            </div>
+                            <div class="mt-2">
+                                Komulatif
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
                 <div class="row">
-                    <div class="col-12  mb-3">
+                    <div class="col-12 ">
                         <div class="table-container card-panel" id="parentofchart">
                             <p class="fw-bold t-primary">Faktor Penilaian</p>
                             <hr>
@@ -263,7 +331,7 @@
                         </div>
                     </div>
 
-                    <div class="col-12  mb-3">
+                    <div class="col-12  ">
                         <div class="table-container card-panel sticky-top" style="z-index: 0">
                             <p class="fw-bold t-primary" id="map-title">Peta Kinerja Penyedia Jasa</p>
                             <hr>
@@ -271,7 +339,7 @@
                         </div>
                     </div>
 
-                    <div class="col-6  mb-3">
+                    <div class="col-6  ">
                         <div class="table-container card-panel" id="parentofchart">
                             <p class="fw-bold t-primary">Risalah Hasil Penilaian Faktor</p>
                             <hr>
@@ -279,7 +347,7 @@
                         </div>
                     </div>
 
-                    <div class="col-6  mb-3">
+                    <div class="col-6  ">
                         <div class="table-container card-panel" id="parentofchart">
                             <p class="fw-bold t-primary">Nilai Komulatif</p>
                             <hr>
@@ -303,6 +371,8 @@
 
     </section>
 </body>
+
+
 <script src="{{ asset('bootstrap/js/jquery.js') }}"></script>
 <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('js/myStyle.js') }}"></script>
