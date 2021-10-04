@@ -358,7 +358,122 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalfile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><span id="title"></span> Upload File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return Save()">
+                        @csrf
+                        <input id="id" name="id" hidden>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nama Sub Indikator</label>
+                            <p class="fw-bold" id="fileNameSub"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="weight" class="form-label">File</label>
+                            <input type="file" class="form-control" id="file" name="file">
+                        </div>
+                        <button type="submit" class="bt-primary">Simpan</button>
+                    </form>
+                </div>
 
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalHistory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="history-container">
+                    <div class="d-flex align-items-center justify-content-center w-100">
+                        <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
+                             style="margin-right: 10px">
+                        </div>
+                        <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
+                             style="margin-right: 10px">
+                        </div>
+                        <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
+                             style="margin-right: 10px">
+                        </div>
+                        <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
+                             style="margin-right: 10px">
+                        </div>
+                        <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <span>Sedang Mengunduh Riwayat Perubahan Terakhir....</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalCatatan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="note-container">
+                    <form id="form-note" onsubmit="return SaveNote()">
+                        @csrf
+                        <input type="hidden" name="id-note" id="id-note" value="">
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Catatan</label>
+                            <textarea class="form-control" id="note" name="note"></textarea>
+                        </div>
+                        <button type="submit" class="bt-primary">Simpan</button>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalCatatan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="note-container">
+                    <form id="form-note" onsubmit="return SaveNote()">
+                        @csrf
+                        <input type="hidden" name="id-note" id="id-note" value="">
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Catatan</label>
+                            <textarea class="form-control" id="note" name="note"></textarea>
+                        </div>
+                        <button type="submit" class="bt-primary">Simpan</button>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalCatatanLihat" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="note" class="form-label">Catatan</label>
+                        <p id="note-see"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 </body>
 
