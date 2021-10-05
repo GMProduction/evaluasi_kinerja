@@ -1175,12 +1175,26 @@
         $(document).ready(function () {
             $('#package-list').on('change', function () {
                 package_id = $(this).val();
-                getScore(index)
+                if(index !== 'komulatif') {
+                    getScore(index)
+                }else{
+                    $('#jenisasesmen').val('Penilaian Komulatif');
+                    $('#pnl-faktor-nilai-kom').removeClass('d-block');
+                    $('#pnl-faktor-penilaian').removeClass('d-block');
+                    $('#pnl-faktor-radar').removeClass('d-block');
+                    $('#pnl-faktor-risalah').removeClass('d-block');
+
+                    $('#pnl-faktor-nilai-kom').addClass('d-none');
+                    $('#pnl-faktor-penilaian').addClass('d-none');
+                    $('#pnl-faktor-radar').addClass('d-none');
+                    $('#pnl-faktor-risalah').addClass('d-none');
+                    getAllCumulative();
+                }
                 getDetailPackage($(this).val());
             });
             $('.card-user').on('click', function () {
+                index = this.dataset.roles;
                 if (this.dataset.roles !== 'komulatif') {
-                    index = this.dataset.roles;
                     let title = '';
                     switch (index) {
                         case 'vendor':
