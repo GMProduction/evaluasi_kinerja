@@ -156,7 +156,7 @@ button.ghost {
 }
 
 .overlay {
-    background: #1F9CAC;
+    background: gray;
     color: #fff;
     position: relative;
     left: -100%;
