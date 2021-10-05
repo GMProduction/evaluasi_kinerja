@@ -34,4 +34,9 @@ class SubIndicator extends Model
     public function indicator(){
         return $this->belongsTo(Indicator::class, 'indicator_id');
     }
+
+    public function cumulativeScore()
+    {
+        return $this->hasMany(Score::class, 'sub_indicator_id');
+    }
 }

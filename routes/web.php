@@ -99,6 +99,7 @@ Route::prefix('/')->middleware('auth')->group(
                 Route::get('/radar', [\App\Http\Controllers\ScoreController::class, 'getRadarChart']);
                 Route::post('/set-score', [\App\Http\Controllers\ScoreController::class, 'setScore']);
                 Route::get('/get-history', [\App\Http\Controllers\ScoreController::class, 'getScoreHistory']);
+                Route::get('/get-all-cumulative', [\App\Http\Controllers\ScoreController::class, 'getAllCumulative']);
                 Route::get('/get-last-history', [\App\Http\Controllers\ScoreController::class, 'getLastScoreHistory']);
                 Route::get('/{id}/vendor', [\App\Http\Controllers\VendorController::class, 'detailVendor']);
             }
