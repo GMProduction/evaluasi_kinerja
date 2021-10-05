@@ -371,6 +371,10 @@ body {
   text-align: right;
 }
 
+.t-dark {
+  color: #4970B4;
+}
+
 .items-tab {
   display: flex;
   position: relative;
