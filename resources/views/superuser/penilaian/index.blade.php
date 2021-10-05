@@ -283,28 +283,24 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12" id="pnl-faktor-penilaian">
-                        <div class="table-container card-panel" id="parentofchart">
-                            <p class="fw-bold t-black">Faktor Penilaian</p>
-                            <hr>
-                            <div class="d-flex justify-content-between " style="align-items: end;">
-                                <p id="faktorternilai" class="secondary-color-text"
-                                   style="font-size: .8rem;  bottom: 0;">0% Dari Faktor Penilaian</p>
-                                <p id="faktorbelum" class="fw-bold" style="font-size: 2rem; color: #DFA01E;">0
-                                </p>
-                            </div>
-                            <div class="progress" style="height: 10px;">
-                                <div id="progress-bar-faktor" class="progress-bar" role="progressbar"
-                                     aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-12" id="pnl-faktor-radar">
+
+                    <div class="col-6" id="pnl-faktor-radar">
                         <div class="table-container card-panel sticky-top" style="z-index: 0">
                             <p class="fw-bold t-black" id="map-title">Peta Kinerja Penyedia Jasa</p>
                             <hr>
                             <canvas class="myChart" id="myChart" style="max-height: 400px"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="col-6" id="pnl-faktor-nilai-kom">
+                        <div class="table-container card-panel" id="parentofchart" style="padding-bottom: 180px">
+                            <p class="fw-bold t-black">Nilai Komulatif</p>
+                            <hr>
+                            <h1 class=" text-center mt-5" style="font-size: 8rem; color: #DFA01E" id="comulative_value">
+                                0</h1>
+                            <p id="comulative_status" class=" r-fullround text-center  ms-auto me-auto p-1 mt-3"
+                               style="width: 200px">Sangat Kurang</p>
                         </div>
                     </div>
 
@@ -316,16 +312,30 @@
                         </div>
                     </div>
 
-                    <div class="col-6" id="pnl-faktor-nilai-kom">
-                        <div class="table-container card-panel" id="parentofchart">
-                            <p class="fw-bold t-black">Nilai Komulatif</p>
+                    <div class="col-6" id="pnl-faktor-penilaian">
+                        <div class="table-container card-panel" id="parentofchart" style="padding-bottom: 95px">
+                            <p class="fw-bold t-black">Faktor Penilaian</p>
                             <hr>
-                            <h1 class=" text-center mt-5" style="font-size: 4rem; color: #DFA01E" id="comulative_value">
-                                0</h1>
-                            <p id="comulative_status" class=" r-fullround text-center  ms-auto me-auto p-1 mt-3"
-                               style="width: 200px">Sangat Kurang</p>
+                            <div class="d-flex justify-content-between " style="align-items: end; margin-top: 50px">
+                                <p id="faktorternilai" class="secondary-color-text"
+                                   style="font-size: .8rem;  bottom: 0;">0% Dari Faktor Penilaian</p>
+                                <p id="faktorbelum" class="fw-bold" style="font-size: 2rem; color: #DFA01E;">0
+                                </p>
+                            </div>
+                            <div class="progress" style="height: 10px; margin-bottom: 10px">
+                                <div id="progress-bar-faktor" class="progress-bar" role="progressbar"
+                                     aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <p id="fk-sudah-dinilai" class="secondary-color-text mb-0"
+                                   style="font-size: .8rem;  bottom: 0;">Faktor Sudah Di Nilai : 0</p>
+                                <p id="fk-belum-dinilai" class="secondary-color-text mb-0"
+                                   style="font-size: .8rem;  bottom: 0;">Faktor Belum Di Nilai : 0</p>
+                            </div>
+
                         </div>
                     </div>
+
 
                     <div class="col-12">
                         <div class="card-panel  table-container" id="content-detail-nilai">
@@ -1117,6 +1127,8 @@
             let total = parseInt(data[0] + data[1] + data[2] + data[3]);
             let percent = (done * 100) / total;
             $('#faktorternilai').html(percent.toFixed(0) + '% Dari Faktor Penilaian');
+            $('#fk-belum-dinilai').html('Faktor Belum Di Nilai : ' + data[0]);
+            $('#fk-sudah-dinilai').html('Faktor Sudah Di Nilai : ' + done);
             $('#progress-bar-faktor').attr('style', 'width:' + percent + '%');
             // $('#faktordinilai').text(parseInt(data[1] + data[2] + data[3]))
         }
@@ -1175,9 +1187,9 @@
         $(document).ready(function () {
             $('#package-list').on('change', function () {
                 package_id = $(this).val();
-                if(index !== 'komulatif') {
+                if (index !== 'komulatif') {
                     getScore(index)
-                }else{
+                } else {
                     $('#jenisasesmen').val('Penilaian Komulatif');
                     $('#pnl-faktor-nilai-kom').removeClass('d-block');
                     $('#pnl-faktor-penilaian').removeClass('d-block');
