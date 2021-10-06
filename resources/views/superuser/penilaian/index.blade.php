@@ -58,6 +58,9 @@
             padding: 30px 40px;
         }
 
+        .back-panel-2 {
+            background-color: #344b63;
+        }
         .table-container {
             margin-bottom: 20px
         }
@@ -231,7 +234,7 @@
                             </div>
                         </a>
 
-                        <a class="card-tab d-block c-text card-user " id="accessor" data-roles="accessor">
+                        <a class="card-tab d-block c-text card-user card-panel" id="accessor" data-roles="accessor">
                             <div class="d-flex justify-content-between">
                                 <i class='bx bx-message-square-edit'></i>
                                 {{-- <p class="number-card t-kurang">38</p> --}}
@@ -257,11 +260,11 @@
 
 
                     <div class="col-6" id="pnl-faktor-penilaian">
-                        <div class="table-container card-panel" id="parentofchart" style="padding-bottom: 60px">
+                        <div class="table-container card-panel back-panel-2" id="parentofchart" style="padding-bottom: 60px">
                             <p class="fw-bold t-black">Faktor Penilaian</p>
                             <hr>
                             <div class="d-flex justify-content-between " style="align-items: end; margin-top: 50px">
-                                <p id="faktorternilai" class="secondary-color-text"
+                                <p id="faktorternilai" class="t-black"
                                    style="font-size: .8rem;  bottom: 0;">0% Dari Faktor Penilaian</p>
                                 <p id="faktorbelum" class="fw-bold" style="font-size: 2rem; color: #DFA01E;">0
                                 </p>
@@ -271,9 +274,9 @@
                                      aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <p id="fk-sudah-dinilai" class="secondary-color-text mb-0"
+                                <p id="fk-sudah-dinilai" class="t-black mb-0"
                                    style="font-size: .8rem;  bottom: 0;">Faktor Sudah Di Nilai : 0</p>
-                                <p id="fk-belum-dinilai" class="secondary-color-text mb-0"
+                                <p id="fk-belum-dinilai" class="t-black mb-0"
                                    style="font-size: .8rem;  bottom: 0;">Faktor Belum Di Nilai : 0</p>
                             </div>
 
@@ -281,7 +284,7 @@
                     </div>
 
                     <div class="col-6" id="pnl-faktor-nilai-kom">
-                        <div class="table-container card-panel" id="parentofchart" style="padding-bottom: 36px">
+                        <div class="table-container card-panel back-panel-2" id="parentofchart" style="padding-bottom: 36px">
                             <p class="fw-bold t-black" id="title-nilai-komulatif">Nilai Komulatif</p>
                             <hr>
                             <h1 class=" text-center mt-1" style="font-size: 5rem; color: #DFA01E" id="comulative_value">
@@ -293,7 +296,7 @@
 
 
                     <div class="col-6" id="pnl-faktor-radar">
-                        <div class="table-container card-panel sticky-top" style="z-index: 0; ">
+                        <div class="table-container card-panel back-panel-2 sticky-top" style="z-index: 0; ">
                             <p class="fw-bold t-black" id="map-title">Peta Kinerja Penyedia Jasa</p>
                             <hr>
                             <canvas class="myChart" id="myChart" style="max-height: 400px"></canvas>
@@ -302,7 +305,7 @@
 
 
                     <div class="col-6" id="pnl-faktor-risalah">
-                        <div class="table-container card-panel" id="parentofchart" style="min-height: 517px">
+                        <div class="table-container card-panel back-panel-2" id="parentofchart" style="min-height: 517px">
                             <p class="fw-bold t-black">Risalah Hasil Penilaian Faktor</p>
                             <hr>
                             <div id="donutchart" style="width: 100%; margin-top: 100px"></div>
@@ -311,7 +314,7 @@
 
 
                     <div class="col-12">
-                        <div class="card-panel  table-container" id="content-detail-nilai">
+                        <div class="card-panel back-panel-2 table-container" id="content-detail-nilai">
                             <p class="fw-bold t-black">Detail Penilaian</p>
                             <hr>
                             <div id="result-container">
