@@ -131,9 +131,9 @@
                                         <span class="secondary-light-text" style="font-size: 14px">{{ $vendor->vendor->address }} ({{ $vendor->vendor->phone }})</span>
                                     </div>
                                     <div class="header-qualified secondary-light-text">
-                                        <span style="margin-right: 20px">{{ $vendor->vendor->kualifikasi }}</span>
+                                        <span style="margin-right: 20px">{{ $vendor->vendor->kualifikasi }}</span>|
                                         <span style="color: #DFA01E; font-weight: bold">IUJK : </span>
-                                        <span style="margin-right: 20px">{{ $vendor->vendor->iujk }}</span>
+                                        <span style="margin-right: 20px">{{ $vendor->vendor->iujk === null ? '-' : $vendor->vendor->iujk }}</span>|
                                         <span style="color: #DFA01E; font-weight: bold">NPWP : </span>
                                         <span>{{ $vendor->vendor->npwp === null ? '-' : $vendor->vendor->npwp }}</span>
                                     </div>
@@ -517,7 +517,7 @@
             data.addRow(['Kosong (' + emptyScore + ')', emptyScore, 'color: #c5c6d0']);
 
             var options = {
-                backgroundColor: '#1d3752',
+                backgroundColor: '#344B63',
                 title: 'Total Faktor Di Nilai ' + (badScore + mediumScore + goodScore),
                 titleTextStyle: {
                     color: 'white'
@@ -1058,13 +1058,13 @@
                     scales: {
                         r: {
                             angleLines: {
-                                color: 'white'
+                                color: '#AAAAAA'
                             },
                             grid: {
-                                color: 'white'
+                                color: '#AAAAAA'
                             },
                             pointLabels: {
-                                color: 'white'
+                                color: '#DFA01E'
                             }
                         }
                     },
