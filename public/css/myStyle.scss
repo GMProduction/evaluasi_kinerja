@@ -419,8 +419,27 @@ body {
     text-align: right;
 }
 
-.t-dark{
-    color: #4970B4;
+.select2-dropdown {
+    background-color: $bg-activecolor4 !important;
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: $bg-activecolor4 !important;
+    // color: $text-color !important;
+    border: none !important;
+}
+
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__rendered {
+    // color: $text-color !important;
+    background-color: $bg-activecolor4 !important;
+    border: none !important;
+    line-height: 28px;
+}
+
+.t-dark {
+    color: #4970b4;
 }
 
 .items-tab {
@@ -979,7 +998,7 @@ $primary-font: "Lato";
 }
 
 .card {
-background-color: $bg-activecolor;
+    background-color: $bg-activecolor;
 }
 
 .tombol-notif {
