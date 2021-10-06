@@ -635,35 +635,42 @@ class ScoreController extends CustomController
         try {
             $packageId = request()->query->get('package');
             $availableType = ['office', 'ppk', 'vendor'];
-            $data = Indicator::with(['subIndicator.cumulativeScore' => function($query) use ($packageId) {
+            $data = Indicator::with(['subIndicator.cumulativeScore' => function ($query) use ($packageId) {
                 $query->where('package_id', $packageId);
             }])->get();
             $tmp = [];
+            $scoreMin = 1;
+            $scoreMax = 3;
+            $cumulative_total = 0;
             foreach ($data as $key => $indicator) {
+                $subLength = count($indicator->subIndicator);
+                $weight = $indicator->weight;
+                $min = ($scoreMin * $subLength);
+                $max = ($scoreMax * $subLength);
+                $maxFactor = round((100 * $weight), 2, PHP_ROUND_HALF_UP);
+                $radarMin = 0;
+                $radarMax = 10;
+                $value = 0;
+                $a = round(($radarMax - $radarMin) / ($max - $min), 3, PHP_ROUND_HALF_UP);
+                $b = round($radarMax - ($max * $a), 0, PHP_ROUND_HALF_UP);
                 $tmpIndicator = [];
                 $tmpIndicator['id'] = $indicator->id;
                 $tmpIndicator['name'] = $indicator->name;
+                $tmpIndicator['weight'] = $indicator->weight;
                 $tmpIndicator['sub_indicator'] = [];
                 foreach ($indicator->subIndicator as $key_sub => $sub_indicator) {
-//                    $tmpScore = [];
-//                    foreach ($sub_indicator->cumulativeScore as $score) {
-//                        $tmp_s['type'] = $score->type;
-//                        $tmp_s['score'] = $score->score;
-//                        array_push($tmpScore, $tmp_s);
-//                    }
                     $tmp_cumulative = 0;
                     $arr_cumulative = $sub_indicator->cumulativeScore->toArray();
                     foreach ($availableType as $type) {
                         $key = array_search($type, array_column($arr_cumulative, 'type'));
                         $tmp_c['type'] = $type;
-                        if ($key !== false ) {
-                            $tmp_cumulative += $arr_cumulative[$key]['score'];
+                        if ($key !== false) {
                             switch ($type) {
                                 case 'office':
                                     $tmp_cumulative += round($arr_cumulative[$key]['score'] * 35 / 100, 2, PHP_ROUND_HALF_UP);
                                     break;
                                 case 'ppk':
-                                    $tmp_cumulative += round($arr_cumulative[$key]['score'] * 55 / 100, 2, PHP_ROUND_HALF_UP);
+                                    $tmp_cumulative += round($arr_cumulative[$key]['score'] * 50 / 100, 2, PHP_ROUND_HALF_UP);
                                     break;
                                 case 'vendor':
                                     $tmp_cumulative += round($arr_cumulative[$key]['score'] * 15 / 100, 2, PHP_ROUND_HALF_UP);
@@ -672,22 +679,35 @@ class ScoreController extends CustomController
                                     $tmp_cumulative += 0;
                                     break;
                             }
-//                            $tmp_c['score'] = $tmpScore[$key]['score'];
-                        }else {
+                        } else {
                             $tmp_cumulative += 0;
-//                            $tmp_c['score'] = 0;
                         }
-//                        array_push($tmp_cumulative, $tmp_c);
+                        $value += $tmp_cumulative;
                     }
                     $tmpIndicator['sub_indicator'][$key_sub]['id'] = $sub_indicator->id;
                     $tmpIndicator['sub_indicator'][$key_sub]['name'] = $sub_indicator->name;
-//                    $tmpIndicator['sub_indicator'][$key_sub]['cumulative'] = $arr_cumulative;
-                    $tmpIndicator['sub_indicator'][$key_sub]['score'] = $tmp_cumulative;
+                    $tmpIndicator['sub_indicator'][$key_sub]['score'] = round($tmp_cumulative, 2, PHP_ROUND_HALF_UP);
                 }
+                $a_cumulative = round(($maxFactor / ($max - $min)), 3, PHP_ROUND_HALF_UP);
+                $b_cumulative = round(($maxFactor - ($max * $a_cumulative)), 3, PHP_ROUND_HALF_UP);
+                $radar = 0;
+                $cumulative = 0;
+                if ($value > 0) {
+                    $radar = ($a * $value) + $b;
+                    $cumulative = ($a_cumulative * $value) + $b_cumulative;
+                    $cumulative_total += round($cumulative, 2, PHP_ROUND_HALF_UP);
+                }
+                $tmpIndicator['radar'] = $radar;
                 array_push($tmp, $tmpIndicator);
             }
-            return response()->json(['msg' => 'success', 'data' => $tmp, 'code' => 200], 200);
-        }catch (\Exception $e) {
+
+
+            return response()->json([
+                'msg' => 'success',
+                'data' => $tmp,
+                'cumulative' => round($cumulative_total, 2, PHP_ROUND_HALF_UP),
+                'code' => 200], 200);
+        } catch (\Exception $e) {
             return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
         }
     }
