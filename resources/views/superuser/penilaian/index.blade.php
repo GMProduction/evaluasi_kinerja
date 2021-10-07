@@ -360,7 +360,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="form" onsubmit="return Save()">
+                            <form id="form" onsu bmit="return Save()">
                                 @csrf
                                 <input id="id" name="id" hidden>
                                 <div class="mb-3">

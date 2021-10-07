@@ -96,7 +96,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="title"></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -158,14 +158,12 @@
             </div>
         </div>
 
-        <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
+        <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Detail <span id="detailTitle"></span></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                        <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <table id="tbDetail" class="table table-borderless">
@@ -227,7 +225,7 @@
             getCountUser()
         }
 
-        $(document).on('click', '#detailData', function () {
+        $(document).on('click', '#detailData', function() {
             getUser($(this).data('id'))
             $('#detail').modal('show')
 
@@ -235,55 +233,55 @@
 
         function getUser(id) {
             let data = {
-                'id' : id,
-                'role' : roles
+                'id': id,
+                'role': roles
             }
-            $.get(window.location.pathname+'/detail',data, function (data) {
+            $.get(window.location.pathname + '/detail', data, function(data) {
                 console.log(data)
-                $('#detail #detailTitle').html(textRoles+' '+data[roles]['name'])
+                $('#detail #detailTitle').html(textRoles + ' ' + data[roles]['name'])
                 $('#detail #dName').html(data[roles]['name'])
                 $('#detail #dUser').html(data['username'])
                 $('#detail #dEmail').html(data['email'])
                 $('#tbDetail #name').html(textRoles)
                 $('#trOther').empty();
-                if (roles === 'vendor'){
+                if (roles === 'vendor') {
                     var phone = data[roles]['phone'] ?? '-';
                     var kualifikasi = data[roles]['kualifikasi'] ?? '-';
                     var npwp = data[roles]['npwp'] ?? '-';
                     var iujk = data[roles]['iujk'] ?? '-';
                     var address = data[roles]['iujk'] ?? '-';
                     $('#trOther').append('<tr>' +
-                        '<td>Phone</td>' +
-                        '<td>:</td>' +
-                        '<td>'+phone+'</td>' +
-                        '</tr>')
+                            '<td>Phone</td>' +
+                            '<td>:</td>' +
+                            '<td>' + phone + '</td>' +
+                            '</tr>')
                         .append('<tr>' +
                             '<td>Kualifikasi</td>' +
                             '<td>:</td>' +
-                            '<td>'+kualifikasi+'</td>' +
+                            '<td>' + kualifikasi + '</td>' +
                             '</tr>')
                         .append('<tr>' +
                             '<td>NPWP</td>' +
                             '<td>:</td>' +
-                            '<td>'+npwp+'</td>' +
+                            '<td>' + npwp + '</td>' +
                             '</tr>')
                         .append('<tr>' +
                             '<td>IUJK</td>' +
                             '<td>:</td>' +
-                            '<td>'+iujk+'</td>' +
+                            '<td>' + iujk + '</td>' +
                             '</tr>')
                         .append('<tr>' +
                             '<td>Alamat</td>' +
                             '<td>:</td>' +
-                            '<td>'+address+'</td>' +
+                            '<td>' + address + '</td>' +
                             '</tr>')
                 }
 
-                if (roles === 'accessorppk'){
+                if (roles === 'accessorppk') {
                     $('#trOther').append('<tr>' +
                         '<td>PPK</td>' +
                         '<td>:</td>' +
-                        '<td>'+data['accessorppk']['ppk']['name']+'</td>' +
+                        '<td>' + data['accessorppk']['ppk']['name'] + '</td>' +
                         '</tr>')
                 }
             })
@@ -316,7 +314,8 @@
             if (roles === 'vendor') {
                 $('#ppkDiv').html(' <div class="mb-3">\n' +
                     '                                    <label for="name" class="form-label">Kualifikasi</label>\n' +
-                    '                                    <input type="text" name="kualifikasi" value="'+$(this).data('kualifikasi')+'" id="kualifikasi" class="form-control">' +
+                    '                                    <input type="text" name="kualifikasi" value="' + $(
+                        this).data('kualifikasi') + '" id="kualifikasi" class="form-control">' +
                     '                                </div>')
             }
 
@@ -462,12 +461,14 @@
                             return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-name="' +
                                 row[role].name + '" data-id="' + data +
                                 '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
-                                '<a href="#!" class="btn btn-sm btn-success btn-sm me-2" style="border-radius: 50px" data-kualifikasi="'+kualifikasi+'" data-image="' +
+                                '<a href="#!" class="btn btn-sm btn-success btn-sm me-2" style="border-radius: 50px" data-kualifikasi="' +
+                                kualifikasi + '" data-image="' +
                                 row.image + '" data-username="' + row.username + '" data-ppk="' + ppk +
                                 '" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role]
                                 .name + '" data-id="' + data +
                                 '" id="editData"><i class="bx bx-edit"></i></a>' +
-                                '<a class="btn btn-sm btn-info btn-sm" id="detailData" data-id="'+row.id+'" style="border-radius: 50px; color: white"><i class=\'bx bxs-user-detail\'></i></a>'
+                                '<a class="btn btn-sm btn-info btn-sm" id="detailData" data-id="' + row.id +
+                                '" style="border-radius: 50px; color: white"><i class=\'bx bxs-user-detail\'></i></a>'
                         }
                     },
                 ]
