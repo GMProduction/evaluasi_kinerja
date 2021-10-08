@@ -117,7 +117,13 @@ class UserController extends CustomController
                     $user->$roles()->update(['ppk_id' => \request('selectPPK')]);
                 }
                 if (\request('roles') == 'vendor'){
-                    $user->$roles()->update(['kualifikasi' => \request('kualifikasi')]);
+                    $user->$roles()->update([
+                        'kualifikasi' => \request('kualifikasi'),
+                        'phone' => \request('phone'),
+                        'npwp' => \request('npwp'),
+                        'iujk' => \request('iujk'),
+                        'address' => \request('address'),
+                    ]);
                 }
             } else {
 
@@ -138,6 +144,10 @@ class UserController extends CustomController
                 }
                 if (\request('roles') == 'vendor'){
                     Arr::set($field, 'kualifikasi', \request('kualifikasi'));
+                    Arr::set($field, 'phone', \request('phone'));
+                    Arr::set($field, 'npwp', \request('npwp'));
+                    Arr::set($field, 'iujk', \request('iujk'));
+                    Arr::set($field, 'address', \request('address'));
                 }
                 $user->$roles()->create($field);
 
