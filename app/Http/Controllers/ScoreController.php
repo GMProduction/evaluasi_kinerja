@@ -183,6 +183,19 @@ class ScoreController extends CustomController
                 $scoreNoteBefore = $score->note;
                 $score->score = $value;
                 $score->text = $scoreText;
+                if($value < 3) {
+                    $files = $this->request->file('file');
+                    if(!$files) {
+                        return response()->json(['msg' => 'Wajib Melampirkan File', 'code' => 202], 202);
+                    }
+                    $extension = $files->getClientOriginalExtension();
+                    $name = str_replace(' ', '-', $score->package->name) . '-' . str_replace(' ', '-', $score->subIndicator->name) . strtotime("now");
+                    $valueImage = $name . '.' . $extension;
+
+                    $stringImg = '/files/' . $valueImage;
+                    $this->uploadImage('file', $valueImage, 'filesUpload');
+                    $score->file = $stringImg;
+                }
                 $score->save();
                 $cumulativeAfter = $this->getCumulative($packageId, $vType);
 
@@ -232,6 +245,8 @@ class ScoreController extends CustomController
 
                 $this->saveHistory($data);
             } else {
+                $package = Package::find($packageId);
+                $sub_indicator = SubIndicator::find($subIndicatorId);
                 $newScore = new Score();
                 $newScore->package_id = $packageId;
                 $newScore->evaluator_id = $authorId;
@@ -240,6 +255,19 @@ class ScoreController extends CustomController
                 $newScore->score = $value;
                 $newScore->text = $scoreText;
                 $newScore->type = $vType;
+                if($value < 3) {
+                    $files = $this->request->file('file');
+                    if(!$files) {
+                        return response()->json(['msg' => 'success', 'code' => 202], 202);
+                    }
+                    $extension = $files->getClientOriginalExtension();
+                    $name = str_replace(' ', '-', $package->name) . '-' . str_replace(' ', '-', $sub_indicator->name) . strtotime("now");
+                    $value = $name . '.' . $extension;
+
+                    $stringImg = '/files/' . $value;
+                    $this->uploadImage('file', $value, 'filesUpload');
+                    $newScore->file = $stringImg;
+                }
                 $newScore->save();
 
                 if ($value < 3 && $vType !== 'vendor') {
@@ -258,7 +286,7 @@ class ScoreController extends CustomController
                 }
             }
             DB::commit();
-            return response()->json(['msg' => 'success'], 200);
+            return response()->json(['msg' => 'success', 'code' => 200], 200);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
@@ -682,8 +710,8 @@ class ScoreController extends CustomController
                         } else {
                             $tmp_cumulative += 0;
                         }
-                        $value += $tmp_cumulative;
                     }
+                    $value += $tmp_cumulative;
                     $tmpIndicator['sub_indicator'][$key_sub]['id'] = $sub_indicator->id;
                     $tmpIndicator['sub_indicator'][$key_sub]['name'] = $sub_indicator->name;
                     $tmpIndicator['sub_indicator'][$key_sub]['score'] = round($tmp_cumulative, 2, PHP_ROUND_HALF_UP);

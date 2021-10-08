@@ -305,10 +305,10 @@
 
 
                     <div class="col-6" id="pnl-faktor-risalah">
-                        <div class="table-container card-panel back-panel-2" id="parentofchart" style="min-height: 517px">
+                        <div class="table-container card-panel back-panel-2" id="parentofchart" style=" position: relative">
                             <p class="fw-bold t-black">Risalah Hasil Penilaian Faktor</p>
                             <hr>
-                            <div id="donutchart" style="width: 100%; margin-top: 100px"></div>
+                            <div id="donutchart" style="width: 100%; margin-top: 50px"></div>
                         </div>
                     </div>
 
@@ -448,6 +448,32 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="modalFileRequired" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><span id="title"></span> Upload File</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-score-with-file" onsubmit="return setScoreWFile()" enctype="multipart/form-data">
+                            @csrf
+                            <input id="value-score" name="value" hidden>
+                            <input id="package-score" name="package" hidden>
+                            <input id="sub_indicator_score" name="sub_indicator" hidden>
+                            <input id="index-score" name="index" hidden>
+                            <div class="mb-3">
+                                <label for="weight" class="form-label">File</label>
+                                <input type="file" class="form-control" id="file" name="file">
+                            </div>
+                            <button type="submit" class="bt-primary">Simpan</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </section>
     </body>
 
@@ -494,30 +520,31 @@
             let badScore = score[1];
             let mediumScore = score[2];
             let goodScore = score[3];
-            // var data = google.visualization.arrayToDataTable([
-            //     ['Penilaian', 'Nilai'],
+            var data = google.visualization.arrayToDataTable([
+                ['Penilaian', 'Nilai'],
 
-            //     ['Baik (' + goodScore + ')', goodScore],
-            //     ['Cukup (' + mediumScore + ')', mediumScore],
-            //     ['Kurang (' + badScore + ')', badScore],
-            //     ['Kosong (' + emptyScore + ')', emptyScore],
+                ['Baik (' + goodScore + ')', goodScore],
+                ['Cukup (' + mediumScore + ')', mediumScore],
+                ['Kurang (' + badScore + ')', badScore],
+                ['Kosong (' + emptyScore + ')', emptyScore],
 
-            // ]);
+            ]);
 
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Status');
-            data.addColumn('number', 'Count');
-            data.addColumn({
-                type: 'string',
-                role: 'style'
-            });
-            data.addRow(['Baik (' + goodScore + ')', goodScore, 'color: #3ded97']);
-            data.addRow(['Cukup (' + mediumScore + ')', mediumScore, 'color: #fcae1e']);
-            data.addRow(['Kurang (' + badScore + ')', badScore, 'color: #e3242b']);
-            data.addRow(['Kosong (' + emptyScore + ')', emptyScore, 'color: #c5c6d0']);
+            // var data = new google.visualization.DataTable();
+            // data.addColumn('string', 'Status');
+            // data.addColumn('number', 'Count');
+            // data.addColumn({
+            //     type: 'string',
+            //     role: 'style'
+            // });
+            // data.addRow(['Baik (' + goodScore + ')', goodScore, 'color: #3ded97']);
+            // data.addRow(['Cukup (' + mediumScore + ')', mediumScore, 'color: #fcae1e']);
+            // data.addRow(['Kurang (' + badScore + ')', badScore, 'color: #e3242b']);
+            // data.addRow(['Kosong (' + emptyScore + ')', emptyScore, 'color: #c5c6d0']);
 
             var options = {
                 backgroundColor: '#344B63',
+                pieHole: 0.4,
                 title: 'Total Faktor Di Nilai ' + (badScore + mediumScore + goodScore),
                 titleTextStyle: {
                     color: 'white'
@@ -545,14 +572,19 @@
                         color: '#999'
                     }
                 },
-                legend: 'none',
-                chart: {
-                    width: '100%'
+                legend: {
+                    textStyle: {
+                        color: 'white'
+                    }
                 },
+                chart: {
+                    width: '100'
+                },
+                colors: ['#3ded97', '#fcae1e', '#e3242b', '#c5c6d0']
 
             };
 
-            var chart = new google.visualization.ColumnChart(document.getElementById('donutchart'));
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
             chart.draw(data, options);
         }
 
@@ -679,7 +711,7 @@
             let file_link = single_score !== null ? single_score['file'] : 'Upload File';
             let update_at = single_score !== null ? new Date(single_score['updated_at']) : null;
             let last_update = single_score !== null ? getCurrentDateString(update_at) : '-';
-            let btn_class = single_score !== null ? availableBtnClass[single_score['score']] : 'bt-primary-xsm';
+
             let button_upload = single_score !== null ? single_score['file'] !== null ?
                 '<a class="bt-primary-xsm ms-2" data-subname="' + value['name'] + '" data-link="' + file_link +
                 '" data-scoreid="' + single_score['id'] + '" id="upload">Upload File</a>' : '' : '';
@@ -689,6 +721,7 @@
             let hasAccess = false;
             let hasHistory = score_history.length > 0;
             let attrib = '';
+            let btn_class = single_score !== null ? availableBtnClass[single_score['score']] : 'bt-primary-xsm';
             if (roles === index && !getParameter('st')) {
                 dropdown_active = 'dropdown';
                 hasAccess = true;
@@ -700,7 +733,11 @@
                     '">Cukup</button>\n' +
                     '<button class="dropdown-item nilai" type="button" data-value="1" data-subin="' + id +
                     '">Kurang</button></div>';
+            }else{
+                btn_class += ' unscoreable';
             }
+
+
             return '<tr class="primary-light-text" id="tr' + scoreid + '">' +
                 '<td class="primary-light-text">' + mainKey + '.' + (key + 1) + '</td>\n' +
                 '<td><div class="primary-light-text">' + value['name'] + elButtonHistory(hasHistory, id) + '' +
@@ -752,6 +789,7 @@
             saveData('Upload File', 'form', '/penilaian/upload', afterSaveFile)
             return false;
         }
+
 
         function SaveNote() {
             saveData('Catatan', 'form-note', '/penilaian/add-note', afterSaveNote)
@@ -827,7 +865,21 @@
                     $('.nilai').on('click', function () {
                         let value = this.dataset.value;
                         let sub_indicator = this.dataset.subin;
-                        setScore(sub_indicator, value);
+                        if(value < 3) {
+                            $('#modalFileRequired #value-score').val(value);
+                            $('#modalFileRequired #sub_indicator_score').val(sub_indicator);
+                            $('#modalFileRequired #package-score').val(package_id);
+                            $('#modalFileRequired #index-score').val(index);
+                            $('#modalFileRequired #file').val('');
+                            $('#modalFileRequired').modal('show');
+                        }else{
+                            setScore(sub_indicator, value);
+                        }
+
+                    });
+
+                    $('.unscoreable').on('click', function () {
+                        alertScore();
                     });
 
                     $('.bt-history').on('click', function () {
@@ -1267,6 +1319,10 @@
             });
             getDetailPackage(package_id);
             getRole();
+
+            $('#bt-score-w-file').on('click', function () {
+                setScoreWFile();
+            })
         });
 
         function elMainIndicatorCumulative(key, value) {
@@ -1314,6 +1370,13 @@
             }
         }
 
+        function alertScore() {
+            swal({
+                title: 'Peringatan',
+                text: "Anda Tidak Mempunyai Akses Untuk Memberikan Nilai!",
+                icon: "warning",
+            })
+        }
         function getRole() {
             console.log(roles)
             let title = '';
@@ -1356,6 +1419,38 @@
             $("#content-detail-nilai").removeClass("d-none")
             $("#content-info").addClass("d-none")
         });
+
+        function setScoreWFile() {
+            var form_data = new FormData($('#form-score-with-file')[0]);
+            $.ajax({
+                type: 'POST',
+                data: form_data,
+                url: '/penilaian/set-score',
+                sync: true,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'Accept': "application/json"
+                },
+                success: function (data, textStatus, xhr) {
+                    console.log(data);
+                    if(data['code'] === 200) {
+                        $('#modalFileRequired').modal('hide');
+                        getScore(index);
+                    }else{
+                        swal({
+                            title: "Peringatan",
+                            text: "Peringatan Untuk Nilai Kurang Dari Baik Diwajibkan Melampirkan File",
+                            icon: "warning",
+                        })
+                    }
+                },
+                error: function (error, xhr, textStatus) {
+                    console.log(error)
+                }
+            })
+            return false;
+        }
     </script>
 
 @endsection
