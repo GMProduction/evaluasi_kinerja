@@ -61,6 +61,7 @@
         .back-panel-2 {
             background-color: #344b63;
         }
+
         .table-container {
             margin-bottom: 20px
         }
@@ -133,7 +134,8 @@
                                     <div class="header-qualified secondary-light-text">
                                         <span style="margin-right: 20px">{{ $vendor->vendor->kualifikasi }}</span>|
                                         <span style="color: #DFA01E; font-weight: bold">IUJK : </span>
-                                        <span style="margin-right: 20px">{{ $vendor->vendor->iujk === null ? '-' : $vendor->vendor->iujk }}</span>|
+                                        <span
+                                            style="margin-right: 20px">{{ $vendor->vendor->iujk === null ? '-' : $vendor->vendor->iujk }}</span>|
                                         <span style="color: #DFA01E; font-weight: bold">NPWP : </span>
                                         <span>{{ $vendor->vendor->npwp === null ? '-' : $vendor->vendor->npwp }}</span>
                                     </div>
@@ -260,7 +262,8 @@
 
 
                     <div class="col-6" id="pnl-faktor-penilaian">
-                        <div class="table-container card-panel back-panel-2" id="parentofchart" style="padding-bottom: 60px">
+                        <div class="table-container card-panel back-panel-2" id="parentofchart"
+                             style="padding-bottom: 60px">
                             <p class="fw-bold t-black">Faktor Penilaian</p>
                             <hr>
                             <div class="d-flex justify-content-between " style="align-items: end; margin-top: 50px">
@@ -284,7 +287,8 @@
                     </div>
 
                     <div class="col-6" id="pnl-faktor-nilai-kom">
-                        <div class="table-container card-panel back-panel-2" id="parentofchart" style="padding-bottom: 36px">
+                        <div class="table-container card-panel back-panel-2" id="parentofchart"
+                             style="padding-bottom: 36px">
                             <p class="fw-bold t-black" id="title-nilai-komulatif">Nilai Komulatif</p>
                             <hr>
                             <h1 class=" text-center mt-1" style="font-size: 5rem; color: #DFA01E" id="comulative_value">
@@ -305,10 +309,15 @@
 
 
                     <div class="col-6" id="pnl-faktor-risalah">
-                        <div class="table-container card-panel back-panel-2" id="parentofchart" style=" position: relative">
+                        <div class="table-container card-panel back-panel-2" id="parentofchart"
+                             style=" position: relative; min-height: 515px"
+
+                        >
                             <p class="fw-bold t-black">Risalah Hasil Penilaian Faktor</p>
                             <hr>
-                            <div id="donutchart" style="width: 100%; margin-top: 50px"></div>
+                            <div id="donutchart"
+{{--                                 style="margin-top: 50px"--}}
+                            ></div>
                         </div>
                     </div>
 
@@ -448,7 +457,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="modalFileRequired" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modalFileRequired" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -573,13 +583,19 @@
                     }
                 },
                 legend: {
+                    position: 'bottom',
                     textStyle: {
                         color: 'white'
                     }
                 },
-                chart: {
-                    width: '100'
+                chartArea: {
+                    width: '100%',
+                    height: '50%'
                 },
+                height: 350,
+                // chart: {
+                //     width: '100'
+                // },
                 colors: ['#3ded97', '#fcae1e', '#e3242b', '#c5c6d0']
 
             };
@@ -733,7 +749,7 @@
                     '">Cukup</button>\n' +
                     '<button class="dropdown-item nilai" type="button" data-value="1" data-subin="' + id +
                     '">Kurang</button></div>';
-            }else{
+            } else {
                 btn_class += ' unscoreable';
             }
 
@@ -865,14 +881,14 @@
                     $('.nilai').on('click', function () {
                         let value = this.dataset.value;
                         let sub_indicator = this.dataset.subin;
-                        if(value < 3) {
+                        if (value < 3) {
                             $('#modalFileRequired #value-score').val(value);
                             $('#modalFileRequired #sub_indicator_score').val(sub_indicator);
                             $('#modalFileRequired #package-score').val(package_id);
                             $('#modalFileRequired #index-score').val(index);
                             $('#modalFileRequired #file').val('');
                             $('#modalFileRequired').modal('show');
-                        }else{
+                        } else {
                             setScore(sub_indicator, value);
                         }
 
@@ -1377,6 +1393,7 @@
                 icon: "warning",
             })
         }
+
         function getRole() {
             console.log(roles)
             let title = '';
@@ -1434,10 +1451,10 @@
                 },
                 success: function (data, textStatus, xhr) {
                     console.log(data);
-                    if(data['code'] === 200) {
+                    if (data['code'] === 200) {
                         $('#modalFileRequired').modal('hide');
                         getScore(index);
-                    }else{
+                    } else {
                         swal({
                             title: "Peringatan",
                             text: "Peringatan Untuk Nilai Kurang Dari Baik Diwajibkan Melampirkan File",
