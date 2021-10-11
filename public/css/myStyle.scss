@@ -11,6 +11,7 @@ $cukupcolorlight: #fcae1e;
 $sedangcolorlight: #f9e076;
 $sbaikcolorlight: #63c5da;
 $burukcolorlight: #e3242b;
+$sangatburukcolorlight: #e3242b;
 $shadowactivecolor: #34506e;
 // $shadowactivecolor: #887df355;
 $shadowactivecolorlight: #9e958311;
@@ -91,6 +92,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 .t-text-color2 {
     color: $text-color2;
 }
+
 .nav {
     &.normal {
         height: 40px !important;
@@ -98,6 +100,7 @@ div.dataTables_wrapper div.dataTables_filter input {
         justify-content: left !important;
         padding-top: 10px;
         border-bottom: none;
+
         .nav-item {
             &.active {
                 border-bottom: 1px solid white;
@@ -196,6 +199,7 @@ td {
 .b-primary {
     background-color: $activecolor;
 }
+
 .t-primary {
     color: $activecolor;
 }
@@ -207,6 +211,7 @@ td {
 .t-black {
     color: white;
 }
+
 .t-bagus {
     color: green;
 }
@@ -222,6 +227,7 @@ td {
 .t-active {
     color: $activecolor;
 }
+
 .bt-success-xsm {
     all: unset;
     background-color: $successcolor;
@@ -290,7 +296,7 @@ td {
 
 .b-cukup-light-xsm {
     all: unset;
-    background-color: $cukupcolorlight;
+    background-color: $sedangcolorlight;
     border-radius: 5px;
     color: black;
     padding: 5px 10px;
@@ -306,9 +312,25 @@ td {
 
 .b-buruk-light-xsm {
     all: unset;
+    background-color: #DD571C;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.6rem;
+    transition: all 300ms;
+    box-shadow: none;
+
+    &:hover {
+        color: white;
+        box-shadow: $shadowsuccessecolor 0px 7px 29px 0px;
+    }
+}
+
+.b-sangat-buruk-light-xsm {
+    all: unset;
     background-color: $burukcolorlight;
     border-radius: 5px;
-    color: black;
+    color: white;
     padding: 5px 10px;
     font-size: 0.6rem;
     transition: all 300ms;
@@ -392,7 +414,7 @@ td {
     padding: 24px;
     background-color: $background-card;
     box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px,
-        rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
+    rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
     margin-bottom: 50px;
 }
 
@@ -430,8 +452,8 @@ body {
 }
 
 .select2-container--default
-    .select2-selection--single
-    .select2-selection__rendered {
+.select2-selection--single
+.select2-selection__rendered {
     // color: $text-color !important;
     background-color: $bg-activecolor4 !important;
     border: none !important;
@@ -448,6 +470,7 @@ body {
     padding: 0.5rem 0.5rem;
     margin: -0.5rem -0.5rem -0.5rem auto;
 }
+
 [type="button"]:not(:disabled),
 [type="reset"]:not(:disabled),
 [type="submit"]:not(:disabled),
@@ -469,7 +492,7 @@ button:not(:disabled) {
         position: relative;
         display: block;
         box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px,
-            rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
+        rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
         background-color: $bg-activecolor;
         border-radius: 10px;
         width: 200px;
@@ -538,6 +561,7 @@ button:not(:disabled) {
 
     .div-content {
         width: 100%;
+
         .div-header {
             width: 100%;
             display: flex;
@@ -597,7 +621,7 @@ button:not(:disabled) {
     position: relative;
     padding: 16px;
     box-shadow: rgba(50, 50, 93, 0.01) 0px 2px 5px -1px,
-        rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
+    rgba(0, 0, 0, 0.1) 0px 1px 3px -1px;
     background-color: $background-card;
     border-radius: 10px;
     width: 100%;
@@ -664,6 +688,7 @@ button:not(:disabled) {
         font-weight: bold;
     }
 }
+
 // INDIKATOR
 
 .card-indikator {
@@ -687,6 +712,7 @@ td.details-control {
     background-size: cover;
     cursor: pointer;
 }
+
 tr.shown td.details-control {
     background: url("../static-images/arrow-down.png") no-repeat center;
     transform: rotate(180deg);
@@ -758,36 +784,36 @@ tr.shown td.details-control {
 .datepicker table tr td.active:hover {
     background-color: #006dcc;
     background-image: -moz-linear-gradient(
-        to bottom,
-        $activecolor,
-        $activecolor
+            to bottom,
+            $activecolor,
+            $activecolor
     ) !important;
     background-image: -ms-linear-gradient(
-        to bottom,
-        $activecolor,
-        $activecolor
+            to bottom,
+            $activecolor,
+            $activecolor
     ) !important;
     background-image: -webkit-gradient(
-        linear,
-        0 0,
-        0 100%,
-        from($activecolor),
-        to($activecolor)
+            linear,
+            0 0,
+            0 100%,
+            from($activecolor),
+            to($activecolor)
     ) !important;
     background-image: -webkit-linear-gradient(
-        to bottom,
-        $activecolor,
-        $activecolor
+            to bottom,
+            $activecolor,
+            $activecolor
     ) !important;
     background-image: -o-linear-gradient(
-        to bottom,
-        $activecolor,
-        $activecolor
+            to bottom,
+            $activecolor,
+            $activecolor
     ) !important;
     background-image: linear-gradient(
-        to bottom,
-        $activecolor,
-        $activecolor
+            to bottom,
+            $activecolor,
+            $activecolor
     ) !important;
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$activecolor', endColorstr='#0044cc', GradientType=0);
@@ -815,6 +841,7 @@ tr.shown td.details-control {
     display: flex;
     justify-content: center;
     align-items: center;
+
     input[type="text"] {
         position: relative;
         width: var(--height);
@@ -829,35 +856,41 @@ tr.shown td.details-control {
         z-index: 10;
         opacity: 0;
         cursor: pointer;
+
         &:focus {
             z-index: 0;
             opacity: 1;
             width: var(--width);
+
             ~ .symbol {
                 &::before {
                     width: 0%;
                 }
+
                 &:after {
                     clip-path: inset(0% 0% 0% 100%);
                     transition: clip-path 0.04s linear 0.105s;
                 }
+
                 .cloud {
                     top: -30px;
                     left: -30px;
                     transform: translate(0, 0);
                     transition: all 0.6s ease;
                 }
+
                 .lens {
                     top: 20px;
                     left: 15px;
                     transform: translate(0, 0);
                     fill: var(--primary-color);
                     transition: top 0.5s ease 0.1s, left 0.5s ease 0.1s,
-                        fill 0.3s ease;
+                    fill 0.3s ease;
                 }
             }
         }
     }
+
     .symbol {
         height: 100%;
         width: 100%;
@@ -867,6 +900,7 @@ tr.shown td.details-control {
         display: flex;
         justify-content: center;
         align-items: center;
+
         &:before {
             content: "";
             position: absolute;
@@ -877,6 +911,7 @@ tr.shown td.details-control {
             z-index: -1;
             transition: width 0.6s ease;
         }
+
         &:after {
             content: "";
             position: absolute;
@@ -890,6 +925,7 @@ tr.shown td.details-control {
             clip-path: inset(0% 0% 0% 0%);
             transition: clip-path 0.04s linear 0.225s;
         }
+
         .cloud,
         .lens {
             position: absolute;
@@ -898,12 +934,14 @@ tr.shown td.details-control {
             top: 50%;
             left: 50%;
         }
+
         .cloud {
             width: 35px;
             height: 32px;
             transform: translate(-50%, -60%);
             transition: all 0.6s ease;
         }
+
         .lens {
             fill: #fff;
             width: 16px;
@@ -935,33 +973,29 @@ $primary-font: "Lato";
             0 0,
             from(lighten($secondary-blue, 3%)),
             to(rgba(0, 0, 0, 0))
-        )
-        1 20%;
+    ) 1 20%;
     -webkit-border-image: -webkit-linear-gradient(
             bottom,
             lighten($secondary-blue, 3%),
             rgba(0, 0, 0, 0)
-        )
-        1 20%;
+    ) 1 20%;
     -moz-border-image: -moz-linear-gradient(
             bottom,
             lighten($secondary-blue, 3%),
             rgba(0, 0, 0, 0)
-        )
-        1 20%;
+    ) 1 20%;
     -o-border-image: -o-linear-gradient(
             bottom,
             lighten($secondary-blue, 3%),
             rgba(0, 0, 0, 0)
-        )
-        1 20%;
+    ) 1 20%;
     border-image: linear-gradient(
             to top,
             lighten($secondary-blue, 3%) 0%,
             rgba(0, 0, 0, 0)
-        )
-        1 20%;
+    ) 1 20%;
 }
+
 @mixin notification-border($border-width: 1px) {
     border: 0px;
     border-style: solid;
@@ -972,25 +1006,23 @@ $primary-font: "Lato";
             lighten($primary-blue, 15%),
             lighten($primary-blue, 15%),
             lighten($secondary-blue, 10%)
-        )
-        1 20%;
+    ) 1 20%;
     -o-border-image: -o-linear-gradient(
             right,
             lighten($secondary-blue, 10%),
             lighten($primary-blue, 15%),
             lighten($primary-blue, 15%),
             lighten($secondary-blue, 10%)
-        )
-        1 20%;
+    ) 1 20%;
     border-image: linear-gradient(
             to right,
             lighten($secondary-blue, 10%) 0%,
             lighten($primary-blue, 15%) 40%,
             lighten($primary-blue, 15%) 60%,
             lighten($secondary-blue, 10%) 100%
-        )
-        1 20%;
+    ) 1 20%;
 }
+
 @mixin transition($timing: 500ms, $easing: ease) {
     -webkit-transition: all $timing $easing;
     -moz-transition: all $timing $easing;
@@ -1006,6 +1038,7 @@ $primary-font: "Lato";
 .form-control {
     background-color: $bg-activecolor4;
     border: none;
+
     &:focus {
         background-color: $bg-activecolor4;
     }
@@ -1056,14 +1089,17 @@ $primary-font: "Lato";
     min-height: 300px;
     font-family: $primary-font;
     overflow: visible;
+
     .nav-bar {
         height: 60px;
         border-bottom: 1px solid lighten($primary-blue, 25%);
+
         ul {
             list-style: none;
             padding-left: 10px;
             margin: 0;
             position: relative;
+
             li {
                 vertical-align: middle;
                 display: inline-block;
@@ -1071,9 +1107,11 @@ $primary-font: "Lato";
                 @include list-border;
             }
         }
+
         .search-box {
             position: relative;
             display: inline;
+
             .search-icon {
                 position: absolute;
                 top: 2px;
@@ -1081,6 +1119,7 @@ $primary-font: "Lato";
                 font-size: 18px;
                 color: $primary-blue;
             }
+
             input {
                 background: $secondary-blue;
                 box-shadow: none;
@@ -1091,22 +1130,27 @@ $primary-font: "Lato";
                 color: $fg-gray;
                 font-size: 14px;
                 font-weight: bold;
+
                 &:focus {
                     outline: 0;
                 }
             }
         }
+
         .dropdowns-wrapper {
             padding: 4px 0px;
         }
+
         .dropdown-container {
             display: inline-block;
             position: relative;
+
             .dropdown {
                 position: relative;
                 cursor: pointer;
                 z-index: 2;
             }
+
             .dropdown-menu {
                 position: absolute;
                 display: none;
@@ -1118,6 +1162,7 @@ $primary-font: "Lato";
                 min-width: 10px;
                 // width: 230px;
                 width: 280px;
+
                 .dropdown-header {
                     background: $white;
                     padding: 15px;
@@ -1128,6 +1173,7 @@ $primary-font: "Lato";
                     border-radius: 10px 10px 0 0;
                     @include notification-border(1px);
                     box-shadow: 0px 2px 10px -2px lighten($primary-blue, 15%);
+
                     .triangle {
                         // position: absolute;
                         // top: -10px;
@@ -1145,6 +1191,7 @@ $primary-font: "Lato";
                         transform: rotate(45deg);
                         background: $white;
                     }
+
                     .count {
                         position: static;
                         height: 25px;
@@ -1156,25 +1203,30 @@ $primary-font: "Lato";
                         vertical-align: middle;
                     }
                 }
+
                 .dropdown-body {
                     max-height: 292px;
                     background: lighten($secondary-blue, 2%);
                     overflow-y: auto;
                     overflow-x: hidden;
+
                     .notification {
                         background: $white;
                         padding: 15px;
                         @include notification-border(1px);
+
                         &.new {
                             @include transition;
                             background: lighten($secondary-blue, 2%);
                             // min-width: 227px;
                             // max-width: 227px;
                         }
+
                         .notification-image-wrapper {
                             display: table-cell;
                             vertical-align: middle;
                         }
+
                         .notification-image {
                             display: inline-block;
                             height: 32px;
@@ -1182,6 +1234,7 @@ $primary-font: "Lato";
                             overflow: hidden;
                             border-radius: 100%;
                         }
+
                         .notification-text {
                             display: table-cell;
                             padding-left: 15px;
@@ -1191,6 +1244,7 @@ $primary-font: "Lato";
                             font-size: 14px;
                             word-spacing: 2px;
                             line-height: 21px;
+
                             .highlight {
                                 font-weight: bold;
                             }
@@ -1198,10 +1252,12 @@ $primary-font: "Lato";
                     }
                 }
             }
+
             .fa {
                 color: $primary-blue;
                 font-size: 22px;
             }
+
             .count {
                 position: absolute;
                 top: -6px;
@@ -1218,12 +1274,15 @@ $primary-font: "Lato";
                 line-height: 15px;
             }
         }
+
         .notifications {
             margin-right: 10px;
         }
+
         .messages {
             margin-left: 10px;
         }
+
         .user {
             background: $primary-blue;
             border-left: 0px;
@@ -1231,6 +1290,7 @@ $primary-font: "Lato";
             right: 0;
             top: -1px;
         }
+
         .user-options-wrapper {
             .user-image {
                 background: url("http://www.apnatimepass.com/tom-cruise-ms.jpg");
@@ -1243,6 +1303,7 @@ $primary-font: "Lato";
                 border-radius: 100%;
                 margin-right: 10px;
             }
+
             .user-options {
                 vertical-align: bottom;
                 border: 2px solid $white;
@@ -1252,6 +1313,7 @@ $primary-font: "Lato";
                 display: inline-block;
                 text-align: center;
                 position: relative;
+
                 .fa {
                     position: absolute;
                     top: 9px;
@@ -1265,6 +1327,7 @@ $primary-font: "Lato";
             }
         }
     }
+
     .body-image {
         /*background: url('http://stock-wallpapers.com/wp-content/uploads/2014/05/nexus_5_wall_8.jpg');*/
         background: #577597;
@@ -1276,6 +1339,7 @@ $primary-font: "Lato";
         padding: 30px;
         position: relative;
         border-radius: 2px;
+
         .instruction {
             position: absolute;
             top: 0;
@@ -1290,14 +1354,17 @@ $primary-font: "Lato";
             height: 20px;
             text-align: center;
         }
+
         .info {
             color: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.3);
             background: rgba(0, 0, 0, 0.2);
             padding: 10px;
+
             ul {
                 list-style: square;
                 padding-right: 20px;
+
                 li {
                     margin-bottom: 13px;
                     font-size: 14px;
@@ -1306,10 +1373,12 @@ $primary-font: "Lato";
                     /*border-bottom: 1px solid rgba(255, 255, 255, 0.2);*/
                 }
             }
+
             .ok-btn-wrapper {
                 text-align: center;
                 position: relative;
                 padding: 4px 0px 10px 0px;
+
                 .ok-btn {
                     position: relative;
                     display: inline-block;
@@ -1318,10 +1387,12 @@ $primary-font: "Lato";
                     color: rgba(255, 255, 255, 0.9);
                     border: 1px solid rgba(255, 255, 255, 0.3);
                     border-radius: 2px;
+
                     .text {
                         z-index: 1;
                         position: relative;
                     }
+
                     .hover-overlay {
                         @include transition;
                         position: absolute;
@@ -1333,6 +1404,7 @@ $primary-font: "Lato";
                         opacity: 0.6;
                         z-index: 0;
                     }
+
                     &:hover {
                         .hover-overlay {
                             width: 100%;
@@ -1361,6 +1433,7 @@ $primary-font: "Lato";
     background: $primary-blue;
     -webkit-box-shadow: none;
 }
+
 ::-webkit-scrollbar-thumb:window-inactive {
     background: $primary-blue;
 }
@@ -1583,13 +1656,13 @@ a:hover {
 
             &.instagram {
                 background: linear-gradient(
-                    45deg,
-                    #405de6,
-                    #5851db,
-                    #833ab4,
-                    #c13584,
-                    #e1306c,
-                    #fd1d1d
+                        45deg,
+                        #405de6,
+                        #5851db,
+                        #833ab4,
+                        #c13584,
+                        #e1306c,
+                        #fd1d1d
                 );
                 box-shadow: 0px 4px 30px rgba(120, 64, 190, 0.6);
             }

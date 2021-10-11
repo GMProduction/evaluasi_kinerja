@@ -527,15 +527,17 @@
 
         function drawChart(score) {
             let emptyScore = score[0];
-            let badScore = score[1];
-            let mediumScore = score[2];
-            let goodScore = score[3];
+            let veryBadScore = score[1];
+            let badScore = score[2];
+            let mediumScore = score[3];
+            let goodScore = score[4];
             var data = google.visualization.arrayToDataTable([
                 ['Penilaian', 'Nilai'],
 
                 ['Baik (' + goodScore + ')', goodScore],
                 ['Cukup (' + mediumScore + ')', mediumScore],
                 ['Kurang (' + badScore + ')', badScore],
+                ['Sangat Kurang (' + veryBadScore + ')', veryBadScore],
                 ['Kosong (' + emptyScore + ')', emptyScore],
 
             ]);
@@ -555,7 +557,7 @@
             var options = {
                 backgroundColor: '#344B63',
                 pieHole: 0.4,
-                title: 'Total Faktor Di Nilai ' + (badScore + mediumScore + goodScore),
+                title: 'Total Faktor Di Nilai ' + (veryBadScore + badScore + mediumScore + goodScore),
                 titleTextStyle: {
                     color: 'white'
                 },
@@ -585,7 +587,8 @@
                 legend: {
                     position: 'bottom',
                     textStyle: {
-                        color: 'white'
+                        color: 'white',
+                        fontSize: 10
                     }
                 },
                 chartArea: {
@@ -596,7 +599,7 @@
                 // chart: {
                 //     width: '100'
                 // },
-                colors: ['#3ded97', '#fcae1e', '#e3242b', '#c5c6d0']
+                colors: ['#3ded97', '#F9E076' ,'#DD571C', '#E3242B', '#c5c6d0']
 
             };
 
@@ -715,8 +718,8 @@
                 score_history,
                 id
             } = value;
-            const availableScore = ['', 'Kurang', 'Cukup', 'Baik'];
-            const availableBtnClass = ['bt-primary-xsm', 'b-buruk-light-xsm', 'b-cukup-light-xsm', 'b-bagus-light-xsm'];
+            const availableScore = ['','Sangat Kurang', 'Kurang', 'Cukup', 'Baik'];
+            const availableBtnClass = ['bt-primary-xsm', 'b-sangat-buruk-light-xsm', 'b-buruk-light-xsm', 'b-cukup-light-xsm', 'b-bagus-light-xsm'];
             let score = single_score !== null ? availableScore[single_score['score']] : 'Beri Nilai';
             let hasScore = single_score !== null;
             let file_text = single_score !== null ? single_score['file'] !== null ? 'Download' : 'Upload File' : '-';
@@ -743,12 +746,15 @@
                 hasAccess = true;
                 attrib = 'data-bs-toggle="dropdown" aria-expanded="false"';
                 el_dropdown =
-                    '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink"> <button class="dropdown-item nilai" type="button" data-value="3" data-subin="' +
+                    '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink"> <button class="dropdown-item nilai" type="button" data-value="4" data-subin="' +
                     id + '">Baik</button>\n' +
-                    '<button class="dropdown-item nilai" type="button" data-value="2" data-subin="' + id +
+                    '<button class="dropdown-item nilai" type="button" data-value="3" data-subin="' + id +
                     '">Cukup</button>\n' +
+                    '<button class="dropdown-item nilai" type="button" data-value="2" data-subin="' + id +
+                    '">Kurang</button>' +
                     '<button class="dropdown-item nilai" type="button" data-value="1" data-subin="' + id +
-                    '">Kurang</button></div>';
+                    '">Sangat Kurang</button>' +
+                    '</div>';
             } else {
                 btn_class += ' unscoreable';
             }
@@ -881,7 +887,7 @@
                     $('.nilai').on('click', function () {
                         let value = this.dataset.value;
                         let sub_indicator = this.dataset.subin;
-                        if (value < 3) {
+                        if (value < 4) {
                             $('#modalFileRequired #value-score').val(value);
                             $('#modalFileRequired #sub_indicator_score').val(sub_indicator);
                             $('#modalFileRequired #package-score').val(package_id);
