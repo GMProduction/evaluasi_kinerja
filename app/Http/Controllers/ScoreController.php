@@ -144,15 +144,18 @@ class ScoreController extends CustomController
             $value = (int)$this->postField('value');
             $type = $this->postField('index');
             $authorId = Auth::id();
-            $scoreText = 'bad';
+            $scoreText = 'very-bad';
             switch ($value) {
                 case 1:
-                    $scoreText = 'bad';
+                    $scoreText = 'very-bad';
                     break;
                 case 2:
-                    $scoreText = 'medium';
+                    $scoreText = 'bad';
                     break;
                 case 3:
+                    $scoreText = 'medium';
+                    break;
+                case 4:
                     $scoreText = 'good';
                     break;
                 default:
@@ -183,7 +186,7 @@ class ScoreController extends CustomController
                 $scoreNoteBefore = $score->note;
                 $score->score = $value;
                 $score->text = $scoreText;
-                if($value < 3) {
+                if($value < 4) {
                     $files = $this->request->file('file');
                     if(!$files) {
                         return response()->json(['msg' => 'Wajib Melampirkan File', 'code' => 202], 202);
@@ -199,7 +202,7 @@ class ScoreController extends CustomController
                 $score->save();
                 $cumulativeAfter = $this->getCumulative($packageId, $vType);
 
-                if ($value === 3 && $vType !== 'vendor') {
+                if ($value === 4 && $vType !== 'vendor') {
                     $notification = Notification::where('score_id', $score->id)->first();
                     if ($notification) {
                         $notification->is_active = false;
@@ -255,7 +258,7 @@ class ScoreController extends CustomController
                 $newScore->score = $value;
                 $newScore->text = $scoreText;
                 $newScore->type = $vType;
-                if($value < 3) {
+                if($value < 4) {
                     $files = $this->request->file('file');
                     if(!$files) {
                         return response()->json(['msg' => 'success', 'code' => 202], 202);
@@ -270,7 +273,7 @@ class ScoreController extends CustomController
                 }
                 $newScore->save();
 
-                if ($value < 3 && $vType !== 'vendor') {
+                if ($value < 4 && $vType !== 'vendor') {
                     $package = Package::with('vendor')->find($packageId);
                     $subIndicator = SubIndicator::find($subIndicatorId);
                     $notification = new Notification();
@@ -337,11 +340,12 @@ class ScoreController extends CustomController
         $result = [];
         $chkSum = 0;
         $scoreMin = 1;
-        $scoreMax = 3;
+        $scoreMax = 4;
         $comulativeTotal = 0;
         $goodScore = 0;
         $mediumScore = 0;
         $badScore = 0;
+        $veryBadScore = 0;
         $emptyScore = 0;
         foreach ($arrData as $v) {
             $index = $v['name'];
@@ -362,12 +366,15 @@ class ScoreController extends CustomController
                 if ($sub['single_score'] !== null) {
                     switch ($sub['single_score']['score']) {
                         case 1:
-                            $badScore += 1;
+                            $veryBadScore += 1;
                             break;
                         case 2:
-                            $mediumScore += 1;
+                            $badScore += 1;
                             break;
                         case 3:
+                            $mediumScore += 1;
+                            break;
+                        case 4:
                             $goodScore += 1;
                             break;
                         default:
@@ -421,11 +428,12 @@ class ScoreController extends CustomController
             $result = [];
             $chkSum = 0;
             $scoreMin = 1;
-            $scoreMax = 3;
+            $scoreMax = 4;
             $comulativeTotal = 0;
             $goodScore = 0;
             $mediumScore = 0;
             $badScore = 0;
+            $veryBadScore = 0;
             $emptyScore = 0;
             foreach ($arrData as $v) {
                 $index = $v['name'];
@@ -446,12 +454,15 @@ class ScoreController extends CustomController
                     if ($sub['single_score'] !== null) {
                         switch ($sub['single_score']['score']) {
                             case 1:
-                                $badScore += 1;
+                                $veryBadScore += 1;
                                 break;
                             case 2:
-                                $mediumScore += 1;
+                                $badScore += 1;
                                 break;
                             case 3:
+                                $mediumScore += 1;
+                                break;
+                            case 4:
                                 $goodScore += 1;
                                 break;
                             default:
@@ -494,7 +505,7 @@ class ScoreController extends CustomController
                 'data' => [
                     'indicator' => $result,
                     'chk_summary' => round($chkSum, 0, PHP_ROUND_HALF_UP),
-                    'score_count' => [$emptyScore, $badScore, $mediumScore, $goodScore]
+                    'score_count' => [$emptyScore, $veryBadScore, $badScore, $mediumScore, $goodScore]
                 ],
                 'comulative' => round($comulativeTotal, 2, PHP_ROUND_HALF_UP)
             ], 200);
@@ -668,7 +679,7 @@ class ScoreController extends CustomController
             }])->get();
             $tmp = [];
             $scoreMin = 1;
-            $scoreMax = 3;
+            $scoreMax = 4;
             $cumulative_total = 0;
             foreach ($data as $key => $indicator) {
                 $subLength = count($indicator->subIndicator);
