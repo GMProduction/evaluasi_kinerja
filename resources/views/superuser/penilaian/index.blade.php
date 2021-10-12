@@ -954,6 +954,7 @@
                     break;
                 case 3:
                     sa = 'Cukup';
+                    break;
                 case 4:
                     sa = 'Baik';
                     break;
