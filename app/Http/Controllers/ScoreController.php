@@ -186,23 +186,32 @@ class ScoreController extends CustomController
                 $scoreNoteBefore = $score->note;
                 $score->score = $value;
                 $score->text = $scoreText;
-                if($value < 4) {
+                if ($value < 3) {
                     $files = $this->request->file('file');
-                    if(!$files) {
-                        return response()->json(['msg' => 'Wajib Melampirkan File', 'code' => 202], 202);
+                    $note = $this->postField('note');
+                    if (!$files && $note === "") {
+                        return response()->json(['msg' => 'Wajib Mengisi Salah Satu Lampiran', 'code' => 202], 202);
                     }
-                    $extension = $files->getClientOriginalExtension();
-                    $name = str_replace(' ', '-', $score->package->name) . '-' . str_replace(' ', '-', $score->subIndicator->name) . strtotime("now");
-                    $valueImage = $name . '.' . $extension;
 
-                    $stringImg = '/files/' . $valueImage;
-                    $this->uploadImage('file', $valueImage, 'filesUpload');
-                    $score->file = $stringImg;
+                    if ($files) {
+                        $extension = $files->getClientOriginalExtension();
+                        $name = str_replace(' ', '-', $score->package->name) . '-' . str_replace(' ', '-', $score->subIndicator->name) . strtotime("now");
+                        $valueImage = $name . '.' . $extension;
+
+                        $stringImg = '/files/' . $valueImage;
+                        $this->uploadImage('file', $valueImage, 'filesUpload');
+                        $score->file = $stringImg;
+                    }
+
+                    if ($note !== "") {
+                        $score->note = $note;
+                    }
                 }
+
                 $score->save();
                 $cumulativeAfter = $this->getCumulative($packageId, $vType);
 
-                if ($value === 4 && $vType !== 'vendor') {
+                if ($value >= 3 && $vType !== 'vendor') {
                     $notification = Notification::where('score_id', $score->id)->first();
                     if ($notification) {
                         $notification->is_active = false;
@@ -258,22 +267,29 @@ class ScoreController extends CustomController
                 $newScore->score = $value;
                 $newScore->text = $scoreText;
                 $newScore->type = $vType;
-                if($value < 4) {
+                if ($value < 3) {
                     $files = $this->request->file('file');
-                    if(!$files) {
-                        return response()->json(['msg' => 'success', 'code' => 202], 202);
+                    $note = $this->postField('note');
+                    if (!$files && $note === "") {
+                        return response()->json(['msg' => 'Wajib Mengisi Salah Satu Lampiran', 'code' => 202], 202);
                     }
-                    $extension = $files->getClientOriginalExtension();
-                    $name = str_replace(' ', '-', $package->name) . '-' . str_replace(' ', '-', $sub_indicator->name) . strtotime("now");
-                    $value = $name . '.' . $extension;
+                    if ($files) {
+                        $extension = $files->getClientOriginalExtension();
+                        $name = str_replace(' ', '-', $package->name) . '-' . str_replace(' ', '-', $sub_indicator->name) . strtotime("now");
+                        $value = $name . '.' . $extension;
 
-                    $stringImg = '/files/' . $value;
-                    $this->uploadImage('file', $value, 'filesUpload');
-                    $newScore->file = $stringImg;
+                        $stringImg = '/files/' . $value;
+                        $this->uploadImage('file', $value, 'filesUpload');
+                        $newScore->file = $stringImg;
+                    }
+
+                    if ($note !== "") {
+                        $newScore->note = $note;
+                    }
                 }
                 $newScore->save();
 
-                if ($value < 4 && $vType !== 'vendor') {
+                if ($value < 3 && $vType !== 'vendor') {
                     $package = Package::with('vendor')->find($packageId);
                     $subIndicator = SubIndicator::find($subIndicatorId);
                     $notification = new Notification();
