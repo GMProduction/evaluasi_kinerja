@@ -462,11 +462,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><span id="title"></span> Upload File</h5>
+                        <h5 class="modal-title" id="exampleModalLabel"><span id="title"></span>Pemberian Nilai Kurang</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <p style="text-align: justify">Pemberian Nilai Di Bawah <span style="font-weight: bold">Cukup</span> Wajib Melampirkan File Atau Mengisi Catatan Penilaian</p>
                         <form id="form-score-with-file" onsubmit="return setScoreWFile()" enctype="multipart/form-data">
                             @csrf
                             <input id="value-score" name="value" hidden>
@@ -474,8 +475,12 @@
                             <input id="sub_indicator_score" name="sub_indicator" hidden>
                             <input id="index-score" name="index" hidden>
                             <div class="mb-3">
-                                <label for="weight" class="form-label">File</label>
+                                <label for="weight" class="form-label">File Lampiran</label>
                                 <input type="file" class="form-control" id="file" name="file">
+                            </div>
+                            <div class="mb-3">
+                                <label for="note" class="form-label">Catatan</label>
+                                <textarea class="form-control" id="note" name="note"></textarea>
                             </div>
                             <button type="submit" class="bt-primary">Simpan</button>
                         </form>
@@ -887,12 +892,13 @@
                     $('.nilai').on('click', function () {
                         let value = this.dataset.value;
                         let sub_indicator = this.dataset.subin;
-                        if (value < 4) {
+                        if (value < 3) {
                             $('#modalFileRequired #value-score').val(value);
                             $('#modalFileRequired #sub_indicator_score').val(sub_indicator);
                             $('#modalFileRequired #package-score').val(package_id);
                             $('#modalFileRequired #index-score').val(index);
                             $('#modalFileRequired #file').val('');
+                            $('#modalFileRequired #note').val('');
                             $('#modalFileRequired').modal('show');
                         } else {
                             setScore(sub_indicator, value);
@@ -941,12 +947,14 @@
             let sb = '';
             switch (score_after) {
                 case 1:
-                    sa = 'Buruk';
+                    sa = 'Sangat Kurang';
                     break;
                 case 2:
-                    sa = 'Cukup';
+                    sa = 'Kurang';
                     break;
                 case 3:
+                    sa = 'Cukup';
+                case 4:
                     sa = 'Baik';
                     break;
                 default:
@@ -954,12 +962,15 @@
             }
             switch (score_before) {
                 case 1:
-                    sb = 'Buruk';
+                    sb = 'Sangat Kurang';
                     break;
                 case 2:
-                    sb = 'Cukup';
+                    sb = 'Kurang';
                     break;
                 case 3:
+                    sb = 'Cukup';
+                    break;
+                case 4:
                     sb = 'Baik';
                     break;
                 default:
@@ -1463,7 +1474,7 @@
                     } else {
                         swal({
                             title: "Peringatan",
-                            text: "Peringatan Untuk Nilai Kurang Dari Baik Diwajibkan Melampirkan File",
+                            text: "Peringatan Untuk Nilai Kurang Dari Cukup Diwajibkan Melampirkan File Atau Mengisi Catatan Penilaian...",
                             icon: "warning",
                         })
                     }
