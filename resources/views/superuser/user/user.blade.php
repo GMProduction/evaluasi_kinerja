@@ -31,7 +31,7 @@
             <div class="items-tab" id="menu-tab">
                 @if (auth()->user()->roles[0] == 'superuser')
                     <a class="card-tab active d-block c-text card-user" id="usuperuser" data-roles="superuser"
-                        data-text-roles="Superuser">
+                       data-text-roles="Superuser">
                         <div class="d-flex justify-content-between">
                             <i class='bx bx-user-circle icon-size-lg '></i>
                             <p class="number-card">0</p>
@@ -42,7 +42,7 @@
                     </a>
                 @endif
                 <a class="card-tab d-block {{ auth()->user()->roles[0] == 'admin' ? 'active' : '' }} c-text card-user"
-                    id="uadmin" data-roles="admin" data-text-roles="Admin Balai">
+                   id="uadmin" data-roles="admin" data-text-roles="Admin Balai">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user-voice icon-size-lg'></i>
                         <p class="number-card">0</p>
@@ -55,7 +55,7 @@
                 @if (auth()->user()->roles[0] == 'superuser')
 
                     <a class="card-tab d-block c-text card-user" id="uaccessor" data-roles="accessor"
-                        data-text-roles="Asesor Balai">
+                       data-text-roles="Asesor Balai">
                         <div class="d-flex justify-content-between">
                             <i class='bx bx-user icon-size-lg'></i>
                             <p class="number-card">0</p>
@@ -66,7 +66,7 @@
                     </a>
 
                     <a class="card-tab d-block c-text card-user" id="uaccessorppk" data-roles="accessorppk"
-                        data-text-roles="Asesor PPK">
+                       data-text-roles="Asesor PPK">
                         <div class="d-flex justify-content-between">
                             <i class='bx bx-user icon-size-lg'></i>
                             <p class="number-card">0</p>
@@ -77,7 +77,7 @@
                     </a>
                 @endif
                 <a class="card-tab d-block c-text card-user" id="uvendor" data-roles="vendor"
-                    data-text-roles="Penyedia Jasa">
+                   data-text-roles="Penyedia Jasa">
                     <div class="d-flex justify-content-between">
                         <i class='bx bx-user icon-size-lg'></i>
                         <p class="number-card">0</p>
@@ -91,13 +91,13 @@
 
             <!-- Modal Tambah-->
             <div class="modal fade" id="tambahdata" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
+                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="title"></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form id="form" onsubmit="return SaveUser()">
@@ -106,8 +106,8 @@
                                 <input name="roles" id="roles" hidden>
                                 <div class="mb-3">
                                     <input type="file" id="image" class="fotoprofile" data-min-height="10"
-                                        data-heigh="400" accept="image/jpeg, image/jpg, image/png"
-                                        data-allowed-file-extensions="jpg jpeg png" />
+                                           data-heigh="400" accept="image/jpeg, image/jpg, image/png"
+                                           data-allowed-file-extensions="jpg jpeg png"/>
                                 </div>
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
@@ -132,7 +132,7 @@
                                 <div class="mb-3">
                                     <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
                                     <input type="password" class="form-control" id="password_confirmation"
-                                        name="password_confirmation">
+                                           name="password_confirmation">
                                 </div>
                                 <div class="mb-4"></div>
                                 <button type="submit" class="bt-primary">Simpan</button>
@@ -158,13 +158,12 @@
             </div>
         </div>
 
-        <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
+        <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Detail <span id="detailTitle"></span></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -196,18 +195,18 @@
 
 @section('script')
     <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
+            src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
     <script src="{{ asset('css/dropify/js/dropify.js') }}"></script>
     <script src="{{ asset('js/handler_image.js') }}"></script>
     <script>
         var roles, textRoles, title;
         var table;
-        $(document).ready(function() {
+        $(document).ready(function () {
             roles = 'superuser';
             textRoles = 'Superuser'
             @if (auth()->user()->roles[0] == 'admin')
                 roles = 'admin';
-                textRoles = 'Admin Balai'
+            textRoles = 'Admin Balai'
             @endif
 
             getCountUser()
@@ -235,18 +234,18 @@
 
         function getUser(id) {
             let data = {
-                'id' : id,
-                'role' : roles
+                'id': id,
+                'role': roles
             }
-            $.get(window.location.pathname+'/detail',data, function (data) {
+            $.get(window.location.pathname + '/detail', data, function (data) {
                 console.log(data)
-                $('#detail #detailTitle').html(textRoles+' '+data[roles]['name'])
+                $('#detail #detailTitle').html(textRoles + ' ' + data[roles]['name'])
                 $('#detail #dName').html(data[roles]['name'])
                 $('#detail #dUser').html(data['username'])
                 $('#detail #dEmail').html(data['email'])
                 $('#tbDetail #name').html(textRoles)
                 $('#trOther').empty();
-                if (roles === 'vendor'){
+                if (roles === 'vendor') {
                     var phone = data[roles]['phone'] ?? '-';
                     var kualifikasi = data[roles]['kualifikasi'] ?? '-';
                     var npwp = data[roles]['npwp'] ?? '-';
@@ -255,41 +254,41 @@
                     $('#trOther').append('<tr>' +
                         '<td>Phone</td>' +
                         '<td>:</td>' +
-                        '<td>'+phone+'</td>' +
+                        '<td>' + phone + '</td>' +
                         '</tr>')
                         .append('<tr>' +
                             '<td>Kualifikasi</td>' +
                             '<td>:</td>' +
-                            '<td>'+kualifikasi+'</td>' +
+                            '<td>' + kualifikasi + '</td>' +
                             '</tr>')
                         .append('<tr>' +
                             '<td>NPWP</td>' +
                             '<td>:</td>' +
-                            '<td>'+npwp+'</td>' +
+                            '<td>' + npwp + '</td>' +
                             '</tr>')
                         .append('<tr>' +
                             '<td>IUJK</td>' +
                             '<td>:</td>' +
-                            '<td>'+iujk+'</td>' +
+                            '<td>' + iujk + '</td>' +
                             '</tr>')
                         .append('<tr>' +
                             '<td>Alamat</td>' +
                             '<td>:</td>' +
-                            '<td>'+address+'</td>' +
+                            '<td>' + address + '</td>' +
                             '</tr>')
                 }
 
-                if (roles === 'accessorppk'){
+                if (roles === 'accessorppk') {
                     $('#trOther').append('<tr>' +
                         '<td>PPK</td>' +
                         '<td>:</td>' +
-                        '<td>'+data['accessorppk']['ppk']['name']+'</td>' +
+                        '<td>' + data['accessorppk']['ppk']['name'] + '</td>' +
                         '</tr>')
                 }
             })
         }
 
-        $(document).on('click', '#addData, #editData', function() {
+        $(document).on('click', '#addData, #editData', function () {
             $('#tambahdata #id').val($(this).data('id'));
             $('#tambahdata #roles').val(roles);
             title = $(this).data('type');
@@ -314,10 +313,32 @@
             }
 
             if (roles === 'vendor') {
-                $('#ppkDiv').html(' <div class="mb-3">\n' +
-                    '                                    <label for="name" class="form-label">Kualifikasi</label>\n' +
-                    '                                    <input type="text" name="kualifikasi" value="'+$(this).data('kualifikasi')+'" id="kualifikasi" class="form-control">' +
+                $('#ppkDiv').append(' <div class="mb-3">\n' +
+                    '                                    <label for="kualifikasi" class="form-label">Kualifikasi</label>\n' +
+                    '                                    <input type="text" name="kualifikasi" value="' + $(
+                        this).data('kualifikasi') + '" id="kualifikasi" class="form-control">' +
                     '                                </div>')
+                    .append(' <div class="mb-3">\n' +
+                        '                                    <label for="phone" class="form-label">No. Hp</label>\n' +
+                        '                                    <input type="text" name="phone" value="' + $(
+                            this).data('phone') + '" id="phone" class="form-control">' +
+                        '                                </div>')
+                    .append(' <div class="mb-3">\n' +
+                        '                                    <label for="npwp" class="form-label">NPWP</label>\n' +
+                        '                                    <input type="text" name="npwp" value="' + $(
+                            this).data('npwp') + '" id="npwp" class="form-control">' +
+                        '                                </div>')
+                    .append(' <div class="mb-3">\n' +
+                        '                                    <label for="iujk" class="form-label">IUJK</label>\n' +
+                        '                                    <input type="text" name="iujk" value="' + $(
+                            this).data('iujk') + '" id="iujk" class="form-control">' +
+                        '                                </div>')
+                    .append(' <div class="mb-3">\n' +
+                        '                                    <label for="address" class="form-label">Alamat</label>\n' +
+                        '                                    <textarea name="address" id="address" class="form-control">' + $(
+                            this).data('address') + '</textarea>' +
+                        '                                </div>')
+                ;
             }
 
 
@@ -347,7 +368,7 @@
         var header = document.getElementById("menu-tab");
         var btns = header.getElementsByClassName("card-tab");
         for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function() {
+            btns[i].addEventListener("click", function () {
 
                 var current = $('.card-tab.active')
                 current[0].className = current[0].className.replace(" active", "");
@@ -357,13 +378,12 @@
         }
 
         function getCountUser() {
-            $.get(window.location.pathname + '/count', function(data) {
-                $.each(data, function(key, val) {
+            $.get(window.location.pathname + '/count', function (data) {
+                $.each(data, function (key, val) {
                     $('#u' + val['roles']['0'] + ' p').html(val['count'])
                 })
             })
         }
-
 
 
         function datatable(role) {
@@ -374,7 +394,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: url,
-                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // debugger;
                     var numStart = this.fnPagingInfo().iStart;
                     var index = numStart + iDisplayIndexFull + 1;
@@ -383,12 +403,12 @@
                     return nRow;
                 },
                 columnDefs: [{
-                        "title": "#",
-                        "searchable": false,
-                        "orderable": false,
-                        "targets": 0,
-                        "className": "text-center"
-                    },
+                    "title": "#",
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 0,
+                    "className": "text-center"
+                },
                     {
                         "title": "Image",
                         'targets': 1,
@@ -427,14 +447,14 @@
                 ],
 
                 columns: [{
-                        "className": '',
-                        "orderable": false,
-                        "data": null,
-                        "defaultContent": ''
-                    },
+                    "className": '',
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": ''
+                },
                     {
                         data: 'image',
-                        render: function(data) {
+                        render: function (data) {
                             var img = data ?? '{{ asset('images/noimage.png') }}';
                             return '<img style="height: 70px" src="' + img +
                                 '" onerror="this.onerror=null; this.src=\'{{ asset('/images/noimage.png') }}\'" alt=""/>'
@@ -456,25 +476,31 @@
                         "target": 2,
                         "data": 'id',
                         "width": '150',
-                        "render": function(data, type, row, meta) {
+                        "render": function (data, type, row, meta) {
                             var ppk = row[role].ppk !== undefined ? row[role].ppk.id : '';
                             var kualifikasi = row[role].kualifikasi ?? '';
+                            var phone = row[role].phone ?? '';
+                            var npwp = row[role].npwp ?? '';
+                            var iujk = row[role].iujk ?? '';
+                            var address = row[role].address ?? '';
                             return '<a href="#!" class="btn btn-sm btn-danger btn-sm me-2" style="border-radius: 50px" data-name="' +
                                 row[role].name + '" data-id="' + data +
                                 '" id="deleteData"><i class="bx bx-trash-alt"></i></a>' +
-                                '<a href="#!" class="btn btn-sm btn-success btn-sm me-2" style="border-radius: 50px" data-kualifikasi="'+kualifikasi+'" data-image="' +
+                                '<a href="#!" class="btn btn-sm btn-success btn-sm me-2" style="border-radius: 50px" data-kualifikasi="' +
+                                kualifikasi + '" data-phone="' + phone + '" data-npwp="' + npwp + '" data-iujk="' + iujk + '" data-address="' + address + '" data-image="' +
                                 row.image + '" data-username="' + row.username + '" data-ppk="' + ppk +
                                 '" data-type="Edit" data-email="' + row.email + '" data-name="' + row[role]
-                                .name + '" data-id="' + data +
+                                    .name + '" data-id="' + data +
                                 '" id="editData"><i class="bx bx-edit"></i></a>' +
-                                '<a class="btn btn-sm btn-info btn-sm" id="detailData" data-id="'+row.id+'" style="border-radius: 50px; color: white"><i class=\'bx bxs-user-detail\'></i></a>'
+                                '<a class="btn btn-sm btn-info btn-sm" id="detailData" data-id="' + row.id +
+                                '" style="border-radius: 50px; color: white"><i class=\'bx bxs-user-detail\'></i></a>'
                         }
                     },
                 ]
             })
         }
 
-        $(document).on('click', '.card-user', function() {
+        $(document).on('click', '.card-user', function () {
             roles = $(this).data('roles');
             textRoles = $(this).data('text-roles')
             datatable(roles);
@@ -482,7 +508,7 @@
             $('.title-table').text('Data ' + textRoles);
         })
 
-        $(document).on('click', '#deleteData', function() {
+        $(document).on('click', '#deleteData', function () {
             deleteData($(this).data('name'), window.location.pathname + '/' + $(this).data('id') + '/delete',
                 afterSave())
             return false

@@ -2,7 +2,7 @@
 
     <div class="mt-4" style="min-height: 23vh">
         <div class="table-container">
-            <p class="fw-bold t-primary">Data Konstruksi Yang Masih Berlangsung</p>
+            <p class="fw-bold t-blackk">Data Konstruksi Yang Masih Berlangsung</p>
             <table id="table" class="table table-striped" style="width:100%">
             </table>
         </div>

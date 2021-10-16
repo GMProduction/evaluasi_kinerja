@@ -173,7 +173,7 @@
                             '                                <div class="div-header">\n' +
                             '                                    <p class="nama t-black">' +
                             senderName + '</p>\n' +
-                            '                                    <p class="tanggal " style="color: gray">' +
+                            '                                    <p class="tanggal " >' +
                             moment(value['updated_at']).format('LLL') + '</p>\n' +
                             '                                </div>\n' +
                             '                                    <p class="title mb-1 mt-2 t-active" style="font-size: .8rem; font-weight: bold">' +
@@ -205,11 +205,11 @@
             var brod;
             if (lok1) {
                 brod =
-                    "<a href='/' class='me-1'>Dashboard</a> <i class='bx bx-chevron-right me-1 t-primary'></i> <a class='me-1' href='/" +
+                    "<a href='/' class='me-1'><span><i class='bx bx-home me-1 t-text-color2'></i></span> Dashboard</a> <i class='bx bx-chevron-right me-1 c-text'></i> <a class='me-1' href='/" +
                     lok1 + "'>" + lok1 +
                     "</a>"
                 if (lok2) {
-                    brod = brod + " <i class='bx bx-chevron-right me-1 t-primary'></i> <a class='me-1' href='/" + lok1 +
+                    brod = brod + " <i class='bx bx-chevron-right me-1 c-text'></i> <a class='me-1' href='/" + lok1 +
                         "/" + lok2 +
                         "/" + lok3 +
                         "'>" + lok2 + "</a>"

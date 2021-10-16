@@ -144,15 +144,18 @@ class ScoreController extends CustomController
             $value = (int)$this->postField('value');
             $type = $this->postField('index');
             $authorId = Auth::id();
-            $scoreText = 'bad';
+            $scoreText = 'very-bad';
             switch ($value) {
                 case 1:
-                    $scoreText = 'bad';
+                    $scoreText = 'very-bad';
                     break;
                 case 2:
-                    $scoreText = 'medium';
+                    $scoreText = 'bad';
                     break;
                 case 3:
+                    $scoreText = 'medium';
+                    break;
+                case 4:
                     $scoreText = 'good';
                     break;
                 default:
@@ -183,10 +186,32 @@ class ScoreController extends CustomController
                 $scoreNoteBefore = $score->note;
                 $score->score = $value;
                 $score->text = $scoreText;
+                if ($value < 3) {
+                    $files = $this->request->file('file');
+                    $note = $this->postField('note');
+                    if (!$files && $note === "") {
+                        return response()->json(['msg' => 'Wajib Mengisi Salah Satu Lampiran', 'code' => 202], 202);
+                    }
+
+                    if ($files) {
+                        $extension = $files->getClientOriginalExtension();
+                        $name = str_replace(' ', '-', $score->package->name) . '-' . str_replace(' ', '-', $score->subIndicator->name) . strtotime("now");
+                        $valueImage = $name . '.' . $extension;
+
+                        $stringImg = '/files/' . $valueImage;
+                        $this->uploadImage('file', $valueImage, 'filesUpload');
+                        $score->file = $stringImg;
+                    }
+
+                    if ($note !== "") {
+                        $score->note = $note;
+                    }
+                }
+
                 $score->save();
                 $cumulativeAfter = $this->getCumulative($packageId, $vType);
 
-                if ($value === 3 && $vType !== 'vendor') {
+                if ($value >= 3 && $vType !== 'vendor') {
                     $notification = Notification::where('score_id', $score->id)->first();
                     if ($notification) {
                         $notification->is_active = false;
@@ -232,6 +257,8 @@ class ScoreController extends CustomController
 
                 $this->saveHistory($data);
             } else {
+                $package = Package::find($packageId);
+                $sub_indicator = SubIndicator::find($subIndicatorId);
                 $newScore = new Score();
                 $newScore->package_id = $packageId;
                 $newScore->evaluator_id = $authorId;
@@ -240,6 +267,26 @@ class ScoreController extends CustomController
                 $newScore->score = $value;
                 $newScore->text = $scoreText;
                 $newScore->type = $vType;
+                if ($value < 3) {
+                    $files = $this->request->file('file');
+                    $note = $this->postField('note');
+                    if (!$files && $note === "") {
+                        return response()->json(['msg' => 'Wajib Mengisi Salah Satu Lampiran', 'code' => 202], 202);
+                    }
+                    if ($files) {
+                        $extension = $files->getClientOriginalExtension();
+                        $name = str_replace(' ', '-', $package->name) . '-' . str_replace(' ', '-', $sub_indicator->name) . strtotime("now");
+                        $value = $name . '.' . $extension;
+
+                        $stringImg = '/files/' . $value;
+                        $this->uploadImage('file', $value, 'filesUpload');
+                        $newScore->file = $stringImg;
+                    }
+
+                    if ($note !== "") {
+                        $newScore->note = $note;
+                    }
+                }
                 $newScore->save();
 
                 if ($value < 3 && $vType !== 'vendor') {
@@ -258,7 +305,7 @@ class ScoreController extends CustomController
                 }
             }
             DB::commit();
-            return response()->json(['msg' => 'success'], 200);
+            return response()->json(['msg' => 'success', 'code' => 200], 200);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
@@ -309,11 +356,12 @@ class ScoreController extends CustomController
         $result = [];
         $chkSum = 0;
         $scoreMin = 1;
-        $scoreMax = 3;
+        $scoreMax = 4;
         $comulativeTotal = 0;
         $goodScore = 0;
         $mediumScore = 0;
         $badScore = 0;
+        $veryBadScore = 0;
         $emptyScore = 0;
         foreach ($arrData as $v) {
             $index = $v['name'];
@@ -334,12 +382,15 @@ class ScoreController extends CustomController
                 if ($sub['single_score'] !== null) {
                     switch ($sub['single_score']['score']) {
                         case 1:
-                            $badScore += 1;
+                            $veryBadScore += 1;
                             break;
                         case 2:
-                            $mediumScore += 1;
+                            $badScore += 1;
                             break;
                         case 3:
+                            $mediumScore += 1;
+                            break;
+                        case 4:
                             $goodScore += 1;
                             break;
                         default:
@@ -393,11 +444,12 @@ class ScoreController extends CustomController
             $result = [];
             $chkSum = 0;
             $scoreMin = 1;
-            $scoreMax = 3;
+            $scoreMax = 4;
             $comulativeTotal = 0;
             $goodScore = 0;
             $mediumScore = 0;
             $badScore = 0;
+            $veryBadScore = 0;
             $emptyScore = 0;
             foreach ($arrData as $v) {
                 $index = $v['name'];
@@ -418,12 +470,15 @@ class ScoreController extends CustomController
                     if ($sub['single_score'] !== null) {
                         switch ($sub['single_score']['score']) {
                             case 1:
-                                $badScore += 1;
+                                $veryBadScore += 1;
                                 break;
                             case 2:
-                                $mediumScore += 1;
+                                $badScore += 1;
                                 break;
                             case 3:
+                                $mediumScore += 1;
+                                break;
+                            case 4:
                                 $goodScore += 1;
                                 break;
                             default:
@@ -466,7 +521,7 @@ class ScoreController extends CustomController
                 'data' => [
                     'indicator' => $result,
                     'chk_summary' => round($chkSum, 0, PHP_ROUND_HALF_UP),
-                    'score_count' => [$emptyScore, $badScore, $mediumScore, $goodScore]
+                    'score_count' => [$emptyScore, $veryBadScore, $badScore, $mediumScore, $goodScore]
                 ],
                 'comulative' => round($comulativeTotal, 2, PHP_ROUND_HALF_UP)
             ], 200);
@@ -625,6 +680,88 @@ class ScoreController extends CustomController
                 return response()->json(['msg' => 'Tidak Ada Riwayat...', 'code' => 202], 202);
             }
             return response()->json(['msg' => 'success', 'data' => $history, 'code' => 200], 200);
+        } catch (\Exception $e) {
+            return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
+        }
+    }
+
+    public function getAllCumulative()
+    {
+        try {
+            $packageId = request()->query->get('package');
+            $availableType = ['office', 'ppk', 'vendor'];
+            $data = Indicator::with(['subIndicator.cumulativeScore' => function ($query) use ($packageId) {
+                $query->where('package_id', $packageId);
+            }])->get();
+            $tmp = [];
+            $scoreMin = 1;
+            $scoreMax = 4;
+            $cumulative_total = 0;
+            foreach ($data as $key => $indicator) {
+                $subLength = count($indicator->subIndicator);
+                $weight = $indicator->weight;
+                $min = ($scoreMin * $subLength);
+                $max = ($scoreMax * $subLength);
+                $maxFactor = round((100 * $weight), 2, PHP_ROUND_HALF_UP);
+                $radarMin = 0;
+                $radarMax = 10;
+                $value = 0;
+                $a = round(($radarMax - $radarMin) / ($max - $min), 3, PHP_ROUND_HALF_UP);
+                $b = round($radarMax - ($max * $a), 0, PHP_ROUND_HALF_UP);
+                $tmpIndicator = [];
+                $tmpIndicator['id'] = $indicator->id;
+                $tmpIndicator['name'] = $indicator->name;
+                $tmpIndicator['weight'] = $indicator->weight;
+                $tmpIndicator['sub_indicator'] = [];
+                foreach ($indicator->subIndicator as $key_sub => $sub_indicator) {
+                    $tmp_cumulative = 0;
+                    $arr_cumulative = $sub_indicator->cumulativeScore->toArray();
+                    foreach ($availableType as $type) {
+                        $key = array_search($type, array_column($arr_cumulative, 'type'));
+                        $tmp_c['type'] = $type;
+                        if ($key !== false) {
+                            switch ($type) {
+                                case 'office':
+                                    $tmp_cumulative += round($arr_cumulative[$key]['score'] * 35 / 100, 2, PHP_ROUND_HALF_UP);
+                                    break;
+                                case 'ppk':
+                                    $tmp_cumulative += round($arr_cumulative[$key]['score'] * 50 / 100, 2, PHP_ROUND_HALF_UP);
+                                    break;
+                                case 'vendor':
+                                    $tmp_cumulative += round($arr_cumulative[$key]['score'] * 15 / 100, 2, PHP_ROUND_HALF_UP);
+                                    break;
+                                default:
+                                    $tmp_cumulative += 0;
+                                    break;
+                            }
+                        } else {
+                            $tmp_cumulative += 0;
+                        }
+                    }
+                    $value += $tmp_cumulative;
+                    $tmpIndicator['sub_indicator'][$key_sub]['id'] = $sub_indicator->id;
+                    $tmpIndicator['sub_indicator'][$key_sub]['name'] = $sub_indicator->name;
+                    $tmpIndicator['sub_indicator'][$key_sub]['score'] = round($tmp_cumulative, 2, PHP_ROUND_HALF_UP);
+                }
+                $a_cumulative = round(($maxFactor / ($max - $min)), 3, PHP_ROUND_HALF_UP);
+                $b_cumulative = round(($maxFactor - ($max * $a_cumulative)), 3, PHP_ROUND_HALF_UP);
+                $radar = 0;
+                $cumulative = 0;
+                if ($value > 0) {
+                    $radar = ($a * $value) + $b;
+                    $cumulative = ($a_cumulative * $value) + $b_cumulative;
+                    $cumulative_total += round($cumulative, 2, PHP_ROUND_HALF_UP);
+                }
+                $tmpIndicator['radar'] = $radar;
+                array_push($tmp, $tmpIndicator);
+            }
+
+
+            return response()->json([
+                'msg' => 'success',
+                'data' => $tmp,
+                'cumulative' => round($cumulative_total, 2, PHP_ROUND_HALF_UP),
+                'code' => 200], 200);
         } catch (\Exception $e) {
             return response()->json(['msg' => 'Terjadi Kesalahan Server..' . $e], 500);
         }
