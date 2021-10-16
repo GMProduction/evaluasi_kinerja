@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
 
-Route::get('/indicators', [\App\Http\Controllers\IndicatorController::class, 'index']);
+//Route::get('/indicators', [\App\Http\Controllers\IndicatorController::class, 'index']);
 Route::get('/package', [\App\Http\Controllers\PackageController::class, 'index']);
 Route::get('/ppk', [\App\Http\Controllers\PPKController::class, 'index']);
 Route::get('/accessor-ppk', [\App\Http\Controllers\AccessorPpkController::class, 'index']);
