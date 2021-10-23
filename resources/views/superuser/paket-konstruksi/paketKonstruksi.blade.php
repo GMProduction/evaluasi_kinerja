@@ -21,10 +21,10 @@
             <div class="table-container">
                 <div class="header-table">
                     <p class="title-table fw-bold t-primary">Data Paket Konstruksi</p>
-                    <a class="bt-primary-sm" id="addData"><i class='bx bx-plus'></i> Tambah Data</a>
+                    <a class="bt-primary-sm fs-07-in-small" id="addData"><i class='bx bx-plus'></i> Tambah <span class="hide-in-small">Data</span></a>
                 </div>
 
-                <table id="table" class="table table-striped" style="width:100%">
+                <table id="table" class="table table-striped display responsive wrap" style="width:100%">
 
                 </table>
             </div>
@@ -77,13 +77,13 @@
                             </div>
 
                             <div class="input-group input-daterange">
-                                <div class="me-2">
+                                <div class="me-1-in-large">
                                     <label for="start" class="form-label">Tanggal Mulai</label>
                                     <input type="text" class="form-control " name="start" required>
                                 </div>
 
 
-                                <div class="ms-2">
+                                <div class="ms-1-in-large">
                                     <label for="finish" class="form-label">Tanggal Berakhir</label>
                                     <input type="text" class="form-control " name="finish" required>
                                 </div>
@@ -131,44 +131,44 @@
                     return nRow;
                 },
                 columnDefs: [
-                    {"title": "#", "searchable": false, "orderable": false, "targets": 0, "className": "text-center"},
-                    {"title": "Paket", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "#", "searchable": false, "orderable": false, "targets": 0, "className": "left-in-small"},
+                    {"title": "Paket", 'targets': 1, 'searchable': true, 'orderable': true, "className": "left-in-small"},
                     {
                         "title": "No. Kontrak",
                         'targets': 2,
                         'searchable': true,
                         'orderable': true,
-                        "className": "text-center"
+                        "className": "left-in-small"
                     },
                     {
                         "title": "Tanggal Kontrak",
                         'targets': 3,
                         'searchable': true,
                         'orderable': true,
-                        "className": "text-center"
+                        "className": "left-in-small"
                     },
-                    {"title": "PPK", 'targets': 4, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "PPK", 'targets': 4, 'searchable': true, 'orderable': true, "className": "left-in-small"},
                     {
                         "title": "Penyedia Jasa",
                         'targets': 5,
                         'searchable': true,
                         'orderable': true,
-                        "className": "text-center"
+                        "className": "left-in-small"
                     },
-                    {"title": "Mulai", 'targets': 6, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "Mulai", 'targets': 6, 'searchable': true, 'orderable': true, "className": "left-in-small"},
                     {
                         "title": "Selesai",
                         'targets': 7,
                         'searchable': true,
                         'orderable': true,
-                        "className": "text-center"
+                        "className": "left-in-small"
                     },
                     {
                         "title": "Action",
                         'targets': 8,
                         'searchable': false,
                         'orderable': false,
-                        "className": "text-center"
+                        "className": "left-in-small"
                     },
                 ],
 

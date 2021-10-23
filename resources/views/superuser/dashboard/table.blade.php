@@ -3,7 +3,7 @@
     <div class="mt-4" style="min-height: 23vh">
         <div class="table-container">
             <p class="fw-bold t-blackk">Data Konstruksi Yang Masih Berlangsung</p>
-            <table id="table" class="table table-striped" style="width:100%">
+            <table id="table" class="table table-striped display responsive wrap" style="width:100%">
             </table>
         </div>
     </div>
@@ -22,6 +22,7 @@
                 destroy: true,
                 processing: true,
                 serverSide: true,
+                scrollX: true,
                 ajax: url,
                 "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // debugger;
@@ -32,14 +33,14 @@
                     return nRow;
                 },
                 columnDefs: [
-                    {"title": "#", "searchable": false, "orderable": false, "targets": 0, "className": "text-center", "width": "100"},
-                    {"title": "Paket", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "No. Kontrak", 'targets': 2, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Tanggal Kontrak", 'targets': 3, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "PPK", 'targets': 4, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Penyedia Jasa", 'targets': 5, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Mulai", 'targets': 6, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Selesai", 'targets': 7, 'searchable': true, 'orderable': true, "className": "text-center"},
+                    {"title": "#", "searchable": false, "orderable": false, "targets": 0, "className": "left-in-small", "width": "30"},
+                    {"title": "Paket", 'targets': 1, 'searchable': true, 'orderable': true, "className": "left-in-small"},
+                    {"title": "No. Kontrak", 'targets': 2, 'searchable': true, 'orderable': true, "className": "left-in-small"},
+                    {"title": "Tanggal Kontrak", 'targets': 3, 'searchable': true, 'orderable': true, "className": "left-in-small"},
+                    {"title": "PPK", 'targets': 4, 'searchable': true, 'orderable': true, "className": "left-in-small"},
+                    {"title": "Penyedia Jasa", 'targets': 5, 'searchable': true, 'orderable': true, "className": "left-in-small"},
+                    {"title": "Mulai", 'targets': 6, 'searchable': true, 'orderable': true, "className": "left-in-small"},
+                    {"title": "Selesai", 'targets': 7, 'searchable': true, 'orderable': true, "className": "left-in-small"},
                 ],
 
                 columns: [

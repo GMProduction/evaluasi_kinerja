@@ -421,8 +421,7 @@
     @endif
 
 
-    <div class="container" id="container">
-        <div class="form-container sign-up-container">
+        <div class="form-container sign-up-container hide-in-small">
             <form action="#">
                 <h1>Create Account</h1>
                 <div class="social-container">
@@ -437,10 +436,12 @@
                 <button>Sign Up</button>
             </form>
         </div>
-        <div class="form-container sign-in-container">
+        <div class="form-container sign-in-container w-100-in-small  ">
             <form action="#" method="post">
                 @csrf
                 <h1>Login</h1>
+                <img src="{{ asset('/images/Logo1.png') }}" height="75" class="hide-in-large">
+
                 <div class="social-container">
                     <p style="margin-bottom: 10px; margin-top: 10px">Masukan Email/Username <br>dan Password</p>
                 </div>
@@ -452,14 +453,14 @@
                 <button class="b-primary mt-4" style="border: none; cursor: pointer">Sign In</button>
             </form>
         </div>
-        <div class="overlay-container">
+        <div class="overlay-container hide-in-small">
             <div class="overlay">
-                <div class="overlay-panel overlay-left">
+                <div class="overlay-panel overlay-left w-100-in-small">
                     <h1 >Evaluasi Kinerja Penyedia Jasa</h1>
                     <p>To keep connected with us please login with your personal info</p>
                     <button class="ghost" id="signIn">Sign In</button>
                 </div>
-                <div class="overlay-panel overlay-right">
+                <div class="overlay-panel overlay-right hide-in-small">
                     <img src="{{ asset('/images/Logo1.png') }}" height="120">
                     <h1 class="mb-0 t-dark">Evaluasi Kinerja Penyedia Jasa</h1>
                     <p class="mt-0 t-dark">Hitung penilaian kinerja penyedia jasa disini</p>

@@ -23,6 +23,7 @@
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" /> --}}
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
         rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -40,7 +41,7 @@
         {{-- <div class="header_toggle"><i class='bx bx-menu bx-x' id="header-toggle"></i></div> --}}
 
         <div class="d-flex">
-            <img src="{{ asset('/images/Logo2.png') }}" height="50px" style="margin-right: 30px" />
+            <img src="{{ asset('/images/Logo2.png') }}" height="50px" style="margin-right: 30px" class="hide-in-small"/>
             <div id="brodcum" style="display: flex; align-items: center; "></div>
         </div>
 
@@ -48,7 +49,7 @@
             <div class="btn-group">
                 <a class="t-black klikable me-3" id="dropdownMenuClickableInside" data-bs-toggle="dropdown"
                     data-bs-auto-close="outside" aria-expanded="false">
-                    <i class='bx bx-bell bx-sm'></i>
+                    <i class='bx bx-bell  fs-10-in-small'></i>
                     <div id="badge"></div>
 
                 </a>
@@ -66,7 +67,7 @@
             <div class="dropdown show ">
                 <a class="dropdown-toggle t-black" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown"
                     data-bs-auto-close="outside" aria-expanded="false">
-                    Hi, {{ auth()->user()->username }}
+                    Hi, <span class="hide-in-small">{{ auth()->user()->username }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" type="button" href="/profile">Profile</a>
@@ -129,6 +130,7 @@
     <script src="{{ asset('js/myStyle.js') }}"></script>
     {{-- <script src="{{ asset('js/sidebar.js') }}"></script> --}}
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap5.min.js"></script>
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -205,11 +207,11 @@
             var brod;
             if (lok1) {
                 brod =
-                    "<a href='/' class='me-1'><span><i class='bx bx-home me-1 t-text-color2'></i></span> Dashboard</a> <i class='bx bx-chevron-right me-1 c-text'></i> <a class='me-1' href='/" +
+                    "<a href='/' class='me-1 fs-07-in-small'><span><i class='bx bx-home me-1 t-text-color2 hide-in-small'></i></span> Dashboard</a> <i class='bx bx-chevron-right me-1 c-text'></i> <a class='me-1 fs-07-in-small' href='/" +
                     lok1 + "'>" + lok1 +
                     "</a>"
                 if (lok2) {
-                    brod = brod + " <i class='bx bx-chevron-right me-1 c-text'></i> <a class='me-1' href='/" + lok1 +
+                    brod = brod + " <i class='bx bx-chevron-right me-1 c-text'></i> <a class='me-1 fs-07-in-small' href='/" + lok1 +
                         "/" + lok2 +
                         "/" + lok3 +
                         "'>" + lok2 + "</a>"

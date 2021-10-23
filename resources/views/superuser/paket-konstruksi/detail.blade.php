@@ -78,7 +78,7 @@
                             <p class="title-table">Addendum Paket</p>
                             <a class="bt-primary-sm" id="addData"><i class='bx bx-plus'></i> Tambah</a>
                         </div>
-                        <table id="table" class="table table-striped" style="width:100%">
+                        <table id="table" class="table table-striped display responsive wrap" style="width:100%">
                         </table>
                     </div>
                 </div>
@@ -162,28 +162,28 @@
                         "searchable": false,
                         "orderable": false,
                         "targets": 0,
-                        "className": "text-center"
+                        "className": "left-in-small"
                     },
                     {
                         "title": "No. Addendum",
                         'targets': 1,
                         'searchable': true,
                         'orderable': true,
-                        "className": "text-center"
+                        "className": "left-in-small"
                     },
                     {
                         "title": "Tanggal Addendum",
                         'targets': 2,
                         'searchable': true,
                         'orderable': true,
-                        "className": "text-center"
+                        "className": "left-in-small"
                     },
                     {
                         "title": "Action",
                         'targets': 3,
                         'searchable': false,
                         'orderable': false,
-                        "className": "text-center"
+                        "className": "left-in-small"
                     },
                 ],
 

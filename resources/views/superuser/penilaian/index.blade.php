@@ -44,452 +44,433 @@
 
 
 @section('content')
+
     <body>
-    <style>
-        body {
-            background-color: #778797;
-            font-family: "Segoe UI", sans-serif;
-        }
+        <style>
+            body {
+                background-color: #778797;
+                font-family: "Segoe UI", sans-serif;
+            }
 
-        .card-panel {
-            background-color: #1D3752;
-            border-radius: 10px;
-            box-shadow: 0 8px 60px -10px rgba(13, 28, 39, 0.6);
-            padding: 30px 40px;
-        }
+            .card-panel {
+                background-color: #1D3752;
+                border-radius: 10px;
+                box-shadow: 0 8px 60px -10px rgba(13, 28, 39, 0.6);
+                padding: 30px 40px;
+            }
 
-        .back-panel-2 {
-            background-color: #344b63;
-        }
+            .back-panel-2 {
+                background-color: #344b63;
+            }
 
-        .table-container {
-            margin-bottom: 20px
-        }
+            .table-container {
+                margin-bottom: 20px
+            }
 
-        .header-profile {
-            background-color: #1D3752;
-            border-radius: 10px;
-            box-shadow: 0 8px 60px -10px rgba(13, 28, 39, 0.6);
-            padding: 30px 40px;
-        }
+            .header-profile {
+                background-color: #1D3752;
+                border-radius: 10px;
+                box-shadow: 0 8px 60px -10px rgba(13, 28, 39, 0.6);
+                padding: 30px 40px;
+            }
 
-        .secondary-color-text {
-            color: #008B93;
-        }
+            .secondary-color-text {
+                color: #008B93;
+            }
 
-        .secondary-light-text {
-            color: #a5afba;
-        }
+            .secondary-light-text {
+                color: #a5afba;
+            }
 
-        .primary-light-text {
-            color: #e8ebee;
-        }
+            .primary-light-text {
+                color: #e8ebee;
+            }
 
-        .color-accent {
-            background-color: #DFA01E;
-        }
+            .color-accent {
+                background-color: #DFA01E;
+            }
 
-        .header-profile-right {
-            border-left: 1px solid #7c7c7c;
-        }
+            .header-profile-right {
+                border-left: 1px solid #7c7c7c;
+            }
 
-        .header-image {
-            border-radius: 50%;
-            margin-right: 30px;
-            /*border: 4px solid #FFC43A;*/
-        }
+            .header-image {
+                border-radius: 50%;
+                margin-right: 30px;
+                /*border: 4px solid #FFC43A;*/
+            }
 
-        .header-name {
-            font-size: 30px;
-            font-weight: bold;
-            margin-bottom: 0;
-        }
+            .header-name {
+                font-size: 30px;
+                font-weight: bold;
+                margin-bottom: 0;
+            }
 
-        .header-qualified {
-            font-size: 16px;
-        }
+            .header-qualified {
+                font-size: 16px;
+            }
 
-        .header-info {
-            display: flex;
-            align-items: start;
+            .header-info {
+                display: flex;
+                align-items: start;
 
-        }
+            }
 
-    </style>
+        </style>
 
-    <section class="container-fluid p-lg-3 p-xl-3">
-        <div class=" row">
-            <div class="col-xl-12 ">
-                <div class="header-profile mb-5">
-                    <div class=" row">
-                        <div class="col-xl-12 col-lg-12 d-flex">
-                            <img src="{{ $vendor->image }}" height="150" width="150" class="header-image mr-5"
-                                 onerror="this.onerror=null;this.src='{{ asset('/images/noimage.png') }}';"/>
-                            <div class="d-flex flex-column">
-                                <div class="flex-grow-1">
-                                    <p class="header-name secondary-color-text">{{ $vendor->vendor->name }}</p>
-                                    <div class="">
-                                        <span class="secondary-light-text" style="font-size: 14px">{{ $vendor->vendor->address }} ({{ $vendor->vendor->phone }})</span>
+        <section class="container-fluid p-lg-3 p-xl-3">
+            <div class=" row">
+                <div class="col-xl-12 p-hor-in-large">
+                    <div class="header-profile mb-5">
+                        <div class=" row">
+                            <div class="col-xl-12 col-lg-12 d-flex flex-wrap">
+                                <img src="{{ $vendor->image }}" height="150" width="150" class="header-image mr-5 mb-1-in-small"
+                                    onerror="this.onerror=null;this.src='{{ asset('/images/noimage.png') }}';" />
+                                <div class="d-flex flex-column">
+                                    <div class="flex-grow-1">
+                                        <p class="header-name secondary-color-text">{{ $vendor->vendor->name }}</p>
+                                        <div class="">
+                                            <p class="secondary-light-text mb-0"
+                                                style="font-size: 14px">{{ $vendor->vendor->address }}
+                                                ({{ $vendor->vendor->phone }})</p>
+                                        </div>
+                                        <div class="header-qualified secondary-light-text">
+                                            <p style="margin-right: 20px" class="mb-0">{{ $vendor->vendor->kualifikasi }}</p>
+                                            <p style="color: #DFA01E; font-weight: bold" class="mb-0">IUJK : 
+                                            <span
+                                                style="margin-right: 20px" class="secondary-light-text fw-normal">{{ $vendor->vendor->iujk === null ? '-' : $vendor->vendor->iujk }}</span></p>
+                                            <p style="color: #DFA01E; font-weight: bold" class="mb-2">NPWP : 
+                                            <span class="secondary-light-text fw-normal">{{ $vendor->vendor->npwp === null ? '-' : $vendor->vendor->npwp }}</span></p>
+                                        </div>
                                     </div>
-                                    <div class="header-qualified secondary-light-text">
-                                        <span style="margin-right: 20px">{{ $vendor->vendor->kualifikasi }}</span>|
-                                        <span style="color: #DFA01E; font-weight: bold">IUJK : </span>
-                                        <span
-                                            style="margin-right: 20px">{{ $vendor->vendor->iujk === null ? '-' : $vendor->vendor->iujk }}</span>|
-                                        <span style="color: #DFA01E; font-weight: bold">NPWP : </span>
-                                        <span>{{ $vendor->vendor->npwp === null ? '-' : $vendor->vendor->npwp }}</span>
+                                    <div>
+                                        <select class="select-paket" id="package-list">
+                                            <option value="">Pilih Paket</option>
+                                            @foreach ($data as $v)
+                                                <option value="{{ $v->id }}">{{ $v->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                                <div>
-                                    <select class="select-paket" id="package-list">
-                                        <option value="">Pilih Paket</option>
-                                        @foreach ($data as $v)
-                                            <option value="{{ $v->id }}">{{ $v->name }}</option>
-                                        @endforeach
-                                    </select>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-md-12 p-hor-in-large">
+                    <div class="sticky-top-in-large" style="top: 75px">
+                        <div class="card-panel mb-3-in-small">
+                            <span class="t-black" style="font-weight: bold">Data Paket Konstruksi</span>
+                            <hr class="primary-light-text">
+                            <div class="mb-3">
+                                <label for="paketkonstruksi" class="form-label secondary-light-text">Paket
+                                    Konstruksi</label>
+                                <input type="text" class="form-control" value="" readonly id="paketkonstruksi">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nomorkontrak" class="form-label secondary-light-text">Nomor Kontrak</label>
+                                <input type="text" class="form-control" value="" readonly id="nomorkontrak">
+                            </div>
+                            <div class="mb-3">
+                                <label for="penggunajasa" class="form-label secondary-light-text">Pengguna Jasa</label>
+                                <input type="text" class="form-control" value="" readonly id="penggunajasa">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="jenisasesmen" class="form-label secondary-light-text">Jenis Asesmen</label>
+                                <input type="text" class="form-control" value="Penilaian Penyedia Jasa" readonly
+                                    id="jenisasesmen">
+                            </div>
+                            <div class="mb-3">
+                                <label for="terahkirupdate" class="form-label secondary-light-text">Terahkir Update</label>
+                                <input type="text" class="form-control" value="Belum Ada Update" readonly
+                                    id="terahkirupdate">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="faktorupdate" class="secondary-light-text">Faktor Diupdate</label>
+                                <textarea class="form-control" id="faktorupdate" rows="3" readonly></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-9 col-lg-9 p-hor-in-large">
+                    <div role="tablist" class="mb-3">
+                        <div class="items-tab w-100-in-small flex-wrap" id="menu-tab">
+                            <a class="card-tab w-100-in-small mb-1-in-small d-block c-text card-user" id="vendor" data-roles="vendor">
+                                <div class="d-flex justify-content-between">
+                                    <i class='bx bx-message-square-edit'></i>
+                                    {{-- <p class="number-card t-bagus">89</p> --}}
+                                </div>
+                                <div class="mt-2">
+                                    Penyedia Jasa
+                                </div>
+                            </a>
+
+                            <a class="card-tab d-block c-text card-user w-100-in-small mb-1-in-small" id="accessorppk" data-roles="accessorppk">
+                                <div class="d-flex justify-content-between">
+                                    <i class='bx bx-message-square-edit'></i>
+                                    {{-- <p class="number-card t-cukup">67</p> --}}
+                                </div>
+                                <div class="mt-2">
+                                    Penilaian PPK
+                                </div>
+                            </a>
+
+                            <a class="card-tab d-block c-text card-user card-panel w-100-in-small mb-1-in-small" id="accessor" data-roles="accessor">
+                                <div class="d-flex justify-content-between">
+                                    <i class='bx bx-message-square-edit'></i>
+                                    {{-- <p class="number-card t-kurang">38</p> --}}
+                                </div>
+                                <div class="mt-2">
+                                    Penilaian Balai
+                                </div>
+                            </a>
+
+                            <a class="card-tab d-block c-text card-user w-100-in-small mb-1-in-small" id="komulatif" data-roles="komulatif">
+                                <div class="d-flex justify-content-between">
+                                    <i class='bx bx-message-square-edit'></i>
+                                    {{-- <p class="number-card t-kurang">38</p> --}}
+                                </div>
+                                <div class="mt-2">
+                                    Komulatif
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 p-hor-in-large" id="pnl-faktor-penilaian">
+                            <div class="table-container card-panel back-panel-2" id="parentofchart"
+                                style="padding-bottom: 60px">
+                                <p class="fw-bold t-black">Faktor Penilaian</p>
+                                <hr>
+                                <div class="d-flex justify-content-between " style="align-items: end; margin-top: 50px">
+                                    <p id="faktorternilai" class="t-black" style="font-size: .8rem;  bottom: 0;">0%
+                                        Dari Faktor Penilaian</p>
+                                    <p id="faktorbelum" class="fw-bold" style="font-size: 2rem; color: #DFA01E;">0
+                                    </p>
+                                </div>
+                                <div class="progress" style="height: 10px; margin-bottom: 10px">
+                                    <div id="progress-bar-faktor" class="progress-bar" role="progressbar"
+                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p id="fk-sudah-dinilai" class="t-black mb-0" style="font-size: .8rem;  bottom: 0;">
+                                        Faktor Sudah Di Nilai : 0</p>
+                                    <p id="fk-belum-dinilai" class="t-black mb-0" style="font-size: .8rem;  bottom: 0;">
+                                        Faktor Belum Di Nilai : 0</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 p-hor-in-large" id="pnl-faktor-nilai-kom">
+                            <div class="table-container card-panel back-panel-2" id="parentofchart"
+                                style="padding-bottom: 36px">
+                                <p class="fw-bold t-black" id="title-nilai-komulatif">Nilai Komulatif</p>
+                                <hr>
+                                <h1 class=" text-center mt-1" style="font-size: 5rem; color: #DFA01E" id="comulative_value">
+                                    0</h1>
+                                <p id="comulative_status" class=" r-fullround text-center  ms-auto me-auto p-1 mt-3"
+                                    style="width: 200px">Sangat Kurang</p>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-12 p-hor-in-large" id="pnl-faktor-radar">
+                            <div class="table-container card-panel back-panel-2 sticky-top" style="z-index: 0; ">
+                                <p class="fw-bold t-black" id="map-title">Peta Kinerja Penyedia Jasa</p>
+                                <hr>
+                                <canvas class="myChart" id="myChart" style="max-height: 400px"></canvas>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-12 p-hor-in-large" id="pnl-faktor-risalah">
+                            <div class="table-container card-panel back-panel-2" id="parentofchart"
+                                style=" position: relative; min-height: 515px">
+                                <p class="fw-bold t-black">Risalah Hasil Penilaian Faktor</p>
+                                <hr>
+                                <div id="donutchart" {{-- style="margin-top: 50px" --}}></div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 p-hor-in-large">
+                            <div class="card-panel back-panel-2 table-container" id="content-detail-nilai">
+                                <p class="fw-bold t-black">Detail Penilaian</p>
+                                <hr>
+                                <div id="result-container">
                                 </div>
                             </div>
                         </div>
-                        {{--                            <div class="col-xl-3 col-lg-3 header-profile-right">--}}
-                        {{--                                <div class="d-flex align-items-start">--}}
-                        {{--                                    <i class="bx bx-home t-primary" style="margin-right: 5px; margin-top: 5px"></i>--}}
-                        {{--                                    <span class="secondary-light-text">{{ $vendor->vendor->address }}</span>--}}
-                        {{--                                </div>--}}
-                        {{--                                <div class="d-flex align-items-start">--}}
-                        {{--                                    <i class="bx bxs-phone t-primary" style="margin-right: 5px; margin-top: 5px"></i>--}}
-                        {{--                                    <p class="secondary-light-text mb-0">{{ $vendor->vendor->phone }}</p>--}}
-                        {{--                                </div>--}}
-                        {{--                                <div class="d-flex align-items-start">--}}
-                        {{--                                    <i class="bx bx-user-pin t-primary" style="margin-right: 5px; margin-top: 5px"></i>--}}
-                        {{--                                    <p class="secondary-light-text mb-0">{{ $vendor->vendor->npwp }}</p>--}}
-                        {{--                                </div>--}}
-                        {{--                                <div class="d-flex align-items-start">--}}
-                        {{--                                    <i class="bx bx-receipt t-primary" style="margin-right: 5px; margin-top: 5px"></i>--}}
-                        {{--                                    <p class="secondary-light-text ">{{ $vendor->vendor->iujk }}</p>--}}
-                        {{--                                </div>--}}
-                        {{--                            </div>--}}
                     </div>
                 </div>
             </div>
-
-        </div>
-        <div class="row">
-            <div class="col-xl-3 col-lg-3 ">
-                <div class="sticky-top" style="top: 75px">
-                    <div class="card-panel ">
-                        <span class="t-black" style="font-weight: bold">Data Paket Konstruksi</span>
-                        <hr class="primary-light-text">
-                        <div class="mb-3">
-                            <label for="paketkonstruksi" class="form-label secondary-light-text">Paket
-                                Konstruksi</label>
-                            <input type="text" class="form-control" value="" readonly id="paketkonstruksi">
-                        </div>
-                        <div class="mb-3">
-                            <label for="nomorkontrak" class="form-label secondary-light-text">Nomor Kontrak</label>
-                            <input type="text" class="form-control" value="" readonly id="nomorkontrak">
-                        </div>
-                        <div class="mb-3">
-                            <label for="penggunajasa" class="form-label secondary-light-text">Pengguna Jasa</label>
-                            <input type="text" class="form-control" value="" readonly id="penggunajasa">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="jenisasesmen" class="form-label secondary-light-text">Jenis Asesmen</label>
-                            <input type="text" class="form-control" value="Penilaian Penyedia Jasa" readonly
-                                   id="jenisasesmen">
-                        </div>
-                        <div class="mb-3">
-                            <label for="terahkirupdate" class="form-label secondary-light-text">Terahkir Update</label>
-                            <input type="text" class="form-control" value="Belum Ada Update" readonly
-                                   id="terahkirupdate">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="faktorupdate" class="secondary-light-text">Faktor Diupdate</label>
-                            <textarea class="form-control" id="faktorupdate" rows="3" readonly></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-9 col-lg-9">
-
-                <div role="tablist" class="mb-3">
-
-                    <div class="items-tab" id="menu-tab">
-                        <a class="card-tab d-block c-text card-user" id="vendor" data-roles="vendor">
-                            <div class="d-flex justify-content-between">
-                                <i class='bx bx-message-square-edit'></i>
-                                {{-- <p class="number-card t-bagus">89</p> --}}
-                            </div>
-                            <div class="mt-2">
-                                Penyedia Jasa
-                            </div>
-                        </a>
-
-                        <a class="card-tab d-block c-text card-user" id="accessorppk" data-roles="accessorppk">
-                            <div class="d-flex justify-content-between">
-                                <i class='bx bx-message-square-edit'></i>
-                                {{-- <p class="number-card t-cukup">67</p> --}}
-                            </div>
-                            <div class="mt-2">
-                                Penilaian PPK
-                            </div>
-                        </a>
-
-                        <a class="card-tab d-block c-text card-user card-panel" id="accessor" data-roles="accessor">
-                            <div class="d-flex justify-content-between">
-                                <i class='bx bx-message-square-edit'></i>
-                                {{-- <p class="number-card t-kurang">38</p> --}}
-                            </div>
-                            <div class="mt-2">
-                                Penilaian Balai
-                            </div>
-                        </a>
-
-                        <a class="card-tab d-block c-text card-user" id="komulatif" data-roles="komulatif">
-                            <div class="d-flex justify-content-between">
-                                <i class='bx bx-message-square-edit'></i>
-                                {{-- <p class="number-card t-kurang">38</p> --}}
-                            </div>
-                            <div class="mt-2">
-                                Komulatif
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="row">
-
-
-                    <div class="col-6" id="pnl-faktor-penilaian">
-                        <div class="table-container card-panel back-panel-2" id="parentofchart"
-                             style="padding-bottom: 60px">
-                            <p class="fw-bold t-black">Faktor Penilaian</p>
-                            <hr>
-                            <div class="d-flex justify-content-between " style="align-items: end; margin-top: 50px">
-                                <p id="faktorternilai" class="t-black"
-                                   style="font-size: .8rem;  bottom: 0;">0% Dari Faktor Penilaian</p>
-                                <p id="faktorbelum" class="fw-bold" style="font-size: 2rem; color: #DFA01E;">0
-                                </p>
-                            </div>
-                            <div class="progress" style="height: 10px; margin-bottom: 10px">
-                                <div id="progress-bar-faktor" class="progress-bar" role="progressbar"
-                                     aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p id="fk-sudah-dinilai" class="t-black mb-0"
-                                   style="font-size: .8rem;  bottom: 0;">Faktor Sudah Di Nilai : 0</p>
-                                <p id="fk-belum-dinilai" class="t-black mb-0"
-                                   style="font-size: .8rem;  bottom: 0;">Faktor Belum Di Nilai : 0</p>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-6" id="pnl-faktor-nilai-kom">
-                        <div class="table-container card-panel back-panel-2" id="parentofchart"
-                             style="padding-bottom: 36px">
-                            <p class="fw-bold t-black" id="title-nilai-komulatif">Nilai Komulatif</p>
-                            <hr>
-                            <h1 class=" text-center mt-1" style="font-size: 5rem; color: #DFA01E" id="comulative_value">
-                                0</h1>
-                            <p id="comulative_status" class=" r-fullround text-center  ms-auto me-auto p-1 mt-3"
-                               style="width: 200px">Sangat Kurang</p>
-                        </div>
-                    </div>
-
-
-                    <div class="col-6" id="pnl-faktor-radar">
-                        <div class="table-container card-panel back-panel-2 sticky-top" style="z-index: 0; ">
-                            <p class="fw-bold t-black" id="map-title">Peta Kinerja Penyedia Jasa</p>
-                            <hr>
-                            <canvas class="myChart" id="myChart" style="max-height: 400px"></canvas>
-                        </div>
-                    </div>
-
-
-                    <div class="col-6" id="pnl-faktor-risalah">
-                        <div class="table-container card-panel back-panel-2" id="parentofchart"
-                             style=" position: relative; min-height: 515px"
-
-                        >
-                            <p class="fw-bold t-black">Risalah Hasil Penilaian Faktor</p>
-                            <hr>
-                            <div id="donutchart"
-{{--                                 style="margin-top: 50px"--}}
-                            ></div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-12">
-                        <div class="card-panel back-panel-2 table-container" id="content-detail-nilai">
-                            <p class="fw-bold t-black">Detail Penilaian</p>
-                            <hr>
-                            <div id="result-container">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="modalfile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><span id="title"></span> Upload File</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+            <div class="modal fade" id="modalfile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"><span id="title"></span> Upload File</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form" onsubmit="return Save()">
-                            @csrf
-                            <input id="id" name="id" hidden>
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nama Sub Indikator</label>
-                                <p class="fw-bold" id="fileNameSub"></p>
-                            </div>
-                            <div class="mb-3">
-                                <label for="weight" class="form-label">File</label>
-                                <input type="file" class="form-control" id="file" name="file">
-                            </div>
-                            <button type="submit" class="bt-primary">Simpan</button>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="modal-body">
+                            <form id="form" onsubmit="return Save()">
+                                @csrf
+                                <input id="id" name="id" hidden>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Nama Sub Indikator</label>
+                                    <p class="fw-bold" id="fileNameSub"></p>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="weight" class="form-label">File</label>
+                                    <input type="file" class="form-control" id="file" name="file">
+                                </div>
+                                <button type="submit" class="bt-primary">Simpan</button>
+                            </form>
+                        </div>
 
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="modalHistory" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="history-container">
-                        <div class="d-flex align-items-center justify-content-center w-100">
-                            <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
-                                 style="margin-right: 10px">
-                            </div>
-                            <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
-                                 style="margin-right: 10px">
-                            </div>
-                            <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
-                                 style="margin-right: 10px">
-                            </div>
-                            <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
-                                 style="margin-right: 10px">
-                            </div>
-                            <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status">
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <span>Sedang Mengunduh Riwayat Perubahan Terakhir....</span>
-                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="modal fade" id="modalCatatan" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+            <div class="modal fade" id="modalHistory" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="history-container">
+                            <div class="d-flex align-items-center justify-content-center w-100">
+                                <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
+                                    style="margin-right: 10px">
+                                </div>
+                                <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
+                                    style="margin-right: 10px">
+                                </div>
+                                <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
+                                    style="margin-right: 10px">
+                                </div>
+                                <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status"
+                                    style="margin-right: 10px">
+                                </div>
+                                <div class="spinner-grow spinner-grow-sm text-info mr-2" role="status">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <span>Sedang Mengunduh Riwayat Perubahan Terakhir....</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body" id="note-container">
-                        <form id="form-note" onsubmit="return SaveNote()">
-                            @csrf
-                            <input type="hidden" name="id-note" id="id-note" value="">
+                </div>
+            </div>
+            <div class="modal fade" id="modalCatatan" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="note-container">
+                            <form id="form-note" onsubmit="return SaveNote()">
+                                @csrf
+                                <input type="hidden" name="id-note" id="id-note" value="">
+                                <div class="mb-3">
+                                    <label for="note" class="form-label">Catatan</label>
+                                    <textarea class="form-control" id="note" name="note"></textarea>
+                                </div>
+                                <button type="submit" class="bt-primary">Simpan</button>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modalCatatan" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="note-container">
+                            <form id="form-note" onsubmit="return SaveNote()">
+                                @csrf
+                                <input type="hidden" name="id-note" id="id-note" value="">
+                                <div class="mb-3">
+                                    <label for="note" class="form-label">Catatan</label>
+                                    <textarea class="form-control" id="note" name="note"></textarea>
+                                </div>
+                                <button type="submit" class="bt-primary">Simpan</button>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modalCatatanLihat" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
                             <div class="mb-3">
                                 <label for="note" class="form-label">Catatan</label>
-                                <textarea class="form-control" id="note" name="note"></textarea>
+                                <p id="note-see"></p>
                             </div>
-                            <button type="submit" class="bt-primary">Simpan</button>
-                        </form>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="modalCatatan" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="note-container">
-                        <form id="form-note" onsubmit="return SaveNote()">
-                            @csrf
-                            <input type="hidden" name="id-note" id="id-note" value="">
-                            <div class="mb-3">
-                                <label for="note" class="form-label">Catatan</label>
-                                <textarea class="form-control" id="note" name="note"></textarea>
-                            </div>
-                            <button type="submit" class="bt-primary">Simpan</button>
-                        </form>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="modalCatatanLihat" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="note" class="form-label">Catatan</label>
-                            <p id="note-see"></p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="modal fade" id="modalFileRequired" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><span id="title"></span>Pemberian Nilai Kurang</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+            <div class="modal fade" id="modalFileRequired" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"><span id="title"></span>Pemberian Nilai
+                                Kurang</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p style="text-align: justify">Pemberian Nilai Di Bawah <span style="font-weight: bold">Cukup</span> Wajib Melampirkan File Atau Mengisi Catatan Penilaian</p>
-                        <form id="form-score-with-file" onsubmit="return setScoreWFile()" enctype="multipart/form-data">
-                            @csrf
-                            <input id="value-score" name="value" hidden>
-                            <input id="package-score" name="package" hidden>
-                            <input id="sub_indicator_score" name="sub_indicator" hidden>
-                            <input id="index-score" name="index" hidden>
-                            <div class="mb-3">
-                                <label for="weight" class="form-label">File Lampiran</label>
-                                <input type="file" class="form-control" id="file" name="file">
-                            </div>
-                            <div class="mb-3">
-                                <label for="note" class="form-label">Catatan</label>
-                                <textarea class="form-control" id="note" name="note"></textarea>
-                            </div>
-                            <button type="submit" class="bt-primary">Simpan</button>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="modal-body">
+                            <p style="text-align: justify">Pemberian Nilai Di Bawah <span
+                                    style="font-weight: bold">Cukup</span> Wajib Melampirkan File Atau Mengisi Catatan
+                                Penilaian</p>
+                            <form id="form-score-with-file" onsubmit="return setScoreWFile()" enctype="multipart/form-data">
+                                @csrf
+                                <input id="value-score" name="value" hidden>
+                                <input id="package-score" name="package" hidden>
+                                <input id="sub_indicator_score" name="sub_indicator" hidden>
+                                <input id="index-score" name="index" hidden>
+                                <div class="mb-3">
+                                    <label for="weight" class="form-label">File Lampiran</label>
+                                    <input type="file" class="form-control" id="file" name="file">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="note" class="form-label">Catatan</label>
+                                    <textarea class="form-control" id="note" name="note"></textarea>
+                                </div>
+                                <button type="submit" class="bt-primary">Simpan</button>
+                            </form>
+                        </div>
 
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     </body>
 
 @endsection
@@ -513,13 +494,12 @@
             $('#brodcum').html('');
             let bread = '';
             if (lok1) {
-                console.log('testtis');
                 bread =
-                    "<a href='/' class='me-1'><span><i class='bx bx-home me-1 t-text-color2'></i></span> Dashboard</a> <i class='bx bx-chevron-right me-1 c-text'></i> <a class='me-1' href='/" +
+                    "<a href='/' class='me-1 fs-07-in-small'><span><i class='bx bx-home me-1 t-text-color2 hide-in-small'></i></span> Dashboard</a> <i class='bx bx-chevron-right me-1 c-text'></i> <a class='me-1 fs-07-in-small' href='/" +
                     lok1 + "'>" + lok1 +
                     "</a>"
                 if (lok2) {
-                    bread = bread + " <i class='bx bx-chevron-right me-1 c-text'></i> <a class='me-1' href='/" + lok1 +
+                    bread = bread + " <i class='bx bx-chevron-right me-1 c-text'></i> <a class='me-1 fs-07-in-small' href='/" + lok1 +
                         "/" + lok2 +
                         "/" + lok3 +
                         "'>{{ $vendor->vendor->name }}</a>"
@@ -604,7 +584,7 @@
                 // chart: {
                 //     width: '100'
                 // },
-                colors: ['#3ded97', '#F9E076' ,'#DD571C', '#E3242B', '#c5c6d0']
+                colors: ['#3ded97', '#F9E076', '#DD571C', '#E3242B', '#c5c6d0']
 
             };
 
@@ -616,7 +596,7 @@
         var header = document.getElementById("menu-tab");
         var btns = header.getElementsByClassName("card-tab");
         for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function () {
+            btns[i].addEventListener("click", function() {
 
                 var current = $('.card-tab.active')
                 current[0].className = current[0].className.replace(" active", "");
@@ -723,8 +703,10 @@
                 score_history,
                 id
             } = value;
-            const availableScore = ['','Sangat Kurang', 'Kurang', 'Cukup', 'Baik'];
-            const availableBtnClass = ['bt-primary-xsm', 'b-sangat-buruk-light-xsm', 'b-buruk-light-xsm', 'b-cukup-light-xsm', 'b-bagus-light-xsm'];
+            const availableScore = ['', 'Sangat Kurang', 'Kurang', 'Cukup', 'Baik'];
+            const availableBtnClass = ['bt-primary-xsm', 'b-sangat-buruk-light-xsm', 'b-buruk-light-xsm',
+                'b-cukup-light-xsm', 'b-bagus-light-xsm'
+            ];
             let score = single_score !== null ? availableScore[single_score['score']] : 'Beri Nilai';
             let hasScore = single_score !== null;
             let file_text = single_score !== null ? single_score['file'] !== null ? 'Download' : 'Upload File' : '-';
@@ -780,24 +762,24 @@
                 '</tr>';
         }
 
-        $(document).on('click', '#download', function () {
+        $(document).on('click', '#download', function() {
             $(this).attr('target', '_blank')
             $(this).attr('href', $(this).data('link'));
         });
-        $(document).on('click', '#upload', function () {
+        $(document).on('click', '#upload', function() {
             $('#modalfile #fileNameSub').html($(this).data('subname'))
             $('#modalfile #id').val($(this).data('scoreid'))
             $('#modalfile #file').val('')
             $('#modalfile').modal('show')
         })
 
-        $(document).on('click', '.add-note', function () {
+        $(document).on('click', '.add-note', function() {
             let id = this.dataset.scoreid;
             $('#modalCatatan #id-note').val(id)
             $('#modalCatatan').modal('show');
         });
 
-        $(document).on('click', '.edit-note', function () {
+        $(document).on('click', '.edit-note', function() {
             let id = this.dataset.scoreid;
             let note = this.dataset.note;
             $('#modalCatatan #id-note').val(id);
@@ -805,7 +787,7 @@
             $('#modalCatatan').modal('show');
         });
 
-        $(document).on('click', '.see-note', function () {
+        $(document).on('click', '.see-note', function() {
             let id = this.dataset.scoreid;
             let note = this.dataset.note;
             $('#modalCatatanLihat #note-see').html(note);
@@ -835,7 +817,7 @@
         }
 
         function elTable() {
-            return '<table class="table" style="width:100%">' +
+            return '<table class="table table-striped  display table-responsive wrap" style="width:100%">' +
                 '<tbody id="table"></tbody>' +
                 '</table>';
         }
@@ -880,16 +862,16 @@
                     let data = response['data']['indicator'];
                     el.append(elTable());
                     let table = $('#table');
-                    $.each(data, function (k, v) {
+                    $.each(data, function(k, v) {
                         table.append(elMainIndicator(k, v));
                         let elMain = $('#indicator-' + k);
                         let sub = '';
-                        $.each(v['sub_indicator'], function (kSub, vSub) {
+                        $.each(v['sub_indicator'], function(kSub, vSub) {
                             sub += elSubIndicator((k + 1), kSub, vSub);
                         });
                         elMain.after(sub);
                     });
-                    $('.nilai').on('click', function () {
+                    $('.nilai').on('click', function() {
                         let value = this.dataset.value;
                         let sub_indicator = this.dataset.subin;
                         if (value < 3) {
@@ -906,11 +888,11 @@
 
                     });
 
-                    $('.unscoreable').on('click', function () {
+                    $('.unscoreable').on('click', function() {
                         alertScore();
                     });
 
-                    $('.bt-history').on('click', function () {
+                    $('.bt-history').on('click', function() {
                         _histId = this.dataset.id;
                         $('#modalHistory').modal('show');
 
@@ -924,7 +906,7 @@
         }
 
         function onModalHistoryShow() {
-            $('#modalHistory').on('shown.bs.modal', function () {
+            $('#modalHistory').on('shown.bs.modal', function() {
                 getHistoryScore(index)
                 // let response = await $.get('/penilaian/get-last-history?package=' + package_id + '&type=' + vType + '&sub=' + _histId);
                 // console.log()
@@ -1031,7 +1013,7 @@
                 let response = await $.get('/penilaian/get-history?package=' + package_id + '&type=' + vType + '&sub=' +
                     _histId);
                 console.log(response)
-                $.each(response['data'], function (k, v) {
+                $.each(response['data'], function(k, v) {
                     el.append(elHistory(v));
                 });
             } catch (e) {
@@ -1099,12 +1081,12 @@
             let values = [];
             console.log(dataChart);
             if (type === 'cumulative') {
-                dataChart.forEach(function (v, k) {
+                dataChart.forEach(function(v, k) {
                     labels.push(v['name']);
                     values.push(v['radar']);
                 });
             } else {
-                dataChart['indicator'].forEach(function (v, k) {
+                dataChart['indicator'].forEach(function(v, k) {
                     labels.push(v['index']);
                     values.push(v['radar']);
                 });
@@ -1258,7 +1240,7 @@
             }
         }
 
-        $(document).ajaxStop(function () {
+        $(document).ajaxStop(function() {
             if (getParameter('q')) {
                 $(window).scrollTop($('table #tr' + getParameter('q')).offset().top);
                 $('table #tr' + getParameter('q')).focus().addClass('trFocus');
@@ -1283,9 +1265,9 @@
             }
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             breadcrumb();
-            $('#package-list').on('change', function () {
+            $('#package-list').on('change', function() {
                 package_id = $(this).val();
                 if (index !== 'komulatif') {
                     getScore(index)
@@ -1303,7 +1285,7 @@
                 }
                 getDetailPackage($(this).val());
             });
-            $('.card-user').on('click', function () {
+            $('.card-user').on('click', function() {
                 index = this.dataset.roles;
                 if (this.dataset.roles !== 'komulatif') {
                     let title = '';
@@ -1354,7 +1336,7 @@
             getDetailPackage(package_id);
             getRole();
 
-            $('#bt-score-w-file').on('click', function () {
+            $('#bt-score-w-file').on('click', function() {
                 setScoreWFile();
             })
         });
@@ -1388,11 +1370,11 @@
                 el.append(elTable());
                 let table = $('#table');
                 let data = response['data'];
-                $.each(data, function (k, v) {
+                $.each(data, function(k, v) {
                     table.append(elMainIndicatorCumulative(k, v));
                     let elMain = $('#indicator-' + k);
                     let sub = '';
-                    $.each(v['sub_indicator'], function (kSub, vSub) {
+                    $.each(v['sub_indicator'], function(kSub, vSub) {
                         sub += elSubIndicatorCumulative((k + 1), kSub, vSub);
                     });
                     elMain.after(sub);
@@ -1441,14 +1423,14 @@
             $('#title-nilai-komulatif').html('Nilai Komulatif ' + title);
         }
 
-        $("#info").click(function () {
+        $("#info").click(function() {
             $("#detail-nilai").removeClass("active");
             $("#info").addClass("active")
             $("#content-detail-nilai").addClass("d-none")
             $("#content-info").removeClass("d-none")
         });
 
-        $("#detail-nilai").click(function () {
+        $("#detail-nilai").click(function() {
             $("#detail-nilai").addClass("active");
             $("#info").removeClass("active")
             $("#content-detail-nilai").removeClass("d-none")
@@ -1467,7 +1449,7 @@
                 headers: {
                     'Accept': "application/json"
                 },
-                success: function (data, textStatus, xhr) {
+                success: function(data, textStatus, xhr) {
                     console.log(data);
                     if (data['code'] === 200) {
                         $('#modalFileRequired').modal('hide');
@@ -1480,7 +1462,7 @@
                         })
                     }
                 },
-                error: function (error, xhr, textStatus) {
+                error: function(error, xhr, textStatus) {
                     console.log(error)
                 }
             })

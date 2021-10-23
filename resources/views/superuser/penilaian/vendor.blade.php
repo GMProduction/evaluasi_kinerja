@@ -17,28 +17,29 @@
         .card-vendor-2:hover {
             box-shadow: #1F9CAC55 0px 7px 29px 0px;
         }
+
     </style>
 
 @endsection
 @section('content')
     <section class="mt-content">
-        <div style="padding-right: 30px; padding-left: 30px" class="mt-5">
-            <div class="d-flex justify-content-between">
+        <div  class="mt-5 p-hor-in-large">
+            <div class="d-flex justify-content-between flex-wrap">
 
                 <p class="fw-bold t-black">Data Penyedia Jasa</p>
-                <form id="form" onsubmit="return cariVendor()" class="mb-0">
-                    <div class="input-group mb-3">
+                <form id="form" onsubmit="return cariVendor()" class="mb-0 w-100-in-small mb-1-in-small">
+                    <div class="input-group input-group-flex mb-3">
                         <input class="form-control" type="text" name="name" id="txtCari"
-                               style="border-top-right-radius: 0;border-bottom-right-radius: 0;"
-                               value="{{ request('name') }}" placeholder="Cari Vendor">
-                        <button class="btn btn-primary me-3" style="border-top-left-radius: 0;border-bottom-left-radius: 0;"
-                                type="submit"><i class='bx bx-search-alt-2'></i></button>
+                            style="border-top-right-radius: 0;border-bottom-right-radius: 0;"
+                            value="{{ request('name') }}" placeholder="Cari Vendor">
+                        <button class="btn btn-primary me-3-in-large" style="border-top-left-radius: 0;border-bottom-left-radius: 0;"
+                            type="submit"><i class='bx bx-search-alt-2'></i></button>
                     </div>
                 </form>
 
             </div>
 
-            <div role="tablist"  id="tablist">
+            <div role="tablist" id="tablist">
                 <div id="menu-vendor" class="row">
 
                 </div>
@@ -61,16 +62,16 @@
         function getVendor(form) {
             var vendor = $('#menu-vendor');
             vendor.empty();
-            $.get('/vendor',form, function(data) {
+            $.get('/vendor', form, function(data) {
                 console.log(data);
                 let allVendor = data.length;
                 let ongoing = 0;
                 $.each(data, function(key, value) {
                     // vendor.append(elVendor(value));
                     ongoing += value['package_vendor_going'].length;
-                    vendor.append(' <div class="items-tab col-3 mb-4"><a href="/penilaian/' + value[
+                    vendor.append(' <div class="items-tab w-100-in-small col-3 mb-4"><a href="/penilaian/' + value[
                             'id'] +
-                        '/vendor" class="card-vendor d-block c-text card-user" id="">\n' +
+                        '/vendor" class="card-vendor d-block c-text card-user me-1-in-large" id="">\n' +
                         '                    <div class="d-flex justify-content-left">\n' +
                         '                        <div class="div-image"> <img src="' + value['image'] +
                         '" onerror="this.onerror=null; this.src=\'{{ asset('/images/noimage.png') }}\'"/> </div>\n' +
@@ -86,4 +87,3 @@
         }
     </script>
 @endsection
-

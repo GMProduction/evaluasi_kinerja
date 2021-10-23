@@ -24,7 +24,7 @@
                     <a class="bt-primary-sm" id="addData"><i class='bx bx-plus'></i> Tambah Data</a>
                 </div>
 
-                <table id="table" class="table table-striped" style="width:100%">
+                <table id="table" class="table table-striped display responsive wrap" style="width:100%">
                 </table>
             </div>
         </div>
@@ -102,9 +102,9 @@
                     return nRow;
                 },
                 columnDefs: [
-                    {"title": "#", "searchable": false, "orderable": false, "targets": 0,"className": "text-center", "width": "100"},
-                    {"title": "Nama", 'targets': 1, 'searchable': true, 'orderable': true, "className": "text-center"},
-                    {"title": "Action", 'targets': 2, 'searchable': false, 'orderable': false, "className": "text-center"},
+                    {"title": "#", "searchable": false, "orderable": false, "targets": 0,"className": "left-in-small", "width": "30"},
+                    {"title": "Nama", 'targets': 1, 'searchable': true, 'orderable': true, "className": "left-in-small"},
+                    {"title": "Action", 'targets': 2, 'searchable': false, 'orderable': false, "className": "left-in-small"},
                 ],
 
                 columns: [
