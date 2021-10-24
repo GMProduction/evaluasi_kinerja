@@ -420,7 +420,7 @@
         @endif
     @endif
 
-
+    <div class="container" id="container">
         <div class="form-container sign-up-container hide-in-small">
             <form action="#">
                 <h1>Create Account</h1>
@@ -455,7 +455,7 @@
         </div>
         <div class="overlay-container hide-in-small">
             <div class="overlay">
-                <div class="overlay-panel overlay-left w-100-in-small">
+                <div class="overlay-panel overlay-left ">
                     <h1 >Evaluasi Kinerja Penyedia Jasa</h1>
                     <p>To keep connected with us please login with your personal info</p>
                     <button class="ghost" id="signIn">Sign In</button>

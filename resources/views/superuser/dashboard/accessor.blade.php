@@ -37,15 +37,15 @@
             </div>
         </div>
     </div>
-    <div style="padding-right: 30px; padding-left: 30px" class="mt-5">
-        <div class="d-flex justify-content-between">
+    <div class="mt-5 p-hor-in-large">
+        <div class="d-flex justify-content-between flex-wrap">
             <p class="fw-bold t-black">Data Penyedia Jasa</p>
-            <form id="form" onsubmit="return cariVendor()" class="mb-0">
-                <div class="input-group mb-3">
-                    <input class="form-control" type="text" name="name" id="txtCari"
+            <form id="form" onsubmit="return cariVendor()" class="mb-0 w-100-in-small">
+                <div class="input-group-flex mb-3 w-100-in-small">
+                    <input class="form-control form-control-sm" type="text" name="name" id="txtCari"
                         style="border-top-right-radius: 0;border-bottom-right-radius: 0;"
                         value="{{ request('name') }}" placeholder="Cari Vendor">
-                    <button class="btn btn-primary me-3" style="border-top-left-radius: 0;border-bottom-left-radius: 0;"
+                    <button class="btn btn-primary" style="border-top-left-radius: 0;border-bottom-left-radius: 0;"
                         type="submit"><i class='bx bx-search-alt-2'></i></button>
                 </div>
             </form>

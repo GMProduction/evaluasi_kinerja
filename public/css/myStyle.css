@@ -1547,10 +1547,6 @@ a:hover {
   transition: all 0.3s;
 }
 
-.hide-in-small {
-  display: block;
-}
-
 .hide-in-large {
   display: none;
 }
@@ -1700,5 +1696,22 @@ div.dataTables_wrapper div.dataTables_paginate {
   .card-panel {
     padding: 16px !important;
     overflow: auto;
+  }
+
+  .notifdiv {
+    width: 90vw;
+  }
+
+  .card-vendor {
+    margin-right: 0;
+  }
+
+  .profile-card-inf {
+    flex-wrap: nowrap;
+  }
+
+  .profile-card-inf__item {
+    padding: 0;
+    min-width: 0;
   }
 }

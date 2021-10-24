@@ -1869,10 +1869,6 @@ a:hover {
     }
 }
 
-.hide-in-small {
-    display: block;
-}
-
 .hide-in-large {
     display: none;
 }
@@ -2025,9 +2021,26 @@ a:hover {
         position: static;
     }
 
-    .card-panel{
+    .card-panel {
         padding: 16px !important;
         overflow: auto;
+    }
+
+    .notifdiv {
+        width: 90vw;
+    }
+
+    .card-vendor {
+        margin-right: 0;
+    }
+
+    .profile-card-inf {
+        flex-wrap: nowrap;
+    }
+
+    .profile-card-inf__item {
+        padding: 0;
+        min-width: 0;
     }
 }
 

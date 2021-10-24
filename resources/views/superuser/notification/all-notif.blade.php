@@ -4,7 +4,7 @@
     <section class="mt-content">
 
         <div class="row">
-            <div class="offset-1 col-2">
+            <div class="offset-lg-1 col-lg-2 col-md-12">
                 <p class="fw-bold" style="color: gray">Pemberitahuan</p>
 
                 <div id="bcukup" class="tombol-notif active">
@@ -22,7 +22,9 @@
                 </div>
 
             </div>
-            <div class="col-8  mt-5">
+
+            <hr class="hide-in-large">
+            <div class="col-lg-8 col-md-12 mt-5">
                 <div class="card-notif table-container" style="border-radius: 30px">
                     <div id="cardNotif">
 

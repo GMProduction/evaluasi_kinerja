@@ -28,7 +28,7 @@
                 @endphp
 
 
-                <div class="col-8 table-container ">
+                <div class="col-lg-8 col-md-12 table-container ">
                     <p class="fw-bold t-primary mb-3">Peringatan Penilaian</p>
 
                     <table class="paket">
@@ -83,7 +83,7 @@
 
                 </div>
 
-                <div class="col-8 table-container ">
+                <div class="col-lg-8 col-md-12 table-container ">
                     <p class="fw-bold t-primary mb-3">Sanggahan Vendor</p>
                     <table class="paket mb-4">
                         <tr class="mb-1">
