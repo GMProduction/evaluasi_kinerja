@@ -207,6 +207,16 @@
                             <label for="faktorupdate" class="secondary-light-text">Faktor Diupdate</label>
                             <textarea class="form-control" id="faktorupdate" rows="3" readonly></textarea>
                         </div>
+                        <div class="form-group mb-3">
+                            <form action="/penilaian/{{ $vendor->id }}/vendor/cetak" method="post" id="form-cetak">
+                                @csrf
+                                <input type="hidden" name="hidden_html" id="hidden_html">
+                                <button type="submit" class="btn-primary btn btn-cetak" data-id="{{ $vendor->id }}">
+                                    Cetak
+                                </button>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -316,11 +326,10 @@
                             <p class="fw-bold t-black">Risalah Hasil Penilaian Faktor</p>
                             <hr>
                             <div id="donutchart"
-{{--                                 style="margin-top: 50px"--}}
+                                {{--                                 style="margin-top: 50px"--}}
                             ></div>
                         </div>
                     </div>
-
 
                     <div class="col-12">
                         <div class="card-panel back-panel-2 table-container" id="content-detail-nilai">
@@ -462,12 +471,15 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><span id="title"></span>Pemberian Nilai Kurang</h5>
+                        <h5 class="modal-title" id="exampleModalLabel"><span id="title"></span>Pemberian Nilai Kurang
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p style="text-align: justify">Pemberian Nilai Di Bawah <span style="font-weight: bold">Cukup</span> Wajib Melampirkan File Atau Mengisi Catatan Penilaian</p>
+                        <p style="text-align: justify">Pemberian Nilai Di Bawah <span
+                                style="font-weight: bold">Cukup</span> Wajib Melampirkan File Atau Mengisi Catatan
+                            Penilaian</p>
                         <form id="form-score-with-file" onsubmit="return setScoreWFile()" enctype="multipart/form-data">
                             @csrf
                             <input id="value-score" name="value" hidden>
@@ -604,7 +616,7 @@
                 // chart: {
                 //     width: '100'
                 // },
-                colors: ['#3ded97', '#F9E076' ,'#DD571C', '#E3242B', '#c5c6d0']
+                colors: ['#3ded97', '#F9E076', '#DD571C', '#E3242B', '#c5c6d0']
 
             };
 
@@ -723,7 +735,7 @@
                 score_history,
                 id
             } = value;
-            const availableScore = ['','Sangat Kurang', 'Kurang', 'Cukup', 'Baik'];
+            const availableScore = ['', 'Sangat Kurang', 'Kurang', 'Cukup', 'Baik'];
             const availableBtnClass = ['bt-primary-xsm', 'b-sangat-buruk-light-xsm', 'b-buruk-light-xsm', 'b-cukup-light-xsm', 'b-bagus-light-xsm'];
             let score = single_score !== null ? availableScore[single_score['score']] : 'Beri Nilai';
             let hasScore = single_score !== null;
@@ -1160,6 +1172,11 @@
                         min: 0,
                         stepSize: 2,
                     },
+                    animation: {
+                        onComplete: function() {
+                            $('#hidden_html').val(radarChart.toBase64Image());
+                        }
+                    }
                 },
                 plugins: {
                     // legend: {
@@ -1189,6 +1206,9 @@
                 document.getElementById('myChart'),
                 config,
             );
+            console.log($('#myChart').html())
+            // document.getElementById('some-image-tag').src = radarChart.toBase64Image();
+            // console.log(radarChart.toBase64Image());
 
         }
 
@@ -1356,6 +1376,14 @@
 
             $('#bt-score-w-file').on('click', function () {
                 setScoreWFile();
+            })
+
+            $('.btn-cetak').on('click', async function (e) {
+                // $('#hidden_html').val($('#pnl-faktor-risalah').html());
+                // console.log($('#hidden_html').val())
+                $('#form-cetak').submit();
+
+
             })
         });
 

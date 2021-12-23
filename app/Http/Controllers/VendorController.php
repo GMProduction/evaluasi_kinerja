@@ -108,5 +108,13 @@ class VendorController extends CustomController
         return view('superuser/penilaian/index')->with(['data' => $data, 'vendor' => $vendor]);
     }
 
+    public function cetakPenilaian($id)
+    {
+        $html = $this->postField('hidden_html');
+        $vendor = User::with('vendor')->where('id', $id)->firstOrFail();
+//        dump($html);
+//        die();
+        return $this->convertToPdf('superuser.penilaian.cetak', ['html' => $html, 'vendor' => $vendor]);
+    }
 
 }
