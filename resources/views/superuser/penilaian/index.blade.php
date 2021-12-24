@@ -211,6 +211,7 @@
                             <form action="/penilaian/{{ $vendor->id }}/vendor/cetak" method="post" id="form-cetak">
                                 @csrf
                                 <input type="hidden" name="hidden_html" id="hidden_html">
+                                <input type="hidden" name="hidden_package" id="hidden_package">
                                 <button type="submit" class="btn-primary btn btn-cetak" data-id="{{ $vendor->id }}">
                                     Cetak
                                 </button>
@@ -1307,6 +1308,7 @@
             breadcrumb();
             $('#package-list').on('change', function () {
                 package_id = $(this).val();
+                $('#hidden_package').val(package_id);
                 if (index !== 'komulatif') {
                     getScore(index)
                 } else {

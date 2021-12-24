@@ -1,139 +1,186 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Laporan Pemasukan</title>
-    <!-- Fonts -->
-
-    <!-- Styles -->
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.css" type="text/css">
-
-
-</head>
-
-<body>
-
-<style>
-    footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 0;
-    }
-
-    table {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        table-layout: fixed;
-    }
-
-    table caption {
-        font-size: 1.5em;
-        margin: .5em 0 .75em;
-    }
-
-    table tr {
-        border: 1px solid #ddd;
-        padding: .35em;
-    }
-
-    table th,
-    table td {
-        padding: .625em;
-        text-align: center;
-    }
-
-    table th,
-    table td {
-        font-size: .8em;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-    }
-
-    @media screen and (max-width: 600px) {
-        table {
-            border: 0;
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .report-title {
+            font-size: 14px;
+            font-weight: bolder;
         }
 
-        table caption {
-            font-size: 1.3em;
-        }
-
-        table thead {
-            border: none;
-            clip: rect(0 0 0 0);
-            height: 1px;
-            margin: -1px;
-            overflow: hidden;
-            padding: 0;
-            position: absolute;
-            width: 1px;
-        }
-
-        table tr {
-            border-bottom: 3px solid #ddd;
-            display: block;
-            margin-bottom: .625em;
-        }
-
-        table td {
-            border-bottom: 1px solid #ddd;
-            display: block;
-            font-size: .6em;
-            text-align: right;
-        }
-
-        table td::before {
-            content: attr(data-label);
-            float: left;
+        .f-bold {
             font-weight: bold;
-            text-transform: uppercase;
         }
 
-        table td:last-child {
-            border-bottom: 0;
+        .footer {
+            position: fixed;
+            bottom: 0cm;
+            right: 0cm;
+            height: 2cm;
         }
-    }
+    </style>
+</head>
+<body>
+<div>
+    <img src="{{ public_path('/images/logo1.png') }}" height="100">
+    <p>Sistem Evaluasi Kinerja Penyedia Jasa </p>
+</div>
 
-    .text-center {
-        text-align: center !important;
-    }
-
-</style>
-
-<br>
+<img src="{{ public_path($vendor->image) }}" height="100" width="100" style="border-radius: 50%"
+     onerror="this.onerror=null;this.src='{{ asset('/images/noimage.png') }}';"/>
+<div>
+    <p style="font-weight: bold">Penyedia jasa</p>
+    <p style="font-weight: bold">{{ $vendor->vendor->name }}</p>
+</div>
+<div>
+    <p>Alamat</p>
+    <p>{{ $vendor->vendor->address }}</p>
+</div>
+<div>
+    <p>IUJK</p>
+    <p>{{ $vendor->vendor->iujk }}</p>
+</div>
+<div>
+    <p>NPWP</p>
+    <p>{{ $vendor->vendor->npwp }}</p>
+</div>
+<div>
+    <p style="font-weight: bold">Paket Pekerjaan</p>
+    <p style="font-weight: bold">{{ $package !== null ? $package->name : '-' }}</p>
+</div>
+<div>
+    <p>No. Kontrak</p>
+    <p>{{ $package !== null ? $package->no_reference : '-' }}</p>
+</div>
+<div>
+    <p>Pengguna Jasa</p>
+    <p>{{ $package !== null ? $package->ppk->name : '-' }}</p>
+</div>
+<div>
+    <p>Tanggal Mulai</p>
+    <p>{{ $package !== null ? $package->start_at : '-' }}</p>
+</div>
+<div>
+    <p>Tanggal Selesai</p>
+    <p>{{ $package !== null ? $package->finish_at : '-' }}</p>
+</div>
 
 <div>
-    <div style="display: flex;">
-        <img src="{{ public_path('images/logo1.png') }}" style="width: 120px; float: left;"/>
-        <div>Sistem Evaluasi Kinerja Penyedia Jasa</div>
-    </div>
-    <div >
-        <p>Penyedia Jasa</p>
-        <p>{{ $vendor->vendor->name }}</p>
-    </div>
+    <p style="font-weight: bold">Nilai Kinerja Komulatif</p>
+    <p>{{ $cumulative['cumulative'] }}</p>
+    <p>{{ $cumulative['text'] }}</p>
+    <p>Update Terakhir : {{ $cumulativeLast }}</p>
+</div>
 
-    <div>
-        <img src="{{ $html }}" width="400" height="400">
+<div>
+    <img src="{{ $html }}" width="250">
+</div>
+
+<div>
+    <p style="font-weight: bold">Penilaian Mandiri</p>
+    <p>{{ $vendorCumulative['cumulative'] }}</p>
+    <p>{{ $vendorCumulative['text'] }}</p>
+    <p>Update Terakhir : {{ $vendorCumulative['last']->updated_at }}</p>
+</div>
+
+<div>
+    <p style="font-weight: bold">Penilaian PPK</p>
+    <p>{{ $ppkCumulative['cumulative'] }}</p>
+    <p>{{ $ppkCumulative['text'] }}</p>
+    <p>Update Terakhir : {{ $ppkCumulative['last']->updated_at }}</p>
+</div>
+
+<div>
+    <p style="font-weight: bold">Penilaian Balai</p>
+    <p>{{ $officeCumulative['cumulative'] }}</p>
+    <p>{{ $officeCumulative['text'] }}</p>
+    <p>Update Terakhir : {{ $officeCumulative['last']->updated_at }}</p>
+</div>
+
+<div id="detail_penilaian_mandiri" class="row">
+    <div class="sangat_kurang col-xs-3">
+        <p style="font-weight: bold">Kinerja Sangat Kurang</p>
+        @foreach($vendorCumulative['very_bad'] as $v)
+            <p>{{$v->subIndicator->name}}</p>
+        @endforeach
+    </div>
+    <div class="kurang col-xs-3">
+        <p style="font-weight: bold">Kinerja Kurang</p>
+        @foreach($vendorCumulative['bad'] as $v)
+            <p>{{$v->subIndicator->name}}</p>
+        @endforeach
+    </div>
+    <div class="medium col-xs-3">
+        <p style="font-weight: bold">Kinerja Cukup</p>
+        @foreach($vendorCumulative['medium'] as $v)
+            <p>{{$v->subIndicator->name}}</p>
+        @endforeach
+    </div>
+    <div class="good col-xs-3">
+        <p style="font-weight: bold">Kinerja Baik</p>
+        @foreach($vendorCumulative['good'] as $v)
+            <p>{{$v->subIndicator->name}}</p>
+        @endforeach
+    </div>
+</div>
+<div id="detail_penilaian_ppk" class="row">
+    <div class="sangat_kurang col-xs-3">
+        <p style="font-weight: bold">Kinerja Sangat Kurang</p>
+        @foreach($ppkCumulative['very_bad'] as $v)
+            <p>{{$v->subIndicator->name}}</p>
+        @endforeach
+    </div>
+    <div class="kurang col-xs-3">
+        <p style="font-weight: bold">Kinerja Kurang</p>
+        @foreach($ppkCumulative['bad'] as $v)
+            <p>{{$v->subIndicator->name}}</p>
+        @endforeach
+    </div>
+    <div class="medium col-xs-3">
+        <p style="font-weight: bold">Kinerja Cukup</p>
+        @foreach($ppkCumulative['medium'] as $v)
+            <p>{{$v->subIndicator->name}}</p>
+        @endforeach
+    </div>
+    <div class="good col-xs-3">
+        <p style="font-weight: bold">Kinerja Baik</p>
+        @foreach($ppkCumulative['good'] as $v)
+            <p>{{$v->subIndicator->name}}</p>
+        @endforeach
     </div>
 </div>
 
-<br>
-
-<footer class="footer">
-</footer>
+<div id="detail_penilaian_balai" class="row">
+    <div class="sangat_kurang col-xs-3">
+        <p style="font-weight: bold">Kinerja Sangat Kurang</p>
+        @foreach($officeCumulative['very_bad'] as $v)
+            <p>{{$v->subIndicator->name}}</p>
+        @endforeach
+    </div>
+    <div class="kurang col-xs-3">
+        <p style="font-weight: bold">Kinerja Kurang</p>
+        @foreach($officeCumulative['bad'] as $v)
+            <p>{{$v->subIndicator->name}}</p>
+        @endforeach
+    </div>
+    <div class="medium col-xs-3">
+        <p style="font-weight: bold">Kinerja Cukup</p>
+        @foreach($officeCumulative['medium'] as $v)
+            <p>{{$v->subIndicator->name}}</p>
+        @endforeach
+    </div>
+    <div class="good col-xs-3">
+        <p style="font-weight: bold">Kinerja Baik</p>
+        @foreach($officeCumulative['good'] as $v)
+            <p>{{$v->subIndicator->name}}</p>
+        @endforeach
+    </div>
+</div>
 
 </body>
-
-<script>
-</script>
-
 </html>
