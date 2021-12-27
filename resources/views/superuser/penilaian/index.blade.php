@@ -208,7 +208,7 @@
                             <textarea class="form-control" id="faktorupdate" rows="3" readonly></textarea>
                         </div>
                         <div class="form-group mb-3">
-                            <form action="/penilaian/{{ $vendor->id }}/vendor/cetak" method="post" id="form-cetak">
+                            <form action="/penilaian/{{ $vendor->id }}/vendor/cetak" target="_blank" method="post" id="form-cetak">
                                 @csrf
                                 <input type="hidden" name="hidden_html" id="hidden_html">
                                 <input type="hidden" name="hidden_package" id="hidden_package">
