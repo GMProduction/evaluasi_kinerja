@@ -46,4 +46,12 @@ class CustomController extends Controller
     {
         return Uuid::uuid1()->toString();
     }
+
+    public function convertToPdf($viewRender, $data = [])
+    {
+        $html = view($viewRender)->with($data);
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($html);
+        return $pdf->stream();
+    }
 }
